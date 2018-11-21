@@ -2,7 +2,7 @@ import App from './App.vue'
 import Vue from 'vue'
 
 // Import styles
-import './style.css'
+import './styles/index'
 
 // Prevent the production tip on Vue startup
 Vue.config.productionTip = false
