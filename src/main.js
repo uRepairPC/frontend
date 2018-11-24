@@ -1,5 +1,8 @@
+'use strict'
+
 import VueSocketIO from 'vue-socket.io'
 import App from './App.vue'
+import store from './store'
 import Vue from 'vue'
 
 // Import styles
@@ -16,5 +19,6 @@ Vue.use(new VueSocketIO({
 
 new Vue({
 	el: '#app',
+	store,
 	render: h => h(App)
 })
