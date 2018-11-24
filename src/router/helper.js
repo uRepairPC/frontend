@@ -6,6 +6,7 @@
  * @return {function(): (Promise<*>|*)}
  */
 export function load(name) {
+	// eslint-disable-next-line
 	return () => import(`@/${name}.vue`)
 }
 

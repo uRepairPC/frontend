@@ -1,5 +1,6 @@
 'use strict'
 
+// eslint-disable-next-line
 const files = require.context('.', false, /\.js$/)
 const modules = {}
 

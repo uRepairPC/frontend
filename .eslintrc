@@ -11,5 +11,8 @@
     "indent": [2, "tab"],
     "no-mixed-spaces-and-tabs": ["error", "smart-tabs"],
     "vue/html-indent": ["error", "tab", { "alignAttributesVertically": true }]
+  },
+  "parserOptions": {
+    "parser": "babel-eslint"
   }
 }
