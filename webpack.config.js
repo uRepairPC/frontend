@@ -49,5 +49,10 @@ module.exports = {
 			inject: true,
 			chunksSortMode: 'dependency'
 		})
-	]
+	],
+	resolve: {
+		alias: {
+			'@': path.resolve(__dirname, './src')
+		}
+	}
 }

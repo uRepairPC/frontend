@@ -1,6 +1,7 @@
 'use strict'
 
 import VueSocketIO from 'vue-socket.io'
+import router from './router'
 import App from './App.vue'
 import store from './store'
 import Vue from 'vue'
@@ -20,5 +21,6 @@ Vue.use(new VueSocketIO({
 new Vue({
 	el: '#app',
 	store,
+	router,
 	render: h => h(App)
 })
