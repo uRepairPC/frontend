@@ -6,6 +6,7 @@ import router from './router'
 import App from './App.vue'
 import store from './store'
 import '@babel/polyfill'
+import './config/axios'
 import Vue from 'vue'
 
 // Import styles
