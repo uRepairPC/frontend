@@ -14,8 +14,6 @@
 </template>
 
 <script>
-import axios from 'axios'
-
 export default {
 	data() {
 		return {
@@ -33,9 +31,16 @@ export default {
 		onClick() {
 			this.loading = true
 
-			axios.post('auth', this.form)
+			this.$axios.post('auth', this.form)
 				.then(res => {
-					// TODO Success && store token
+					if (res.data && res.data.success) {
+						localStorage.setItem('user', JSON.stringify(res.data.user))
+						this.$store.commit('SET_USER', res.data.user)
+						this.$router.push({ name: 'dashboard' })
+					}
+
+					// TODO Connect to websocket
+
 					this.loading = false
 				})
 				.catch(() => {
@@ -50,10 +55,9 @@ export default {
 #auth {
 	max-width: 400px;
 	margin: 0 auto;
-	border: 1px solid #e7e7e7;
 	padding: 40px;
 	background: #fff;
-	border-radius: 10px;
+	box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12)
 }
 
 .logo {
@@ -84,7 +88,6 @@ export default {
 	#auth {
 		max-width: none;
 		padding: 20px;
-		border-radius: 0;
 	}
 }
 </style>
