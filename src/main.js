@@ -1,6 +1,7 @@
 'use strict'
 
 import VueSocketIO from 'vue-socket.io'
+import ElementUI from 'element-ui'
 import router from './router'
 import App from './App.vue'
 import store from './store'
@@ -18,6 +19,7 @@ Vue.use(new VueSocketIO({
 	debug: true,
 	connection: 'http://localhost:3000'
 }))
+Vue.use(ElementUI)
 
 new Vue({
 	el: '#app',
