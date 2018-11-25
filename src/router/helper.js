@@ -27,3 +27,12 @@ export function loadComponent(component) {
 export function loadPage(page) {
 	return load(`pages/${page}`)
 }
+
+/**
+ * File Import Assistant (Layout).
+ * @param {String} layout
+ * @return {function(): (Promise<*>|*)}
+ */
+export function loadLayout(layout) {
+	return load(`layouts/${layout}`)
+}
