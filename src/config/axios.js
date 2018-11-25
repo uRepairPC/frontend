@@ -2,7 +2,9 @@
 /* eslint-disable */
 
 import { Message } from 'element-ui'
+import router from '../router'
 import axios from 'axios'
+import Vue from 'vue'
 
 axios.defaults.baseURL = 'http://localhost:8000'
 
@@ -11,14 +13,24 @@ axios.interceptors.response.use(
 		return resp
 	},
 	(err) => {
-		if (err.status === 401) {
-			// TODO move to auth page, remove token, etc
+		if (!err.response) {
+			return Promise.reject(err)
 		}
 
-		if (err.response && err.response.data && err.response.data.message) {
-			Message.error(err.response.data.message)
+		const { response } = err
+
+		if (response.status === 401) {
+			router.push({ name: 'dashboard' })
+			Vue.$store.commit('CLEAR_USER')
+			localStorage.removeItem('user')
+		}
+
+		if (response.data && response.data.message) {
+			Message.error(response.data.message)
 		}
 
 		return Promise.reject(err)
 	}
 )
+
+Vue.prototype.$axios = axios
