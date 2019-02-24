@@ -76,7 +76,6 @@ export default {
 .logo {
 	text-align: center;
 	margin-bottom: 40px;
-
 	> img {
 		max-width: 200px;
 	}
@@ -84,10 +83,8 @@ export default {
 
 .el-input {
 	margin-bottom: 20px;
-
 	> /deep/ .el-input-group__prepend {
 		padding: 0 15px;
-
 		> i {
 			display: flex;
 			align-items: center;

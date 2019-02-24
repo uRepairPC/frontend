@@ -4,6 +4,8 @@
 
 <script>
 export default {
-	//
+	breadcrumbs: [
+		{ title: 'Користувачі' }
+	]
 }
 </script>
