@@ -11,22 +11,22 @@
 			v-model="form.email"
 			placeholder="Email"
 		>
-			<template slot="prepend">
-				<i class="material-icons">
-					email
-				</i>
-			</template>
+			<i
+				slot="prepend"
+				class="material-icons">
+				email
+			</i>
 		</el-input>
 		<el-input
 			v-model="form.password"
 			placeholder="Password"
 			type="password"
 		>
-			<template slot="prepend">
-				<i class="material-icons">
-					lock
-				</i>
-			</template>
+			<i
+				slot="prepend"
+				class="material-icons">
+				lock
+			</i>
 		</el-input>
 		<el-button
 			type="primary"

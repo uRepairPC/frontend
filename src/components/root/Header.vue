@@ -8,16 +8,31 @@
 				alt="logo"
 			>
 			<span>КНТЕУ</span>
+			<el-button
+				size="small"
+				round
+				@click="onClickCreateRequest">
+				<i class="material-icons">add</i>
+				Створити заявку
+			</el-button>
 		</div>
-		<el-button
-			size="small"
-			round
-			@click="onClickCreateRequest">
-			<i class="material-icons">
-				add
-			</i>
-			Створити заявку
-		</el-button>
+		<div class="header--center" />
+		<div class="header--right">
+			<!--TODO Move to component-->
+			<el-input
+				size="mini"
+				placeholder="Пошук">
+				<i slot="suffix" class="el-input__icon el-icon-search"></i>
+			</el-input>
+			<!--TODO Move to component-->
+			<div class="user">
+				<i class="material-icons">person</i>
+				{{ user.email }}
+			</div>
+			<div class="quit">
+				<i class="material-icons">exit_to_app</i>
+			</div>
+		</div>
 	</el-header>
 </template>
 
@@ -25,6 +40,11 @@
 import { DEFAULT_ROUTE_NAME } from '@/router'
 
 export default {
+	computed: {
+		user() {
+			return this.$store.state.profile.user
+		}
+	},
 	methods: {
 		onClickLeftHeader() {
 			this.$router.push({ name: DEFAULT_ROUTE_NAME })
@@ -49,7 +69,6 @@ export default {
 .header--left {
 	display: flex;
 	align-items: center;
-	margin-right: 25px;
 	cursor: pointer;
 	&:hover {
 		> span {
@@ -68,16 +87,46 @@ export default {
 		opacity: .8;
 		transition: opacity .2s;
 	}
-}
-
-.el-button {
-	> /deep/ span {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		> i {
-			margin-right: 5px;
+	.el-button {
+		margin-left: 25px;
+		> /deep/ span {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			> i {
+				margin-right: 5px;
+			}
 		}
 	}
+}
+
+.header--center {
+	flex: 1 1 auto;
+}
+
+.header--right {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.user, .quit {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 20px;
+	margin-left: 20px;
+	cursor: pointer;
+}
+
+.user {
+	white-space: nowrap;
+	> i {
+		margin-right: 5px;
+	}
+}
+
+.quit {
+	color: #555;
 }
 </style>
