@@ -2,17 +2,14 @@
 
 // eslint-disable-next-line
 const files = require.context('.', false, /\.js$/)
-const modules = {}
+const prototypes = []
 
 files.keys().forEach(key => {
 	if (key === './index.js') {
 		return
 	}
 
-	const mod = files(key).default
-	mod.namespaced = true
-
-	modules[key.replace(/(\.\/|\.js)/g, '')] = mod
+	prototypes.push(files(key).default)
 })
 
-export default modules
+export default prototypes

@@ -1,26 +1,33 @@
 'use strict'
 
-import VueSocketIO from 'vue-socket.io'
-import ElementUI from 'element-ui'
-import router from './router'
-import App from './App.vue'
-import store from './store'
 import '@babel/polyfill'
-import './config/axios'
+import prototypes from '@/prototypes'
+import ElementUI from 'element-ui'
+import router from '@/router'
+import App from '@/App.vue'
+import store from '@/store'
 import Vue from 'vue'
 
 // Import styles
-import './styles/index'
+import '@/styles/index'
+
+// Connect libraries
+Vue.use(ElementUI)
 
 // Prevent the production tip on Vue startup
 Vue.config.productionTip = false
 
-// TODO Move to const (config) + replace to instance socket.io client
-Vue.use(new VueSocketIO({
-	debug: true,
-	connection: 'http://localhost:3000'
-}))
-Vue.use(ElementUI)
+/**
+ * Install global prototypes
+ * @var {Array} prototypes
+ * @example Vue.$axios | this.$axios
+ */
+prototypes.forEach(prototype => {
+	Vue.use(prototype)
+})
+
+// Set user from localStorage
+store.dispatch('profile/init')
 
 new Vue({
 	el: '#app',

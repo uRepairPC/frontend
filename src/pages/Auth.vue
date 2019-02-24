@@ -1,15 +1,40 @@
 <template>
 	<div id="auth">
 		<div class="logo">
-			<img src="https://stat.knteu.kiev.ua/img/pre-style/knteu_logo_200.png" alt="logo" />
+			<img
+				src="https://stat.knteu.kiev.ua/img/pre-style/knteu_logo_200.png"
+				alt="logo"
+			>
 		</div>
-		<el-input placeholder="Login" v-model="form.login" ref="login">
-			<template slot="prepend"><i class="material-icons">face</i></template>
+		<el-input
+			ref="email"
+			v-model="form.email"
+			placeholder="Email"
+		>
+			<template slot="prepend">
+				<i class="material-icons">
+					face
+				</i>
+			</template>
 		</el-input>
-		<el-input placeholder="Password" v-model="form.password" type="password">
-			<template slot="prepend"><i class="material-icons">lock</i></template>
+		<el-input
+			v-model="form.password"
+			placeholder="Password"
+			type="password"
+		>
+			<template slot="prepend">
+				<i class="material-icons">
+					lock
+				</i>
+			</template>
 		</el-input>
-		<el-button type="primary" :loading="loading" @click="onClick">Login</el-button>
+		<el-button
+			type="primary"
+			:loading="loading"
+			@click="onClick"
+		>
+			Login
+		</el-button>
 	</div>
 </template>
 
@@ -17,35 +42,23 @@
 export default {
 	data() {
 		return {
-			loading: false,
 			form: {
-				login: 'admin',
+        email: 'admin@example.com',
 				password: 'admin123'
 			}
 		}
 	},
+	computed: {
+	  loading() {
+	    return this.$store.state.profile.loading
+	  }
+	},
 	mounted() {
-		this.$refs.login.focus()
+		this.$refs.email.focus()
 	},
 	methods: {
 		onClick() {
-			this.loading = true
-
-			this.$axios.post('auth', this.form)
-				.then(res => {
-					if (res.data && res.data.success) {
-						localStorage.setItem('user', JSON.stringify(res.data.user))
-						this.$store.commit('SET_USER', res.data.user)
-						this.$router.push({ name: 'dashboard' })
-					}
-
-					// TODO Connect to websocket
-
-					this.loading = false
-				})
-				.catch(() => {
-					this.loading = false
-				})
+      this.$store.dispatch('profile/auth', this.form)
 		}
 	}
 }
