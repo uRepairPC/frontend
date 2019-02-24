@@ -13,7 +13,7 @@
 		>
 			<template slot="prepend">
 				<i class="material-icons">
-					face
+					email
 				</i>
 			</template>
 		</el-input>
@@ -43,22 +43,22 @@ export default {
 	data() {
 		return {
 			form: {
-        email: 'admin@example.com',
+				email: 'admin@example.com',
 				password: 'admin123'
 			}
 		}
 	},
 	computed: {
-	  loading() {
-	    return this.$store.state.profile.loading
-	  }
+		loading() {
+			return this.$store.state.profile.loading
+		}
 	},
 	mounted() {
 		this.$refs.email.focus()
 	},
 	methods: {
 		onClick() {
-      this.$store.dispatch('profile/auth', this.form)
+			this.$store.dispatch('profile/auth', this.form)
 		}
 	}
 }
@@ -67,15 +67,16 @@ export default {
 <style lang="scss" scoped>
 #auth {
 	max-width: 400px;
-	margin: 0 auto;
+	margin: 50px auto 0;
 	padding: 40px;
 	background: #fff;
-	box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12)
+	box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .2), 0 1px 1px 0 rgba(0, 0, 0, .14), 0 2px 1px -1px rgba(0, 0, 0, .12)
 }
 
 .logo {
 	text-align: center;
 	margin-bottom: 40px;
+
 	> img {
 		max-width: 200px;
 	}
@@ -83,8 +84,10 @@ export default {
 
 .el-input {
 	margin-bottom: 20px;
+
 	> /deep/ .el-input-group__prepend {
 		padding: 0 15px;
+
 		> i {
 			display: flex;
 			align-items: center;
