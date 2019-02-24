@@ -1,3 +1,5 @@
+'use strict'
+
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { VueLoaderPlugin } = require('vue-loader')
@@ -10,13 +12,22 @@ module.exports = {
 	],
 	output: {
 		filename: 'main.js',
+		publicPath: '/',
 		path: path.resolve(__dirname, 'dist')
 	},
 	devtool: 'inline-source-map',
 	devServer: {
+		publicPath: '/',
 		contentBase: './dist',
 		hot: true,
-		clientLogLevel: 'error'
+		clientLogLevel: 'error',
+		disableHostCheck: true,
+		proxy: {
+			'/api/*': {
+				target: 'http://u.local/',
+				changeOrigin: true
+			}
+		}
 	},
 	module: {
 		rules: [
@@ -35,8 +46,22 @@ module.exports = {
 				]
 			},
 			{
+				test: /\.(eot|svg|ttf|woff|woff2)$/,
+				use: [
+					'file-loader'
+				]
+			},
+			{
 				test: /\.vue$/,
 				use: 'vue-loader'
+			},
+			{
+				test: /\.m?js$/,
+				exclude: /(node_modules|bower_components)/,
+				use: [
+					"babel-loader",
+					"eslint-loader"
+				]
 			}
 		]
 	},
@@ -45,9 +70,15 @@ module.exports = {
 		new CleanWebpackPlugin(['dist']),
 		new HtmlWebpackPlugin({
 			filename: 'index.html',
-			template: './src/index.html',
+			template: './index.html',
 			inject: true,
 			chunksSortMode: 'dependency'
 		})
-	]
+	],
+	resolve: {
+		extensions: ['.js', '.vue', '.json'],
+		alias: {
+			'@': path.resolve(__dirname, './src/')
+		}
+	}
 }

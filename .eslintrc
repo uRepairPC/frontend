@@ -1,0 +1,18 @@
+{
+  "extends": [
+    "eslint:recommended",
+    "plugin:vue/base",
+    "plugin:vue/essential",
+    "plugin:vue/strongly-recommended",
+    "plugin:vue/recommended"
+  ],
+  "rules": {
+    "no-tabs": ["error", { "allowIndentationTabs": true }],
+    "indent": [2, "tab"],
+    "no-mixed-spaces-and-tabs": ["error", "smart-tabs"],
+    "vue/html-indent": ["error", "tab", { "alignAttributesVertically": true }]
+  },
+  "parserOptions": {
+    "parser": "babel-eslint"
+  }
+}
