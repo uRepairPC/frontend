@@ -1,6 +1,7 @@
 'use strict'
 /* eslint-disable */
 
+import { DEFAULT_ROUTE_NAME } from '../router'
 import { Message } from 'element-ui'
 import router from '../router'
 import axios from 'axios'
@@ -20,7 +21,7 @@ axios.interceptors.response.use(
 		const { response } = err
 
 		if (response.status === 401) {
-			router.push({ name: 'dashboard' })
+			router.push({ name: DEFAULT_ROUTE_NAME })
 			Vue.$store.commit('CLEAR_USER')
 			localStorage.removeItem('user')
 		}

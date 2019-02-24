@@ -2,7 +2,7 @@
 	<div id="auth">
 		<div class="logo">
 			<img
-				src="https://stat.knteu.kiev.ua/img/pre-style/knteu_logo_200.png"
+				src="../images/knteu_logo_200.png"
 				alt="logo"
 			>
 		</div>

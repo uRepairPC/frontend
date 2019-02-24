@@ -3,6 +3,6 @@
 		id="layout"
 		class="layout_not_authorized"
 	>
-		<RouterView />
+		<router-view />
 	</div>
 </template>

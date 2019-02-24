@@ -5,6 +5,8 @@
 </template>
 
 <script>
+import { DEFAULT_ROUTE_NAME } from '@/router'
+
 export default {
 	computed: {
 		isLogin() {
@@ -12,8 +14,8 @@ export default {
 		}
 	},
 	watch: {
-    isLogin(val) {
-			this.$router.push({ name: val ? 'dashboard' : 'auth' })
+		isLogin(val) {
+			this.$router.push({ name: val ? DEFAULT_ROUTE_NAME : 'auth' })
 		}
 	}
 }
