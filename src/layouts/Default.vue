@@ -6,9 +6,7 @@
 				<sidebar-box />
 				<el-main>
 					<breadcrumbs-box :list="breadcrumbs" />
-					<router-view
-						ref="content"
-						class="content" />
+					<router-view ref="content" />
 				</el-main>
 			</el-container>
 		</el-container>
@@ -79,9 +77,5 @@ export default {
 
 .el-main {
 	padding: 0;
-}
-
-.content {
-	padding: 20px;
 }
 </style>

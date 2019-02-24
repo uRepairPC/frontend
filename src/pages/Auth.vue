@@ -66,7 +66,7 @@ export default {
 
 <style lang="scss" scoped>
 #auth {
-	max-width: 400px;
+	max-width: 500px;
 	margin: 50px auto 0;
 	padding: 40px;
 	background: #fff;

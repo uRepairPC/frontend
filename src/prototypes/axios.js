@@ -37,8 +37,8 @@ axios.interceptors.response.use(
 				// Refresh token
 				return axios.post('auth/refresh')
 					.then(({ data }) => {
+						axios.defaults.headers['Authorization'] = 'Bearer ' + data.token
 						localStorage.setItem('token', data.token)
-						config.headers['Authorization'] = 'Bearer ' + data.token
 
 						return axios({
 							...config,
