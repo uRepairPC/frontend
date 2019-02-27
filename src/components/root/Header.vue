@@ -29,7 +29,9 @@
 				<i class="material-icons">person</i>
 				{{ user.email }}
 			</div>
-			<div class="quit">
+			<div
+				class="quit"
+				@click="onClickLogout">
 				<i class="material-icons">exit_to_app</i>
 			</div>
 		</div>
@@ -46,6 +48,9 @@ export default {
 		}
 	},
 	methods: {
+		onClickLogout() {
+			this.$store.dispatch('profile/logout')
+		},
 		onClickLeftHeader() {
 			this.$router.push({ name: DEFAULT_ROUTE_NAME })
 		},
