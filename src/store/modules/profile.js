@@ -71,6 +71,7 @@ const actions = {
 				axios.defaults.headers['Authorization'] = `Bearer ${res.data.token}`
 				localStorage.setItem(STORE_TOKEN, res.data.token)
 				localStorage.setItem(STORE_USER, JSON.stringify(res.data.user))
+				commit('SET_USER', res.data.user)
 				commit('SET_IS_LOGIN', true)
 				commit('SET_LOADING', false)
 			})

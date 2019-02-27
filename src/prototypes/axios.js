@@ -38,6 +38,7 @@ axios.interceptors.response.use(
 				return axios.post('auth/refresh')
 					.then(({ data }) => {
 						axios.defaults.headers['Authorization'] = 'Bearer ' + data.token
+						config.headers['Authorization'] = 'Bearer ' + data.token
 						localStorage.setItem('token', data.token)
 
 						return axios({

@@ -1,6 +1,7 @@
 'use strict'
 
 import '@babel/polyfill'
+import locale from 'element-ui/lib/locale/lang/ua'
 import prototypes from '@/prototypes'
 import ElementUI from 'element-ui'
 import router from '@/router'
@@ -12,7 +13,7 @@ import Vue from 'vue'
 import '@/styles/index'
 
 // Connect libraries
-Vue.use(ElementUI)
+Vue.use(ElementUI, { locale })
 
 // Prevent the production tip on Vue startup
 Vue.config.productionTip = false
