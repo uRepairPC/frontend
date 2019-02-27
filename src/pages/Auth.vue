@@ -67,7 +67,7 @@ export default {
 <style lang="scss" scoped>
 #auth {
 	max-width: 500px;
-	margin: 50px auto 0;
+	margin: 50px auto;
 	padding: 40px;
 	background: #fff;
 	box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .2), 0 1px 1px 0 rgba(0, 0, 0, .14), 0 2px 1px -1px rgba(0, 0, 0, .12)
