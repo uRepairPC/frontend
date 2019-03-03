@@ -2,6 +2,7 @@
 	<el-table
 		:data="dataList"
 		:class="{ loading }"
+		stripe
 		v-bind="$attrs"
 	>
 		<el-table-column

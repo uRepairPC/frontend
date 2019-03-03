@@ -4,7 +4,7 @@ import axios from 'axios'
 
 const state = {
 	loading: false,
-	list: []
+	list: {}
 }
 
 const mutations = {
@@ -17,10 +17,10 @@ const mutations = {
 }
 
 const actions = {
-	fetchList({ commit }) {
+	fetchList({ commit }, params) {
 		commit('SET_LOADING', true)
 
-		axios.get('users')
+		axios.get('users', { params })
 			.then(({ data }) => {
 				commit('SET_LOADING', false)
 				commit('SET_LIST', data)

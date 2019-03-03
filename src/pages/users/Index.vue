@@ -11,6 +11,7 @@
 		</template>
 		<filter-core slot="right-column">
 			<filter-search />
+			<filter-pagination :pagination="list" />
 			<filter-columns
 				:columns="columns"
 				@change="onChangeColumn"
@@ -46,8 +47,11 @@ export default {
 		}
 	},
 	computed: {
+		list() {
+			return this.$store.state.users.list
+		},
 		users() {
-			return this.$store.state.users.list.data || []
+			return this.list.data || []
 		},
 		filterColumns() {
 			return this.columns.filter(c => !!c.model)
@@ -61,7 +65,7 @@ export default {
 	},
 	methods: {
 		fetchList() {
-			this.$store.dispatch('users/fetchList')
+			this.$store.dispatch('users/fetchList', { page: 1 })
 		},
 		onChangeColumn() {
 			setColumnUsers(this.filterColumns.map(i => i.prop))
