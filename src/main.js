@@ -4,6 +4,7 @@ import '@babel/polyfill'
 import filterComponents from '@/components/filters/index'
 import locale from 'element-ui/lib/locale/lang/ua'
 import prototypes from '@/prototypes'
+import directives from '@/directives'
 import ElementUI from 'element-ui'
 import router from '@/router'
 import App from '@/App.vue'
@@ -26,6 +27,14 @@ Vue.config.productionTip = false
  */
 prototypes.forEach((prototype) => {
 	Vue.use(prototype)
+})
+
+/**
+ * Install global directives
+ * @var {Array} directives
+ */
+directives.forEach((directive) => {
+	Vue.use(directive)
 })
 
 /**
