@@ -1,7 +1,7 @@
 'use strict'
 
 /** @type {string} */
-const TABLE_SELECTOR = '.el-table__body-wrapper'
+export const TABLE_SELECTOR = '.el-table__body-wrapper'
 
 /** @type {number} - milliseconds */
 const WAIT_UPDATE_SCROLL = 100

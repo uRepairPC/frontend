@@ -2,9 +2,18 @@
  * Core
  */
 
+.filters-core {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
 .filters-core__content {
-  position: sticky;
-  top: 10px;
+  flex: 1 1 auto;
+}
+
+.filters-core__bottom {
+  padding: 10px;
 }
 
 /*
@@ -44,4 +53,12 @@
   .el-alert {
     margin-bottom: 10px;
   }
+}
+
+/*
+ * TableTop
+ */
+
+.filter-table-top {
+  width: 100%;
 }

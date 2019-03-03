@@ -31,6 +31,10 @@ export default {
 		}
 	},
 	watch: {
+		/*
+		 * On update $route - we update breadcrumbs
+		 * from ref="content" component.
+		 */
 		'$route': {
 			handler() {
 				this.$nextTick(() => {

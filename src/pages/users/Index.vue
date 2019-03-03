@@ -15,6 +15,7 @@
 				:columns="columns"
 				@change="onChangeColumn"
 			/>
+			<filter-table-top slot="bottom" />
 		</filter-core>
 	</template-page>
 </template>
