@@ -15,7 +15,10 @@
 				:columns="columns"
 				@change="onChangeColumn"
 			/>
-			<filter-table-top slot="bottom" />
+			<filter-table-buttons
+				slot="bottom"
+				@update="fetchList"
+			/>
 		</filter-core>
 	</template-page>
 </template>
@@ -54,9 +57,12 @@ export default {
 		}
 	},
 	mounted() {
-		this.$store.dispatch('users/fetchList')
+		this.fetchList()
 	},
 	methods: {
+		fetchList() {
+			this.$store.dispatch('users/fetchList')
+		},
 		onChangeColumn() {
 			setColumnUsers(this.filterColumns.map(i => i.prop))
 		}

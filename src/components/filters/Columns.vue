@@ -3,6 +3,10 @@
 		title="Колонки"
 		class="filter-columns"
 	>
+		<el-alert
+			title="Фільтр колонок в таблиці"
+			type="info"
+		/>
 		<el-checkbox-group
 			v-for="(column, index) in columns"
 			:key="index"

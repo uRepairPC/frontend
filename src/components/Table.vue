@@ -54,6 +54,10 @@ export default {
 		@include contentLoader;
 	}
 }
+
+/deep/ th .cell {
+	white-space: nowrap;
+}
 </style>
 
 
