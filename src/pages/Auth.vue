@@ -3,38 +3,49 @@
 		<div class="logo">
 			<img
 				src="../images/knteu_logo_200.png"
-				alt="logo"
-			>
+				alt="logo">
 		</div>
-		<el-input
-			ref="email"
-			v-model="form.email"
-			placeholder="Email"
-		>
-			<i
-				slot="prepend"
-				class="material-icons">
-				email
-			</i>
-		</el-input>
-		<el-input
-			v-model="form.password"
-			placeholder="Password"
-			type="password"
-		>
-			<i
-				slot="prepend"
-				class="material-icons">
-				lock
-			</i>
-		</el-input>
-		<el-button
-			type="primary"
-			:loading="loading"
-			@click="onClick"
-		>
-			Login
-		</el-button>
+		<el-form
+			:model="form"
+			status-icon
+			ref="form"
+			:rules="rules"
+			@submit.native.prevent="onSubmit">
+			<el-form-item prop="email">
+				<el-input
+					v-model="form.email"
+					ref="email"
+					placeholder="E-mail"
+					autocomplete="off">
+					<i
+						slot="prepend"
+						class="material-icons">
+						email
+					</i>
+				</el-input>
+			</el-form-item>
+			<el-form-item prop="password">
+				<el-input
+					v-model="form.password"
+					type="password"
+					placeholder="Пароль"
+					autocomplete="off">
+					<i
+						slot="prepend"
+						class="material-icons">
+						lock
+					</i>
+				</el-input>
+			</el-form-item>
+			<el-form-item>
+				<el-button
+					native-type="submit"
+					type="primary"
+					:loading="loading">
+					Увійти
+				</el-button>
+			</el-form-item>
+		</el-form>
 	</div>
 </template>
 
@@ -45,6 +56,17 @@ export default {
 			form: {
 				email: 'admin@example.com',
 				password: 'admin123'
+			},
+			rules: {
+				// TODO Move to external scripts?
+				email: [
+					{ required: true, message: 'Будь ласка, введіть E-mail' },
+					{ type: 'email', message: 'Введіть правильну адресу електронної пошти' }
+				],
+				password: [
+					{ required: true, message: 'Будь ласка, введіть пароль' },
+					{ min: 6, message: 'Пароль повинен бути більше, ніж 5 символів' }
+				]
 			}
 		}
 	},
@@ -57,8 +79,14 @@ export default {
 		this.$refs.email.focus()
 	},
 	methods: {
-		onClick() {
-			this.$store.dispatch('profile/auth', this.form)
+		onSubmit() {
+			this.$refs.form.validate((valid) => {
+				if (!valid) {
+					return
+				}
+
+				this.$store.dispatch('profile/auth', this.form)
+			})
 		}
 	}
 }
@@ -66,11 +94,12 @@ export default {
 
 <style lang="scss" scoped>
 #auth {
-	max-width: 500px;
+	width: 100%;
+	max-width: 450px;
 	margin: 50px auto;
 	padding: 40px;
 	background: #fff;
-	box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .2), 0 1px 1px 0 rgba(0, 0, 0, .14), 0 2px 1px -1px rgba(0, 0, 0, .12)
+	box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .2), 0 1px 1px 0 rgba(0, 0, 0, .14), 0 2px 1px -1px rgba(0, 0, 0, .12);
 }
 
 .logo {
@@ -82,13 +111,12 @@ export default {
 }
 
 .el-input {
-	margin-bottom: 20px;
 	> /deep/ .el-input-group__prepend {
-		padding: 0 15px;
+		padding: 0 12px;
 		> i {
 			display: flex;
 			align-items: center;
-			font-size: 20px;
+			font-size: 18px;
 		}
 	}
 }
