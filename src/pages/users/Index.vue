@@ -22,6 +22,7 @@
 <script>
 import { users as columnsUsers } from '@/data/columns'
 import TemplatePage from '@/components/template/Page'
+import scrollTableMixin from '@/mixins/scrollTable'
 import { setColumnUsers } from '@/data/storage'
 import TableComponent from '@/components/Table'
 
@@ -32,6 +33,9 @@ export default {
 	components: {
 		TableComponent, TemplatePage
 	},
+	mixins: [
+		scrollTableMixin
+	],
 	data() {
 		return {
 			columns: columnsUsers()
