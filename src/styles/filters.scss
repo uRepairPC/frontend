@@ -1,0 +1,33 @@
+/*
+ * Core
+ */
+
+.filters-core {
+  width: 250px;
+  border-left: 1px solid #e6e6e6;
+}
+
+.filters-core__content {
+  position: sticky;
+  top: 10px;
+}
+
+/*
+ * Basic
+ */
+
+//TODO
+
+/*
+ * Columns
+ */
+
+.filter-columns {
+  .el-checkbox-group {
+    margin: 10px;
+  }
+  .el-checkbox.is-bordered {
+    display: flex;
+    align-items: center;
+  }
+}
