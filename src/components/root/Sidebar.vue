@@ -20,17 +20,12 @@
 </template>
 
 <script>
+import { menu } from '@/data/template'
+
 export default {
 	data() {
 		return {
-			// TODO Role visible
-			menu: [
-				{ icon: 'description', title: 'Заявки', route: { name: 'requests' } },
-				{ icon: 'people_outline', title: 'Користувачі', route: { name: 'users' } },
-				{ icon: 'storage', title: 'Обладнання', route: { name: 'equipments' } },
-				{ icon: 'people', title: 'Працівники', route: { name: 'workers' } },
-				{ icon: 'settings', title: 'Конфігурація', route: { name: 'config' } }
-			]
+			menu
 		}
 	},
 	computed: {
