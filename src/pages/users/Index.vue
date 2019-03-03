@@ -8,6 +8,7 @@
 				:list="users"
 				:loading="loading"
 				height="calc(100vh - 96px)"
+				@row-click="onRowClick"
 			/>
 		</template>
 		<filter-core slot="right-column">
@@ -78,6 +79,9 @@ export default {
 			if (!this.loading && this.list.current_page < this.list.last_page) {
 				this.fetchList(this.list.current_page + 1)
 			}
+		},
+		onRowClick(obj) {
+			this.$router.push({ name: 'user', params: { id: obj.id } })
 		}
 	}
 }

@@ -4,6 +4,7 @@
 		:class="{ loading }"
 		stripe
 		v-bind="$attrs"
+		v-on="$listeners"
 	>
 		<el-table-column
 			v-for="(column, index) in columns"
@@ -56,9 +57,11 @@ export default {
 	}
 }
 
+/deep/ .el-table__row {
+	cursor: pointer;
+}
+
 /deep/ th .cell {
 	white-space: nowrap;
 }
 </style>
-
-

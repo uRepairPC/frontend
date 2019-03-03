@@ -75,8 +75,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-/* TODO Mobile design */
-
 .el-header {
 	display: flex;
 	align-items: center;

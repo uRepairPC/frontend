@@ -10,6 +10,18 @@ body {
   background: #fbfbfb;
   margin: 0;
   padding: 0;
+  * {
+    &::-webkit-scrollbar {
+      width: 5px;
+      height: 7px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background: #909399;
+    }
+    &::-webkit-scrollbar-track {
+      background: #ececec;
+    }
+  }
 }
 
 img {
