@@ -1,14 +1,15 @@
 <template>
 	<div class="users">
-		<users-table
+		<table-component
 			:columns="filterColumns"
-			:list="users" />
+			:list="users"
+			:loading="loading" />
 		<filters :columns="columns" />
 	</div>
 </template>
 
 <script>
-import UsersTable from '@/components/users/Table'
+import TableComponent from '@/components/Table'
 import Filters from '@/components/Filters'
 
 export default {
@@ -16,7 +17,7 @@ export default {
 		{ title: 'Користувачі' }
 	],
 	components: {
-		UsersTable, Filters
+		TableComponent, Filters
 	},
 	data() {
 		return {
@@ -27,7 +28,6 @@ export default {
 				{ prop: 'last_name', label: 'Прізвище', model: false },
 				{ prop: 'email', label: 'E-mail', model: true },
 				{ prop: 'phone', label: 'Телефон', model: true },
-				{ prop: 'role', label: 'Роль', model: true }, // TODO permissions
 				{ prop: 'updated_at', label: 'Оновлено', model: false },
 				{ prop: 'created_at', label: 'Створений', model: false }
 			]
@@ -39,6 +39,9 @@ export default {
 		},
 		filterColumns() {
 			return this.columns.filter(c => !!c.model)
+		},
+		loading() {
+			return this.$store.state.users.loading
 		}
 	},
 	mounted() {

@@ -1,0 +1,56 @@
+<template>
+	<el-table
+		:data="dataList"
+		:class="{ loading }">
+		<el-table-column
+			v-for="(column, index) in columns"
+			:key="index"
+			v-bind="column" />
+	</el-table>
+</template>
+
+<script>
+export default {
+	props: {
+		list: {
+			type: Array,
+			required: true
+		},
+		columns: {
+			type: Array,
+			required: true
+		},
+		loading: {
+			type: Boolean,
+			default: false
+		}
+	},
+	computed: {
+		dataList() {
+			if (this.loading) {
+				return Array(20).fill({})
+			}
+
+			return this.list
+		}
+	}
+}
+</script>
+
+<style lang="scss" scoped>
+@import "../styles/keyframes";
+
+.loading {
+	/deep/ .el-table__row {
+		height: 48px;
+	}
+	/deep/ tbody .cell {
+		width: 80%;
+		height: 10px;
+		margin: 0 auto;
+		@include contentLoader;
+	}
+}
+</style>
+
+
