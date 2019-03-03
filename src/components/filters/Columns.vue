@@ -40,6 +40,7 @@ export default {
 	methods: {
 		onChange(column, toggle) {
 			this.$set(column, 'model', toggle)
+			this.$emit('change', column, toggle)
 		}
 	}
 }
