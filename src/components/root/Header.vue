@@ -25,7 +25,7 @@
 			<!--TODO Move to component-->
 			<el-input
 				size="mini"
-				placeholder="Пошук"
+				placeholder="Глобальний Пошук"
 			>
 				<i
 					slot="suffix"

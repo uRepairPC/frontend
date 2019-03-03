@@ -1,0 +1,16 @@
+.template-page {
+  display: flex;
+  flex-direction: row;
+  > .left-column,
+  > .right-column {
+    height: calc(100vh - 96px);
+    overflow: auto;
+  }
+  > .left-column {
+    flex: 1 1 auto;
+  }
+  > .right-column {
+    width: 250px;
+    border-left: 1px solid #e6e6e6;
+  }
+}

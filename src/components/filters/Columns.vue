@@ -10,8 +10,6 @@
 		>
 			<el-checkbox
 				:label="column.label"
-				border
-				size="small"
 				@change="onChange(column, $event)"
 			/>
 		</el-checkbox-group>

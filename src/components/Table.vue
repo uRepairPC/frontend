@@ -2,6 +2,7 @@
 	<el-table
 		:data="dataList"
 		:class="{ loading }"
+		v-bind="$attrs"
 	>
 		<el-table-column
 			v-for="(column, index) in columns"

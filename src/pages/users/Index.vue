@@ -1,17 +1,23 @@
 <template>
-	<div class="users">
-		<table-component
-			:columns="filterColumns"
-			:list="users"
-			:loading="loading"
-		/>
-		<filter-core>
+	<template-page>
+		<template slot="left-column">
+			<table-component
+				slot="left-column"
+				:columns="filterColumns"
+				:list="users"
+				:loading="loading"
+				height="calc(100vh - 96px)"
+			/>
+		</template>
+		<filter-core slot="right-column">
+			<filter-search />
 			<filter-columns :columns="columns" />
 		</filter-core>
-	</div>
+	</template-page>
 </template>
 
 <script>
+import TemplatePage from '@/components/template/Page'
 import TableComponent from '@/components/Table'
 
 export default {
@@ -19,7 +25,7 @@ export default {
 		{ title: 'Користувачі' }
 	],
 	components: {
-		TableComponent
+		TableComponent, TemplatePage
 	},
 	data() {
 		return {
@@ -47,8 +53,6 @@ export default {
 		}
 	},
 	mounted() {
-		// TODO Filter only users
-		// FIXME Remove store? keep-alive
 		this.$store.dispatch('users/fetchList')
 	}
 }
@@ -58,5 +62,11 @@ export default {
 .users {
 	display: flex;
 	flex-direction: row;
+}
+
+.table--overflow {
+	flex: 1 1 auto;
+	height: calc(100vh - 96px);
+	overflow: auto;
 }
 </style>
