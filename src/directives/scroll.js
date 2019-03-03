@@ -1,10 +1,10 @@
 'use strict'
 
 /** @var {number} - px */
-const OFFSET_BOTTOM = 200
+const OFFSET_BOTTOM = 300
 
 /** @var {number} - milliseconds */
-const WAIT_TIMEOUT = 300
+const WAIT_TIMEOUT = 150
 
 export default {
 	bind(el, binding) {

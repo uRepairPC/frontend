@@ -3,6 +3,7 @@
 		<template slot="left-column">
 			<table-component
 				slot="left-column"
+				v-scroll="onScroll"
 				:columns="filterColumns"
 				:list="users"
 				:loading="loading"
@@ -64,11 +65,19 @@ export default {
 		this.fetchList()
 	},
 	methods: {
-		fetchList() {
-			this.$store.dispatch('users/fetchList', { page: 1 })
+		fetchList(page = 1) {
+			// TODO Filters
+			this.$store.dispatch('users/fetchList', {
+				page
+			})
 		},
 		onChangeColumn() {
 			setColumnUsers(this.filterColumns.map(i => i.prop))
+		},
+		onScroll() {
+			if (!this.loading && this.list.current_page < this.list.last_page) {
+				this.fetchList(this.list.current_page + 1)
+			}
 		}
 	}
 }

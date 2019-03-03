@@ -32,7 +32,7 @@ export default {
 	computed: {
 		dataList() {
 			if (this.loading) {
-				return Array(20).fill({})
+				return [...this.list, ...Array(10).fill({})]
 			}
 
 			return this.list
@@ -48,7 +48,7 @@ export default {
 	/deep/ .el-table__row {
 		height: 48px;
 	}
-	/deep/ tbody .cell {
+	/deep/ tbody tr:nth-last-child(-n + 10) .cell {
 		width: 80%;
 		height: 10px;
 		margin: 0 auto;
