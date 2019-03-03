@@ -3,7 +3,8 @@
 		<el-breadcrumb-item
 			v-for="(item, index) in list"
 			:key="index"
-			:to="item.route">
+			:to="item.route"
+		>
 			{{ item.title }}
 		</el-breadcrumb-item>
 	</el-breadcrumb>

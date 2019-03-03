@@ -8,8 +8,11 @@
 				v-for="(item, index) in menu"
 				:key="index"
 				:index="item.route.name"
-				:route="item.route">
-				<i class="material-icons">{{ item.icon }}</i>
+				:route="item.route"
+			>
+				<i class="material-icons">
+					{{ item.icon }}
+				</i>
 				<span>{{ item.title }}</span>
 			</el-menu-item>
 		</el-menu>

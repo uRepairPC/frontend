@@ -3,23 +3,27 @@
 		<div class="logo">
 			<img
 				src="../images/knteu_logo_200.png"
-				alt="logo">
+				alt="logo"
+			>
 		</div>
 		<el-form
+			ref="form"
 			:model="form"
 			status-icon
-			ref="form"
 			:rules="rules"
-			@submit.native.prevent="onSubmit">
+			@submit.native.prevent="onSubmit"
+		>
 			<el-form-item prop="email">
 				<el-input
-					v-model="form.email"
 					ref="email"
+					v-model="form.email"
 					placeholder="E-mail"
-					autocomplete="off">
+					autocomplete="off"
+				>
 					<i
 						slot="prepend"
-						class="material-icons">
+						class="material-icons"
+					>
 						email
 					</i>
 				</el-input>
@@ -29,10 +33,12 @@
 					v-model="form.password"
 					type="password"
 					placeholder="Пароль"
-					autocomplete="off">
+					autocomplete="off"
+				>
 					<i
 						slot="prepend"
-						class="material-icons">
+						class="material-icons"
+					>
 						lock
 					</i>
 				</el-input>
@@ -41,7 +47,8 @@
 				<el-button
 					native-type="submit"
 					type="primary"
-					:loading="loading">
+					:loading="loading"
+				>
 					Увійти
 				</el-button>
 			</el-form-item>

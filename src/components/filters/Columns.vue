@@ -1,16 +1,19 @@
 <template>
 	<filter-basic
 		title="Колонки"
-		class="filter-columns">
+		class="filter-columns"
+	>
 		<el-checkbox-group
-			:value="listSelected"
 			v-for="(column, index) in columns"
-			:key="index">
+			:key="index"
+			:value="listSelected"
+		>
 			<el-checkbox
 				:label="column.label"
 				border
 				size="small"
-				@change="onChange(column, $event)" />
+				@change="onChange(column, $event)"
+			/>
 		</el-checkbox-group>
 	</filter-basic>
 </template>

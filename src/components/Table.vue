@@ -1,11 +1,13 @@
 <template>
 	<el-table
 		:data="dataList"
-		:class="{ loading }">
+		:class="{ loading }"
+	>
 		<el-table-column
 			v-for="(column, index) in columns"
 			:key="index"
-			v-bind="column" />
+			v-bind="column"
+		/>
 	</el-table>
 </template>
 

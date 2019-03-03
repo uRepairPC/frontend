@@ -3,21 +3,23 @@
 		<table-component
 			:columns="filterColumns"
 			:list="users"
-			:loading="loading" />
-		<filters :columns="columns" />
+			:loading="loading"
+		/>
+		<filter-core>
+			<filter-columns :columns="columns" />
+		</filter-core>
 	</div>
 </template>
 
 <script>
 import TableComponent from '@/components/Table'
-import Filters from '@/components/Filters'
 
 export default {
 	breadcrumbs: [
 		{ title: 'Користувачі' }
 	],
 	components: {
-		TableComponent, Filters
+		TableComponent
 	},
 	data() {
 		return {
