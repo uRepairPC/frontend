@@ -29,8 +29,8 @@ const authorizedRoutes = {
 			component: loadPage('users/Index')
 		},
 		{
-			path: '/user/:id',
-			name: 'user',
+			path: '/users/:id',
+			name: 'users-id',
 			component: loadPage('users/One')
 		}
 	]

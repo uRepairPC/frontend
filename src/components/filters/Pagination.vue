@@ -1,7 +1,7 @@
 <template>
 	<filter-basic
 		v-if="hasPagination"
-		title="Пагінація"
+		title="Дані"
 		class="filter-pagination"
 	>
 		<el-alert

@@ -16,13 +16,18 @@
 				<span>{{ item.title }}</span>
 			</el-menu-item>
 		</el-menu>
+		<history />
 	</el-aside>
 </template>
 
 <script>
+import History from '@/components/root/History'
 import { menu } from '@/data/template'
 
 export default {
+	components: {
+		History
+	},
 	data() {
 		return {
 			menu
@@ -37,8 +42,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.el-menu {
+.el-aside {
+	border-right: solid 1px #e6e6e6;
+	background: #fff;
 	height: 100%;
+}
+
+.el-menu {
+	border: 0;
+	background: none;
 }
 
 .el-menu-item {

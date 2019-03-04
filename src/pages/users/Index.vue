@@ -81,7 +81,8 @@ export default {
 			}
 		},
 		onRowClick(obj) {
-			this.$router.push({ name: 'user', params: { id: obj.id } })
+			this.$store.commit('template/ADD_SIDEBAR_USER', obj)
+			this.$router.push({ name: 'users-id', params: { id: obj.id } })
 		}
 	}
 }
