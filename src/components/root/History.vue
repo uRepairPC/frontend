@@ -94,6 +94,9 @@ export default {
 	}
 	> span {
 		flex: 1 1 auto;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		overflow: hidden;
 		&:hover {
 			color: #409eff;
 		}

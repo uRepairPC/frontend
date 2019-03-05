@@ -11,8 +11,6 @@ const state = {
 	}
 }
 
-// TODO Generate sidebar from data/template?
-
 const mutations = {
 	/**
 	 * @param state

@@ -1,7 +1,5 @@
 'use strict'
 
-/* eslint-disable */
-
 import template from '@/store/modules/template'
 
 /** @var {array} */

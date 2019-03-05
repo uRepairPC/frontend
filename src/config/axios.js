@@ -1,5 +1,4 @@
 'use strict'
-/* eslint-disable */
 
 import { DEFAULT_ROUTE_NAME } from '../router'
 import { Message } from 'element-ui'

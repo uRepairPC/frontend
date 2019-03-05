@@ -14,7 +14,7 @@
 				class="filter-table-top"
 				size="small"
 				type="primary"
-				@click="onClick"
+				@click="scrollTop"
 			>
 				Стрибнути вгору
 			</el-button>
@@ -28,7 +28,7 @@ import { TABLE_SELECTOR } from '@/mixins/scrollTable'
 export default {
 	name: 'FilterTableButtons',
 	methods: {
-		onClick() {
+		scrollTop() {
 			const el = document.querySelector(TABLE_SELECTOR)
 
 			if (el) {

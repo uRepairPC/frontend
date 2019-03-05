@@ -16,8 +16,6 @@ export default {
 		}
 	},
 	activated() {
-		console.log(this.list, this.$route.params.id)
-
 		if (!this.list[this.$route.params.id]) {
 			// TODO Fetch the user from API
 			// this.$store.commit('template/ADD_SIDEBAR_USER', obj)
