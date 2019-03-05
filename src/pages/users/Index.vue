@@ -7,18 +7,23 @@
 				:columns="filterColumns"
 				:list="users"
 				:loading="loading"
+				:loading-type="loadingType"
 				height="calc(100vh - 96px)"
 				@row-click="onRowClick"
 			/>
 		</template>
 		<filter-core slot="right-column">
-			<filter-search />
+			<filter-search
+				v-model="search"
+				@submit="fetchList"
+			/>
 			<filter-pagination :pagination="list" />
 			<filter-columns
 				:columns="columns"
 				@change="onChangeColumn"
 			/>
 			<filter-table-buttons
+				ref="buttons"
 				slot="bottom"
 				@update="fetchList"
 			/>
@@ -45,7 +50,9 @@ export default {
 	],
 	data() {
 		return {
-			columns: columnsUsers()
+			columns: columnsUsers(),
+			loadingType: 'rows',
+			search: ''
 		}
 	},
 	computed: {
@@ -67,9 +74,15 @@ export default {
 	},
 	methods: {
 		fetchList(page = 1) {
-			// TODO Filters
+			this.loadingType = page === 1 && this.users.length ? 'directive' : 'rows'
+
+			if (this.loadingType === 'directive') {
+				this.$refs.buttons.scrollTop()
+			}
+
 			this.$store.dispatch('users/fetchList', {
-				page
+				page,
+				search: this.search || null
 			})
 		},
 		onChangeColumn() {

@@ -1,5 +1,6 @@
 <template>
 	<el-table
+		v-loading="loading && loadingType === 'directive'"
 		:data="dataList"
 		:class="{ loading }"
 		stripe
@@ -28,11 +29,18 @@ export default {
 		loading: {
 			type: Boolean,
 			default: false
+		},
+		loadingType: {
+			type: String,
+			default: 'rows',
+			validator: (val) => {
+				return ~['rows', 'directive'].indexOf(val)
+			}
 		}
 	},
 	computed: {
 		dataList() {
-			if (this.loading) {
+			if (this.loading && this.loadingType === 'rows') {
 				return [...this.list, ...Array(10).fill({})]
 			}
 
