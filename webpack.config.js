@@ -5,6 +5,12 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { VueLoaderPlugin } = require('vue-loader')
 const path = require('path')
 
+/**
+ * @type {string} - website
+ * @see https://webpack.js.org/configuration/dev-server/#devserverproxy
+ */
+const PROXY_TARGET = 'http://u.local/'
+
 module.exports = {
 	mode: 'development',
 	entry: [
@@ -24,7 +30,7 @@ module.exports = {
 		disableHostCheck: true,
 		proxy: {
 			'/api/*': {
-				target: 'http://u.local/',
+				target: PROXY_TARGET,
 				changeOrigin: true
 			}
 		}
@@ -67,7 +73,9 @@ module.exports = {
 	},
 	plugins: [
 		new VueLoaderPlugin(),
-		new CleanWebpackPlugin(['dist']),
+		new CleanWebpackPlugin({
+			verbose: true
+		}),
 		new HtmlWebpackPlugin({
 			filename: 'index.html',
 			template: './index.html',
