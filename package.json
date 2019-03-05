@@ -19,6 +19,7 @@
   "homepage": "https://github.com/uRepairPC/frontend#readme",
   "dependencies": {
     "axios": "^0.18.0",
+    "dotenv-webpack": "^1.7.0",
     "element-ui": "^2.6.1",
     "material-design-icons": "^3.0.1",
     "vue": "^2.6.8",

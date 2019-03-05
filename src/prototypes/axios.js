@@ -1,11 +1,12 @@
 'use strict'
 
+import { axiosBaseUrl } from '@/data/env'
 import { Message } from 'element-ui'
 import store from '../store'
 import axios from 'axios'
 
 // All request send to: http(s)://example.com/api/*
-axios.defaults.baseURL = 'api'
+axios.defaults.baseURL = axiosBaseUrl
 
 axios.interceptors.response.use(
 	(resp) => {

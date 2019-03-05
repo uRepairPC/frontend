@@ -5,7 +5,7 @@
 			@click="onClickLeftHeader"
 		>
 			<img
-				src="../../images/knteu_logo_200.png"
+				src="../../images/logo.png"
 				alt="logo"
 			>
 			<span>КНТЕУ</span>

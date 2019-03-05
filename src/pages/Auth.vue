@@ -2,7 +2,7 @@
 	<div id="auth">
 		<div class="logo">
 			<img
-				src="../images/knteu_logo_200.png"
+				src="../images/logo.png"
 				alt="logo"
 			>
 		</div>
@@ -57,12 +57,14 @@
 </template>
 
 <script>
+import { isProd } from '@/data/env'
+
 export default {
 	data() {
 		return {
 			form: {
-				email: 'admin@example.com',
-				password: 'admin123'
+				email: isProd ? '' : 'admin@example.com',
+				password: isProd ? '' : 'admin123'
 			},
 			rules: {
 				// TODO Move to external scripts?
