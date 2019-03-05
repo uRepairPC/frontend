@@ -1,12 +1,14 @@
 'use strict'
 
-export const COLUMN_USERS ='column_users'
+export const COLUMN_USERS = 'column_users'
 
 /** @return {array|null} */
 export function getColumnUsers() {
 	if (localStorage.getItem(COLUMN_USERS)) {
 		try {
-			return JSON.parse(localStorage.getItem(COLUMN_USERS))
+			const data = JSON.parse(localStorage.getItem(COLUMN_USERS))
+			return Array.isArray(data) ? data : null
+
 		} catch (e) {
 			return null
 		}
