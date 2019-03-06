@@ -1,6 +1,8 @@
 <template>
 	<div class="history">
-		<div class="history-title">Швидкий перехід</div>
+		<div class="history-title">
+			Швидкий перехід
+		</div>
 		<el-collapse v-model="activeName">
 			<el-collapse-item
 				v-for="(item, index) in menuHistory"
@@ -14,7 +16,8 @@
 				<div
 					v-for="(historyItem, j) in sidebar[item.route.name]"
 					:key="j"
-					class="history-item">
+					class="history-item"
+				>
 					<span @click="onClick(historyItem, item.route.name)">{{ getText(item, historyItem) }}</span>
 					<i
 						class="material-icons"

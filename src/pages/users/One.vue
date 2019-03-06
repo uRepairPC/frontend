@@ -22,7 +22,7 @@ export default {
 		}
 
 		// TODO User not found -> move to 404 page?
-		console.log(this.list[this.$route.params.id])
+		// console.log(this.list[this.$route.params.id])
 	}
 }
 </script>

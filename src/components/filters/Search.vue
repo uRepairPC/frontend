@@ -36,13 +36,16 @@ export default {
 				...this.$listeners,
 				input: (val) => {
 					this.$emit('input', val)
-
-					clearTimeout(this._timeout)
-
-					this._timeout = setTimeout(() => {
-						this.$emit('submit')
-					}, TIMEOUT)
 				}
+			}
+		},
+		watch: {
+			value() {
+				clearTimeout(this._timeout)
+
+				this._timeout = setTimeout(() => {
+					this.$emit('submit')
+				}, TIMEOUT)
 			}
 		}
 	}

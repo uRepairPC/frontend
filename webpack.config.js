@@ -5,9 +5,10 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { VueLoaderPlugin } = require('vue-loader')
 const Dotenv = require('dotenv-webpack')
 const path = require('path')
+require('dotenv').config()
 
 module.exports = {
-	mode: ['prod', 'production'].includes(process.env.APP_ENV) ? 'production' : 'development',
+	mode: ['dev', 'development'].includes(process.env.APP_ENV) ? 'development' : 'production',
 	entry: [
 		'./src/main.js'
 	],

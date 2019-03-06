@@ -27,8 +27,12 @@
 		</svg>
 		<slot>
 			<div class="circle-progress__text">
-				<div class="top">{{ text }}</div>
-				<div class="bottom">{{ subText }}</div>
+				<div class="top">
+					{{ text }}
+				</div>
+				<div class="bottom">
+					{{ subText }}
+				</div>
 			</div>
 		</slot>
 	</div>
