@@ -1,8 +1,8 @@
 <template>
 	<el-table
-		v-loading="loading && loadingType === 'directive'"
+		v-loading="loadingDirective"
 		:data="dataList"
-		:class="{ loading }"
+		:class="{ loading: loadingRows }"
 		stripe
 		height="calc(100vh - 96px)"
 		v-bind="$attrs"
@@ -47,6 +47,12 @@ export default {
 			}
 
 			return this.list
+		},
+		loadingRows() {
+			return this.loading && this.loadingType === 'rows'
+		},
+		loadingDirective() {
+			return this.loading && this.loadingType === 'directive'
 		}
 	}
 }
