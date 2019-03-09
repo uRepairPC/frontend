@@ -67,6 +67,9 @@ export default {
 		},
 		loading() {
 			return this.$store.state.users.loading
+		},
+		activeColumnProps() {
+			return this.filterColumns.map(c => c.prop)
 		}
 	},
 	mounted() {
@@ -82,6 +85,7 @@ export default {
 
 			this.$store.dispatch('users/fetchList', {
 				page,
+				columns: this.activeColumnProps,
 				search: this.search || null
 			})
 		},

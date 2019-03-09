@@ -7,6 +7,7 @@
 			title="Пошук відбувається по всім колонках, які відображені в таблиці."
 			type="info"
 		/>
+		<!--TODO keydown.prevent-->
 		<el-input
 			:value="value"
 			size="small"
@@ -38,15 +39,21 @@ export default {
 					this.$emit('input', val)
 				}
 			}
-		},
-		watch: {
-			value() {
-				clearTimeout(this._timeout)
+		}
+	},
+	methods: {
+		submit() {
+			clearTimeout(this._timeout)
+			this.$emit('submit')
+		}
+	},
+	watch: {
+		value() {
+			clearTimeout(this._timeout)
 
-				this._timeout = setTimeout(() => {
-					this.$emit('submit')
-				}, TIMEOUT)
-			}
+			this._timeout = setTimeout(() => {
+				this.$emit('submit')
+			}, TIMEOUT)
 		}
 	}
 }
