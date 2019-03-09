@@ -3,7 +3,6 @@
   flex-direction: row;
   > .left-column,
   > .right-column {
-    height: calc(100vh - 96px);
     overflow: auto;
   }
   > .left-column {

@@ -80,6 +80,7 @@ export default {
 	align-items: center;
 	background: #fff;
 	border-bottom: 1px solid #e6e6e6;
+	user-select: none;
 }
 
 .header--left {

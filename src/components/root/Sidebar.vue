@@ -46,6 +46,7 @@ export default {
 	border-right: solid 1px #e6e6e6;
 	background: #fff;
 	height: 100%;
+	user-select: none;
 }
 
 .el-menu {

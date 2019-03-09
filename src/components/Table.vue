@@ -4,7 +4,7 @@
 		:data="dataList"
 		:class="{ loading: loadingRows }"
 		stripe
-		height="calc(100vh - 96px)"
+		height="100%"
 		v-bind="$attrs"
 		v-on="$listeners"
 	>

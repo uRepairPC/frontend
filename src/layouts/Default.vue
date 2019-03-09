@@ -7,7 +7,10 @@
 				<el-main>
 					<breadcrumbs-box :list="breadcrumbs" />
 					<keep-alive>
-						<router-view ref="content" />
+						<router-view
+							class="page"
+							ref="content"
+						/>
 					</keep-alive>
 				</el-main>
 			</el-container>
@@ -83,5 +86,10 @@ export default {
 
 .el-main {
 	padding: 0;
+}
+
+.page {
+	height: calc(100% - 36px);
+	overflow: auto;
 }
 </style>

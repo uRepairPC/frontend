@@ -118,16 +118,3 @@ export default {
 	}
 }
 </script>
-
-<style lang="scss" scoped>
-.users {
-	display: flex;
-	flex-direction: row;
-}
-
-.table--overflow {
-	flex: 1 1 auto;
-	height: calc(100vh - 96px);
-	overflow: auto;
-}
-</style>
