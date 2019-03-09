@@ -7,11 +7,11 @@
 			title="Пошук відбувається по всім колонках, які відображені в таблиці."
 			type="info"
 		/>
-		<!--TODO keydown.prevent-->
 		<el-input
 			:value="value"
 			size="small"
 			placeholder="Пошук по таблиці"
+			@keyup.enter.native="submit"
 			v-bind="$attrs"
 			v-on="listeners"
 		/>

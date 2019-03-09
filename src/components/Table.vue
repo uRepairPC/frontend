@@ -4,6 +4,7 @@
 		:data="dataList"
 		:class="{ loading }"
 		stripe
+		height="calc(100vh - 96px)"
 		v-bind="$attrs"
 		v-on="$listeners"
 	>
@@ -11,6 +12,7 @@
 			v-for="(column, index) in columns"
 			:key="index"
 			v-bind="column"
+			sortable="custom"
 		/>
 	</el-table>
 </template>

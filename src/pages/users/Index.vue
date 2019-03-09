@@ -8,8 +8,8 @@
 				:list="users"
 				:loading="loading"
 				:loading-type="loadingType"
-				height="calc(100vh - 96px)"
 				@row-click="onRowClick"
+				@sort-change="onSortChange"
 			/>
 		</template>
 		<filter-core slot="right-column">
@@ -17,11 +17,18 @@
 				v-model="search"
 				@submit="fetchList"
 			/>
-			<filter-pagination :pagination="list" />
+			<filter-pagination
+				:pagination="list"
+			/>
 			<filter-columns
 				:columns="columns"
 				@change="onChangeColumn"
 			/>
+			<!--
+				TODO Filter Configuration
+				Example: Size table
+								 Fixed orw
+			-->
 			<filter-table-buttons
 				ref="buttons"
 				slot="bottom"
@@ -52,7 +59,8 @@ export default {
 		return {
 			columns: columnsUsers(),
 			loadingType: 'rows',
-			search: ''
+			search: '',
+			sort: {}
 		}
 	},
 	computed: {
@@ -85,6 +93,8 @@ export default {
 
 			this.$store.dispatch('users/fetchList', {
 				page,
+				sortColumn: this.sort.column,
+				sortOrder: this.sort.order,
 				columns: this.activeColumnProps,
 				search: this.search || null
 			})
@@ -100,6 +110,10 @@ export default {
 		onRowClick(obj) {
 			this.$store.commit('template/ADD_SIDEBAR_USER', obj)
 			this.$router.push({ name: 'users-id', params: { id: obj.id } })
+		},
+		onSortChange({ prop: column, order }) {
+			this.sort = { column, order }
+			this.fetchList()
 		}
 	}
 }
