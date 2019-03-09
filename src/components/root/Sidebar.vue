@@ -8,26 +8,29 @@
 				v-for="(item, index) in menu"
 				:key="index"
 				:index="item.route.name"
-				:route="item.route">
-				<i class="material-icons">{{ item.icon }}</i>
+				:route="item.route"
+			>
+				<i class="material-icons">
+					{{ item.icon }}
+				</i>
 				<span>{{ item.title }}</span>
 			</el-menu-item>
 		</el-menu>
+		<history />
 	</el-aside>
 </template>
 
 <script>
+import History from '@/components/root/History'
+import { menu } from '@/data/template'
+
 export default {
+	components: {
+		History
+	},
 	data() {
 		return {
-			// TODO Role visible
-			menu: [
-				{ icon: 'description', title: 'Заявки', route: { name: 'requests' } },
-				{ icon: 'people_outline', title: 'Користувачі', route: { name: 'users' } },
-				{ icon: 'storage', title: 'Обладнання', route: { name: 'equipments' } },
-				{ icon: 'people', title: 'Працівники', route: { name: 'workers' } },
-				{ icon: 'settings', title: 'Конфігурація', route: { name: 'config' } }
-			]
+			menu
 		}
 	},
 	computed: {
@@ -39,8 +42,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.el-menu {
+.el-aside {
+	border-right: solid 1px #e6e6e6;
+	background: #fff;
 	height: 100%;
+}
+
+.el-menu {
+	border: 0;
+	background: none;
 }
 
 .el-menu-item {

@@ -3,10 +3,12 @@
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { VueLoaderPlugin } = require('vue-loader')
+const Dotenv = require('dotenv-webpack')
 const path = require('path')
+require('dotenv').config()
 
 module.exports = {
-	mode: 'development',
+	mode: ['dev', 'development'].includes(process.env.APP_ENV) ? 'development' : 'production',
 	entry: [
 		'./src/main.js'
 	],
@@ -24,7 +26,7 @@ module.exports = {
 		disableHostCheck: true,
 		proxy: {
 			'/api/*': {
-				target: 'http://u.local/',
+				target: process.env.PROXY_TARGET || 'http://localhost/',
 				changeOrigin: true
 			}
 		}
@@ -59,15 +61,18 @@ module.exports = {
 				test: /\.m?js$/,
 				exclude: /(node_modules|bower_components)/,
 				use: [
-					"babel-loader",
-					"eslint-loader"
+					'babel-loader',
+					'eslint-loader'
 				]
 			}
 		]
 	},
 	plugins: [
+		new Dotenv(),
 		new VueLoaderPlugin(),
-		new CleanWebpackPlugin(['dist']),
+		new CleanWebpackPlugin({
+			verbose: true
+		}),
 		new HtmlWebpackPlugin({
 			filename: 'index.html',
 			template: './index.html',

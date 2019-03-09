@@ -6,7 +6,9 @@
 				<sidebar-box />
 				<el-main>
 					<breadcrumbs-box :list="breadcrumbs" />
-					<router-view ref="content" />
+					<keep-alive>
+						<router-view ref="content" />
+					</keep-alive>
 				</el-main>
 			</el-container>
 		</el-container>
@@ -29,6 +31,10 @@ export default {
 		}
 	},
 	watch: {
+		/*
+		 * On update $route - we update breadcrumbs
+		 * from ref="content" component.
+		 */
 		'$route': {
 			handler() {
 				this.$nextTick(() => {

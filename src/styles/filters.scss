@@ -1,0 +1,83 @@
+/*
+ * Core
+ */
+
+.filters-core {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.filters-core__content {
+  flex: 1 1 auto;
+}
+
+.filters-core__bottom {
+  padding: 10px;
+}
+
+/*
+ * Basic
+ */
+
+.filter {
+  padding: 10px;
+  .el-alert {
+    margin-bottom: 15px;
+  }
+}
+
+.filter-title {
+  font-weight: 600;
+  padding: 5px 5px 5px 15px;
+  margin-bottom: 15px;
+  border-left: 5px solid #409EFF;
+}
+
+/*
+ * Columns
+ */
+
+.filter-columns {
+  .el-checkbox-group {
+    margin-bottom: 10px;
+  }
+  .el-checkbox.is-bordered {
+    display: flex;
+    align-items: center;
+  }
+}
+
+/*
+ * Search
+ */
+
+//
+
+/*
+ * TableTop
+ */
+
+.filter-table-top {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  > div {
+    width: 100%;
+    margin-bottom: 10px;
+    &:last-child {
+      margin-bottom: 0;
+    }
+    .el-button {
+      width: 100%;
+    }
+  }
+}
+
+/*
+ * Pagination
+ */
+
+.filter-pagination__circles {
+  display: flex;
+}

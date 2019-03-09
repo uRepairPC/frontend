@@ -3,8 +3,9 @@
 		<el-breadcrumb-item
 			v-for="(item, index) in list"
 			:key="index"
-			:to="item.route">
-			{{ item.title }}
+			:to="item.route"
+		>
+			{{ getTitle(item.title) }}
 		</el-breadcrumb-item>
 	</el-breadcrumb>
 </template>
@@ -15,6 +16,11 @@ export default {
 		list: {
 			type: Array,
 			required: true
+		}
+	},
+	methods: {
+		getTitle(val) {
+			return typeof val === 'function' ? val(this.$route) : val
 		}
 	}
 }

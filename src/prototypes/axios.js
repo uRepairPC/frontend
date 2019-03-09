@@ -1,11 +1,12 @@
 'use strict'
 
+import { axiosBaseUrl } from '@/data/env'
 import { Message } from 'element-ui'
 import store from '../store'
 import axios from 'axios'
 
 // All request send to: http(s)://example.com/api/*
-axios.defaults.baseURL = 'api'
+axios.defaults.baseURL = axiosBaseUrl
 
 axios.interceptors.response.use(
 	(resp) => {
@@ -38,6 +39,7 @@ axios.interceptors.response.use(
 				return axios.post('auth/refresh')
 					.then(({ data }) => {
 						axios.defaults.headers['Authorization'] = 'Bearer ' + data.token
+						config.headers['Authorization'] = 'Bearer ' + data.token
 						localStorage.setItem('token', data.token)
 
 						return axios({

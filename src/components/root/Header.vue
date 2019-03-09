@@ -2,17 +2,21 @@
 	<el-header>
 		<div
 			class="header--left"
-			@click="onClickLeftHeader">
+			@click="onClickLeftHeader"
+		>
 			<img
-				src="../../images/knteu_logo_200.png"
+				src="../../images/logo.png"
 				alt="logo"
 			>
 			<span>КНТЕУ</span>
 			<el-button
 				size="small"
 				round
-				@click="onClickCreateRequest">
-				<i class="material-icons">add</i>
+				@click="onClickCreateRequest"
+			>
+				<i class="material-icons">
+					add
+				</i>
 				Створити заявку
 			</el-button>
 		</div>
@@ -21,16 +25,27 @@
 			<!--TODO Move to component-->
 			<el-input
 				size="mini"
-				placeholder="Пошук">
-				<i slot="suffix" class="el-input__icon el-icon-search"></i>
+				placeholder="Глобальний Пошук"
+			>
+				<i
+					slot="suffix"
+					class="el-input__icon el-icon-search"
+				/>
 			</el-input>
 			<!--TODO Move to component-->
 			<div class="user">
-				<i class="material-icons">person</i>
+				<i class="material-icons">
+					person
+				</i>
 				{{ user.email }}
 			</div>
-			<div class="quit">
-				<i class="material-icons">exit_to_app</i>
+			<div
+				class="quit"
+				@click="onClickLogout"
+			>
+				<i class="material-icons">
+					exit_to_app
+				</i>
 			</div>
 		</div>
 	</el-header>
@@ -46,6 +61,9 @@ export default {
 		}
 	},
 	methods: {
+		onClickLogout() {
+			this.$store.dispatch('profile/logout')
+		},
 		onClickLeftHeader() {
 			this.$router.push({ name: DEFAULT_ROUTE_NAME })
 		},
@@ -57,8 +75,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-/* TODO Mobile design */
-
 .el-header {
 	display: flex;
 	align-items: center;
