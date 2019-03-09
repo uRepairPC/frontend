@@ -1,6 +1,7 @@
 <template>
 	<el-aside width="250px">
 		<el-menu
+			ref="menu"
 			router
 			:default-active="defaultRoute"
 		>
@@ -36,6 +37,16 @@ export default {
 	computed: {
 		defaultRoute() {
 			return this.$route.name
+		},
+		routeNames() {
+			return this.menu.map(m => m.route.name)
+		}
+	},
+	watch: {
+		'$route'() {
+			if (!this.routeNames.includes(this.defaultRoute)) {
+				this.$refs.menu.activeIndex = null
+			}
 		}
 	}
 }
