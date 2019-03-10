@@ -22,15 +22,44 @@
 					style="width: 100%">
 					<el-table-column
 						prop="name"
-						label="Назва" />
+						label="Назва"
+						width="200" />
 					<el-table-column
 						prop="value"
-						label="Значення" />
+						label="Значення">
+						<template slot-scope="scope">
+							<span v-if="scope.row.key === 'role'">
+								<el-tag
+									:type="COLORS[scope.row.value]"
+									size="medium"
+								>
+									{{ scope.row.value }}
+								</el-tag>
+							</span>
+							<span v-else>{{ scope.row.value }}</span>
+						</template>
+					</el-table-column>
 				</el-table>
 			</div>
 			<div class="bottom">
-				<el-button type="primary">Редагувати</el-button>
-				<el-button type="danger">Вилучити</el-button>
+				<el-button
+					size="small"
+					@click="fetchUser"
+				>
+					Оновити
+				</el-button>
+				<el-button
+					type="primary"
+					size="small"
+				>
+					Редагувати
+				</el-button>
+				<el-button
+					type="danger"
+					size="small"
+				>
+					Вилучити
+				</el-button>
 			</div>
 		</div>
 	</div>
@@ -38,6 +67,7 @@
 
 <script>
 import UserClass from '@/classes/User'
+import { COLORS } from '@/data/role'
 
 export default {
 	breadcrumbs: [
@@ -46,6 +76,7 @@ export default {
 	],
 	data() {
 		return {
+			COLORS,
 			loading: false
 		}
 	},
@@ -63,13 +94,13 @@ export default {
 			const displayProps = [
 				{ name: 'Роль', key: 'role' },
 				{ name: 'Опис', key: 'description' },
-				{ name: 'phone', key: 'phone' },
+				{ name: 'Телефон', key: 'phone' },
 				{ name: 'Створений', key: 'created_at' },
 				{ name: 'Останнє оновлення', key: 'updated_at' }
 			]
 
 			return displayProps.reduce((result, obj) => {
-				result.push({ name: obj.name, value: this.user[obj.key] })
+				result.push({ ...obj, value: this.user[obj.key] })
 				return result
 			}, [])
 		}
@@ -100,7 +131,7 @@ export default {
 <style lang="scss" scoped>
 .user {
 	> div {
-		max-width: 600px;
+		max-width: 700px;
 		margin: 0 auto;
 	}
 }
