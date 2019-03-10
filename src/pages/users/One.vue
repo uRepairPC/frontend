@@ -1,28 +1,162 @@
 <template>
-	<div class="user">
-		User {{ $route.params.id }}
+	<div
+		v-loading="loading"
+		class="user"
+	>
+		<div>
+			<div class="top">
+				<div
+					class="image"
+					:style="userClass.backgroundImage"
+				>
+					<template v-if="!user.image">
+						<i class="material-icons">face</i>
+						{{ userClass.initials }}
+					</template>
+				</div>
+				<div class="name">{{ userClass.fullName }}</div>
+			</div>
+			<div class="center">
+				<el-table
+					:data="tableData"
+					style="width: 100%">
+					<el-table-column
+						prop="name"
+						label="Назва" />
+					<el-table-column
+						prop="value"
+						label="Значення" />
+				</el-table>
+			</div>
+			<div class="bottom">
+				<el-button type="primary">Редагувати</el-button>
+				<el-button type="danger">Вилучити</el-button>
+			</div>
+		</div>
 	</div>
 </template>
 
 <script>
+import UserClass from '@/classes/User'
+
 export default {
 	breadcrumbs: [
 		{ title: 'Користувачі', route: { name: 'users' } },
 		{ title: route => `ID: ${route.params.id}` }
 	],
+	data() {
+		return {
+			loading: false
+		}
+	},
 	computed: {
-		list() {
-			return this.$store.state.template.sidebar.users
+		user() {
+			const id = this.$route.params.id
+			const users = this.$store.state.template.sidebar.users
+
+			return users[id] || {}
+		},
+		userClass() {
+			return new UserClass(this.user)
+		},
+		tableData() {
+			const displayProps = [
+				{ name: 'Роль', key: 'role' },
+				{ name: 'Опис', key: 'description' },
+				{ name: 'phone', key: 'phone' },
+				{ name: 'Створений', key: 'created_at' },
+				{ name: 'Останнє оновлення', key: 'updated_at' }
+			]
+
+			return displayProps.reduce((result, obj) => {
+				result.push({ name: obj.name, value: this.user[obj.key] })
+				return result
+			}, [])
 		}
 	},
 	activated() {
-		if (!this.list[this.$route.params.id]) {
-			// TODO Fetch the user from API
-			// this.$store.commit('template/ADD_SIDEBAR_USER', obj)
+		if (!this.user.id) {
+			this.fetchUser()
 		}
-
+	},
+	methods: {
 		// TODO User not found -> move to 404 page?
-		// console.log(this.list[this.$route.params.id])
+		fetchUser() {
+			this.loading = true
+
+			this.$axios.get(`users/${this.$route.params.id}`)
+				.then(({ data }) => {
+					this.$store.commit('template/ADD_SIDEBAR_USER', data.user)
+					this.loading = false
+				})
+				.catch(() => {
+					this.loading = false
+				})
+		}
 	}
 }
 </script>
+
+<style lang="scss" scoped>
+.user {
+	> div {
+		max-width: 600px;
+		margin: 0 auto;
+	}
+}
+
+.top,
+.bottom,
+.center {
+	background: #fff;
+	border: 1px solid #e6e6e6;
+}
+
+.top {
+	margin-top: 30px;
+	padding: 50px;
+	text-align: center;
+}
+
+.bottom,
+.center {
+	margin-top: 20px;
+	padding: 20px;
+}
+
+.bottom {
+	margin-bottom: 30px;
+	padding-bottom: 10px;
+	> button {
+		margin-bottom: 10px;
+	}
+}
+
+.image {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	font-weight: bold;
+	font-size: 2rem;
+	width: 150px;
+	height: 150px;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: 50% 50%;
+	border-radius: 50%;
+	margin: 0 auto;
+	color: #000000;
+	border: 3px solid;
+
+	> i {
+		margin-bottom: 10px;
+	}
+}
+
+.name {
+	margin-top: 40px;
+	font-weight: bold;
+	font-size: 1.5rem;
+}
+</style>
