@@ -8,6 +8,7 @@
 		v-bind="$attrs"
 		v-on="$listeners"
 	>
+		<!--TODO Column date (see users/One page)-->
 		<el-table-column
 			v-for="(column, index) in columns"
 			:key="index"

@@ -9,7 +9,7 @@ export default class User {
 		let name = `${this.user.last_name} ${this.user.first_name}`
 
 		if (this.user.middle_name) {
-			return name `${name} ${this.user.middle_name}`
+			return `${name} ${this.user.middle_name}`
 		}
 
 		return name

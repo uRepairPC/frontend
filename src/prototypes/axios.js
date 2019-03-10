@@ -44,6 +44,7 @@ axios.interceptors.response.use(
 
 						return axios({
 							...config,
+							// TODO Check on prod
 							url: config.url.replace(/^api\//, '')
 						})
 					})
