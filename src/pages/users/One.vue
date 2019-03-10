@@ -5,7 +5,10 @@
 				<el-button
 					v-for="(btn, index) in buttons"
 					:key="index"
+					v-if="typeof btn.show === 'undefined' || btn.show"
 					size="small"
+					:disabled="btn.disabled"
+					:loading="btn.loading"
 					:type="btn.type"
 					plain
 					@click="btn.action"
@@ -18,7 +21,9 @@
 				class="header"
 			>
 				<div
-					class="image"
+					:class="['image', {
+						'image_has': !!user.image
+					}]"
 					:style="userClass.backgroundImage"
 				>
 					<template v-if="!user.image">
@@ -77,6 +82,7 @@ import DeletePhotoDialog from '@/components/users/dialogs/DeleteImage'
 import EditPhotoDialog from '@/components/users/dialogs/EditImage'
 import DeleteDialog from '@/components/users/dialogs/Delete'
 import UserClass from '@/classes/User'
+import * as roles from '@/enum/roles'
 import { COLORS } from '@/data/role'
 import moment from 'moment'
 
@@ -95,19 +101,13 @@ export default {
 			dialog: {
 				value: false,
 				component: null
-			},
-			buttons: [
-				{ text: 'Оновити', type: 'success', action: this.fetchUser },
-				{ text: 'Редагувати дані', type: 'primary', action: () => {} },
-				{ text: 'Редагувати пароль', type: 'primary', action: () => {} },
-				{ text: 'Редагувати зображення', type: 'primary', action: () => this.openDialog(EditPhotoDialog) },
-				{ text: 'Редагувати email', type: 'primary', action: () => {} },
-				{ text: 'Видалити зображення', type: 'warning', action: () => this.openDialog(DeletePhotoDialog) },
-				{ text: 'Видалити користувача', type: 'danger', action: () => this.openDialog(DeleteDialog) }
-			]
+			}
 		}
 	},
 	computed: {
+		me() {
+			return this.$store.state.profile.user
+		},
 		user() {
 			const users = this.$store.state.template.sidebar.users
 			const id = this.$route.params.id
@@ -117,7 +117,59 @@ export default {
 		userClass() {
 			return new UserClass(this.user)
 		},
+		canAccess() {
+			return this.me.role === roles.ADMIN || (this.me.id === this.user.id)
+		},
+		buttons() {
+			return [
+				{
+					text: 'Оновити',
+					type: 'success',
+					action: this.fetchUser,
+					loading: this.loading,
+					disabled: this.loading
+				},
+				{
+					text: 'Редагувати дані',
+					type: 'primary',
+					show: this.canAccess,
+					action: () => {}
+				},
+				{
+					text: 'Редагувати пароль',
+					type: 'primary',
+					show: this.canAccess,
+					action: () => {}
+				},
+				{
+					text: 'Редагувати зображення',
+					type: 'primary',
+					show: this.canAccess,
+					action: () => this.openDialog(EditPhotoDialog)
+				},
+				{
+					text: 'Редагувати email',
+					type: 'primary',
+					show: this.canAccess,
+					action: () => {}
+				},
+				{
+					text: 'Видалити зображення',
+					type: 'warning',
+					show: this.canAccess,
+					disabled: !this.user.image,
+					action: () => this.openDialog(DeletePhotoDialog)
+				},
+				{
+					text: 'Видалити користувача',
+					type: 'danger',
+					show: this.me.role === roles.ADMIN && this.me.id !== this.user.id,
+					action: () => this.openDialog(DeleteDialog)
+				}
+			]
+		},
 		tableData() {
+			// TODO Hide role on NoAdmin
 			const displayProps = [
 				{ name: 'Роль', key: 'role' },
 				{ name: 'Опис', key: 'description' },
@@ -231,6 +283,9 @@ export default {
 	border: 3px solid;
 	> i {
 		margin-bottom: 10px;
+	}
+	&.image_has {
+		border: 0;
 	}
 }
 
