@@ -3,23 +3,14 @@
 		<div class="user__wrap">
 			<div class="actions">
 				<el-button
+					v-for="(btn, index) in buttons"
+					:key="index"
 					size="small"
-					@click="fetchUser"
+					:type="btn.type"
+					plain
+					@click="btn.action"
 				>
-					Оновити
-				</el-button>
-				<el-button
-					type="primary"
-					size="small"
-				>
-					Редагувати
-				</el-button>
-				<el-button
-					type="danger"
-					size="small"
-					@click="dialogDelete = true"
-				>
-					Вилучити
+					{{ btn.text }}
 				</el-button>
 			</div>
 			<div
@@ -73,12 +64,11 @@
 		</div>
 
 		<!-- DIALOGS -->
-		<template v-if="user.id">
-			<delete-dialog
-				:id="user.id"
-				v-model="dialogDelete"
-			/>
-		</template>
+		<component
+			v-model="dialog.value"
+			:is="dialog.component"
+			:user="user"
+		/>
 	</div>
 </template>
 
@@ -100,7 +90,19 @@ export default {
 		return {
 			COLORS,
 			loading: false,
-			dialogDelete: false
+			dialog: {
+				value: false,
+				component: null
+			},
+			buttons: [
+				{ text: 'Оновити', type: 'success', action: this.fetchUser },
+				{ text: 'Редагувати дані', type: 'primary', action: () => {} },
+				{ text: 'Редагувати пароль', type: 'primary', action: () => {} },
+				{ text: 'Редагувати зображення', type: 'primary', action: () => {} },
+				{ text: 'Редагувати email', type: 'primary', action: () => {} },
+				{ text: 'Видалити зображення', type: 'warning', action: () => {} },
+				{ text: 'Вадалити користувача', type: 'danger', action: () => this.openDialog(DeleteDialog) }
+			]
 		}
 	},
 	computed: {
@@ -136,13 +138,18 @@ export default {
 	watch: {
 		'$route': {
 			handler() {
-				this.dialogDelete = false
-
+				this.closeDialog()
 				if (!this.user.id && this.$route.name === 'users-id') {
 					this.fetchUser()
 				}
 			},
 			immediate: true
+		},
+		'dialog.value'(val) {
+			if (!val) {
+				// FIXME blink animation
+				this.closeDialog()
+			}
 		}
 	},
 	methods: {
@@ -158,6 +165,14 @@ export default {
 					this.$router.push({ name: 'users' })
 					this.loading = false
 				})
+		},
+		openDialog(component) {
+			this.$set(this.dialog, 'component', component)
+			this.$set(this.dialog, 'value', true)
+		},
+		closeDialog() {
+			this.$set(this.dialog, 'value', false)
+			this.$set(this.dialog, 'component', null)
 		}
 	}
 }
@@ -174,17 +189,16 @@ export default {
 }
 
 .header,
-.content,
-.actions {
+.content {
 	margin-top: 20px;
 	padding: 20px;
 }
 
 .actions {
 	margin-top: 30px;
-	padding-bottom: 10px;
+	padding: 10px;
 	> button {
-		margin-bottom: 10px;
+		margin: 5px;
 	}
 }
 

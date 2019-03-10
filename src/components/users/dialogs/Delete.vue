@@ -15,10 +15,7 @@
 				:min="0"
 			/>
 		</div>
-		<span
-			slot="footer"
-			class="dialog-footer"
-		>
+		<span slot="footer">
 			<el-button @click="close">Відмінити</el-button>
 			<el-button
 				type="danger"
@@ -26,7 +23,7 @@
 				:loading="loading"
 				@click="fetchDelete"
 			>
-				Так
+				Видалити
 			</el-button>
 		</span>
 	</el-dialog>
@@ -40,8 +37,8 @@ export default {
 			type: Boolean,
 			default: false
 		},
-		id: {
-			type: Number,
+		user: {
+			type: Object,
 			required: true
 		}
 	},
@@ -63,7 +60,7 @@ export default {
 				return true
 			}
 
-			return !this.input || this.input !== this.id
+			return !this.input || this.input !== this.user.id
 		}
 	},
 	watch: {
@@ -82,7 +79,7 @@ export default {
 			this.loading = true
 
 			try {
-				const res = await this.$axios.delete(`users/${this.id}`)
+				const res = await this.$axios.delete(`users/${this.user.id}`)
 
 				if (res.status === 200) {
 					this.close()
