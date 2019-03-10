@@ -25,7 +25,10 @@ export default class User {
 
 	get backgroundImage() {
 		if (this.user.image) {
-			return `background-image: url(${this.user.image})`
+			const path = encodeURIComponent(this.user.image)
+			const token = localStorage.getItem('token')
+
+			return `background-image: url(/api/users/get/image?path=${path}&token=${token})`
 		}
 
 		return null

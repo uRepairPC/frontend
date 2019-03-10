@@ -73,6 +73,7 @@
 </template>
 
 <script>
+import EditPhotoDialog from '@/components/users/dialogs/EditPhoto'
 import DeleteDialog from '@/components/users/dialogs/Delete'
 import UserClass from '@/classes/User'
 import { COLORS } from '@/data/role'
@@ -98,10 +99,10 @@ export default {
 				{ text: 'Оновити', type: 'success', action: this.fetchUser },
 				{ text: 'Редагувати дані', type: 'primary', action: () => {} },
 				{ text: 'Редагувати пароль', type: 'primary', action: () => {} },
-				{ text: 'Редагувати зображення', type: 'primary', action: () => {} },
+				{ text: 'Редагувати зображення', type: 'primary', action: () => this.openDialog(EditPhotoDialog) },
 				{ text: 'Редагувати email', type: 'primary', action: () => {} },
 				{ text: 'Видалити зображення', type: 'warning', action: () => {} },
-				{ text: 'Вадалити користувача', type: 'danger', action: () => this.openDialog(DeleteDialog) }
+				{ text: 'Видалити користувача', type: 'danger', action: () => this.openDialog(DeleteDialog) }
 			]
 		}
 	},
