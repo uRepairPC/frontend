@@ -2,7 +2,7 @@
 	<div id="auth">
 		<div class="logo">
 			<img
-				src="../images/logo.png"
+				src="@/images/logo.png"
 				alt="logo"
 			>
 		</div>

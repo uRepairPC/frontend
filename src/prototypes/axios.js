@@ -2,7 +2,7 @@
 
 import { axiosBaseUrl } from '@/data/env'
 import { Message } from 'element-ui'
-import store from '../store'
+import store from '@/store'
 import axios from 'axios'
 
 // All request send to: http(s)://example.com/api/*
