@@ -1,10 +1,10 @@
 <template>
-	<div
-		v-loading="loading"
-		class="user"
-	>
+	<div class="user">
 		<div>
-			<div class="top">
+			<div
+				v-loading="loading"
+				class="top"
+			>
 				<div
 					class="image"
 					:style="userClass.backgroundImage"
@@ -16,7 +16,10 @@
 				</div>
 				<div class="name">{{ userClass.fullName }}</div>
 			</div>
-			<div class="center">
+			<div
+				v-loading="loading"
+				class="center"
+			>
 				<el-table
 					:data="tableData"
 					style="width: 100%">
@@ -28,7 +31,7 @@
 						prop="value"
 						label="Значення">
 						<template slot-scope="scope">
-							<span v-if="scope.row.key === 'role'">
+							<span v-if="scope.row.key === 'role' && scope.row.value">
 								<el-tag
 									:type="COLORS[scope.row.value]"
 									size="medium"
@@ -111,13 +114,17 @@ export default {
 			}, [])
 		}
 	},
-	activated() {
-		if (!this.user.id) {
-			this.fetchUser()
+	watch: {
+		'$route': {
+			handler() {
+				if (!this.user.id && this.$route.name === 'users-id') {
+					this.fetchUser()
+				}
+			},
+			immediate: true
 		}
 	},
 	methods: {
-		// TODO User not found -> move to 404 page?
 		fetchUser() {
 			this.loading = true
 
@@ -127,6 +134,7 @@ export default {
 					this.loading = false
 				})
 				.catch(() => {
+					this.$router.push({ name: 'users' })
 					this.loading = false
 				})
 		}
