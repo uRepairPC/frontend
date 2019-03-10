@@ -18,7 +18,7 @@
 				action>
 				<i class="el-icon-upload"></i>
 				<div class="el-upload__text">Перетягніть файл сюди або <em>натисніть, щоб завантажити</em></div>
-				<div class="el-upload__tip" slot="tip">jpeg/jpg/png зображення повинне мати меньше 2мб.</div>
+				<div class="el-upload__tip" slot="tip">jpeg/jpg/png зображення повинне мати не більше 2мб.</div>
 			</el-upload>
 		</div>
 		<span slot="footer">

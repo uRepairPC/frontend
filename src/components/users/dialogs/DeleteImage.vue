@@ -16,7 +16,7 @@
 				:disabled="loading"
 				@click="fetchRequest"
 			>
-				Видали
+				Видалити
 			</el-button>
 		</span>
 	</el-dialog>
