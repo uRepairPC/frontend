@@ -11,8 +11,8 @@
 			:value="value"
 			size="small"
 			placeholder="Пошук по таблиці"
-			@keyup.enter.native="submit"
 			v-bind="$attrs"
+			@keyup.enter.native="submit"
 			v-on="listeners"
 		/>
 	</filter-basic>
@@ -41,12 +41,6 @@ export default {
 			}
 		}
 	},
-	methods: {
-		submit() {
-			clearTimeout(this._timeout)
-			this.$emit('submit')
-		}
-	},
 	watch: {
 		value() {
 			clearTimeout(this._timeout)
@@ -54,6 +48,12 @@ export default {
 			this._timeout = setTimeout(() => {
 				this.$emit('submit')
 			}, TIMEOUT)
+		}
+	},
+	methods: {
+		submit() {
+			clearTimeout(this._timeout)
+			this.$emit('submit')
 		}
 	}
 }

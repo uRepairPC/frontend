@@ -1,50 +1,7 @@
 <template>
 	<div class="user">
-		<div>
-			<div
-				v-loading="loading"
-				class="top"
-			>
-				<div
-					class="image"
-					:style="userClass.backgroundImage"
-				>
-					<template v-if="!user.image">
-						<i class="material-icons">face</i>
-						{{ userClass.initials }}
-					</template>
-				</div>
-				<div class="name">{{ userClass.fullName }}</div>
-			</div>
-			<div
-				v-loading="loading"
-				class="center"
-			>
-				<el-table
-					:data="tableData"
-					style="width: 100%">
-					<el-table-column
-						prop="name"
-						label="Назва"
-						width="200" />
-					<el-table-column
-						prop="value"
-						label="Значення">
-						<template slot-scope="scope">
-							<span v-if="scope.row.key === 'role' && scope.row.value">
-								<el-tag
-									:type="COLORS[scope.row.value]"
-									size="medium"
-								>
-									{{ scope.row.value }}
-								</el-tag>
-							</span>
-							<span v-else>{{ scope.row.value }}</span>
-						</template>
-					</el-table-column>
-				</el-table>
-			</div>
-			<div class="bottom">
+		<div class="user__wrap">
+			<div class="actions">
 				<el-button
 					size="small"
 					@click="fetchUser"
@@ -60,15 +17,73 @@
 				<el-button
 					type="danger"
 					size="small"
+					@click="dialogDelete = true"
 				>
 					Вилучити
 				</el-button>
 			</div>
+			<div
+				v-loading="loading"
+				class="header"
+			>
+				<div
+					class="image"
+					:style="userClass.backgroundImage"
+				>
+					<template v-if="!user.image">
+						<i class="material-icons">face</i>
+						{{ userClass.initials }}
+					</template>
+				</div>
+				<div class="name">
+					{{ userClass.fullName }}
+				</div>
+			</div>
+			<div
+				v-loading="loading"
+				class="content"
+			>
+				<el-table
+					:data="tableData"
+					style="width: 100%"
+				>
+					<el-table-column
+						prop="name"
+						label="Назва"
+						width="200"
+					/>
+					<el-table-column
+						prop="value"
+						label="Значення"
+					>
+						<template slot-scope="scope">
+							<span v-if="scope.row.key === 'role' && scope.row.value">
+								<el-tag
+									:type="COLORS[scope.row.value]"
+									size="medium"
+								>
+									{{ scope.row.value }}
+								</el-tag>
+							</span>
+							<span v-else>{{ scope.row.value }}</span>
+						</template>
+					</el-table-column>
+				</el-table>
+			</div>
 		</div>
+
+		<!-- DIALOGS -->
+		<template v-if="user.id">
+			<delete-dialog
+				:id="user.id"
+				v-model="dialogDelete"
+			/>
+		</template>
 	</div>
 </template>
 
 <script>
+import DeleteDialog from '@/components/users/dialogs/Delete'
 import UserClass from '@/classes/User'
 import { COLORS } from '@/data/role'
 import moment from 'moment'
@@ -78,10 +93,14 @@ export default {
 		{ title: 'Користувачі', route: { name: 'users' } },
 		{ title: route => `ID: ${route.params.id}` }
 	],
+	components: {
+		DeleteDialog
+	},
 	data() {
 		return {
 			COLORS,
-			loading: false
+			loading: false,
+			dialogDelete: false
 		}
 	},
 	computed: {
@@ -117,6 +136,8 @@ export default {
 	watch: {
 		'$route': {
 			handler() {
+				this.dialogDelete = false
+
 				if (!this.user.id && this.$route.name === 'users-id') {
 					this.fetchUser()
 				}
@@ -143,38 +164,37 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.user {
+.user__wrap {
+	max-width: 700px;
+	margin: 0 auto;
 	> div {
-		max-width: 700px;
-		margin: 0 auto;
+		background: #fff;
+		border: 1px solid #e6e6e6;
 	}
 }
 
-.top,
-.bottom,
-.center {
-	background: #fff;
-	border: 1px solid #e6e6e6;
-}
-
-.top {
-	margin-top: 30px;
-	padding: 50px;
-	text-align: center;
-}
-
-.bottom,
-.center {
+.header,
+.content,
+.actions {
 	margin-top: 20px;
 	padding: 20px;
 }
 
-.bottom {
-	margin-bottom: 30px;
+.actions {
+	margin-top: 30px;
 	padding-bottom: 10px;
 	> button {
 		margin-bottom: 10px;
 	}
+}
+
+.header {
+	padding: 50px;
+	text-align: center;
+}
+
+.content {
+	margin-bottom: 30px;
 }
 
 .image {
@@ -193,7 +213,6 @@ export default {
 	margin: 0 auto;
 	color: #000000;
 	border: 3px solid;
-
 	> i {
 		margin-bottom: 10px;
 	}

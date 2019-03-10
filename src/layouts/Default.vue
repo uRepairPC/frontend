@@ -8,8 +8,8 @@
 					<breadcrumbs-box :list="breadcrumbs" />
 					<keep-alive>
 						<router-view
-							class="page"
 							ref="content"
+							class="page"
 						/>
 					</keep-alive>
 				</el-main>
