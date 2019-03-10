@@ -53,6 +53,11 @@ axios.interceptors.response.use(
 			store.commit('profile/CLEAR_ALL')
 		}
 
+		// No access, etc
+		if (response.status === 422) {
+			store.dispatch('profile/update')
+		}
+
 		// Notification
 		if (response.data && typeof response.data === 'object' && response.data.message) {
 			Message({ message: response.data.message, type: 'error' })
