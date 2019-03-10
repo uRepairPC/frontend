@@ -68,6 +68,7 @@
 <script>
 import UserClass from '@/classes/User'
 import { COLORS } from '@/data/role'
+import moment from 'moment'
 
 export default {
 	breadcrumbs: [
@@ -82,8 +83,8 @@ export default {
 	},
 	computed: {
 		user() {
-			const id = this.$route.params.id
 			const users = this.$store.state.template.sidebar.users
+			const id = this.$route.params.id
 
 			return users[id] || {}
 		},
@@ -100,8 +101,13 @@ export default {
 			]
 
 			return displayProps.reduce((result, obj) => {
-				result.push({ ...obj, value: this.user[obj.key] })
+				const value = ['updated_at', 'created_at'].includes(obj.key)
+					? moment(this.user[obj.key]).format('LLL')
+					: this.user[obj.key]
+
+				result.push({ ...obj, value })
 				return result
+
 			}, [])
 		}
 	},
