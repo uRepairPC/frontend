@@ -106,16 +106,3 @@ export default {
 	}
 }
 </script>
-
-<style lang="scss" scoped>
-.el-input {
-	> /deep/ .el-input-group__prepend {
-		padding: 0 12px;
-		> i {
-			display: flex;
-			align-items: center;
-			font-size: 18px;
-		}
-	}
-}
-</style>

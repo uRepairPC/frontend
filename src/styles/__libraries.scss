@@ -1,1 +1,7 @@
 @import '~element-ui/lib/theme-chalk/index.css';
+
+.el-input > .el-input-group__prepend > i {
+  display: flex;
+  align-items: center;
+  font-size: 18px;
+}

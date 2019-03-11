@@ -16,6 +16,7 @@ const state = {
 const mutations = {
 	SET_USER(state, obj) {
 		state.user = obj
+		localStorage.setItem(STORE_USER, obj)
 	},
 	SET_LOADING(state, toggle) {
 		state.loading = toggle

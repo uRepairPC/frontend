@@ -33,7 +33,10 @@
 				/>
 			</el-input>
 			<!--TODO Move to component-->
-			<div class="user">
+			<div
+				class="user"
+				@click="onClickEmail"
+			>
 				<i class="material-icons">
 					person
 				</i>
@@ -69,6 +72,10 @@ export default {
 		},
 		onClickCreateRequest() {
 			this.$router.push({ name: 'requests-create' })
+		},
+		onClickEmail() {
+			this.$store.dispatch('template/addSidebarUser', this.user)
+			this.$router.push({ name: 'users-id', params: { id: this.user.id } })
 		}
 	}
 }
