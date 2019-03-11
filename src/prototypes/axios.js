@@ -48,14 +48,16 @@ axios.interceptors.response.use(
 							url: config.url.replace(/^api\//, '')
 						})
 					})
-					.catch(() => store.commit('profile/CLEAR_ALL'))
+					.catch(() => {
+						store.commit('profile/CLEAR_ALL')
+					})
 			}
 
 			store.commit('profile/CLEAR_ALL')
 		}
 
 		// No access, etc
-		if (response.status === 422) {
+		if (response.status === 403) {
 			store.dispatch('profile/update')
 		}
 

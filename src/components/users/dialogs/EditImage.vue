@@ -71,11 +71,13 @@ export default {
 
 			this.$axios.post(`users/${this.user.id}/image`, fd)
 				.then(({ data }) => {
-					this.$store.commit('template/ADD_SIDEBAR_USER', { ...this.user, image: data.image })
+					this.$store.dispatch('template/addSidebarUser', { ...this.user, image: data.image })
 					this.loading = false
 					this.close()
 				})
-				.catch(() => this.loading = false)
+				.catch(() => {
+					this.loading = false
+				})
 		},
 		save() {
 			this.$refs.upload.submit()

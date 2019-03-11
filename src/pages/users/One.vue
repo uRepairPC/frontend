@@ -80,6 +80,7 @@
 <script>
 import DeletePhotoDialog from '@/components/users/dialogs/DeleteImage'
 import EditPhotoDialog from '@/components/users/dialogs/EditImage'
+import EditEmailDialog from '@/components/users/dialogs/EditEmail'
 import DeleteDialog from '@/components/users/dialogs/Delete'
 import UserClass from '@/classes/User'
 import * as roles from '@/enum/roles'
@@ -151,7 +152,7 @@ export default {
 					text: 'Редагувати email',
 					type: 'primary',
 					show: this.canAccess,
-					action: () => {}
+					action: () => this.openDialog(EditEmailDialog)
 				},
 				{
 					text: 'Видалити зображення',
@@ -172,6 +173,7 @@ export default {
 			// TODO Hide role on NoAdmin
 			const displayProps = [
 				{ name: 'Роль', key: 'role' },
+				{ name: 'E-mail', key: 'email' },
 				{ name: 'Опис', key: 'description' },
 				{ name: 'Телефон', key: 'phone' },
 				{ name: 'Створений', key: 'created_at' },
@@ -212,7 +214,7 @@ export default {
 
 			this.$axios.get(`users/${this.$route.params.id}`)
 				.then(({ data }) => {
-					this.$store.commit('template/ADD_SIDEBAR_USER', data.user)
+					this.$store.dispatch('template/addSidebarUser', data.user)
 					this.loading = false
 				})
 				.catch(() => {

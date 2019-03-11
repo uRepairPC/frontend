@@ -40,7 +40,9 @@ const actions = {
 
 				commit('SET_LOADING', false)
 			})
-			.catch(() => commit('SET_LOADING', false))
+			.catch(() => {
+				commit('SET_LOADING', false)
+			})
 	}
 }
 

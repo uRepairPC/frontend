@@ -44,7 +44,12 @@ const mutations = {
 }
 
 const actions = {
-	//
+	addSidebarUser({ commit, rootState }, obj) {
+		commit('ADD_SIDEBAR_USER', obj)
+		if (obj.id === rootState.profile.user.id) {
+			commit('profile/SET_USER', obj, { root: true })
+		}
+	}
 }
 
 export default {

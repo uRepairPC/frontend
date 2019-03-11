@@ -54,11 +54,13 @@ export default {
 
 			this.$axios.delete(`users/${this.user.id}/image`)
 				.then(() => {
-					this.$store.commit('template/ADD_SIDEBAR_USER', { ...this.user, image: null })
+					this.$store.dispatch('template/addSidebarUser', { ...this.user, image: null })
 					this.loading = false
 					this.close()
 				})
-				.catch(() => this.loading = false)
+				.catch(() => {
+					this.loading = false
+				})
 		},
 		close() {
 			this.$emit('input', false)

@@ -9,8 +9,8 @@
 		<el-form
 			ref="form"
 			:model="form"
-			status-icon
 			:rules="rules"
+			status-icon
 			@submit.native.prevent="onSubmit"
 		>
 			<el-form-item prop="email">
@@ -18,7 +18,6 @@
 					ref="email"
 					v-model="form.email"
 					placeholder="E-mail"
-					autocomplete="off"
 				>
 					<i
 						slot="prepend"
@@ -33,7 +32,6 @@
 					v-model="form.password"
 					type="password"
 					placeholder="Пароль"
-					autocomplete="off"
 				>
 					<i
 						slot="prepend"
@@ -57,6 +55,7 @@
 </template>
 
 <script>
+import * as rules from '@/data/rules'
 import { isProd } from '@/data/env'
 
 export default {
@@ -67,15 +66,8 @@ export default {
 				password: isProd ? '' : 'admin123'
 			},
 			rules: {
-				// TODO Move to external scripts?
-				email: [
-					{ required: true, message: 'Будь ласка, введіть E-mail' },
-					{ type: 'email', message: 'Введіть правильну адресу електронної пошти' }
-				],
-				password: [
-					{ required: true, message: 'Будь ласка, введіть пароль' },
-					{ min: 6, message: 'Пароль повинен бути більше, ніж 5 символів' }
-				]
+				email: rules.email,
+				password: rules.password
 			}
 		}
 	},

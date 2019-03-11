@@ -108,7 +108,7 @@ export default {
 			}
 		},
 		onRowClick(obj) {
-			this.$store.commit('template/ADD_SIDEBAR_USER', obj)
+			this.$store.dispatch('template/addSidebarUser', obj)
 			this.$router.push({ name: 'users-id', params: { id: obj.id } })
 		},
 		onSortChange({ prop: column, order }) {
