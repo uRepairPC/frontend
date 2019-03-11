@@ -13,6 +13,11 @@ const sidebarKeys = Object.keys(template.state.sidebar)
  */
 export const menu = [
 	{
+		icon: 'home',
+		title: 'Головна сторінка',
+		route: { name: 'home' }
+	},
+	{
 		icon: 'description',
 		title: 'Заявки',
 		route: { name: 'requests' },
