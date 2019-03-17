@@ -15,7 +15,6 @@
 			>
 				<el-form-item prop="email">
 					<el-input
-						ref="email"
 						v-model="form.email"
 						placeholder="E-mail"
 					>
@@ -44,7 +43,7 @@
 </template>
 
 <script>
-import * as rules from '../../../data/rules'
+import * as rules from '@/data/rules'
 
 export default {
 	inheritAttrs: false,

@@ -78,6 +78,7 @@
 </template>
 
 <script>
+import EditPasswordDialog from '@/components/users/dialogs/EditPassword'
 import DeletePhotoDialog from '@/components/users/dialogs/DeleteImage'
 import EditPhotoDialog from '@/components/users/dialogs/EditImage'
 import EditEmailDialog from '@/components/users/dialogs/EditEmail'
@@ -119,7 +120,7 @@ export default {
 			return new UserClass(this.user)
 		},
 		canAccess() {
-			return this.me.role === roles.ADMIN || (this.me.id === this.user.id)
+			return this.me.role === roles.ADMIN || this.me.id === this.user.id
 		},
 		buttons() {
 			return [
@@ -140,7 +141,7 @@ export default {
 					text: 'Редагувати пароль',
 					type: 'primary',
 					show: this.canAccess,
-					action: () => {}
+					action: () => this.openDialog(EditPasswordDialog)
 				},
 				{
 					text: 'Редагувати зображення',
