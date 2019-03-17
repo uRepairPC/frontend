@@ -18,13 +18,13 @@
 			</div>
 			<div
 				v-loading="loading"
-				class="header"
+				class="header max--width"
 			>
 				<user-image :user="user" />
 			</div>
 			<div
 				v-loading="loading"
-				class="content"
+				class="content max--width"
 			>
 				<el-table
 					:data="tableData"
@@ -227,15 +227,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.user__wrap {
-	max-width: 700px;
-	margin: 0 auto;
-	> div {
-		background: #fff;
-		border: 1px solid #e6e6e6;
-	}
-}
-
 .header,
 .content {
 	margin-top: 20px;
@@ -243,20 +234,23 @@ export default {
 }
 
 .actions {
-	margin-top: 30px;
 	padding: 10px;
+	background: #fff;
+	border-bottom: 1px solid #e6e6e6;
 	> button {
 		margin: 5px;
 	}
 }
 
 .header {
-	padding: 50px;
+	padding: 30px;
 	text-align: center;
 }
 
 .content {
 	margin-bottom: 30px;
+	background: #fff;
+	border: 1px solid #e6e6e6;
 }
 
 .image {
@@ -287,5 +281,11 @@ export default {
 	margin-top: 40px;
 	font-weight: bold;
 	font-size: 1.5rem;
+}
+
+.max--width {
+	max-width: 900px;
+	margin-left: auto;
+	margin-right: auto;
 }
 </style>

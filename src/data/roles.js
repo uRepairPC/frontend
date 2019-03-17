@@ -20,14 +20,17 @@ export const COLORS = {
 export const list = {
 	[roles.ADMIN]: {
 		color: COLORS[roles.ADMIN],
-		name: 'Адміністратор'
+		name: 'Адміністратор',
+		nameMultiple: 'Адміністратори'
 	},
 	[roles.WORKER]: {
 		color: COLORS[roles.WORKER],
-		name: 'Робітник'
+		name: 'Робітник',
+		nameMultiple: 'Робітники'
 	},
 	[roles.USER]: {
 		color: COLORS[roles.USER],
-		name: 'Користувач'
+		name: 'Користувач',
+		nameMultiple: 'Користувачі'
 	}
 }

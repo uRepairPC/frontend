@@ -17,7 +17,7 @@ export default class User {
 
 	get initials() {
 		if (this.user.last_name && this.user.first_name) {
-			return `${this.user.last_name[0]}. ${this.user.first_name[0]}.`
+			return `${this.user.last_name[0].toUpperCase()}. ${this.user.first_name[0].toUpperCase()}.`
 		}
 
 		return null
