@@ -5,7 +5,8 @@
 			v-for="(group, key) in list"
 			:key="key"
 			v-loading="loading"
-			class="section">
+			class="section"
+		>
 			<div class="title">
 				<div :class="['title__before', `${listRoles[key].color}--background`]" />
 				<span>{{ listRoles[key].nameMultiple }}</span>

@@ -17,14 +17,14 @@ import UserImage from '@/components/users/Image'
 import UserClass from '@/classes/User'
 
 export default {
+	components: {
+		UserImage
+	},
 	props: {
 		user: {
 			type: Object,
 			required: true
 		}
-	},
-	components: {
-		UserImage
 	},
 	computed: {
 		userClass() {

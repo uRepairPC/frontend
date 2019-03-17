@@ -1,9 +1,8 @@
 <template>
 	<div class="top-buttons">
 		<el-button
-			v-for="(btn, index) in buttons"
+			v-for="(btn, index) in list"
 			:key="index"
-			v-if="typeof btn.show === 'undefined' || btn.show"
 			size="small"
 			:disabled="btn.disabled"
 			:loading="btn.loading"
@@ -22,6 +21,13 @@ export default {
 		buttons: {
 			type: Array,
 			required: true
+		}
+	},
+	computed: {
+		list() {
+			return this.buttons.filter((obj) => {
+				return typeof obj.show === 'undefined' || obj.show
+			})
 		}
 	}
 }

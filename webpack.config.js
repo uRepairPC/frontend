@@ -77,7 +77,7 @@ module.exports = {
 			filename: 'index.html',
 			template: './index.html',
 			inject: true,
-			chunksSortMode: 'dependency'
+			chunksSortMode: 'none'
 		})
 	],
 	resolve: {

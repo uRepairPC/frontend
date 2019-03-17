@@ -15,10 +15,18 @@
 				list-type="picture"
 				:limit="1"
 				accept="image/jpeg, image/jpg, image/png"
-				action>
-				<i class="el-icon-upload"></i>
-				<div class="el-upload__text">Перетягніть файл сюди або <em>натисніть, щоб завантажити</em></div>
-				<div class="el-upload__tip" slot="tip">jpeg/jpg/png зображення повинне мати не більше 2мб.</div>
+				action
+			>
+				<i class="el-icon-upload" />
+				<div class="el-upload__text">
+					Перетягніть файл сюди або <em>натисніть, щоб завантажити</em>
+				</div>
+				<div
+					slot="tip"
+					class="el-upload__tip"
+				>
+					jpeg/jpg/png зображення повинне мати не більше 2мб.
+				</div>
 			</el-upload>
 		</div>
 		<span slot="footer">

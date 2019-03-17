@@ -43,8 +43,8 @@
 
 		<!-- DIALOGS -->
 		<component
-			v-model="dialog.value"
 			:is="dialog.component"
+			v-model="dialog.value"
 			:user="user"
 		/>
 	</div>

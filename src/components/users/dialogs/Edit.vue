@@ -18,8 +18,8 @@
 					label="Ім'я"
 				>
 					<el-input
-						placeholder="Ім'я"
 						v-model="form.first_name"
+						placeholder="Ім'я"
 					/>
 				</el-form-item>
 				<el-form-item
@@ -27,8 +27,8 @@
 					label="По-батькові"
 				>
 					<el-input
-						placeholder="По-батькові"
 						v-model="form.middle_name"
+						placeholder="По-батькові"
 					/>
 				</el-form-item>
 				<el-form-item
@@ -36,8 +36,8 @@
 					label="Прізвище"
 				>
 					<el-input
-						placeholder="Прізвище"
 						v-model="form.last_name"
+						placeholder="Прізвище"
 					/>
 				</el-form-item>
 				<el-form-item
@@ -50,7 +50,8 @@
 							v-for="(role, key) in roleList"
 							:key="key"
 							:label="role.name"
-							:value="key">
+							:value="key"
+						>
 							<span :class="`${role.color}--text`">{{ role.name }}</span>
 						</el-option>
 					</el-select>
@@ -60,19 +61,19 @@
 					label="Телефон"
 				>
 					<el-input
-						placeholder="Телефон"
 						v-model="form.phone"
+						placeholder="Телефон"
 					/>
 				</el-form-item>
 				<el-form-item
 					prop="textarea"
-          label="Опис"
+					label="Опис"
 				>
 					<el-input
+						v-model="form.description"
 						type="textarea"
 						:autosize="{ minRows: 3 }"
 						placeholder="Опис"
-						v-model="form.description"
 					/>
 				</el-form-item>
 			</el-form>
