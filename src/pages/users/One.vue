@@ -176,20 +176,19 @@ export default {
 		}
 	},
 	watch: {
-		'$route': {
-			handler() {
-				this.closeDialog()
-				if (!this.user.id && this.$route.name === 'users-id') {
-					this.fetchUser()
-				}
-			},
-			immediate: true
-		},
 		'dialog.value'(val) {
 			if (!val) {
 				this.closeDialog()
 			}
 		}
+	},
+	activated() {
+		if (!this.user.id && this.$route.name === 'users-id') {
+			this.fetchUser()
+		}
+	},
+	deactivated() {
+		this.closeDialog()
 	},
 	methods: {
 		fetchUser() {
