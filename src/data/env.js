@@ -1,5 +1,5 @@
-'use strict'
 /* eslint-disable */
+'use strict'
 
 /** @return {boolean} */
 export const isProd = !['dev', 'development'].includes(process.env.APP_ENV)
