@@ -1,17 +1,19 @@
 <template>
 	<el-header>
-		<div
-			class="header--left"
-			@click="onClickLeftHeader"
-		>
-			<img
-				src="@/images/logo.png"
-				alt="logo"
+		<div class="header--left">
+			<div
+				class="logo"
+				@click="onClickLogo"
 			>
-			<span>КНТЕУ</span>
+				<img
+					src="@/images/logo.png"
+					alt="logo"
+				>
+				<span>КНТЕУ</span>
+			</div>
 			<el-button
-				size="small"
-				round
+				type="success"
+				size="mini"
 				@click="onClickCreateRequest"
 			>
 				<i class="material-icons">
@@ -22,17 +24,13 @@
 		</div>
 		<div class="header--center" />
 		<div class="header--right">
-			<!--TODO Move to component-->
-			<el-input
+			<el-button
 				size="mini"
-				placeholder="Глобальний Пошук"
+				:icon="`el-icon-${search ? 'close' : 'search'}`"
+				@click="onClickSearch"
 			>
-				<i
-					slot="suffix"
-					class="el-input__icon el-icon-search"
-				/>
-			</el-input>
-			<!--TODO Move to component-->
+				<span>Глобальний пошук</span>
+			</el-button>
 			<div
 				class="user"
 				@click="onClickEmail"
@@ -62,17 +60,27 @@ export default {
 	computed: {
 		user() {
 			return this.$store.state.profile.user
+		},
+		search() {
+			return this.$store.state.template.search
 		}
 	},
 	methods: {
 		onClickLogout() {
 			this.$store.dispatch('profile/logout')
 		},
-		onClickLeftHeader() {
+		onClickLogo() {
 			this.$router.push({ name: DEFAULT_ROUTE_NAME })
 		},
 		onClickCreateRequest() {
 			this.$router.push({ name: 'requests-create' })
+		},
+		onClickSearch() {
+			if (this.search) {
+				this.$store.commit('template/CLOSE_SEARCH')
+			} else {
+				this.$store.commit('template/OPEN_SEARCH')
+			}
 		},
 		onClickEmail() {
 			this.$store.dispatch('template/addSidebarItem', {
@@ -97,6 +105,22 @@ export default {
 .header--left {
 	display: flex;
 	align-items: center;
+	.el-button {
+		margin-left: 25px;
+		> /deep/ span {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			> i {
+				margin-right: 5px;
+			}
+		}
+	}
+}
+
+.logo {
+	display: flex;
+	align-items: center;
 	cursor: pointer;
 	&:hover {
 		> span {
@@ -114,17 +138,6 @@ export default {
 		color: #333;
 		opacity: .8;
 		transition: opacity .2s;
-	}
-	.el-button {
-		margin-left: 25px;
-		> /deep/ span {
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			> i {
-				margin-right: 5px;
-			}
-		}
 	}
 }
 

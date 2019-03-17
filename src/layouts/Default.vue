@@ -2,7 +2,7 @@
 	<div class="layout layout_default">
 		<el-container direction="vertical">
 			<header-box />
-			<el-container>
+			<el-container :class="{ 'search--open': search }">
 				<sidebar-box />
 				<el-main>
 					<breadcrumbs-box :list="breadcrumbs" />
@@ -15,6 +15,7 @@
 				</el-main>
 			</el-container>
 		</el-container>
+		<search-box v-if="search" />
 	</div>
 </template>
 
@@ -22,15 +23,21 @@
 import BreadcrumbsBox from '@/components/root/Breadcrumbs'
 import SidebarBox from '@/components/root/Sidebar'
 import HeaderBox from '@/components/root/Header'
+import SearchBox from '@/components/root/Search'
 import { DEFAULT_ROUTE_NAME } from '@/router'
 
 export default {
 	components: {
-		BreadcrumbsBox, SidebarBox, HeaderBox
+		BreadcrumbsBox, SidebarBox, HeaderBox, SearchBox
 	},
 	data() {
 		return {
 			breadcrumbs: []
+		}
+	},
+	computed: {
+		search() {
+			return this.$store.state.template.search
 		}
 	},
 	watch: {
@@ -40,6 +47,10 @@ export default {
 		 */
 		'$route': {
 			handler() {
+				if (this.search) {
+					this.$store.commit('template/CLOSE_SEARCH')
+				}
+
 				this.$nextTick(() => {
 					if (!this.$refs.content || !this.$refs.content.$options.breadcrumbs) {
 						this.breadcrumbs = [this.getFirstBreadcrumb(false)]
@@ -91,5 +102,9 @@ export default {
 .page {
 	height: calc(100% - 36px);
 	overflow: auto;
+}
+
+.search--open {
+	filter: blur(5px);
 }
 </style>

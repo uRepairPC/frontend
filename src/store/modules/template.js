@@ -4,6 +4,7 @@ import sections from '@/data/sections'
 import Vue from 'vue'
 
 const state = {
+	search: false,
 	pagesScroll: {},
 	// History on left sidebar
 	// Required id property
@@ -11,6 +12,12 @@ const state = {
 }
 
 const mutations = {
+	OPEN_SEARCH(state) {
+		state.search = true
+	},
+	CLOSE_SEARCH(state) {
+		state.search = false
+	},
 	/**
 	 * @param state
 	 * @param {string} pageName
