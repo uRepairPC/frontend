@@ -20,20 +20,7 @@
 				v-loading="loading"
 				class="header"
 			>
-				<div
-					:class="['image', {
-						'image_has': !!user.image
-					}]"
-					:style="userClass.backgroundImage"
-				>
-					<template v-if="!user.image">
-						<i class="material-icons">face</i>
-						{{ userClass.initials }}
-					</template>
-				</div>
-				<div class="name">
-					{{ userClass.fullName }}
-				</div>
+				<user-image :user="user" />
 			</div>
 			<div
 				v-loading="loading"
@@ -85,7 +72,7 @@ import EditEmailDialog from '@/components/users/dialogs/EditEmail'
 import DeleteDialog from '@/components/users/dialogs/Delete'
 import EditDialog from '@/components/users/dialogs/Edit'
 import { list as listRoles } from '@/data/roles'
-import UserClass from '@/classes/User'
+import UserImage from '@/components/users/Image'
 import * as roles from '@/enum/roles'
 import moment from 'moment'
 
@@ -95,7 +82,7 @@ export default {
 		{ title: route => `ID: ${route.params.id}` }
 	],
 	components: {
-		DeleteDialog
+		UserImage
 	},
 	data() {
 		return {
@@ -116,9 +103,6 @@ export default {
 			const id = this.$route.params.id
 
 			return users[id] || {}
-		},
-		userClass() {
-			return new UserClass(this.user)
 		},
 		canAccess() {
 			return this.profile.role === roles.ADMIN || this.profile.id === this.user.id
@@ -289,7 +273,7 @@ export default {
 	background-position: 50% 50%;
 	border-radius: 50%;
 	margin: 0 auto;
-	color: #000000;
+	color: #000;
 	border: 3px solid;
 	> i {
 		margin-bottom: 10px;

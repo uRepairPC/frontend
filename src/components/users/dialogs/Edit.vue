@@ -9,9 +9,37 @@
 			<el-form
 				ref="form"
 				:model="form"
+				:rules="rules"
 				status-icon
 				@submit.native.prevent="onSubmit"
 			>
+				<el-form-item
+					prop="first_name"
+					label="Ім'я"
+				>
+					<el-input
+						placeholder="Ім'я"
+						v-model="form.first_name"
+					/>
+				</el-form-item>
+				<el-form-item
+					prop="middle_name"
+					label="По-батькові"
+				>
+					<el-input
+						placeholder="По-батькові"
+						v-model="form.middle_name"
+					/>
+				</el-form-item>
+				<el-form-item
+					prop="last_name"
+					label="Прізвище"
+				>
+					<el-input
+						placeholder="Прізвище"
+						v-model="form.last_name"
+					/>
+				</el-form-item>
 				<el-form-item
 					v-if="canChangeRole"
 					label="Роль"
@@ -33,8 +61,8 @@
 				>
 					<el-input
 						placeholder="Телефон"
-						v-model="form.phone">
-					</el-input>
+						v-model="form.phone"
+					/>
 				</el-form-item>
 				<el-form-item
 					prop="textarea"
@@ -44,8 +72,8 @@
 						type="textarea"
 						:autosize="{ minRows: 3 }"
 						placeholder="Опис"
-						v-model="form.description">
-					</el-input>
+						v-model="form.description"
+					/>
 				</el-form-item>
 			</el-form>
 		</div>
@@ -65,6 +93,7 @@
 
 <script>
 import { list as roleList } from '@/data/roles'
+import { required } from '@/data/rules'
 import * as roles from '@/enum/roles'
 
 export default {
@@ -80,14 +109,26 @@ export default {
 		}
 	},
 	data() {
+		const form = {
+			first_name: this.user.first_name,
+			middle_name: this.user.middle_name,
+			last_name: this.user.last_name,
+			description: this.user.description,
+			phone: this.user.phone
+		}
+
+		if (this.user.role) {
+			form.role = this.user.role
+		}
+
 		return {
 			roleList,
 			loading: false,
-			form: {
-				role: this.user.role,
-				description: this.user.description,
-				phone: this.user.phone
-			}
+			rules: {
+				first_name: required,
+				last_name: required
+			},
+			form
 		}
 	},
 	computed: {
@@ -135,6 +176,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.dialog--default {
+	/deep/ > .el-dialog {
+		margin-top: 5vh !important;
+		max-width: 700px;
+	}
+}
+
 .content {
 	/deep/ .el-select {
 		width: 100%;
