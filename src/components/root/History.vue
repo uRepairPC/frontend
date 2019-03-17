@@ -67,6 +67,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "~scss/_colors";
+
 .history-title {
 	text-align: center;
 	border: 1px solid #e6e6e6;
@@ -101,16 +103,16 @@ export default {
 		text-overflow: ellipsis;
 		overflow: hidden;
 		&:hover {
-			color: #409eff;
+			color: $primary;
 		}
 	}
 	> i {
 		width: 20px;
 		text-align: center;
-		color: #909399;
+		color: $info;
 		opacity: 0;
 		&:hover {
-			color: #f56c6c;
+			color: $danger;
 		}
 	}
 }

@@ -85,7 +85,7 @@ import EditEmailDialog from '@/components/users/dialogs/EditEmail'
 import DeleteDialog from '@/components/users/dialogs/Delete'
 import UserClass from '@/classes/User'
 import * as roles from '@/enum/roles'
-import { COLORS } from '@/data/role'
+import { COLORS } from '@/data/roles'
 import moment from 'moment'
 
 export default {

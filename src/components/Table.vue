@@ -60,7 +60,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../styles/keyframes";
+@import "~scss/keyframes";
 
 .loading {
 	/deep/ .el-table__row {

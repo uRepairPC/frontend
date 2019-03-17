@@ -1,0 +1,50 @@
+/* https://element.eleme.io/#/en-US/component/color */
+
+// VARIABLES
+$primary: #409eff;
+$success: #67c23a;
+$warning: #e6a23c;
+$danger: #f56c6c;
+$info: #909399;
+
+// TEXT
+.primary--text {
+  color: $primary !important;
+}
+
+.success--text {
+  color: $success !important;
+}
+
+.warning--text {
+  color: $warning !important;
+}
+
+.danger--text {
+  color: $danger !important;
+}
+
+.info--text {
+  color: $info !important;
+}
+
+// BACKGROUND
+.primary--background {
+  background: $primary !important;
+}
+
+.success--background {
+  background: $success !important;
+}
+
+.warning--background {
+  background: $warning !important;
+}
+
+.danger--background {
+  background: $danger !important;
+}
+
+.info--background {
+  background: $info !important;
+}
