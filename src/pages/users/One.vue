@@ -107,7 +107,7 @@ export default {
 		}
 	},
 	computed: {
-		me() {
+		profile() {
 			return this.$store.state.profile.user
 		},
 		user() {
@@ -120,7 +120,7 @@ export default {
 			return new UserClass(this.user)
 		},
 		canAccess() {
-			return this.me.role === roles.ADMIN || this.me.id === this.user.id
+			return this.profile.role === roles.ADMIN || this.profile.id === this.user.id
 		},
 		buttons() {
 			return [
@@ -165,15 +165,14 @@ export default {
 				{
 					text: 'Видалити користувача',
 					type: 'danger',
-					show: this.me.role === roles.ADMIN && this.me.id !== this.user.id,
+					show: this.profile.role === roles.ADMIN && this.profile.id !== this.user.id,
 					action: () => this.openDialog(DeleteDialog)
 				}
 			]
 		},
 		tableData() {
-			// TODO Hide role on NoAdmin
 			const displayProps = [
-				{ name: 'Роль', key: 'role' },
+				{ name: 'Роль', key: 'role', access: [roles.ADMIN] },
 				{ name: 'E-mail', key: 'email' },
 				{ name: 'Опис', key: 'description' },
 				{ name: 'Телефон', key: 'phone' },
@@ -181,15 +180,23 @@ export default {
 				{ name: 'Останнє оновлення', key: 'updated_at' }
 			]
 
-			return displayProps.reduce((result, obj) => {
-				const value = ['updated_at', 'created_at'].includes(obj.key)
-					? moment(this.user[obj.key]).format('LLL')
-					: this.user[obj.key]
+			return displayProps
+				.filter((obj) => {
+					if (obj.access && typeof obj.access === 'object' && Array.isArray(obj.access)) {
+						return obj.access.includes(this.profile.role)
+					}
 
-				result.push({ ...obj, value })
-				return result
+					return true
+				})
+				.reduce((result, obj) => {
+					const value = ['updated_at', 'created_at'].includes(obj.key)
+						? moment(this.user[obj.key]).format('LLL')
+						: this.user[obj.key]
 
-			}, [])
+					result.push({ ...obj, value })
+					return result
+
+				}, [])
 		}
 	},
 	watch: {
@@ -204,7 +211,6 @@ export default {
 		},
 		'dialog.value'(val) {
 			if (!val) {
-				// FIXME blink animation
 				this.closeDialog()
 			}
 		}
