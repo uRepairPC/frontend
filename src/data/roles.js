@@ -9,8 +9,8 @@ import * as roles from '@/enum/roles'
  */
 export const COLORS = {
 	[roles.ADMIN]: 'danger',
-	[roles.WORKER]: 'warning',
-	[roles.USER]: 'info'
+	[roles.WORKER]: 'primary',
+	[roles.USER]: 'success'
 }
 
 /**

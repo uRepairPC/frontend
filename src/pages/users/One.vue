@@ -55,10 +55,10 @@
 						<template slot-scope="scope">
 							<span v-if="scope.row.key === 'role' && scope.row.value">
 								<el-tag
-									:type="COLORS[scope.row.value]"
+									:type="listRoles[scope.row.value].color"
 									size="medium"
 								>
-									{{ scope.row.value }}
+									{{ listRoles[scope.row.value].name }}
 								</el-tag>
 							</span>
 							<span v-else>{{ scope.row.value }}</span>
@@ -83,9 +83,10 @@ import DeletePhotoDialog from '@/components/users/dialogs/DeleteImage'
 import EditPhotoDialog from '@/components/users/dialogs/EditImage'
 import EditEmailDialog from '@/components/users/dialogs/EditEmail'
 import DeleteDialog from '@/components/users/dialogs/Delete'
+import EditDialog from '@/components/users/dialogs/Edit'
+import { list as listRoles } from '@/data/roles'
 import UserClass from '@/classes/User'
 import * as roles from '@/enum/roles'
-import { COLORS } from '@/data/roles'
 import moment from 'moment'
 
 export default {
@@ -98,7 +99,7 @@ export default {
 	},
 	data() {
 		return {
-			COLORS,
+			listRoles,
 			loading: false,
 			dialog: {
 				value: false,
@@ -135,7 +136,7 @@ export default {
 					text: 'Редагувати дані',
 					type: 'primary',
 					show: this.canAccess,
-					action: () => {}
+					action: () => this.openDialog(EditDialog)
 				},
 				{
 					text: 'Редагувати пароль',
