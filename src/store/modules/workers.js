@@ -20,7 +20,7 @@ const actions = {
 	fetchList({ commit }) {
 		commit('SET_LOADING', true)
 
-		axios.get('workers' )
+		axios.get('workers')
 			.then(({ data }) => {
 				commit('SET_LIST', data)
 				commit('SET_LOADING', false)

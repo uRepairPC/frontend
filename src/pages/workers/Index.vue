@@ -1,8 +1,10 @@
 <template>
 	<div>
+		<top-buttons :buttons="buttons" />
 		<div
 			v-for="(group, key) in list"
 			:key="key"
+			v-loading="loading"
 			class="section">
 			<div class="title">
 				<div :class="['title__before', `${listRoles[key].color}--background`]" />
@@ -30,6 +32,7 @@
 </template>
 
 <script>
+import TopButtons from '@/components/TopButtons'
 import UserBlock from '@/components/users/Block'
 import { list as listRoles} from '@/data/roles'
 
@@ -38,7 +41,7 @@ export default {
 		{ title: 'Працівники' }
 	],
 	components: {
-		UserBlock
+		UserBlock, TopButtons
 	},
 	data() {
 		return {
@@ -51,6 +54,20 @@ export default {
 		},
 		list() {
 			return this.$store.state.workers.list
+		},
+		loading() {
+			return this.$store.state.workers.loading
+		},
+		buttons() {
+			return [
+				{
+					text: 'Оновити',
+					type: 'success',
+					action: this.fetchList,
+					loading: this.loading,
+					disabled: this.loading
+				}
+			]
 		}
 	},
 	mounted() {

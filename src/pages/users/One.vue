@@ -1,21 +1,7 @@
 <template>
 	<div class="user">
 		<div class="user__wrap">
-			<div class="actions">
-				<el-button
-					v-for="(btn, index) in buttons"
-					:key="index"
-					v-if="typeof btn.show === 'undefined' || btn.show"
-					size="small"
-					:disabled="btn.disabled"
-					:loading="btn.loading"
-					:type="btn.type"
-					plain
-					@click="btn.action"
-				>
-					{{ btn.text }}
-				</el-button>
-			</div>
+			<top-buttons :buttons="buttons" />
 			<div
 				v-loading="loading"
 				class="header max--width"
@@ -71,6 +57,7 @@ import EditPhotoDialog from '@/components/users/dialogs/EditImage'
 import EditEmailDialog from '@/components/users/dialogs/EditEmail'
 import DeleteDialog from '@/components/users/dialogs/Delete'
 import EditDialog from '@/components/users/dialogs/Edit'
+import TopButtons from '@/components/TopButtons'
 import { list as listRoles } from '@/data/roles'
 import UserImage from '@/components/users/Image'
 import * as roles from '@/enum/roles'
@@ -82,7 +69,7 @@ export default {
 		{ title: route => `ID: ${route.params.id}` }
 	],
 	components: {
-		UserImage
+		UserImage, TopButtons
 	},
 	data() {
 		return {
@@ -233,15 +220,6 @@ export default {
 	padding: 20px;
 }
 
-.actions {
-	padding: 10px;
-	background: #fff;
-	border-bottom: 1px solid #e6e6e6;
-	> button {
-		margin: 5px;
-	}
-}
-
 .header {
 	padding: 30px;
 	text-align: center;
@@ -251,36 +229,6 @@ export default {
 	margin-bottom: 30px;
 	background: #fff;
 	border: 1px solid #e6e6e6;
-}
-
-.image {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	flex-direction: column;
-	font-weight: bold;
-	font-size: 2rem;
-	width: 150px;
-	height: 150px;
-	background-repeat: no-repeat;
-	background-size: cover;
-	background-position: 50% 50%;
-	border-radius: 50%;
-	margin: 0 auto;
-	color: #000;
-	border: 3px solid;
-	> i {
-		margin-bottom: 10px;
-	}
-	&.image_has {
-		border: 0;
-	}
-}
-
-.name {
-	margin-top: 40px;
-	font-weight: bold;
-	font-size: 1.5rem;
 }
 
 .max--width {
