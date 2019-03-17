@@ -60,12 +60,13 @@ import EditDialog from '@/components/users/dialogs/Edit'
 import TopButtons from '@/components/TopButtons'
 import { list as listRoles } from '@/data/roles'
 import UserImage from '@/components/users/Image'
+import sections from '@/data/sections'
 import * as roles from '@/enum/roles'
 import moment from 'moment'
 
 export default {
 	breadcrumbs: [
-		{ title: 'Користувачі', route: { name: 'users' } },
+		{ title: 'Користувачі', route: { name: sections.users } },
 		{ title: route => `ID: ${route.params.id}` }
 	],
 	components: {
@@ -86,10 +87,14 @@ export default {
 			return this.$store.state.profile.user
 		},
 		user() {
-			const users = this.$store.state.template.sidebar.users
+			const users = this.$store.state.template.sidebar[sections.users]
 			const id = this.$route.params.id
 
-			return users[id] || {}
+			if (users[id]) {
+				return users[id]
+			}
+
+			return {}
 		},
 		canAccess() {
 			return this.profile.role === roles.ADMIN || this.profile.id === this.user.id
@@ -100,7 +105,6 @@ export default {
 					text: 'Оновити',
 					type: 'success',
 					action: this.fetchUser,
-					loading: this.loading,
 					disabled: this.loading
 				},
 				{
@@ -193,11 +197,14 @@ export default {
 
 			this.$axios.get(`users/${this.$route.params.id}`)
 				.then(({ data }) => {
-					this.$store.dispatch('template/addSidebarUser', data.user)
+					this.$store.dispatch('template/addSidebarItem', {
+						section: sections.users,
+						data: data.user
+					})
 					this.loading = false
 				})
 				.catch(() => {
-					this.$router.push({ name: 'users' })
+					this.$router.push({ name: sections.users })
 					this.loading = false
 				})
 		},

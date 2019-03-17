@@ -1,53 +1,63 @@
 'use strict'
 
+import sections from '@/data/sections'
 import Vue from 'vue'
 
 const state = {
 	pagesScroll: {},
-	sidebar: {
-		users: {},
-		requests: {},
-		equipments: {}
-	}
+	// History on left sidebar
+	// Required id property
+	sidebar: {}
 }
 
 const mutations = {
 	/**
 	 * @param state
-	 * @param {String} pageName
-	 * @param {Number} scroll
+	 * @param {string} pageName
+	 * @param {number} scroll
 	 */
 	SET_PAGE_SCROLL(state, { pageName, scroll }) {
 		state.pagesScroll[pageName] = scroll
 	},
+	/**
+	 * @param state
+	 * @param {string} pageName
+	 */
 	REMOVE_PAGE_SCROLL(state, pageName) {
-		delete state.pagesScroll[pageName]
+		Vue.delete(state.pagesScroll, pageName)
 	},
-	ADD_SIDEBAR_USER(state, obj) {
-		Vue.set(state.sidebar.users, obj.id, obj)
+	/** @see actions */
+	ADD_SIDEBAR_ITEM(state, { section, data }) {
+		if (!state.sidebar[section]) {
+			Vue.set(state.sidebar, section, {})
+		}
+
+		Vue.set(state.sidebar[section], data.id, data)
 	},
-	REMOVE_SIDEBAR_USER(state, num) {
-		Vue.delete(state.sidebar.users, num)
-	},
-	ADD_SIDEBAR_REQUEST(state, obj) {
-		Vue.set(state.sidebar.requests, obj.id, obj)
-	},
-	REMOVE_SIDEBAR_REQUEST(state, num) {
-		Vue.delete(state.sidebar.requests, num)
-	},
-	ADD_SIDEBAR_EQUIPMENT(state, obj) {
-		Vue.set(state.sidebar.equipments, obj.id, obj)
-	},
-	REMOVE_SIDEBAR_EQUIPMENT(state, num) {
-		Vue.delete(state.sidebar.equipments, num)
+	/**
+	 *
+	 * @param state
+	 * @param {string} section - name (users, equipments, etc)
+	 * @param {object} data
+	 */
+	REMOVE_SIDEBAR_ITEM(state, { section, data }) {
+		Vue.delete(state.sidebar[section], data.id)
 	}
 }
 
 const actions = {
-	addSidebarUser({ commit, rootState }, obj) {
-		commit('ADD_SIDEBAR_USER', obj)
-		if (obj.id === rootState.profile.user.id) {
-			commit('profile/SET_USER', obj, { root: true })
+	/**
+	 * @param commit
+	 * @param rootState
+	 * @param {string} section - name (users, equipments, etc)
+	 * @param {Object} data
+	 */
+	addSidebarItem({ commit, rootState }, { section, data }) {
+		commit('ADD_SIDEBAR_ITEM', { section, data })
+
+		// Update the current user if move to profile page
+		if (section === sections.users && data.id === rootState.profile.user.id) {
+			commit('profile/SET_USER', data, { root: true })
 		}
 	}
 }

@@ -44,6 +44,8 @@
 </template>
 
 <script>
+import sections from '@/data/sections'
+
 export default {
 	inheritAttrs: false,
 	props: {
@@ -79,7 +81,10 @@ export default {
 
 			this.$axios.post(`users/${this.user.id}/image`, fd)
 				.then(({ data }) => {
-					this.$store.dispatch('template/addSidebarUser', { ...this.user, image: data.image })
+					this.$store.dispatch('template/addSidebarItem', {
+						section: sections.users,
+						data: { ...this.user, image: data.image }
+					})
 					this.loading = false
 					this.close()
 				})

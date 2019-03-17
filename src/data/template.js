@@ -1,63 +1,77 @@
 'use strict'
 
-import template from '@/store/modules/template'
+import sections from '@/data/sections'
 import * as roles from '@/enum/roles'
 import store from '@/store'
-
-/** @var {array} */
-const sidebarKeys = Object.keys(template.state.sidebar)
 
 /**
  * Display on sidebar. Route name must be equal to
  * template.sidebar store for show on left sidebar.
- * @type {array} of objects
+ * @type {object} of objects
  */
-export const menu = [
-	{
+const list = {
+	[sections.home]: {
 		icon: 'home',
 		title: 'Головна сторінка',
-		route: { name: 'home' }
+		route: { name: sections.home }
 	},
-	{
+	[sections.requests]: {
 		icon: 'description',
 		title: 'Заявки',
-		route: { name: 'requests' },
-		historyRemove: 'REMOVE_SIDEBAR_REQUEST'
+		route: { name: sections.requests },
+		history: {
+			show: true
+		},
+		actions: {
+			add: {
+				text: 'Додати заявку',
+				icon: 'add',
+				action: () => this.$router.push({ name: 'requests-create' })
+			}
+		}
 	},
-	{
+	[sections.users]: {
 		icon: 'people_outline',
 		title: 'Користувачі',
-		route: { name: 'users' },
-		historyCb: item => `[${item.id}] ${item.last_name} ${item.first_name}`,
-		historyRemove: 'REMOVE_SIDEBAR_USER'
+		route: { name: sections.users },
+		history: {
+			show: true,
+			callback: (obj) => `[${obj.id}] ${obj.last_name} ${obj.first_name}`
+		}
 	},
-	{
+	[sections.equipments]: {
 		icon: 'storage',
 		title: 'Обладнання',
-		route: { name: 'equipments' },
-		historyRemove: 'REMOVE_SIDEBAR_EQUIPMENT',
-		access: [roles.ADMIN, roles.WORKER]
+		route: { name: sections.equipments },
+		access: [roles.ADMIN, roles.WORKER],
+		history: {
+			show: true
+		}
 	},
-	{
+	[sections.workers]: {
 		icon: 'people',
 		title: 'Працівники',
-		route: { name: 'workers' },
+		route: { name: sections.workers },
 		access: [roles.ADMIN]
 	},
-	{
+	[sections.config]: {
 		icon: 'settings',
 		title: 'Конфігурація',
-		route: { name: 'config' },
+		route: { name: sections.config },
 		access: [roles.ADMIN, roles.WORKER]
 	}
-]
-	.filter((item) => {
-		if (item.access && typeof item.access === 'object' && Array.isArray(item.access)) {
-			return item.access.includes(store.state.profile.user.role)
-		}
+}
 
-		return true
-	})
-	.map((item) => {
-		return { ...item, history: sidebarKeys.includes(item.route.name) }
-	})
+let menu = {}
+
+for (const [key, obj] of Object.entries(list)) {
+	if (obj.access && typeof obj.access === 'object' && Array.isArray(obj.access)) {
+		if (!obj.access.includes(store.state.profile.user.role)) {
+			continue
+		}
+	}
+
+	menu[key] = obj
+}
+
+export { menu }

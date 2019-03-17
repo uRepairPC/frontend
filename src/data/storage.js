@@ -1,5 +1,6 @@
 'use strict'
 
+/** @type {string} */
 export const COLUMN_USERS = 'column_users'
 
 /** @return {array|null} */

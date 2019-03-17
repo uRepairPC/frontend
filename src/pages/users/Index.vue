@@ -44,6 +44,7 @@ import TemplatePage from '@/components/template/Page'
 import scrollTableMixin from '@/mixins/scrollTable'
 import { setColumnUsers } from '@/data/storage'
 import TableComponent from '@/components/Table'
+import sections from '@/data/sections'
 
 export default {
 	breadcrumbs: [
@@ -107,9 +108,12 @@ export default {
 				this.fetchList(this.list.current_page + 1)
 			}
 		},
-		onRowClick(obj) {
-			this.$store.dispatch('template/addSidebarUser', obj)
-			this.$router.push({ name: 'users-id', params: { id: obj.id } })
+		onRowClick(user) {
+			this.$store.dispatch('template/addSidebarItem', {
+				section: sections.users,
+				data: user
+			})
+			this.$router.push({ name: 'users-id', params: { id: user.id } })
 		},
 		onSortChange({ prop: column, order }) {
 			this.sort = { column, order }

@@ -95,6 +95,7 @@
 <script>
 import { list as roleList } from '@/data/roles'
 import { required } from '@/data/rules'
+import sections from '@/data/sections'
 import * as roles from '@/enum/roles'
 
 export default {
@@ -152,7 +153,10 @@ export default {
 
 			this.$axios.put(`users/${this.user.id}`, this.form)
 				.then(({ data }) => {
-					this.$store.dispatch('template/addSidebarUser', data.user)
+					this.$store.dispatch('template/addSidebarItem', {
+						section: sections.users,
+						data: data.user
+					})
 					this.loading = false
 					this.close()
 				})

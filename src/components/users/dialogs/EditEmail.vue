@@ -43,6 +43,7 @@
 </template>
 
 <script>
+import sections from '@/data/sections'
 import * as rules from '@/data/rules'
 
 export default {
@@ -82,7 +83,10 @@ export default {
 
 			this.$axios.post(`users/${this.user.id}/email`, this.form)
 				.then(({ data }) => {
-					this.$store.dispatch('template/addSidebarUser', data.user)
+					this.$store.dispatch('template/addSidebarItem', {
+						section: sections.users,
+						data: data.user
+					})
 					this.loading = false
 					this.close()
 				})

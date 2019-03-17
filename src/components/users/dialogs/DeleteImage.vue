@@ -23,6 +23,8 @@
 </template>
 
 <script>
+import sections from '@/data/sections'
+
 export default {
 	inheritAttrs: false,
 	props: {
@@ -54,7 +56,10 @@ export default {
 
 			this.$axios.delete(`users/${this.user.id}/image`)
 				.then(() => {
-					this.$store.dispatch('template/addSidebarUser', { ...this.user, image: null })
+					this.$store.dispatch('template/addSidebarItem', {
+						section: sections.users,
+						data: { ...this.user, image: null }
+					})
 					this.loading = false
 					this.close()
 				})

@@ -30,6 +30,8 @@
 </template>
 
 <script>
+import sections from '@/data/sections'
+
 export default {
 	inheritAttrs: false,
 	props: {
@@ -83,7 +85,7 @@ export default {
 
 				if (res.status === 200) {
 					this.close()
-					this.$router.push({ name: 'users' })
+					this.$router.push({ name: sections.users })
 				}
 			} finally {
 				this.loading = false

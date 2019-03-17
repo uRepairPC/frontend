@@ -39,7 +39,7 @@ export default {
 			return this.$route.name
 		},
 		routeNames() {
-			return this.menu.map(m => m.route.name)
+			return Object.values(this.menu).map(m => m.route.name)
 		}
 	},
 	watch: {

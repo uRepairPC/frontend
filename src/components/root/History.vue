@@ -1,27 +1,27 @@
 <template>
 	<div class="history">
 		<div class="history-title">
-			Швидкий перехід
+			Відкриті сторінки
 		</div>
-		<el-collapse v-model="activeName">
+		<el-collapse v-model="activeNames">
 			<el-collapse-item
-				v-for="(item, index) in menuHistory"
-				:key="index"
-				:name="item.route.name"
+				v-for="(obj, section) in menuHistory"
+				:key="section"
+				:name="section"
 			>
 				<template slot="title">
-					<i class="material-icons">{{ item.icon }}</i>
-					{{ item.title }}
+					<i class="material-icons">{{ obj.icon }}</i>
+					{{ obj.title }}
 				</template>
 				<div
-					v-for="(historyItem, j) in sidebar[item.route.name]"
+					v-for="(historyItem, j) in sidebar[obj.route.name]"
 					:key="j"
 					class="history-item"
 				>
-					<span @click="onClick(historyItem, item.route.name)">{{ getText(item, historyItem) }}</span>
+					<span @click="onClick(historyItem, obj.route.name)">{{ getText(obj, historyItem) }}</span>
 					<i
 						class="material-icons"
-						@click="removeHistoryItem(item, historyItem)"
+						@click="removeHistoryItem(section, historyItem)"
 					>
 						clear
 					</i>
@@ -37,30 +37,48 @@ import { menu } from '@/data/template'
 export default {
 	data() {
 		return {
-			activeName: ''
+			activeNames: []
 		}
 	},
 	computed: {
 		menuHistory() {
-			return menu.filter(m => !!m.history)
+			const list = {}
+
+			Object.entries(menu).forEach(([key, obj]) => {
+				if (obj.history && typeof obj.history === 'object' && obj.history.show) {
+					list[key] = obj
+				}
+			})
+
+			return list
 		},
 		sidebar() {
 			return this.$store.state.template.sidebar
 		}
 	},
+	mounted() {
+		this.activeNames = Object.keys(this.menuHistory)
+	},
 	methods: {
-		removeHistoryItem(item, historyItem) {
-			this.$store.commit(`template/${item.historyRemove}`, historyItem.id)
+		removeHistoryItem(section, historyItem) {
+			this.$store.commit(`template/REMOVE_SIDEBAR_ITEM`, {
+				section,
+				data: historyItem
+			})
+
+			if (this.$route.name === `${section}-id` && this.$route.params.id === historyItem.id) {
+				this.$router.push({ name: section })
+			}
 		},
-		getText(item, historyItem) {
-			if (item.historyCb && typeof item.historyCb === 'function') {
-				return item.historyCb(historyItem)
+		getText(obj, historyItem) {
+			if (obj.history.callback && typeof obj.history.callback === 'function') {
+				return obj.history.callback(historyItem)
 			}
 
 			return `[${historyItem.id}] ${historyItem.name}` || historyItem.id
 		},
-		onClick(item, route) {
-			this.$router.push({ name: `${route}-id`, params: { id: item.id } })
+		onClick(obj, route) {
+			this.$router.push({ name: `${route}-id`, params: { id: obj.id } })
 		}
 	}
 }

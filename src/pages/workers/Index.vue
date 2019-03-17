@@ -65,7 +65,6 @@ export default {
 					text: 'Оновити',
 					type: 'success',
 					action: this.fetchList,
-					loading: this.loading,
 					disabled: this.loading
 				}
 			]

@@ -56,6 +56,7 @@
 
 <script>
 import { DEFAULT_ROUTE_NAME } from '@/router'
+import sections from '@/data/sections'
 
 export default {
 	computed: {
@@ -74,7 +75,10 @@ export default {
 			this.$router.push({ name: 'requests-create' })
 		},
 		onClickEmail() {
-			this.$store.dispatch('template/addSidebarUser', this.user)
+			this.$store.dispatch('template/addSidebarItem', {
+				section: sections.users,
+				data: this.user
+			})
 			this.$router.push({ name: 'users-id', params: { id: this.user.id } })
 		}
 	}
