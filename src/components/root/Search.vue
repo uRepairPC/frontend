@@ -1,10 +1,23 @@
 <template>
-	<div class="search">
-		<div class="wrap">
-			<!--TODO-->
-			Search
+	<transition name="search-anim">
+		<div
+			v-if="openSearch"
+			class="root"
+		>
+			<div class="wrap">
+				<div class="input">
+					<el-input
+						v-model="input"
+						ref="input"
+						placeholder="Введіть щось"
+						prefix-icon="el-icon-search"
+						clearable
+					/>
+				</div>
+				{{ input }}
+			</div>
 		</div>
-	</div>
+	</transition>
 </template>
 
 <script>
@@ -13,20 +26,97 @@ export default {
 		return {
 			input: ''
 		}
+	},
+	computed: {
+		openSearch() {
+			return this.$store.state.template.openSearch
+		}
+	},
+	watch: {
+		openSearch(val) {
+			if (val) {
+				this.$nextTick(() => this.$refs.input.focus())
+				this.addEvent()
+			} else {
+				this.removeEvent()
+			}
+		}
+	},
+	methods: {
+		onKeyDown(evt) {
+			if (evt.key === 'Escape') {
+				this.$store.commit('template/CLOSE_SEARCH')
+			}
+		},
+		addEvent() {
+			document.addEventListener('keydown', this.onKeyDown)
+		},
+		removeEvent() {
+			document.removeEventListener('keydown', this.onKeyDown)
+		}
 	}
 }
 </script>
 
 <style lang="scss" scoped>
-.search {
+.root {
 	position: absolute;
 	top: 60px;
 	height: calc(100% - 60px);
 	width: 100%;
+	background: rgba(255, 255, 255, .8);
 	overflow: auto;
 }
 
 .wrap {
-	padding: 20px;
+	padding: 30px 20px;
+}
+
+.input {
+	max-width: 600px;
+	margin: 0 auto;
+}
+
+// <animation>
+.search-anim-enter-active {
+	transition: .3s;
+	.wrap {
+		transition: .3s;
+		opacity: 0;
+	}
+	.input {
+		transition: .3s;
+		opacity: 0;
+		transform: translateY(-30px);
+	}
+}
+
+.search-anim-enter-to {
+	.wrap {
+		opacity: 1;
+	}
+	.input {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+.search-anim-leave-active {
+	transition: .1s;
+	.wrap {
+		transition: .1s;
+	}
+	.input {
+		transition: .1s;
+	}
+}
+
+.search-anim-leave-to {
+	.wrap {
+		opacity: 0;
+	}
+	.input {
+		transform: translateY(-30px);
+	}
 }
 </style>

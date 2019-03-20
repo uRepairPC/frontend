@@ -26,7 +26,8 @@
 		<div class="header--right">
 			<el-button
 				size="mini"
-				:icon="`el-icon-${search ? 'close' : 'search'}`"
+				:type="openSearch ? 'primary' : 'default'"
+				:icon="`el-icon-${openSearch ? 'close' : 'search'}`"
 				@click="onClickSearch"
 			>
 				<span>Глобальний пошук</span>
@@ -61,8 +62,8 @@ export default {
 		user() {
 			return this.$store.state.profile.user
 		},
-		search() {
-			return this.$store.state.template.search
+		openSearch() {
+			return this.$store.state.template.openSearch
 		}
 	},
 	methods: {
@@ -76,7 +77,7 @@ export default {
 			this.$router.push({ name: 'requests-create' })
 		},
 		onClickSearch() {
-			if (this.search) {
+			if (this.openSearch) {
 				this.$store.commit('template/CLOSE_SEARCH')
 			} else {
 				this.$store.commit('template/OPEN_SEARCH')

@@ -2,7 +2,7 @@
 	<div class="layout layout_default">
 		<el-container direction="vertical">
 			<header-box />
-			<el-container :class="{ 'search--open': search }">
+			<el-container :class="{ 'search--open': openSearch }">
 				<sidebar-box />
 				<el-main>
 					<breadcrumbs-box :list="breadcrumbs" />
@@ -15,7 +15,7 @@
 				</el-main>
 			</el-container>
 		</el-container>
-		<search-box v-if="search" />
+		<search-box />
 	</div>
 </template>
 
@@ -36,8 +36,8 @@ export default {
 		}
 	},
 	computed: {
-		search() {
-			return this.$store.state.template.search
+		openSearch() {
+			return this.$store.state.template.openSearch
 		}
 	},
 	watch: {
@@ -47,7 +47,7 @@ export default {
 		 */
 		'$route': {
 			handler() {
-				if (this.search) {
+				if (this.openSearch) {
 					this.$store.commit('template/CLOSE_SEARCH')
 				}
 
