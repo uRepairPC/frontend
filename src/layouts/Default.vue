@@ -6,7 +6,7 @@
 				<sidebar-box />
 				<el-main>
 					<breadcrumbs-box :list="breadcrumbs" />
-					<keep-alive>
+					<keep-alive :include="keepAliveRoutesName">
 						<router-view
 							ref="content"
 							class="page"
@@ -32,6 +32,9 @@ export default {
 	},
 	data() {
 		return {
+			keepAliveRoutesName: [
+				'Home', 'Requests', 'Users', 'Workers'
+			],
 			breadcrumbs: []
 		}
 	},

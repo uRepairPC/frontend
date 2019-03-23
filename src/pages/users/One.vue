@@ -57,6 +57,7 @@ import EditPhotoDialog from '@/components/users/dialogs/EditImage'
 import EditEmailDialog from '@/components/users/dialogs/EditEmail'
 import DeleteDialog from '@/components/users/dialogs/Delete'
 import EditDialog from '@/components/users/dialogs/Edit'
+import { COLUMNS_DATES } from '../../data/columns'
 import TopButtons from '@/components/TopButtons'
 import { list as listRoles } from '@/data/roles'
 import UserImage from '@/components/users/Image'
@@ -82,6 +83,11 @@ export default {
 			}
 		}
 	},
+	created() {
+		if (!this.user.id) {
+			this.fetchUser()
+		}
+	},
 	computed: {
 		profile() {
 			return this.$store.state.profile.user
@@ -90,14 +96,21 @@ export default {
 			const users = this.$store.state.template.sidebar[sections.users]
 			const id = this.$route.params.id
 
-			if (users[id]) {
+			if (users && users[id]) {
 				return users[id]
 			}
 
 			return {}
 		},
-		canAccess() {
-			return this.profile.role === roles.ADMIN || this.profile.id === this.user.id
+		isAdmin() {
+			if (!this.user.id) {
+				return false
+			}
+
+			return this.profile.role === roles.ADMIN
+		},
+		canBasicOperation() {
+			return this.isAdmin || this.profile.id === this.user.id
 		},
 		buttons() {
 			return [
@@ -110,38 +123,38 @@ export default {
 				{
 					text: 'Редагувати дані',
 					type: 'primary',
-					show: this.canAccess,
+					show: this.canBasicOperation,
 					action: () => this.openDialog(EditDialog)
 				},
 				{
 					text: 'Редагувати пароль',
 					type: 'primary',
-					show: this.canAccess,
+					show: this.canBasicOperation,
 					action: () => this.openDialog(EditPasswordDialog)
 				},
 				{
 					text: 'Редагувати зображення',
 					type: 'primary',
-					show: this.canAccess,
+					show: this.canBasicOperation,
 					action: () => this.openDialog(EditPhotoDialog)
 				},
 				{
 					text: 'Редагувати email',
 					type: 'primary',
-					show: this.canAccess,
+					show: this.canBasicOperation,
 					action: () => this.openDialog(EditEmailDialog)
 				},
 				{
 					text: 'Видалити зображення',
 					type: 'warning',
-					show: this.canAccess,
+					show: this.canBasicOperation,
 					disabled: !this.user.image,
 					action: () => this.openDialog(DeletePhotoDialog)
 				},
 				{
 					text: 'Видалити користувача',
 					type: 'danger',
-					show: this.profile.role === roles.ADMIN && this.profile.id !== this.user.id,
+					show: this.isAdmin && this.profile.id !== this.user.id,
 					action: () => this.openDialog(DeleteDialog)
 				}
 			]
@@ -165,7 +178,7 @@ export default {
 					return true
 				})
 				.reduce((result, obj) => {
-					const value = ['updated_at', 'created_at'].includes(obj.key)
+					const value = COLUMNS_DATES.includes(obj.key)
 						? moment(this.user[obj.key]).format('LLL')
 						: this.user[obj.key]
 
@@ -180,15 +193,12 @@ export default {
 			if (!val) {
 				this.closeDialog()
 			}
+		},
+		'$route'() {
+			if (!this.user.id) {
+				this.fetchUser()
+			}
 		}
-	},
-	activated() {
-		if (!this.user.id && this.$route.name === 'users-id') {
-			this.fetchUser()
-		}
-	},
-	deactivated() {
-		this.closeDialog()
 	},
 	methods: {
 		fetchUser() {

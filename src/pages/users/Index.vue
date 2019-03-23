@@ -47,6 +47,7 @@ import TableComponent from '@/components/Table'
 import sections from '@/data/sections'
 
 export default {
+	name: 'Users',
 	breadcrumbs: [
 		{ title: 'Користувачі' }
 	],

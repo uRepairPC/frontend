@@ -61,12 +61,14 @@ export default {
 	},
 	methods: {
 		removeHistoryItem(section, historyItem) {
+			const routeId = +this.$route.params.id
+
 			this.$store.commit(`template/REMOVE_SIDEBAR_ITEM`, {
 				section,
 				data: historyItem
 			})
 
-			if (this.$route.name === `${section}-id` && this.$route.params.id === historyItem.id) {
+			if (this.$route.name === `${section}-id` && routeId === historyItem.id) {
 				this.$router.push({ name: section })
 			}
 		},

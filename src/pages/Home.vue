@@ -1,11 +1,13 @@
 <template>
 	<div class="home">
-		<div
-			v-for="(item, index) in menu"
-			:key="index"
-			class="item"
-		>
-			{{ item }}
+		<div class="items">
+			<div
+				v-for="(item, index) in menu"
+				:key="index"
+				class="item"
+			>
+				{{ item }}
+			</div>
 		</div>
 	</div>
 </template>
@@ -14,6 +16,7 @@
 import { menu } from '@/data/template'
 
 export default {
+	name: 'Home',
 	data() {
 		return {
 			menu

@@ -38,6 +38,7 @@ import UserBlock from '@/components/users/Block'
 import { list as listRoles} from '@/data/roles'
 
 export default {
+	name: 'Workers',
 	breadcrumbs: [
 		{ title: 'Працівники' }
 	],
