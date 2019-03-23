@@ -2,7 +2,16 @@
 
 import sections from '@/data/sections'
 import * as roles from '@/enum/roles'
+import router from '@/router'
 import store from '@/store'
+
+/**
+ * @param {*} input
+ * @returns {boolean}
+ */
+const isArray = (input) => {
+	return !!input && typeof input === 'object' && !!Array.isArray(input)
+}
 
 /**
  * Display on sidebar. Route name must be equal to
@@ -24,9 +33,9 @@ const list = {
 		},
 		actions: {
 			add: {
-				text: 'Додати заявку',
+				text: 'Створити заявку',
 				icon: 'add',
-				action: () => this.$router.push({ name: 'requests-create' })
+				action: () => router.push({ name: 'requests-create' })
 			}
 		}
 	},
@@ -37,6 +46,14 @@ const list = {
 		history: {
 			show: true,
 			callback: (obj) => `[${obj.id}] ${obj.last_name} ${obj.first_name}`
+		},
+		actions: {
+			add: {
+				text: 'Створити користувача',
+				icon: 'add',
+				access: [roles.ADMIN],
+				action: () => router.push({ name: 'users-create' })
+			}
 		}
 	},
 	[sections.equipments]: {
@@ -46,6 +63,13 @@ const list = {
 		access: [roles.ADMIN, roles.WORKER],
 		history: {
 			show: true
+		},
+		actions: {
+			add: {
+				text: 'Створити обладнання',
+				icon: 'add',
+				action: () => router.push({ name: 'equipments-create' })
+			}
 		}
 	},
 	[sections.workers]: {
@@ -62,13 +86,28 @@ const list = {
 	}
 }
 
+/*
+ * Filter array by depends user role.
+ */
+
+const userRole = store.state.profile.user.role
 let menu = {}
 
 for (const [key, obj] of Object.entries(list)) {
-	if (obj.access && typeof obj.access === 'object' && Array.isArray(obj.access)) {
-		if (!obj.access.includes(store.state.profile.user.role)) {
+	if (isArray(obj.access)) {
+		if (!obj.access.includes(userRole)) {
 			continue
 		}
+	}
+
+	if (obj.actions && typeof obj.actions === 'object') {
+		Object.entries(obj.actions).forEach(([actionKey, action]) => {
+			if (isArray(action.access)) {
+				if (!action.access.includes(userRole)) {
+					delete obj.actions[actionKey]
+				}
+			}
+		})
 	}
 
 	menu[key] = obj
