@@ -52,7 +52,7 @@
 							:label="role.name"
 							:value="key"
 						>
-							<span :class="`${role.color}--text`">{{ role.name }}</span>
+							<span :class="role.color">{{ role.name }}</span>
 						</el-option>
 					</el-select>
 				</el-form-item>

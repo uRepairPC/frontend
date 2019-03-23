@@ -9,17 +9,15 @@ export const COLUMNS_DATES = ['updated_at', 'created_at']
 export function users() {
 	const defaultActive = ['first_name', 'last_name', 'email', 'phone']
 
-	// TODO Column width
-
 	const columns = [
-		{ prop: 'id', label: 'ID', sortable: true },
-		{ prop: 'first_name', label: 'Ім\'я', sortable: true },
-		{ prop: 'middle_name', label: 'По-батькові', sortable: true },
-		{ prop: 'last_name', label: 'Прізвище', sortable: true },
-		{ prop: 'email', label: 'E-mail', sortable: true },
-		{ prop: 'phone', label: 'Телефон', sortable: true },
-		{ prop: 'updated_at', label: 'Оновлено', sortable: true },
-		{ prop: 'created_at', label: 'Створений', sortable: true }
+		{ prop: 'id', label: 'ID', 'min-width': 70, sortable: true },
+		{ prop: 'first_name', label: 'Ім\'я', 'min-width': 150, sortable: true },
+		{ prop: 'middle_name', label: 'По-батькові', 'min-width': 150, sortable: true },
+		{ prop: 'last_name', label: 'Прізвище', 'min-width': 150, sortable: true },
+		{ prop: 'email', label: 'E-mail', 'min-width': 250, sortable: true },
+		{ prop: 'phone', label: 'Телефон', 'min-width': 150, sortable: true },
+		{ prop: 'updated_at', label: 'Оновлено', 'min-width': 150, sortable: true },
+		{ prop: 'created_at', label: 'Створений', 'min-width': 150, sortable: true }
 	]
 
 	const data = getColumnUsers() || defaultActive

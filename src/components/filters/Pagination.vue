@@ -10,13 +10,13 @@
 		/>
 		<div class="filter-pagination__circles">
 			<circle-progress
-				class="success--text"
+				class="success"
 				:text="`${pagination.current_page} / ${pagination.last_page}`"
 				sub-text="Сторінок"
 				:value="100 * (pagination.current_page / pagination.last_page)"
 			/>
 			<circle-progress
-				class="danger--text"
+				class="danger"
 				:text="textData"
 				sub-text="Даних"
 				:value="100 * ((pagination.current_page * pagination.per_page) / pagination.total)"
