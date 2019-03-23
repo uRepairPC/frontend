@@ -83,3 +83,13 @@
 .filter-pagination__circles {
   display: flex;
 }
+
+/*
+ * Fixed
+ */
+
+.filter-fixed {
+  .el-select {
+    width: 100%;
+  }
+}

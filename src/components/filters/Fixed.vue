@@ -1,0 +1,32 @@
+<template>
+	<filter-basic
+		title="Зафіксувати колонку"
+		class="filter-fixed"
+	>
+		<el-select
+			v-bind="$attrs"
+			v-on="$listeners"
+			clearable
+		>
+			<el-option
+				v-for="(column, index) in columns"
+				:key="index"
+				:label="column.label"
+				:value="column.prop"
+			/>
+		</el-select>
+	</filter-basic>
+</template>
+
+<script>
+export default {
+	name: 'FilterFixed',
+	inheritAttrs: false,
+	props: {
+		columns: {
+			type: Array,
+			required: true
+		}
+	}
+}
+</script>

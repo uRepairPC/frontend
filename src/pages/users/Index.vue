@@ -24,11 +24,10 @@
 				:columns="columns"
 				@change="onChangeColumn"
 			/>
-			<!--
-				TODO Filter Configuration
-				Example: Size table
-								 Fixed orw
-			-->
+			<filter-fixed
+				v-model="fixed"
+				:columns="columns"
+			/>
 			<filter-table-buttons
 				ref="buttons"
 				slot="bottom"
@@ -61,6 +60,7 @@ export default {
 		return {
 			columns: columnsUsers(),
 			loadingType: 'rows',
+			fixed: null,
 			search: '',
 			sort: {}
 		}
@@ -73,7 +73,15 @@ export default {
 			return this.list.data || []
 		},
 		filterColumns() {
-			return this.columns.filter(c => !!c.model)
+			const columns = []
+
+			for (const column of this.columns) {
+				if (!!column.model) {
+					columns.push({ ...column, fixed: this.fixed === column.prop })
+				}
+			}
+
+			return columns
 		},
 		loading() {
 			return this.$store.state.users.loading

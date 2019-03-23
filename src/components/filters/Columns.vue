@@ -31,7 +31,7 @@ export default {
 	props: {
 		columns: {
 			type: Array,
-			default: () => []
+			required: true
 		}
 	},
 	computed: {
