@@ -109,6 +109,10 @@ export default {
 			}
 		},
 		onRowClick(user) {
+			if (user.disable) {
+				return
+			}
+
 			this.$store.dispatch('template/addSidebarItem', {
 				section: sections.users,
 				data: user

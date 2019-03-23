@@ -2,6 +2,9 @@
 
 import { getColumnUsers } from './storage'
 
+/** @type {array} */
+export const COLUMNS_DATES = ['updated_at', 'created_at']
+
 /** @return {Object} - prop, label, model */
 export function users() {
 	const defaultActive = ['first_name', 'last_name', 'email', 'phone']

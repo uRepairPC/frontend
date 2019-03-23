@@ -79,22 +79,17 @@ export default {
 
 // <animation>
 .search-anim-enter-active {
-	transition: .3s;
-	.wrap {
-		transition: .3s;
-		opacity: 0;
-	}
+	transition: .2s;
+	opacity: 0;
 	.input {
-		transition: .3s;
+		transition: .2s;
 		opacity: 0;
-		transform: translateY(-30px);
+		transform: translateY(-20px);
 	}
 }
 
 .search-anim-enter-to {
-	.wrap {
-		opacity: 1;
-	}
+	opacity: 1;
 	.input {
 		opacity: 1;
 		transform: translateY(0);
@@ -102,19 +97,14 @@ export default {
 }
 
 .search-anim-leave-active {
-	transition: .1s;
-	.wrap {
-		transition: .1s;
-	}
+	transition: .2s;
 	.input {
-		transition: .1s;
+		transition: .2s;
 	}
 }
 
 .search-anim-leave-to {
-	.wrap {
-		opacity: 0;
-	}
+	opacity: 0;
 	.input {
 		transform: translateY(-30px);
 	}

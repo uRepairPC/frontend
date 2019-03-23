@@ -105,6 +105,7 @@ export default {
 }
 
 .search--open {
+	transition: .2s;
 	filter: blur(5px);
 }
 </style>

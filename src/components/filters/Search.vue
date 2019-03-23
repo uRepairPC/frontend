@@ -11,9 +11,10 @@
 			:value="value"
 			size="small"
 			placeholder="Пошук по таблиці"
+			clearable
 			v-bind="$attrs"
-			@keyup.enter.native="submit"
 			v-on="listeners"
+			@keyup.enter.native="submit"
 		/>
 	</filter-basic>
 </template>
