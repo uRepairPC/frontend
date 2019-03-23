@@ -6,6 +6,7 @@ import locale from 'element-ui/lib/locale/lang/ua'
 import prototypes from '@/prototypes'
 import directives from '@/directives'
 import ElementUI from 'element-ui'
+import NProgress from 'nprogress'
 import router from '@/router'
 import App from '@/App.vue'
 import moment from 'moment'
@@ -23,6 +24,7 @@ Vue.config.productionTip = false
 
 // Other libraries
 moment.locale('uk')
+NProgress.configure({ showSpinner: false })
 
 /**
  * Install global prototypes

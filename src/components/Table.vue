@@ -69,6 +69,10 @@ export default {
 	},
 	methods: {
 		getDate(date) {
+			if (!date) {
+				return null
+			}
+
 			return moment(date).format('LL')
 		},
 		isColumnDate(prop) {

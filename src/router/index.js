@@ -1,6 +1,7 @@
 'use strict'
 
 import { notAuthorizedRoutesName } from '@/router/routes'
+import NProgress from 'nprogress'
 import router from './router'
 import store from '@/store'
 
@@ -15,6 +16,7 @@ import store from '@/store'
 export const DEFAULT_ROUTE_NAME = 'home'
 
 router.beforeEach((to, from, next) => {
+	NProgress.start()
 	const isLogin = store.state.profile.isLogin
 
 	if (to.path === '/' && to.name !== DEFAULT_ROUTE_NAME) {
@@ -29,6 +31,10 @@ router.beforeEach((to, from, next) => {
 	else {
 		next()
 	}
+})
+
+router.afterEach(() => {
+	NProgress.done()
 })
 
 export default router
