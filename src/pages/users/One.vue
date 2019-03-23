@@ -61,6 +61,7 @@ import { COLUMNS_DATES } from '../../data/columns'
 import TopButtons from '@/components/TopButtons'
 import { list as listRoles } from '@/data/roles'
 import UserImage from '@/components/users/Image'
+import { isArray } from '@/scripts/helpers'
 import sections from '@/data/sections'
 import * as roles from '@/enum/roles'
 import moment from 'moment'
@@ -171,7 +172,7 @@ export default {
 
 			return displayProps
 				.filter((obj) => {
-					if (obj.access && typeof obj.access === 'object' && Array.isArray(obj.access)) {
+					if (isArray(obj.access)) {
 						return obj.access.includes(this.profile.role)
 					}
 

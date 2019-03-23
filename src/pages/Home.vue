@@ -2,7 +2,7 @@
 	<div class="home">
 		<div class="items">
 			<div
-				v-for="(item, index) in menu"
+				v-for="(item, index) in filterMenu"
 				:key="index"
 				class="item"
 			>
@@ -49,21 +49,24 @@
 
 <script>
 import sections from '@/data/sections'
-import { menu } from '@/data/template'
+import { mapGetters } from 'vuex'
 
 export default {
 	name: 'Home',
-	data() {
-		const list = {}
+	computed: {
+		...mapGetters({
+			menu: 'template/menu'
+		}),
+		filterMenu() {
+			const list = {}
 
-		Object.entries(menu).filter(([key, val]) => {
-			if (key !== sections.home) {
-				list[key] = val
-			}
-		})
+			Object.entries(this.menu).filter(([key, val]) => {
+				if (key !== sections.home) {
+					list[key] = val
+				}
+			})
 
-		return {
-			menu: list
+			return list
 		}
 	},
 	methods: {
@@ -96,7 +99,7 @@ export default {
 .item-header {
 	display: flex;
 	align-items: center;
-	padding: 10px 20px;
+	padding: 15px 20px;
 	box-shadow: $basicShadow;
 	background: #fff;
 	cursor: pointer;
@@ -133,6 +136,7 @@ export default {
 
 .item--route {
 	color: $info;
+	font-size: .8rem;
 }
 
 .item-action {

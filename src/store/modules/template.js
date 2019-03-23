@@ -1,5 +1,7 @@
 'use strict'
 
+import { isArray } from '@/scripts/helpers'
+import { listMenu } from '@/data/template'
 import sections from '@/data/sections'
 import Vue from 'vue'
 
@@ -69,6 +71,37 @@ const actions = {
 	}
 }
 
+const getters = {
+	/**
+	 * Filter global menu (sidebar, another places)
+	 * by depends user role.
+	 */
+	menu(state, getters, rootState) {
+		const userRole = rootState.profile.user.role
+		let menu = {}
+
+		for (const [key, obj] of Object.entries(listMenu)) {
+			if (isArray(obj.access)) {
+				if (!obj.access.includes(userRole)) {
+					continue
+				}
+			}
+
+			if (obj.actions && typeof obj.actions === 'object') {
+				Object.entries(obj.actions).forEach(([actionKey, action]) => {
+					if (isArray(action.access) && !action.access.includes(userRole)) {
+						delete obj.actions[actionKey]
+					}
+				})
+			}
+
+			menu[key] = obj
+		}
+
+		return menu
+	}
+}
+
 export default {
-	state, mutations, actions
+	state, mutations, actions, getters
 }

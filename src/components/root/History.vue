@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import { menu } from '@/data/template'
+import { mapGetters } from 'vuex'
 
 export default {
 	data() {
@@ -41,10 +41,13 @@ export default {
 		}
 	},
 	computed: {
+		...mapGetters({
+			menu: 'template/menu'
+		}),
 		menuHistory() {
 			const list = {}
 
-			Object.entries(menu).forEach(([key, obj]) => {
+			Object.entries(this.menu).forEach(([key, obj]) => {
 				if (obj.history && typeof obj.history === 'object' && obj.history.show) {
 					list[key] = obj
 				}

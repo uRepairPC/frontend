@@ -3,22 +3,13 @@
 import sections from '@/data/sections'
 import * as roles from '@/enum/roles'
 import router from '@/router'
-import store from '@/store'
-
-/**
- * @param {*} input
- * @returns {boolean}
- */
-const isArray = (input) => {
-	return !!input && typeof input === 'object' && !!Array.isArray(input)
-}
 
 /**
  * Display on sidebar. Route name must be equal to
  * template.sidebar store for show on left sidebar.
  * @type {object} of objects
  */
-const list = {
+const listMenu = {
 	[sections.home]: {
 		icon: 'home',
 		title: 'Головна сторінка',
@@ -86,31 +77,4 @@ const list = {
 	}
 }
 
-/*
- * Filter array by depends user role.
- */
-
-const userRole = store.state.profile.user.role
-let menu = {}
-
-for (const [key, obj] of Object.entries(list)) {
-	if (isArray(obj.access)) {
-		if (!obj.access.includes(userRole)) {
-			continue
-		}
-	}
-
-	if (obj.actions && typeof obj.actions === 'object') {
-		Object.entries(obj.actions).forEach(([actionKey, action]) => {
-			if (isArray(action.access)) {
-				if (!action.access.includes(userRole)) {
-					delete obj.actions[actionKey]
-				}
-			}
-		})
-	}
-
-	menu[key] = obj
-}
-
-export { menu }
+export { listMenu }

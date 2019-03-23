@@ -23,18 +23,16 @@
 
 <script>
 import History from '@/components/root/History'
-import { menu } from '@/data/template'
+import { mapGetters } from 'vuex'
 
 export default {
 	components: {
 		History
 	},
-	data() {
-		return {
-			menu
-		}
-	},
 	computed: {
+		...mapGetters({
+			menu: 'template/menu'
+		}),
 		defaultRoute() {
 			return this.$route.name
 		},
