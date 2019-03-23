@@ -2,6 +2,7 @@
 
 import sections from '@/data/sections'
 import * as roles from '@/enum/roles'
+import * as types from '@/enum/types'
 import router from '@/router'
 
 /**
@@ -26,6 +27,7 @@ const listMenu = {
 			add: {
 				text: 'Створити заявку',
 				icon: 'add',
+				type: types.PRIMARY,
 				action: () => router.push({ name: 'requests-create' })
 			}
 		}
@@ -42,6 +44,7 @@ const listMenu = {
 			add: {
 				text: 'Створити користувача',
 				icon: 'add',
+				type: types.PRIMARY,
 				access: [roles.ADMIN],
 				action: () => router.push({ name: 'users-create' })
 			}
@@ -59,6 +62,7 @@ const listMenu = {
 			add: {
 				text: 'Створити обладнання',
 				icon: 'add',
+				type: types.PRIMARY,
 				action: () => router.push({ name: 'equipments-create' })
 			}
 		}

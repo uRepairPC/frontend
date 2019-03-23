@@ -36,6 +36,7 @@
 import TopButtons from '@/components/TopButtons'
 import UserBlock from '@/components/users/Block'
 import { list as listRoles} from '@/data/roles'
+import { SUCCESS } from '@/enum/types'
 
 export default {
 	name: 'Workers',
@@ -64,7 +65,7 @@ export default {
 			return [
 				{
 					text: 'Оновити',
-					type: 'success',
+					type: SUCCESS,
 					action: this.fetchList,
 					disabled: this.loading
 				}

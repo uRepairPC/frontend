@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import { COLUMNS_DATES } from '../data/columns'
+import { COLUMNS_DATES } from '@/data/columns'
 import moment from 'moment'
 
 export default {

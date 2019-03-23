@@ -13,6 +13,9 @@
 			/>
 		</template>
 		<filter-core slot="right-column">
+			<filter-action
+				:section="sectionName"
+			/>
 			<filter-search
 				v-model="search"
 				@submit="fetchList"
@@ -58,6 +61,7 @@ export default {
 	],
 	data() {
 		return {
+			sectionName: sections.users,
 			columns: columnsUsers(),
 			loadingType: 'rows',
 			fixed: null,

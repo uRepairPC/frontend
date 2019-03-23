@@ -4,6 +4,7 @@ import TableButtons from './TableButtons'
 import Pagination from './Pagination'
 import Columns from './Columns'
 import Search from './Search'
+import Action from './Action'
 import Fixed from './Fixed'
 import Basic from './Basic'
 import Core from './Core'
@@ -18,6 +19,7 @@ export default [
 	(Vue) => Vue.component(Pagination.name, Pagination),
 	(Vue) => Vue.component(Columns.name, Columns),
 	(Vue) => Vue.component(Search.name, Search),
+	(Vue) => Vue.component(Action.name, Action),
 	(Vue) => Vue.component(Fixed.name, Fixed),
 	(Vue) => Vue.component(Basic.name, Basic),
 	(Vue) => Vue.component(Core.name, Core)

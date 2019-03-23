@@ -93,3 +93,28 @@
     width: 100%;
   }
 }
+
+/*
+ * Action
+ */
+
+.filter-action {
+  .el-button {
+    width: 100%;
+    margin-bottom: 10px;
+    &:last-child {
+      margin-bottom: 0;
+    }
+    > span {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      > i {
+        margin-right: 5px;
+      }
+    }
+    + .el-button {
+      margin-left: 0;
+    }
+  }
+}

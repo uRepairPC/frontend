@@ -1,5 +1,6 @@
 'use strict'
 
+import * as types from '@/enum/types'
 import * as roles from '@/enum/roles'
 
 /**
@@ -8,9 +9,9 @@ import * as roles from '@/enum/roles'
  * @see https://element.eleme.io/#/en-US/component/tag
  */
 export const COLORS = {
-	[roles.ADMIN]: 'danger',
-	[roles.WORKER]: 'primary',
-	[roles.USER]: 'success'
+	[roles.ADMIN]: types.DANGER,
+	[roles.WORKER]: types.PRIMARY,
+	[roles.USER]: types.SUCCESS
 }
 
 /**

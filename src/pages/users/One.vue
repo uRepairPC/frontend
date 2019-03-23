@@ -57,12 +57,13 @@ import EditPhotoDialog from '@/components/users/dialogs/EditImage'
 import EditEmailDialog from '@/components/users/dialogs/EditEmail'
 import DeleteDialog from '@/components/users/dialogs/Delete'
 import EditDialog from '@/components/users/dialogs/Edit'
-import { COLUMNS_DATES } from '../../data/columns'
 import TopButtons from '@/components/TopButtons'
 import { list as listRoles } from '@/data/roles'
 import UserImage from '@/components/users/Image'
+import { COLUMNS_DATES } from '@/data/columns'
 import { isArray } from '@/scripts/helpers'
 import sections from '@/data/sections'
+import * as types from '@/enum/types'
 import * as roles from '@/enum/roles'
 import moment from 'moment'
 
@@ -117,44 +118,44 @@ export default {
 			return [
 				{
 					text: 'Оновити',
-					type: 'success',
+					type: types.SUCCESS,
 					action: this.fetchUser,
 					disabled: this.loading
 				},
 				{
 					text: 'Редагувати дані',
-					type: 'primary',
+					type: types.PRIMARY,
 					show: this.canBasicOperation,
 					action: () => this.openDialog(EditDialog)
 				},
 				{
 					text: 'Редагувати пароль',
-					type: 'primary',
+					type: types.PRIMARY,
 					show: this.canBasicOperation,
 					action: () => this.openDialog(EditPasswordDialog)
 				},
 				{
 					text: 'Редагувати зображення',
-					type: 'primary',
+					type: types.PRIMARY,
 					show: this.canBasicOperation,
 					action: () => this.openDialog(EditPhotoDialog)
 				},
 				{
 					text: 'Редагувати email',
-					type: 'primary',
+					type: types.PRIMARY,
 					show: this.canBasicOperation,
 					action: () => this.openDialog(EditEmailDialog)
 				},
 				{
 					text: 'Видалити зображення',
-					type: 'warning',
+					type: types.WARNING,
 					show: this.canBasicOperation,
 					disabled: !this.user.image,
 					action: () => this.openDialog(DeletePhotoDialog)
 				},
 				{
 					text: 'Видалити користувача',
-					type: 'danger',
+					type: types.DANGER,
 					show: this.isAdmin && this.profile.id !== this.user.id,
 					action: () => this.openDialog(DeleteDialog)
 				}
