@@ -74,7 +74,7 @@ export default {
 			this.$router.push({ name: DEFAULT_ROUTE_NAME })
 		},
 		onClickCreateRequest() {
-			this.$router.push({ name: 'requests-create' })
+			this.$router.push({ name: `${sections.requests}-create` })
 		},
 		onClickSearch() {
 			if (this.openSearch) {
@@ -88,7 +88,7 @@ export default {
 				section: sections.users,
 				data: this.user
 			})
-			this.$router.push({ name: 'users-id', params: { id: this.user.id } })
+			this.$router.push({ name: `${sections.users}-id`, params: { id: this.user.id } })
 		}
 	}
 }

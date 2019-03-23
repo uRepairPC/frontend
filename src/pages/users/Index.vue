@@ -130,7 +130,7 @@ export default {
 				section: sections.users,
 				data: user
 			})
-			this.$router.push({ name: 'users-id', params: { id: user.id } })
+			this.$router.push({ name: `${sections.users}-id`, params: { id: user.id } })
 		},
 		onSortChange({ prop: column, order }) {
 			this.sort = { column, order }

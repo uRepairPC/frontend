@@ -38,7 +38,7 @@ export default {
 				section: sections.users,
 				data: this.user
 			})
-			this.$router.push({ name: 'users-id', params: { id: this.user.id } })
+			this.$router.push({ name: `${sections.users}-id`, params: { id: this.user.id } })
 		}
 	}
 }

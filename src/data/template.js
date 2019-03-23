@@ -28,7 +28,7 @@ const listMenu = {
 				text: 'Створити заявку',
 				icon: 'add',
 				type: types.PRIMARY,
-				action: () => router.push({ name: 'requests-create' })
+				action: () => router.push({ name: `${sections.requests}-create` })
 			}
 		}
 	},
@@ -46,7 +46,7 @@ const listMenu = {
 				icon: 'add',
 				type: types.PRIMARY,
 				access: [roles.ADMIN],
-				action: () => router.push({ name: 'users-create' })
+				action: () => router.push({ name: `${sections.users}-create` })
 			}
 		}
 	},
@@ -63,7 +63,7 @@ const listMenu = {
 				text: 'Створити обладнання',
 				icon: 'add',
 				type: types.PRIMARY,
-				action: () => router.push({ name: 'equipments-create' })
+				action: () => router.push({ name: `${sections.equipments}-create` })
 			}
 		}
 	},

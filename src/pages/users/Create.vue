@@ -132,8 +132,12 @@ export default {
 			this.loading = true
 
 			this.$axios.post('users', this.form)
-				.then(() => {
-					this.$router.push({ name: 'users' })
+				.then(({ data }) => {
+					this.$store.dispatch('template/addSidebarItem', {
+						section: sections.users,
+						data: data.user
+					})
+					this.$router.push({ name: `${sections.users}-id`, params: { id: data.user.id } })
 				})
 				.catch(() => {
 					this.loading = false
@@ -154,7 +158,7 @@ export default {
 
 <style lang="scss" scoped>
 .wrap {
-	padding: 0 20px 20px;
+	padding: 10px 20px 40px;
 	max-width: 550px;
 	margin: 0 auto;
 }

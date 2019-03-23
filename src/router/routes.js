@@ -4,12 +4,12 @@ import { loadPage, loadLayout } from './helper'
 import sections from '@/data/sections'
 
 const notAuthorizedRoutes = {
-	path: '/auth',
+	path: `/${sections.auth}`,
 	component: loadLayout('NotAuthorized'),
 	children: [
 		{
 			path: '/',
-			name: 'auth',
+			name: sections.auth,
 			component: loadPage('Auth')
 		}
 	]

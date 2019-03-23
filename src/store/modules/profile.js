@@ -1,5 +1,6 @@
 'use strict'
 
+import sections from '@/data/sections'
 import router from '@/router'
 import axios from 'axios'
 
@@ -36,7 +37,7 @@ const mutations = {
 		state.user = {}
 		state.isLogin  =false
 
-		router.push({ name: 'auth' })
+		router.push({ name: sections.auth })
 	}
 }
 
@@ -50,7 +51,7 @@ const actions = {
 
 		if (!storageUserData || !token) {
 			commit('CLEAR_ALL')
-			return router.push({ name: 'auth' })
+			return router.push({ name: sections.auth })
 		}
 
 		try {
