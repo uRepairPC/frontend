@@ -85,11 +85,6 @@ export default {
 			}
 		}
 	},
-	created() {
-		if (!this.user.id) {
-			this.fetchUser()
-		}
-	},
 	computed: {
 		profile() {
 			return this.$store.state.profile.user
@@ -200,6 +195,11 @@ export default {
 			if (!this.user.id) {
 				this.fetchUser()
 			}
+		}
+	},
+	created() {
+		if (!this.user.id) {
+			this.fetchUser()
 		}
 	},
 	methods: {

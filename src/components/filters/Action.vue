@@ -6,9 +6,10 @@
 	>
 		<el-button
 			v-for="(action, key) in actions"
-			:index="key"
+			:key="key"
 			size="small"
 			:type="action.type"
+			@click="action.action"
 		>
 			<i class="material-icons">
 				{{ action.icon }}

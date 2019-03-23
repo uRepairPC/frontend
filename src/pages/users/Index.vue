@@ -80,7 +80,7 @@ export default {
 			const columns = []
 
 			for (const column of this.columns) {
-				if (!!column.model) {
+				if (column.model) {
 					columns.push({ ...column, fixed: this.fixed === column.prop })
 				}
 			}

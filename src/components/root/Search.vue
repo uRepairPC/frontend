@@ -7,8 +7,8 @@
 			<div class="wrap">
 				<div class="input">
 					<el-input
-						v-model="input"
 						ref="input"
+						v-model="input"
 						placeholder="Введіть щось"
 						prefix-icon="el-icon-search"
 						clearable

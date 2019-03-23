@@ -5,8 +5,8 @@
 	>
 		<el-select
 			v-bind="$attrs"
-			v-on="$listeners"
 			clearable
+			v-on="$listeners"
 		>
 			<el-option
 				v-for="(column, index) in columns"

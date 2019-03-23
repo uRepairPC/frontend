@@ -16,8 +16,12 @@
 						</i>
 					</div>
 					<div class="item-header__right">
-						<div class="item--title">{{ item.title }}</div>
-						<div class="item--route">{{ item.route.name }}</div>
+						<div class="item--title">
+							{{ item.title }}
+						</div>
+						<div class="item--route">
+							{{ item.route.name }}
+						</div>
 					</div>
 					<div class="item-header__icon">
 						<i class="material-icons">
@@ -33,12 +37,15 @@
 						v-for="(action, key) in item.actions"
 						:key="key"
 						class="item-action"
-						@click="action.action">
+						@click="action.action"
+					>
 						<div class="item-action-wrap">
 							<i class="item-action--icon material-icons">
 								{{ action.icon }}
 							</i>
-							<div class="item-action--title">{{ action.text }}</div>
+							<div class="item-action--title">
+								{{ action.text }}
+							</div>
 						</div>
 					</div>
 				</div>
