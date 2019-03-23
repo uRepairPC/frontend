@@ -1,6 +1,7 @@
 'use strict'
 
 import { loadPage, loadLayout } from './helper'
+import sections from '@/data/sections'
 
 const notAuthorizedRoutes = {
 	path: '/auth',
@@ -20,33 +21,38 @@ const authorizedRoutes = {
 	children: [
 		{
 			path: '/',
-			name: 'home',
+			name: sections.home,
 			component: loadPage('Home')
 		},
 		{
-			path: '/requests',
-			name: 'requests',
+			path: `/${sections.requests}`,
+			name: sections.requests,
 			component: loadPage('requests/Index')
 		},
 		{
-			path: '/users',
-			name: 'users',
+			path: `/${sections.users}`,
+			name: sections.users,
 			component: loadPage('users/Index')
 		},
 		{
-			path: '/users/create',
-			name: 'users-create',
+			path: `/${sections.users}/create`,
+			name: `${sections.users}-create`,
 			component: loadPage('users/Create')
 		},
 		{
-			path: '/users/:id',
-			name: 'users-id',
+			path: `/${sections.users}/:id`,
+			name: `${sections.users}-id`,
 			component: loadPage('users/One')
 		},
 		{
-			path: '/workers',
-			name: 'workers',
+			path: `/${sections.workers}`,
+			name: sections.workers,
 			component: loadPage('workers/Index')
+		},
+		{
+			path: `/${sections.settings}`,
+			name: sections.settings,
+			component: loadPage('settings/Index')
 		}
 	]
 }

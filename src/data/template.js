@@ -73,10 +73,10 @@ const listMenu = {
 		route: { name: sections.workers },
 		access: [roles.ADMIN]
 	},
-	[sections.config]: {
+	[sections.settings]: {
 		icon: 'settings',
 		title: 'Конфігурація',
-		route: { name: sections.config },
+		route: { name: sections.settings },
 		access: [roles.ADMIN, roles.WORKER]
 	}
 }

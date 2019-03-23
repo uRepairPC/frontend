@@ -8,5 +8,5 @@ export default {
 	users: 'users',
 	equipments: 'equipments',
 	workers: 'workers',
-	config: 'config'
+	settings: 'settings'
 }

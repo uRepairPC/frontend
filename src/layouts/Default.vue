@@ -33,7 +33,7 @@ export default {
 	data() {
 		return {
 			keepAliveRoutesName: [
-				'Home', 'Requests', 'Users', 'Workers'
+				'Home', 'Requests', 'Users', 'Workers', 'Settings'
 			],
 			breadcrumbs: []
 		}
