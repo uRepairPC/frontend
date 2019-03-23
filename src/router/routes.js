@@ -19,6 +19,11 @@ const authorizedRoutes = {
 	component: loadLayout('Default'),
 	children: [
 		{
+			path: '/',
+			name: 'home',
+			component: loadPage('Home')
+		},
+		{
 			path: '/requests',
 			name: 'requests',
 			component: loadPage('requests/Index')
@@ -29,9 +34,19 @@ const authorizedRoutes = {
 			component: loadPage('users/Index')
 		},
 		{
+			path: '/users/create',
+			name: 'users-create',
+			component: loadPage('users/Create')
+		},
+		{
 			path: '/users/:id',
 			name: 'users-id',
 			component: loadPage('users/One')
+		},
+		{
+			path: '/workers',
+			name: 'workers',
+			component: loadPage('workers/Index')
 		}
 	]
 }

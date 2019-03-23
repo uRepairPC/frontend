@@ -4,7 +4,7 @@
 		:data="dataList"
 		:class="{ loading: loadingRows }"
 		stripe
-		height="calc(100vh - 96px)"
+		height="100%"
 		v-bind="$attrs"
 		v-on="$listeners"
 	>
@@ -13,11 +13,23 @@
 			:key="index"
 			v-bind="column"
 			sortable="custom"
-		/>
+		>
+			<template slot-scope="scope">
+				<template v-if="isColumnDate(column.prop)">
+					{{ getDate(scope.row[column.prop]) }}
+				</template>
+				<template v-else>
+					{{ scope.row[column.prop] }}
+				</template>
+			</template>
+		</el-table-column>
 	</el-table>
 </template>
 
 <script>
+import { COLUMNS_DATES } from '@/data/columns'
+import moment from 'moment'
+
 export default {
 	props: {
 		list: {
@@ -43,7 +55,7 @@ export default {
 	computed: {
 		dataList() {
 			if (this.loading && this.loadingType === 'rows') {
-				return [...this.list, ...Array(10).fill({})]
+				return [...this.list, ...Array(10).fill({ disable: true })]
 			}
 
 			return this.list
@@ -54,12 +66,24 @@ export default {
 		loadingDirective() {
 			return this.loading && this.loadingType === 'directive'
 		}
+	},
+	methods: {
+		getDate(date) {
+			if (!date) {
+				return null
+			}
+
+			return moment(date).format('LL')
+		},
+		isColumnDate(prop) {
+			return COLUMNS_DATES.includes(prop)
+		}
 	}
 }
 </script>
 
 <style lang="scss" scoped>
-@import "../styles/keyframes";
+@import "~scss/keyframes";
 
 .loading {
 	/deep/ .el-table__row {

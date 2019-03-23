@@ -1,3 +1,5 @@
+@import "~scss/_colors";
+
 /*
  * Core
  */
@@ -31,7 +33,7 @@
   font-weight: 600;
   padding: 5px 5px 5px 15px;
   margin-bottom: 15px;
-  border-left: 5px solid #409EFF;
+  border-left: 5px solid $primary;
 }
 
 /*
@@ -80,4 +82,39 @@
 
 .filter-pagination__circles {
   display: flex;
+}
+
+/*
+ * Fixed
+ */
+
+.filter-fixed {
+  .el-select {
+    width: 100%;
+  }
+}
+
+/*
+ * Action
+ */
+
+.filter-action {
+  .el-button {
+    width: 100%;
+    margin-bottom: 10px;
+    &:last-child {
+      margin-bottom: 0;
+    }
+    > span {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      > i {
+        margin-right: 5px;
+      }
+    }
+    + .el-button {
+      margin-left: 0;
+    }
+  }
 }

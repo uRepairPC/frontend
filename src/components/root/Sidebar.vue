@@ -1,6 +1,7 @@
 <template>
 	<el-aside width="250px">
 		<el-menu
+			ref="menu"
 			router
 			:default-active="defaultRoute"
 		>
@@ -22,20 +23,28 @@
 
 <script>
 import History from '@/components/root/History'
-import { menu } from '@/data/template'
+import { mapGetters } from 'vuex'
 
 export default {
 	components: {
 		History
 	},
-	data() {
-		return {
-			menu
-		}
-	},
 	computed: {
+		...mapGetters({
+			menu: 'template/menu'
+		}),
 		defaultRoute() {
 			return this.$route.name
+		},
+		routeNames() {
+			return Object.values(this.menu).map(m => m.route.name)
+		}
+	},
+	watch: {
+		'$route'() {
+			if (!this.routeNames.includes(this.defaultRoute)) {
+				this.$refs.menu.activeIndex = null
+			}
 		}
 	}
 }
@@ -46,6 +55,7 @@ export default {
 	border-right: solid 1px #e6e6e6;
 	background: #fff;
 	height: 100%;
+	user-select: none;
 }
 
 .el-menu {

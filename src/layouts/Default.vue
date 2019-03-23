@@ -2,16 +2,20 @@
 	<div class="layout layout_default">
 		<el-container direction="vertical">
 			<header-box />
-			<el-container>
+			<el-container :class="{ 'search--open': openSearch }">
 				<sidebar-box />
 				<el-main>
 					<breadcrumbs-box :list="breadcrumbs" />
-					<keep-alive>
-						<router-view ref="content" />
+					<keep-alive :include="keepAliveRoutesName">
+						<router-view
+							ref="content"
+							class="page"
+						/>
 					</keep-alive>
 				</el-main>
 			</el-container>
 		</el-container>
+		<search-box />
 	</div>
 </template>
 
@@ -19,15 +23,24 @@
 import BreadcrumbsBox from '@/components/root/Breadcrumbs'
 import SidebarBox from '@/components/root/Sidebar'
 import HeaderBox from '@/components/root/Header'
+import SearchBox from '@/components/root/Search'
 import { DEFAULT_ROUTE_NAME } from '@/router'
 
 export default {
 	components: {
-		BreadcrumbsBox, SidebarBox, HeaderBox
+		BreadcrumbsBox, SidebarBox, HeaderBox, SearchBox
 	},
 	data() {
 		return {
+			keepAliveRoutesName: [
+				'Home', 'Requests', 'Users', 'Workers'
+			],
 			breadcrumbs: []
+		}
+	},
+	computed: {
+		openSearch() {
+			return this.$store.state.template.openSearch
 		}
 	},
 	watch: {
@@ -37,6 +50,10 @@ export default {
 		 */
 		'$route': {
 			handler() {
+				if (this.openSearch) {
+					this.$store.commit('template/CLOSE_SEARCH')
+				}
+
 				this.$nextTick(() => {
 					if (!this.$refs.content || !this.$refs.content.$options.breadcrumbs) {
 						this.breadcrumbs = [this.getFirstBreadcrumb(false)]
@@ -83,5 +100,15 @@ export default {
 
 .el-main {
 	padding: 0;
+}
+
+.page {
+	height: calc(100% - 36px);
+	overflow: auto;
+}
+
+.search--open {
+	transition: .2s;
+	filter: blur(5px);
 }
 </style>

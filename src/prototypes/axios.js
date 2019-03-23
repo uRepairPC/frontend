@@ -1,8 +1,9 @@
 'use strict'
 
 import { axiosBaseUrl } from '@/data/env'
+import * as types from '@/enum/types'
 import { Message } from 'element-ui'
-import store from '../store'
+import store from '@/store'
 import axios from 'axios'
 
 // All request send to: http(s)://example.com/api/*
@@ -12,7 +13,7 @@ axios.interceptors.response.use(
 	(resp) => {
 		// Notification
 		if (resp.config.method !== 'get' && resp.data.message) {
-			Message({ message: resp.data.message, type: 'success' })
+			Message({ message: resp.data.message, type: types.SUCCESS })
 		}
 
 		return resp
@@ -44,21 +45,29 @@ axios.interceptors.response.use(
 
 						return axios({
 							...config,
+							// TODO Check on prod
 							url: config.url.replace(/^api\//, '')
 						})
 					})
-					.catch(() => store.commit('profile/CLEAR_ALL'))
+					.catch(() => {
+						store.commit('profile/CLEAR_ALL')
+					})
 			}
 
 			store.commit('profile/CLEAR_ALL')
 		}
 
+		// No access, etc
+		if (response.status === 403) {
+			store.dispatch('profile/update')
+		}
+
 		// Notification
 		if (response.data && typeof response.data === 'object' && response.data.message) {
-			Message({ message: response.data.message, type: 'error' })
+			Message({ message: response.data.message, type: types.ERROR })
 		}
 		else if (response.status === 404) {
-			Message({ message: 'Ресурс не знайдений', type: 'warning' })
+			Message({ message: 'Ресурс не знайдений', type: types.WARNING })
 		}
 
 		return Promise.reject(err)

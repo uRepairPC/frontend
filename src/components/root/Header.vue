@@ -1,17 +1,19 @@
 <template>
 	<el-header>
-		<div
-			class="header--left"
-			@click="onClickLeftHeader"
-		>
-			<img
-				src="../../images/logo.png"
-				alt="logo"
+		<div class="header--left">
+			<div
+				class="logo"
+				@click="onClickLogo"
 			>
-			<span>КНТЕУ</span>
+				<img
+					src="@/images/logo.png"
+					alt="logo"
+				>
+				<span>КНТЕУ</span>
+			</div>
 			<el-button
-				size="small"
-				round
+				type="success"
+				size="mini"
 				@click="onClickCreateRequest"
 			>
 				<i class="material-icons">
@@ -22,18 +24,18 @@
 		</div>
 		<div class="header--center" />
 		<div class="header--right">
-			<!--TODO Move to component-->
-			<el-input
+			<el-button
 				size="mini"
-				placeholder="Глобальний Пошук"
+				:type="openSearch ? 'primary' : 'default'"
+				:icon="`el-icon-${openSearch ? 'close' : 'search'}`"
+				@click="onClickSearch"
 			>
-				<i
-					slot="suffix"
-					class="el-input__icon el-icon-search"
-				/>
-			</el-input>
-			<!--TODO Move to component-->
-			<div class="user">
+				<span>Глобальний пошук</span>
+			</el-button>
+			<div
+				class="user"
+				@click="onClickEmail"
+			>
 				<i class="material-icons">
 					person
 				</i>
@@ -53,22 +55,40 @@
 
 <script>
 import { DEFAULT_ROUTE_NAME } from '@/router'
+import sections from '@/data/sections'
 
 export default {
 	computed: {
 		user() {
 			return this.$store.state.profile.user
+		},
+		openSearch() {
+			return this.$store.state.template.openSearch
 		}
 	},
 	methods: {
 		onClickLogout() {
 			this.$store.dispatch('profile/logout')
 		},
-		onClickLeftHeader() {
+		onClickLogo() {
 			this.$router.push({ name: DEFAULT_ROUTE_NAME })
 		},
 		onClickCreateRequest() {
 			this.$router.push({ name: 'requests-create' })
+		},
+		onClickSearch() {
+			if (this.openSearch) {
+				this.$store.commit('template/CLOSE_SEARCH')
+			} else {
+				this.$store.commit('template/OPEN_SEARCH')
+			}
+		},
+		onClickEmail() {
+			this.$store.dispatch('template/addSidebarItem', {
+				section: sections.users,
+				data: this.user
+			})
+			this.$router.push({ name: 'users-id', params: { id: this.user.id } })
 		}
 	}
 }
@@ -80,9 +100,26 @@ export default {
 	align-items: center;
 	background: #fff;
 	border-bottom: 1px solid #e6e6e6;
+	user-select: none;
 }
 
 .header--left {
+	display: flex;
+	align-items: center;
+	.el-button {
+		margin-left: 25px;
+		> /deep/ span {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			> i {
+				margin-right: 5px;
+			}
+		}
+	}
+}
+
+.logo {
 	display: flex;
 	align-items: center;
 	cursor: pointer;
@@ -102,17 +139,6 @@ export default {
 		color: #333;
 		opacity: .8;
 		transition: opacity .2s;
-	}
-	.el-button {
-		margin-left: 25px;
-		> /deep/ span {
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			> i {
-				margin-right: 5px;
-			}
-		}
 	}
 }
 

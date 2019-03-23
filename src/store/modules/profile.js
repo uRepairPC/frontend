@@ -16,6 +16,7 @@ const state = {
 const mutations = {
 	SET_USER(state, obj) {
 		state.user = obj
+		localStorage.setItem(STORE_USER, JSON.stringify(obj))
 	},
 	SET_LOADING(state, toggle) {
 		state.loading = toggle
@@ -67,12 +68,26 @@ const actions = {
 		commit('SET_LOADING', true)
 
 		axios.post('auth/login', data)
-			.then(async res => {
-				axios.defaults.headers['Authorization'] = `Bearer ${res.data.token}`
-				localStorage.setItem(STORE_TOKEN, res.data.token)
-				localStorage.setItem(STORE_USER, JSON.stringify(res.data.user))
-				commit('SET_USER', res.data.user)
+			.then(({ data }) => {
+				axios.defaults.headers['Authorization'] = `Bearer ${data.token}`
+				localStorage.setItem(STORE_TOKEN, data.token)
+				localStorage.setItem(STORE_USER, JSON.stringify(data.user))
+				commit('SET_USER', data.user)
 				commit('SET_IS_LOGIN', true)
+				commit('SET_LOADING', false)
+			})
+			.catch(() => {
+				commit('SET_LOADING', false)
+			})
+	},
+	update({ state, commit }) {
+		if (!state.user.id) {
+			return
+		}
+
+		axios.get(`users/${state.user.id}`)
+			.then(({ data }) => {
+				commit('SET_USER', data.user)
 				commit('SET_LOADING', false)
 			})
 			.catch(() => {

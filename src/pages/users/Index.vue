@@ -13,6 +13,9 @@
 			/>
 		</template>
 		<filter-core slot="right-column">
+			<filter-action
+				:section="sectionName"
+			/>
 			<filter-search
 				v-model="search"
 				@submit="fetchList"
@@ -24,11 +27,10 @@
 				:columns="columns"
 				@change="onChangeColumn"
 			/>
-			<!--
-				TODO Filter Configuration
-				Example: Size table
-								 Fixed orw
-			-->
+			<filter-fixed
+				v-model="fixed"
+				:columns="columns"
+			/>
 			<filter-table-buttons
 				ref="buttons"
 				slot="bottom"
@@ -44,8 +46,10 @@ import TemplatePage from '@/components/template/Page'
 import scrollTableMixin from '@/mixins/scrollTable'
 import { setColumnUsers } from '@/data/storage'
 import TableComponent from '@/components/Table'
+import sections from '@/data/sections'
 
 export default {
+	name: 'Users',
 	breadcrumbs: [
 		{ title: 'Користувачі' }
 	],
@@ -57,8 +61,10 @@ export default {
 	],
 	data() {
 		return {
+			sectionName: sections.users,
 			columns: columnsUsers(),
 			loadingType: 'rows',
+			fixed: null,
 			search: '',
 			sort: {}
 		}
@@ -71,7 +77,15 @@ export default {
 			return this.list.data || []
 		},
 		filterColumns() {
-			return this.columns.filter(c => !!c.model)
+			const columns = []
+
+			for (const column of this.columns) {
+				if (column.model) {
+					columns.push({ ...column, fixed: this.fixed === column.prop })
+				}
+			}
+
+			return columns
 		},
 		loading() {
 			return this.$store.state.users.loading
@@ -107,9 +121,16 @@ export default {
 				this.fetchList(this.list.current_page + 1)
 			}
 		},
-		onRowClick(obj) {
-			this.$store.commit('template/ADD_SIDEBAR_USER', obj)
-			this.$router.push({ name: 'users-id', params: { id: obj.id } })
+		onRowClick(user) {
+			if (user.disable) {
+				return
+			}
+
+			this.$store.dispatch('template/addSidebarItem', {
+				section: sections.users,
+				data: user
+			})
+			this.$router.push({ name: 'users-id', params: { id: user.id } })
 		},
 		onSortChange({ prop: column, order }) {
 			this.sort = { column, order }
@@ -118,16 +139,3 @@ export default {
 	}
 }
 </script>
-
-<style lang="scss" scoped>
-.users {
-	display: flex;
-	flex-direction: row;
-}
-
-.table--overflow {
-	flex: 1 1 auto;
-	height: calc(100vh - 96px);
-	overflow: auto;
-}
-</style>

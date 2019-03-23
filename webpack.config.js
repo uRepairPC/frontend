@@ -77,13 +77,14 @@ module.exports = {
 			filename: 'index.html',
 			template: './index.html',
 			inject: true,
-			chunksSortMode: 'dependency'
+			chunksSortMode: 'none'
 		})
 	],
 	resolve: {
 		extensions: ['.js', '.vue', '.json'],
 		alias: {
-			'@': path.resolve(__dirname, './src/')
+			'@': path.resolve(__dirname, './src/'),
+			'scss': path.resolve(__dirname, './src/styles/')
 		}
 	}
 }
