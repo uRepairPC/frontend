@@ -1,11 +1,7 @@
 <template>
-	<el-dialog
-		title="Редагування користувача"
-		:visible="value"
-		class="dialog--default"
-		v-on="listeners"
-	>
-		<div class="content">
+	<div class="user">
+		<div class="wrap">
+			<div class="title">Створення користувача</div>
 			<el-form
 				ref="form"
 				:model="form"
@@ -13,6 +9,15 @@
 				status-icon
 				@submit.native.prevent="onSubmit"
 			>
+				<el-form-item
+					prop="email"
+					label="E-mail"
+				>
+					<el-input
+						v-model="form.email"
+						placeholder="E-mail"
+					/>
+				</el-form-item>
 				<el-form-item
 					prop="first_name"
 					label="Ім'я"
@@ -41,7 +46,6 @@
 					/>
 				</el-form-item>
 				<el-form-item
-					v-if="canChangeRole"
 					label="Роль"
 					prop="role"
 				>
@@ -76,89 +80,60 @@
 						placeholder="Опис"
 					/>
 				</el-form-item>
+				<div class="btn-wrap">
+					<el-button
+						type="primary"
+						:loading="loading"
+						:disabled="loading"
+						class="btn"
+						@click="onSubmit"
+					>
+						Створити
+					</el-button>
+				</div>
 			</el-form>
 		</div>
-		<span slot="footer">
-			<el-button @click="close">Закрити</el-button>
-			<el-button
-				type="primary"
-				:loading="loading"
-				:disabled="loading"
-				@click="onSubmit"
-			>
-				Зберегти
-			</el-button>
-		</span>
-	</el-dialog>
+	</div>
 </template>
 
 <script>
 import { list as roleList } from '@/data/roles'
-import { required } from '@/data/rules'
-import sections from '@/data/sections'
+import * as dataRules from '@/data/rules'
 import * as roles from '@/enum/roles'
+import sections from '@/data/sections'
 
 export default {
-	inheritAttrs: false,
-	props: {
-		value: {
-			type: Boolean,
-			default: false
-		},
-		user: {
-			type: Object,
-			required: true
-		}
-	},
+	breadcrumbs: [
+		{ title: 'Користувачі', route: { name: sections.users } },
+		{ title: 'Створення' }
+	],
 	data() {
-		const form = {
-			first_name: this.user.first_name,
-			middle_name: this.user.middle_name,
-			last_name: this.user.last_name,
-			description: this.user.description,
-			phone: this.user.phone
-		}
-
-		if (this.user.role) {
-			form.role = this.user.role
-		}
-
 		return {
 			roleList,
 			loading: false,
-			rules: {
-				first_name: required,
-				last_name: required
+			form: {
+				role: roles.USER
 			},
-			form
+			rules: {
+				email: dataRules.email,
+				first_name: dataRules.required,
+				last_name: dataRules.required,
+				role: dataRules.required
+			}
 		}
 	},
 	computed: {
 		profile() {
 			return this.$store.state.profile.user
-		},
-		listeners() {
-			return {
-				...this.$listeners,
-				'update:visible': this.close
-			}
-		},
-		canChangeRole() {
-			return this.profile.role === roles.ADMIN && this.profile.id !== this.user.id
 		}
 	},
 	methods: {
 		fetchRequest() {
 			this.loading = true
 
-			this.$axios.put(`users/${this.user.id}`, this.form)
-				.then(({ data }) => {
-					this.$store.dispatch('template/addSidebarItem', {
-						section: sections.users,
-						data: data.user
-					})
-					this.loading = false
-					this.close()
+			this.$axios.post('users', this.form)
+				.then(() => {
+					this.$router.push({ name: 'users' })
 				})
 				.catch(() => {
 					this.loading = false
@@ -172,25 +147,38 @@ export default {
 
 				this.fetchRequest()
 			})
-		},
-		close() {
-			this.$emit('input', false)
 		}
 	}
 }
 </script>
 
 <style lang="scss" scoped>
-.dialog--default {
-	/deep/ > .el-dialog {
-		margin-top: 5vh !important;
-		max-width: 700px;
+.wrap {
+	padding: 0 20px 20px;
+	max-width: 550px;
+	margin: 0 auto;
+}
+
+.title {
+	text-align: center;
+	font-size: 1.5rem;
+	font-weight: bold;
+	margin: 25px 15px;
+}
+
+.el-select {
+	width: 100%;
+}
+
+.btn-wrap {
+	text-align: center;
+	button {
+		max-width: 200px;
+		width: 100%;
 	}
 }
 
-.content {
-	/deep/ .el-select {
-		width: 100%;
-	}
+/deep/ .el-form-item__label {
+	float: none;
 }
 </style>
