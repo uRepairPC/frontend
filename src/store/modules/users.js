@@ -1,5 +1,7 @@
 'use strict'
 
+import { users as userColumns } from '@/data/columns'
+import { isArray } from '@/scripts/helpers'
 import axios from 'axios'
 import Vue from 'vue'
 
@@ -46,6 +48,23 @@ const actions = {
 	}
 }
 
+const getters = {
+	/*
+	 * Display on table.
+	 */
+	columns(state, getters, rootState) {
+		const userRole = rootState.profile.user.role
+
+		return userColumns().filter((column) => {
+			if (isArray(column.access)) {
+				return column.access.includes(userRole)
+			}
+
+			return true
+		})
+	}
+}
+
 export default {
-	state, mutations, actions
+	state, mutations, actions, getters
 }

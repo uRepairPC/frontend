@@ -41,12 +41,12 @@
 </template>
 
 <script>
-import { users as columnsUsers } from '@/data/columns'
 import TemplatePage from '@/components/template/Page'
 import scrollTableMixin from '@/mixins/scrollTable'
 import { setColumnUsers } from '@/data/storage'
 import TableComponent from '@/components/Table'
 import sections from '@/data/sections'
+import { mapGetters } from 'vuex'
 
 export default {
 	name: 'Users',
@@ -62,7 +62,7 @@ export default {
 	data() {
 		return {
 			sectionName: sections.users,
-			columns: columnsUsers(),
+			columns: [],
 			loadingType: 'rows',
 			fixed: null,
 			search: '',
@@ -70,6 +70,9 @@ export default {
 		}
 	},
 	computed: {
+		...mapGetters({
+			'userColumns': 'users/columns'
+		}),
 		list() {
 			return this.$store.state.users.list
 		},
@@ -92,6 +95,14 @@ export default {
 		},
 		activeColumnProps() {
 			return this.filterColumns.map(c => c.prop)
+		}
+	},
+	watch: {
+		userColumns: {
+			handler(arr) {
+				this.columns = arr
+			},
+			immediate: true
 		}
 	},
 	mounted() {
