@@ -33,7 +33,6 @@
 			/>
 			<el-table-column
 				fixed="right"
-				label="Дії"
 				width="120">
 				<template slot-scope="scope">
 					<el-button
@@ -50,12 +49,11 @@
 </template>
 
 <script>
+import { listMenu } from '@/data/template'
+import sections from '@/data/sections'
+
 export default {
 	props: {
-		title: {
-			type: String,
-			required: true
-		},
 		loading: {
 			type: Boolean,
 			required: true
@@ -67,6 +65,12 @@ export default {
 		columns: {
 			type: Array,
 			required: true
+		}
+	},
+	computed: {
+		title() {
+			const action = listMenu[sections.settings].actions[this.$route.name]
+			return action ? action.text : ''
 		}
 	},
 	methods: {

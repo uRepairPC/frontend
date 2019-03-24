@@ -1,6 +1,5 @@
 <template>
 	<basic
-		title="Виробники обладнання"
 		:list="list"
 		:loading="loading"
 		:columns="columns"

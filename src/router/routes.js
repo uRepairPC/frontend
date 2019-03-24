@@ -56,17 +56,17 @@ const authorizedRoutes = {
 			children: [
 				{
 					path: `/${sections.settings}/manufacturers`,
-					name: `${sections.settings}-manufacturers`,
+					name: `${sections.settingsManufacturers}`,
 					component: loadPage('settings/Manufacturers')
 				},
 				{
 					path: `/${sections.settings}/types`,
-					name: `${sections.settings}-types`,
+					name: `${sections.settingsTypes}`,
 					component: loadPage('settings/Types')
 				},
 				{
 					path: `/${sections.settings}/models`,
-					name: `${sections.settings}-models`,
+					name: `${sections.settingsModels}`,
 					component: loadPage('settings/Models')
 				}
 			]

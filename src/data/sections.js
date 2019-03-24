@@ -9,5 +9,8 @@ export default {
 	users: 'users',
 	equipments: 'equipments',
 	workers: 'workers',
-	settings: 'settings'
+	settings: 'settings',
+	settingsManufacturers: 'settings-manufacturers',
+	settingsModels: 'settings-models',
+	settingsTypes: 'settings-types'
 }

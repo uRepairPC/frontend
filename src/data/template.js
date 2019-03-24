@@ -77,7 +77,30 @@ const listMenu = {
 		icon: 'settings',
 		title: 'Конфігурація',
 		route: { name: sections.settings },
-		access: [roles.ADMIN, roles.WORKER]
+		access: [roles.ADMIN, roles.WORKER],
+		actions: {
+			[sections.settingsManufacturers]: {
+				text: 'Виробники обладнання',
+				icon: 'keyboard_arrow_right',
+				type: types.PRIMARY,
+				tag: 'page',
+				action: () => router.push({ name: `${sections.settingsManufacturers}` })
+			},
+			[sections.settingsTypes]: {
+				text: 'Типи обладнання',
+				icon: 'keyboard_arrow_right',
+				type: types.PRIMARY,
+				tag: 'page',
+				action: () => router.push({ name: `${sections.settingsTypes}` })
+			},
+			[sections.settingsModels]: {
+				text: 'Моделі обладнання',
+				icon: 'keyboard_arrow_right',
+				type: types.PRIMARY,
+				tag: 'page',
+				action: () => router.push({ name: `${sections.settingsModels}` })
+			}
+		}
 	}
 }
 

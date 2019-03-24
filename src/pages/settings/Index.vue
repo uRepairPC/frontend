@@ -5,10 +5,10 @@
 		@tab-click="onTabClick"
 	>
 		<el-tab-pane
-			v-for="(tab, index) in tabs"
+			v-for="(tab, index) in sectionMenu"
 			:key="index"
 			:label="tab.label"
-			:name="`${sections.settings}-${tab.name}`"
+			:name="tab.name"
 		>
 			<router-view />
 		</el-tab-pane>
@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import ManufacturersItem from '@/components/settings/Manufacturers'
+import { listMenu } from '@/data/template'
 import sections from '@/data/sections'
 
 export default {
@@ -24,20 +24,19 @@ export default {
 	breadcrumbs: [
 		{ title: 'Конфігурація' }
 	],
-	components: {
-		ManufacturersItem
-	},
-	data() {
-		return {
-			sections,
-			tabs: [
-				{ label: 'Виробники обладнання', name: 'manufacturers' },
-				{ label: 'Моделі обладнання', name: 'models' },
-				{ label: 'Типи обладнання', name: 'types' }
-			]
-		}
-	},
 	computed: {
+		sectionMenu() {
+			const actions = listMenu[sections.settings].actions
+			const arr = []
+
+			Object.entries(actions).forEach(([key, obj]) => {
+				if (obj.tag === 'page') {
+					arr.push({ label: obj.text, name: key })
+				}
+			})
+
+			return arr
+		},
 		routeName() {
 			return this.$route.name
 		}
