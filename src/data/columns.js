@@ -40,3 +40,23 @@ export const equipmentTypes = [
 	{ prop: 'updated_at', label: 'Оновлено', 'min-width': 150, sortable: true },
 	{ prop: 'created_at', label: 'Створений', 'min-width': 150, sortable: true }
 ]
+
+/** @return {Object} */
+export const equipmentManufacturers = [
+	{ prop: 'id', label: 'ID', 'min-width': 70, sortable: true },
+	{ prop: 'name', label: 'Назва', 'min-width': 150, sortable: true },
+	{ prop: 'description', label: 'Опис', 'min-width': 200, sortable: false },
+	{ prop: 'updated_at', label: 'Оновлено', 'min-width': 150, sortable: true },
+	{ prop: 'created_at', label: 'Створений', 'min-width': 150, sortable: true }
+]
+
+/** @return {Object} */
+export const equipmentModels = [
+	{ prop: 'id', label: 'ID', 'min-width': 70, sortable: true },
+	{ prop: 'name', label: 'Назва', 'min-width': 150, sortable: true },
+	{ prop: 'manufacturer_name', label: 'Виробник', 'min-width': 150, sortable: true },
+	{ prop: 'type_name', label: 'Тип', 'min-width': 150, sortable: true },
+	{ prop: 'description', label: 'Опис', 'min-width': 200, sortable: false },
+	{ prop: 'updated_at', label: 'Оновлено', 'min-width': 150, sortable: true },
+	{ prop: 'created_at', label: 'Створений', 'min-width': 150, sortable: true }
+]

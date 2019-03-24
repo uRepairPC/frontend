@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import { equipmentTypes as columns } from '@/data/columns'
+import { equipmentManufacturers as columns } from '@/data/columns'
 import Basic from '@/components/settings/Basic'
 import { mapState } from 'vuex'
 
@@ -25,8 +25,8 @@ export default {
 	},
 	computed: {
 		...mapState({
-			loading: state => state.manufacturers.loading,
-			list: state => state.manufacturers.list
+			loading: state => state.equipmentManufacturers.loading,
+			list: state => state.equipmentManufacturers.list
 		})
 	},
 	mounted() {
@@ -36,7 +36,7 @@ export default {
 	},
 	methods: {
 		fetchRequest() {
-			this.$store.dispatch('manufacturers/fetchList')
+			this.$store.dispatch('equipmentManufacturers/fetchList')
 		},
 		onAdd() {
 			// TODO
