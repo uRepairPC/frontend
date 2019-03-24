@@ -52,7 +52,24 @@ const authorizedRoutes = {
 		{
 			path: `/${sections.settings}`,
 			name: sections.settings,
-			component: loadPage('settings/Index')
+			component: loadPage('settings/Index'),
+			children: [
+				{
+					path: `/${sections.settings}/manufacturers`,
+					name: `${sections.settings}-manufacturers`,
+					component: loadPage('settings/Manufacturers')
+				},
+				{
+					path: `/${sections.settings}/types`,
+					name: `${sections.settings}-types`,
+					component: loadPage('settings/Types')
+				},
+				{
+					path: `/${sections.settings}/models`,
+					name: `${sections.settings}-models`,
+					component: loadPage('settings/Models')
+				}
+			]
 		}
 	]
 }

@@ -1,17 +1,23 @@
 <template>
-	<div>
-		<el-tabs type="border-card" v-model="activeName">
-			<el-tab-pane label="Виробники обладнання" name="manufacturers">
-				<manufacturers-item />
-			</el-tab-pane>
-			<el-tab-pane label="Моделі обладнання" name="models">models</el-tab-pane>
-			<el-tab-pane label="Типи обладнання" name="types">types</el-tab-pane>
-		</el-tabs>
-	</div>
+	<el-tabs
+		:value="routeName"
+		type="border-card"
+		@tab-click="onTabClick"
+	>
+		<el-tab-pane
+			v-for="(tab, index) in tabs"
+			:key="index"
+			:label="tab.label"
+			:name="`${sections.settings}-${tab.name}`"
+		>
+			<router-view />
+		</el-tab-pane>
+	</el-tabs>
 </template>
 
 <script>
 import ManufacturersItem from '@/components/settings/Manufacturers'
+import sections from '@/data/sections'
 
 export default {
 	name: 'Settings',
@@ -23,14 +29,29 @@ export default {
 	},
 	data() {
 		return {
-			activeName: 'manufacturers'
+			sections,
+			tabs: [
+				{ label: 'Виробники обладнання', name: 'manufacturers' },
+				{ label: 'Моделі обладнання', name: 'models' },
+				{ label: 'Типи обладнання', name: 'types' }
+			]
+		}
+	},
+	computed: {
+		routeName() {
+			return this.$route.name
+		}
+	},
+	methods: {
+		onTabClick(component) {
+			this.$router.push({ name: component.name })
 		}
 	}
 }
 </script>
 
 <style lang="scss" scoped>
-/deep/ .el-tabs--border-card {
+.el-tabs--border-card {
 	border: none;
 	box-shadow: none;
 	height: 100%;
