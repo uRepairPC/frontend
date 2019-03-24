@@ -27,12 +27,7 @@
 					>
 						<template slot-scope="scope">
 							<span v-if="scope.row.key === 'role' && scope.row.value">
-								<el-tag
-									:type="listRoles[scope.row.value].color"
-									size="medium"
-								>
-									{{ listRoles[scope.row.value].name }}
-								</el-tag>
+								<tag-role :role="scope.row.value" />
 							</span>
 							<span v-else>{{ scope.row.value }}</span>
 						</template>
@@ -58,7 +53,7 @@ import EditEmailDialog from '@/components/users/dialogs/EditEmail'
 import DeleteDialog from '@/components/users/dialogs/Delete'
 import EditDialog from '@/components/users/dialogs/Edit'
 import TopButtons from '@/components/TopButtons'
-import { list as listRoles } from '@/data/roles'
+import TagRole from '@/components/users/TagRole'
 import UserImage from '@/components/users/Image'
 import { COLUMNS_DATES } from '@/data/columns'
 import { isArray } from '@/scripts/helpers'
@@ -73,11 +68,10 @@ export default {
 		{ title: route => `ID: ${route.params.id}` }
 	],
 	components: {
-		UserImage, TopButtons
+		UserImage, TopButtons, TagRole
 	},
 	data() {
 		return {
-			listRoles,
 			loading: false,
 			dialog: {
 				value: false,
