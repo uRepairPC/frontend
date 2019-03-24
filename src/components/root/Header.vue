@@ -12,14 +12,15 @@
 				<span>КНТЕУ</span>
 			</div>
 			<el-button
-				type="success"
+				v-if="sectionRequestMenuActions.add"
+				:type="sectionRequestMenuActions.add.type"
 				size="mini"
 				@click="onClickCreateRequest"
 			>
 				<i class="material-icons">
-					add
+					{{ sectionRequestMenuActions.add.icon }}
 				</i>
-				Створити заявку
+				{{ sectionRequestMenuActions.add.text }}
 			</el-button>
 		</div>
 		<div class="header--center" />
@@ -56,14 +57,21 @@
 <script>
 import { DEFAULT_ROUTE_NAME } from '@/router'
 import sections from '@/data/sections'
+import { mapGetters } from 'vuex'
 
 export default {
 	computed: {
+		...mapGetters({
+			menu: 'template/menu'
+		}),
 		user() {
 			return this.$store.state.profile.user
 		},
 		openSearch() {
 			return this.$store.state.template.openSearch
+		},
+		sectionRequestMenuActions() {
+			return this.menu[sections.requests].actions || {}
 		}
 	},
 	methods: {
