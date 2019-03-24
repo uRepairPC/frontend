@@ -55,7 +55,7 @@ const getters = {
 	columns(state, getters, rootState) {
 		const userRole = rootState.profile.user.role
 
-		return userColumns().filter((column) => {
+		return userColumns.filter((column) => {
 			if (isArray(column.access)) {
 				return column.access.includes(userRole)
 			}

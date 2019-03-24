@@ -6,8 +6,8 @@ import * as roles from '@/enum/roles'
 /** @type {array} */
 export const COLUMNS_DATES = ['updated_at', 'created_at']
 
-/** @return {Object} - prop, label, model */
-export function users() {
+/** @return {Object} */
+function userData() {
 	const defaultActive = ['first_name', 'last_name', 'email', 'phone']
 
 	const columns = [
@@ -28,3 +28,15 @@ export function users() {
 		return { ...column, model: data.includes(column.prop) }
 	})
 }
+
+/** @return {Object} */
+export const users = userData()
+
+/** @return {Object} */
+export const equipmentTypes = [
+	{ prop: 'id', label: 'ID', 'min-width': 70, sortable: true },
+	{ prop: 'name', label: 'Назва', 'min-width': 150, sortable: true },
+	{ prop: 'description', label: 'Опис', 'min-width': 200, sortable: false },
+	{ prop: 'updated_at', label: 'Оновлено', 'min-width': 150, sortable: true },
+	{ prop: 'created_at', label: 'Створений', 'min-width': 150, sortable: true }
+]
