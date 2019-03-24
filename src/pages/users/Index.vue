@@ -10,7 +10,17 @@
 				:loading-type="loadingType"
 				@row-click="onRowClick"
 				@sort-change="onSortChange"
-			/>
+			>
+				<template slot-scope="{ column, row }">
+					<template v-if="column.prop === 'role' && row">
+						<tag-role
+							:role="row"
+							size="small"
+						/>
+					</template>
+					<template v-else>{{ row }}</template>
+				</template>
+			</table-component>
 		</template>
 		<filter-core slot="right-column">
 			<filter-action
@@ -43,6 +53,7 @@
 <script>
 import TemplatePage from '@/components/template/Page'
 import scrollTableMixin from '@/mixins/scrollTable'
+import TagRole from '@/components/users/TagRole'
 import { setColumnUsers } from '@/data/storage'
 import TableComponent from '@/components/Table'
 import sections from '@/data/sections'
@@ -54,7 +65,7 @@ export default {
 		{ title: 'Користувачі' }
 	],
 	components: {
-		TableComponent, TemplatePage
+		TableComponent, TemplatePage, TagRole
 	},
 	mixins: [
 		scrollTableMixin
