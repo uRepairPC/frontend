@@ -18,12 +18,15 @@
 
 <script>
 import sections from '@/data/sections'
-import menu from '@/data/menu'
+import { mapGetters } from 'vuex'
 
 export default {
 	computed: {
+		...mapGetters({
+			menu: 'template/menu'
+		}),
 		sectionMenu() {
-			const actions = menu[sections.settings].actions
+			const actions = this.menu[sections.settings].children
 
 			const arr = [
 				{ label: 'Головна', name: sections.settings }

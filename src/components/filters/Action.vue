@@ -39,14 +39,14 @@ export default {
 			return this.menu[this.section]
 		},
 		hasActions() {
-			return !!Object.keys(this.menuSection.actions).length
+			return !!Object.keys(this.menuSection.children).length
 		},
 		actions() {
 			if (!this.hasActions) {
 				return []
 			}
 
-			return this.menuSection.actions
+			return this.menuSection.children
 		}
 	}
 }

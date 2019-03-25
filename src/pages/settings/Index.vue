@@ -7,6 +7,7 @@
 <script>
 import breadcrumbs from '@/mixins/breadcrumbs'
 import sections from '@/data/sections'
+import { mapGetters } from 'vuex'
 import menu from '@/data/menu'
 
 export default {
@@ -18,8 +19,11 @@ export default {
 		breadcrumbs
 	],
 	computed: {
+		...mapGetters({
+			menu: 'template/menu'
+		}),
 		pages() {
-			const actions = menu[sections.settings].actions
+			const actions = this.menu[sections.settings].children
 			const arr = []
 
 			Object.entries(actions).forEach(([key, obj]) => {

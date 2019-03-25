@@ -23,7 +23,7 @@ export default {
 	name: 'Manufacturers',
 	breadcrumbs: [
 		{ title: menu[sections.settings].title, routeName: sections.settings },
-		{ title: menu[sections.settings].actions[sections.settingsManufacturers].title }
+		{ title: menu[sections.settings].children[sections.settingsManufacturers].title }
 	],
 	components: {
 		BasicTable

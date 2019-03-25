@@ -23,11 +23,12 @@ export default {
 		history: {
 			show: true
 		},
-		actions: {
+		children: {
 			add: {
 				title: 'Створити заявку',
 				icon: 'add',
 				type: types.PRIMARY,
+				tag: 'action',
 				action: () => router.push({ name: `${sections.requests}-create` })
 			}
 		}
@@ -40,12 +41,13 @@ export default {
 			show: true,
 			callback: (obj) => `[${obj.id}] ${obj.last_name} ${obj.first_name}`
 		},
-		actions: {
+		children: {
 			add: {
 				title: 'Створити користувача',
 				icon: 'add',
 				type: types.PRIMARY,
 				access: [roles.ADMIN],
+				tag: 'action',
 				action: () => router.push({ name: `${sections.users}-create` })
 			}
 		}
@@ -58,11 +60,12 @@ export default {
 		history: {
 			show: true
 		},
-		actions: {
+		children: {
 			add: {
 				title: 'Створити обладнання',
 				icon: 'add',
 				type: types.PRIMARY,
+				tag: 'action',
 				action: () => router.push({ name: `${sections.equipments}-create` })
 			}
 		}
@@ -78,24 +81,24 @@ export default {
 		title: 'Конфігурація',
 		route: { name: sections.settings },
 		access: [roles.ADMIN, roles.WORKER],
-		actions: {
+		children: {
 			[sections.settingsManufacturers]: {
 				title: 'Виробники обладнання',
 				icon: 'keyboard_arrow_right',
 				tag: 'page',
-				action: () => router.push({ name: `${sections.settingsManufacturers}` })
+				action: () => router.push({ name: sections.settingsManufacturers })
 			},
 			[sections.settingsTypes]: {
 				title: 'Типи обладнання',
 				icon: 'keyboard_arrow_right',
 				tag: 'page',
-				action: () => router.push({ name: `${sections.settingsTypes}` })
+				action: () => router.push({ name: sections.settingsTypes })
 			},
 			[sections.settingsModels]: {
 				title: 'Моделі обладнання',
 				icon: 'keyboard_arrow_right',
 				tag: 'page',
-				action: () => router.push({ name: `${sections.settingsModels}` })
+				action: () => router.push({ name: sections.settingsModels })
 			}
 		}
 	}

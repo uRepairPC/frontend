@@ -23,7 +23,7 @@ export default {
 	name: 'Models',
 	breadcrumbs: [
 		{ title: menu[sections.settings].title, routeName: sections.settings },
-		{ title: menu[sections.settings].actions[sections.settingsModels].title }
+		{ title: menu[sections.settings].children[sections.settingsModels].title }
 	],
 	components: {
 		BasicTable

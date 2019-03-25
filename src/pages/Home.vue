@@ -30,18 +30,26 @@
 					</div>
 				</div>
 				<div
-					v-if="item.actions"
+					v-if="item.children"
 					class="item-actions-list"
 				>
 					<div
-						v-for="(action, key) in item.actions"
+						v-for="(action, key) in item.children"
 						:key="key"
 						class="item-action"
 						@click="action.action"
 					>
 						<div class="item-action-wrap">
 							<i class="item-action--icon material-icons">
-								{{ action.icon }}
+								<template v-if="action.tag === 'page'">
+									chevron_right
+								</template>
+								<template v-else-if="action.icon">
+									{{ action.icon }}
+								</template>
+								<template v-else>
+									change_history
+								</template>
 							</i>
 							<div class="item-action--title">
 								{{ action.title }}

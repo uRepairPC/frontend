@@ -91,10 +91,10 @@ const getters = {
 				}
 			}
 
-			if (obj.actions && typeof obj.actions === 'object') {
-				Object.entries(obj.actions).forEach(([actionKey, action]) => {
+			if (obj.children && typeof obj.children === 'object') {
+				Object.entries(obj.children).forEach(([actionKey, action]) => {
 					if (isArray(action.access) && !action.access.includes(userRole)) {
-						delete obj.actions[actionKey]
+						delete obj.children[actionKey]
 					}
 				})
 			}

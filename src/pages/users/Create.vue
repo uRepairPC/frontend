@@ -109,7 +109,7 @@ import menu from '@/data/menu'
 export default {
 	breadcrumbs: [
 		{ title: menu[sections.users].title, routeName: sections.users },
-		{ title: menu[sections.users].actions.add.title }
+		{ title: menu[sections.users].children.add.title }
 	],
 	mixins: [
 		breadcrumbs
@@ -131,7 +131,7 @@ export default {
 	},
 	computed: {
 		titlePage() {
-			return menu[sections.users].actions.add.title
+			return menu[sections.users].children.add.title
 		},
 		profile() {
 			return this.$store.state.profile.user

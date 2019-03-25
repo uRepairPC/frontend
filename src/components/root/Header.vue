@@ -77,7 +77,7 @@ export default {
 			return this.$store.state.template.openSearch
 		},
 		sectionRequestMenuActions() {
-			return this.menu[sections.requests].actions || {}
+			return this.menu[sections.requests].children || {}
 		}
 	},
 	methods: {
