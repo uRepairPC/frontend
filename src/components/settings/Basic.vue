@@ -31,16 +31,22 @@
 				:key="index"
 				v-bind="column"
 			/>
-			<el-table-column
-				fixed="right"
-				width="120">
+			<el-table-column width="200">
 				<template slot-scope="scope">
 					<el-button
 						type="text"
 						size="small"
-						@click="onEdit"
+						@click="onEdit(scope.$index, scope.row)"
 					>
 						Редагувати
+					</el-button>
+					<el-button
+						type="text"
+						size="small"
+						class="danger"
+						@click="onDelete(scope.$index, scope.row)"
+					>
+						Видалити
 					</el-button>
 				</template>
 			</el-table-column>
@@ -83,8 +89,11 @@ export default {
 		onUpdate() {
 			this.$emit('update')
 		},
-		onEdit() {
-			this.$emit('edit')
+		onEdit(index, obj) {
+			this.$emit('edit', obj, index)
+		},
+		onDelete(index, obj) {
+			this.$emit('delete', obj, index)
 		}
 	}
 }

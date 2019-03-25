@@ -1,15 +1,26 @@
 <template>
-	<basic
-		:list="list"
-		:loading="loading"
-		:columns="columns"
-		@add="onAdd"
-		@edit="onEdit"
-		@update="fetchRequest"
-	/>
+	<div>
+		<basic
+			:list="list"
+			:loading="loading"
+			:columns="columns"
+			@add="onAdd"
+			@edit="onEdit"
+			@update="fetchRequest"
+			@delete="onDelete"
+		/>
+
+		<!-- DIALOGS -->
+		<component
+			:is="dialog.component"
+			v-model="dialog.value"
+			:item="dialog.item"
+		/>
+	</div>
 </template>
 
 <script>
+import CreateDialog from '@/components/settings/manufacturers/Create'
 import { equipmentManufacturers as columns } from '@/data/columns'
 import Basic from '@/components/settings/Basic'
 import breadcrumbs from '@/mixins/breadcrumbs'
@@ -30,7 +41,12 @@ export default {
 	],
 	data() {
 		return {
-			columns
+			columns,
+			dialog: {
+				value: false,
+				component: null,
+				item: null
+			}
 		}
 	},
 	computed: {
@@ -38,6 +54,13 @@ export default {
 			loading: state => state.equipmentManufacturers.loading,
 			list: state => state.equipmentManufacturers.list
 		})
+	},
+	watch: {
+		'dialog.value'(val) {
+			if (!val) {
+				this.closeDialog()
+			}
+		}
 	},
 	mounted() {
 		if (!this.list.length) {
@@ -49,10 +72,23 @@ export default {
 			this.$store.dispatch('equipmentManufacturers/fetchList')
 		},
 		onAdd() {
-			// TODO
+			this.openDialog(CreateDialog)
 		},
-		onEdit() {
-			// TODO
+		onEdit(obj) {
+			this.dialog.item = obj
+			// this.openDialog(EditDialog)
+		},
+		onDelete(obj) {
+			this.dialog.item = obj
+			// this.openDialog(DeleteDialog)
+		},
+		openDialog(component) {
+			this.dialog.component = component
+			this.dialog.value = true
+		},
+		closeDialog() {
+			this.dialog.value = false
+			this.dialog.component = null
 		}
 	}
 }
