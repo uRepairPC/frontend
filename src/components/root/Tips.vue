@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import { isArray } from '@/scripts/helpers'
+import { isArray, getRndInteger } from '@/scripts/helpers'
 import tips from '@/data/tips'
 
 /** @type {number} - milliseconds */
@@ -49,7 +49,7 @@ export default {
 				this.currentTip = ''
 
 				const setCurrentTip = () => {
-					this.index = this.index + 1 >= this.len ? 0 : this.index + 1
+					this.index = getRndInteger(0, this.len - 1)
 					this.currentTip = arr[this.index]
 				}
 
