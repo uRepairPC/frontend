@@ -1,6 +1,6 @@
 'use strict'
 
-import { getColumnUsers } from './storage'
+import StorageData from '@/classes/StorageData'
 import * as roles from '@/enum/roles'
 
 /** @type {array} */
@@ -22,7 +22,7 @@ function userData() {
 		{ prop: 'created_at', label: 'Створений', 'min-width': 150, sortable: true }
 	]
 
-	const data = getColumnUsers() || defaultActive
+	const data = StorageData.columnUsers.length ? StorageData.columnUsers : defaultActive
 
 	return columns.map((column) => {
 		return { ...column, model: data.includes(column.prop) }

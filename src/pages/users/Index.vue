@@ -55,7 +55,7 @@
 import TemplatePage from '@/components/template/Page'
 import scrollTableMixin from '@/mixins/scrollTable'
 import TagRole from '@/components/users/TagRole'
-import { setColumnUsers } from '@/data/storage'
+import StorageData from '@/classes/StorageData'
 import TableComponent from '@/components/Table'
 import breadcrumbs from '@/mixins/breadcrumbs'
 import sections from '@/data/sections'
@@ -139,7 +139,7 @@ export default {
 			})
 		},
 		onChangeColumn() {
-			setColumnUsers(this.filterColumns.map(i => i.prop))
+			StorageData.columnUsers = this.filterColumns.map(i => i.prop)
 		},
 		onScroll() {
 			if (!this.loading && this.list.current_page < this.list.last_page) {

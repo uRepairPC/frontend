@@ -29,6 +29,8 @@ axios.interceptors.response.use(
 		// User is not auth
 		if (response.status === 401) {
 
+			// FIXME Multiple request with 401 status code
+
 			// Disable all interface
 			const loadingService = Loading.service({
 				lock: true,
