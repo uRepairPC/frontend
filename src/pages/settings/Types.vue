@@ -12,12 +12,22 @@
 <script>
 import { equipmentTypes as columns } from '@/data/columns'
 import Basic from '@/components/settings/Basic'
+import breadcrumbs from '@/mixins/breadcrumbs'
+import sections from '@/data/sections'
 import { mapState } from 'vuex'
+import menu from '@/data/menu'
 
 export default {
+	breadcrumbs: [
+		{ title: menu[sections.settings].title, routeName: sections.settings },
+		{ title: menu[sections.settings].actions[sections.settingsTypes].title }
+	],
 	components: {
 		Basic
 	},
+	mixins: [
+		breadcrumbs
+	],
 	data() {
 		return {
 			columns

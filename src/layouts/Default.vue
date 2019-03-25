@@ -5,7 +5,7 @@
 			<el-container :class="{ 'search--open': openSearch }">
 				<sidebar-box />
 				<el-main>
-					<breadcrumbs-box :list="breadcrumbs" />
+					<breadcrumbs-box />
 					<keep-alive :include="keepAliveRoutesName">
 						<router-view
 							ref="content"
@@ -24,7 +24,6 @@ import BreadcrumbsBox from '@/components/root/Breadcrumbs'
 import SidebarBox from '@/components/root/Sidebar'
 import HeaderBox from '@/components/root/Header'
 import SearchBox from '@/components/root/Search'
-import { DEFAULT_ROUTE_NAME } from '@/router'
 
 export default {
 	components: {
@@ -34,8 +33,7 @@ export default {
 		return {
 			keepAliveRoutesName: [
 				'Home', 'Requests', 'Users', 'Workers', 'Settings'
-			],
-			breadcrumbs: []
+			]
 		}
 	},
 	computed: {
@@ -48,44 +46,10 @@ export default {
 		 * On update $route - we update breadcrumbs
 		 * from ref="content" component.
 		 */
-		'$route': {
-			handler() {
-				if (this.openSearch) {
-					this.$store.commit('template/CLOSE_SEARCH')
-				}
-
-				this.$nextTick(() => {
-					if (!this.$refs.content || !this.$refs.content.$options.breadcrumbs) {
-						this.breadcrumbs = [this.getFirstBreadcrumb(false)]
-						return
-					}
-
-					this.breadcrumbs = [
-						this.getFirstBreadcrumb(true),
-						...this.$refs.content.$options.breadcrumbs
-					]
-				})
-			},
-			immediate: true
-		}
-	},
-	methods: {
-		/**
-		 * Get first item - Home page
-		 * @param {Boolean} hasLink
-		 * @return {Object}
-		 * @example
-		 *  - title {String}
-		 *  - route - RouterLink
-		 */
-		getFirstBreadcrumb(hasLink) {
-			const title = 'Головна сторінка'
-
-			if (hasLink) {
-				return { title, route: { name: DEFAULT_ROUTE_NAME } }
+		'$route'() {
+			if (this.openSearch) {
+				this.$store.commit('template/CLOSE_SEARCH')
 			}
-
-			return { title }
 		}
 	}
 }

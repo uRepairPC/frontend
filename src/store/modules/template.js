@@ -1,12 +1,13 @@
 'use strict'
 
 import { isArray } from '@/scripts/helpers'
-import { listMenu } from '@/data/template'
 import sections from '@/data/sections'
+import menu from '@/data/menu'
 import Vue from 'vue'
 
 const state = {
 	openSearch: false,
+	breadcrumbs: [],
 	pagesScroll: {},
 	// History on left sidebar
 	// Required id property
@@ -19,6 +20,9 @@ const mutations = {
 	},
 	CLOSE_SEARCH(state) {
 		state.openSearch = false
+	},
+	SET_BREADCRUMBS(state, arr) {
+		state.breadcrumbs = arr
 	},
 	/**
 	 * @param state
@@ -78,9 +82,9 @@ const getters = {
 	 */
 	menu(state, getters, rootState) {
 		const userRole = rootState.profile.user.role
-		let menu = {}
+		const result = {}
 
-		for (const [key, obj] of Object.entries(listMenu)) {
+		for (const [key, obj] of Object.entries(menu)) {
 			if (isArray(obj.access)) {
 				if (!obj.access.includes(userRole)) {
 					continue
@@ -95,10 +99,10 @@ const getters = {
 				})
 			}
 
-			menu[key] = obj
+			result[key] = obj
 		}
 
-		return menu
+		return result
 	}
 }
 

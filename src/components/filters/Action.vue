@@ -14,7 +14,7 @@
 			<i class="material-icons">
 				{{ action.icon }}
 			</i>
-			<span>{{ action.text }}</span>
+			<span>{{ action.title }}</span>
 		</el-button>
 	</filter-basic>
 </template>

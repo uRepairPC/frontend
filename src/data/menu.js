@@ -10,7 +10,7 @@ import router from '@/router'
  * template.sidebar store for show on left sidebar.
  * @type {object} of objects
  */
-const listMenu = {
+export default {
 	[sections.home]: {
 		icon: 'home',
 		title: 'Головна сторінка',
@@ -25,7 +25,7 @@ const listMenu = {
 		},
 		actions: {
 			add: {
-				text: 'Створити заявку',
+				title: 'Створити заявку',
 				icon: 'add',
 				type: types.PRIMARY,
 				action: () => router.push({ name: `${sections.requests}-create` })
@@ -42,7 +42,7 @@ const listMenu = {
 		},
 		actions: {
 			add: {
-				text: 'Створити користувача',
+				title: 'Створити користувача',
 				icon: 'add',
 				type: types.PRIMARY,
 				access: [roles.ADMIN],
@@ -60,7 +60,7 @@ const listMenu = {
 		},
 		actions: {
 			add: {
-				text: 'Створити обладнання',
+				title: 'Створити обладнання',
 				icon: 'add',
 				type: types.PRIMARY,
 				action: () => router.push({ name: `${sections.equipments}-create` })
@@ -80,28 +80,23 @@ const listMenu = {
 		access: [roles.ADMIN, roles.WORKER],
 		actions: {
 			[sections.settingsManufacturers]: {
-				text: 'Виробники обладнання',
+				title: 'Виробники обладнання',
 				icon: 'keyboard_arrow_right',
-				type: types.PRIMARY,
 				tag: 'page',
 				action: () => router.push({ name: `${sections.settingsManufacturers}` })
 			},
 			[sections.settingsTypes]: {
-				text: 'Типи обладнання',
+				title: 'Типи обладнання',
 				icon: 'keyboard_arrow_right',
-				type: types.PRIMARY,
 				tag: 'page',
 				action: () => router.push({ name: `${sections.settingsTypes}` })
 			},
 			[sections.settingsModels]: {
-				text: 'Моделі обладнання',
+				title: 'Моделі обладнання',
 				icon: 'keyboard_arrow_right',
-				type: types.PRIMARY,
 				tag: 'page',
 				action: () => router.push({ name: `${sections.settingsModels}` })
 			}
 		}
 	}
 }
-
-export { listMenu }

@@ -49,8 +49,8 @@
 </template>
 
 <script>
-import { listMenu } from '@/data/template'
 import sections from '@/data/sections'
+import { mapGetters } from 'vuex'
 
 export default {
 	props: {
@@ -68,9 +68,12 @@ export default {
 		}
 	},
 	computed: {
+		...mapGetters({
+			menu: 'template/menu'
+		}),
 		title() {
-			const action = listMenu[sections.settings].actions[this.$route.name]
-			return action ? action.text : ''
+			const action = this.menu[sections.settings].actions[this.$route.name]
+			return action ? action.title : ''
 		}
 	},
 	methods: {

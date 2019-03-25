@@ -20,7 +20,7 @@
 				<i class="material-icons">
 					{{ sectionRequestMenuActions.add.icon }}
 				</i>
-				{{ sectionRequestMenuActions.add.text }}
+				{{ sectionRequestMenuActions.add.title }}
 			</el-button>
 		</div>
 		<div class="header--center" />

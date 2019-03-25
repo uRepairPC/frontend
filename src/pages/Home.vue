@@ -2,7 +2,7 @@
 	<div class="home">
 		<div class="items">
 			<div
-				v-for="(item, index) in filterMenu"
+				v-for="(item, index) in menuWithoutHomePage"
 				:key="index"
 				class="item"
 			>
@@ -44,7 +44,7 @@
 								{{ action.icon }}
 							</i>
 							<div class="item-action--title">
-								{{ action.text }}
+								{{ action.title }}
 							</div>
 						</div>
 					</div>
@@ -55,16 +55,20 @@
 </template>
 
 <script>
+import breadcrumbs from '@/mixins/breadcrumbs'
 import sections from '@/data/sections'
 import { mapGetters } from 'vuex'
 
 export default {
 	name: 'Home',
+	mixins: [
+		breadcrumbs
+	],
 	computed: {
 		...mapGetters({
 			menu: 'template/menu'
 		}),
-		filterMenu() {
+		menuWithoutHomePage() {
 			const list = {}
 
 			Object.entries(this.menu).filter(([key, val]) => {

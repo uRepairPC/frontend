@@ -51,9 +51,13 @@ const authorizedRoutes = {
 		},
 		{
 			path: `/${sections.settings}`,
-			name: sections.settings,
-			component: loadPage('settings/Index'),
+			component: loadPage('settings/Core'),
 			children: [
+				{
+					path: `/${sections.settings}`,
+					name: sections.settings,
+					component: loadPage('settings/Index')
+				},
 				{
 					path: `/${sections.settings}/manufacturers`,
 					name: `${sections.settingsManufacturers}`,

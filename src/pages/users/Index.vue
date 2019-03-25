@@ -12,12 +12,11 @@
 				@sort-change="onSortChange"
 			>
 				<template slot-scope="{ column, row }">
-					<template v-if="column.prop === 'role' && row">
-						<tag-role
-							:role="row"
-							size="small"
-						/>
-					</template>
+					<tag-role
+						v-if="column.prop === 'role' && row"
+						:role="row"
+						size="small"
+					/>
 					<template v-else>{{ row }}</template>
 				</template>
 			</table-component>
@@ -56,19 +55,21 @@ import scrollTableMixin from '@/mixins/scrollTable'
 import TagRole from '@/components/users/TagRole'
 import { setColumnUsers } from '@/data/storage'
 import TableComponent from '@/components/Table'
+import breadcrumbs from '@/mixins/breadcrumbs'
 import sections from '@/data/sections'
 import { mapGetters } from 'vuex'
+import menu from '@/data/menu'
 
 export default {
 	name: 'Users',
 	breadcrumbs: [
-		{ title: 'Користувачі' }
+		{ title: menu[sections.users].title }
 	],
 	components: {
 		TableComponent, TemplatePage, TagRole
 	},
 	mixins: [
-		scrollTableMixin
+		scrollTableMixin, breadcrumbs
 	],
 	data() {
 		return {

@@ -1,7 +1,7 @@
 <template>
 	<div class="user">
 		<div class="wrap">
-			<div class="title">Створення користувача</div>
+			<div class="title">{{ titlePage }}</div>
 			<el-form
 				ref="form"
 				:model="form"
@@ -98,14 +98,19 @@
 
 <script>
 import { list as roleList } from '@/data/roles'
+import breadcrumbs from '@/mixins/breadcrumbs'
 import * as dataRules from '@/data/rules'
-import * as roles from '@/enum/roles'
 import sections from '@/data/sections'
+import * as roles from '@/enum/roles'
+import menu from '@/data/menu'
 
 export default {
 	breadcrumbs: [
-		{ title: 'Користувачі', route: { name: sections.users } },
-		{ title: 'Створення' }
+		{ title: menu[sections.users].title, routeName: sections.users },
+		{ title: menu[sections.users].actions.add.title }
+	],
+	mixins: [
+		breadcrumbs
 	],
 	data() {
 		return {
@@ -123,6 +128,9 @@ export default {
 		}
 	},
 	computed: {
+		titlePage() {
+			return menu[sections.users].actions.add.title
+		},
 		profile() {
 			return this.$store.state.profile.user
 		}
