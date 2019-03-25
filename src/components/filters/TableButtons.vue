@@ -2,7 +2,7 @@
 	<div class="filter-table-top">
 		<div>
 			<el-button
-				type="warning"
+				type="success"
 				size="small"
 				@click="onUpdateClick"
 			>

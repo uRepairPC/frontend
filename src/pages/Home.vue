@@ -154,7 +154,7 @@ export default {
 	position: relative;
 	margin-top: 15px;
 	padding: 5px 10px 5px 0;
-	color: #606266; // TODO colors
+	color: $regularText;
 	transition: color .2s;
 	cursor: pointer;
 	&:hover {

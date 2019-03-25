@@ -1,8 +1,8 @@
 'use strict'
 
+import { Message, Loading } from 'element-ui'
 import { axiosBaseUrl } from '@/data/env'
 import * as types from '@/enum/types'
-import { Message } from 'element-ui'
 import store from '@/store'
 import axios from 'axios'
 
@@ -29,21 +29,30 @@ axios.interceptors.response.use(
 		// User is not auth
 		if (response.status === 401) {
 
+			// Disable all interface
+			const loadingService = Loading.service({
+				lock: true,
+				text: 'Оновлюється токен безпеки',
+				spinner: 'el-icon-loading',
+				background: 'rgba(0, 0, 0, 0.7)'
+			})
+
 			// User is auth, probably token is expired, try renew
 			// And send last request again
 			if (!config._retry && store.state.profile.isLogin) {
 				config._retry = true
 
-				// FIXME Block multiple request, queue/wait
-
 				// Refresh token
 				return axios.post('auth/refresh')
-					.then(({ data }) => {
+					.then(async ({ data }) => {
 						axios.defaults.headers['Authorization'] = 'Bearer ' + data.token
 						config.headers['Authorization'] = 'Bearer ' + data.token
 						localStorage.setItem('token', data.token)
 
-						return axios({
+						// Enable interface
+						loadingService.close()
+
+						return await axios({
 							...config,
 							// TODO Check on prod
 							url: config.url.replace(/^api\//, '')
