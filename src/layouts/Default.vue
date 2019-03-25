@@ -35,6 +35,12 @@ export default {
 			keepAliveRoutesName
 		}
 	},
+	mounted() {
+		document.addEventListener('keypress', this.hotKeys)
+	},
+	beforeDestroy() {
+		document.removeEventListener('keypress', this.hotKeys)
+	},
 	computed: {
 		openSearch() {
 			return this.$store.state.template.openSearch
@@ -48,6 +54,14 @@ export default {
 		'$route'() {
 			if (this.openSearch) {
 				this.$store.commit('template/CLOSE_SEARCH')
+			}
+		}
+	},
+	methods: {
+		hotKeys(evt) {
+			// Open global Search - Ctrl + Shift + F
+			if (evt.ctrlKey && evt.shiftKey && evt.code === 'KeyF') {
+				this.$store.commit('template/OPEN_SEARCH')
 			}
 		}
 	}

@@ -70,11 +70,9 @@ export default {
 @import "~scss/_colors";
 
 .tips {
-	text-align: center;
 	color: $regularText;
 	font-size: .9rem;
 	white-space: nowrap;
-	overflow: hidden;
 	text-overflow: ellipsis;
 }
 

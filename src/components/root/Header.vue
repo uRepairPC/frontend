@@ -29,7 +29,7 @@
 		<div class="header--right">
 			<el-button
 				size="mini"
-				:type="openSearch ? 'primary' : 'default'"
+				:type="openSearch ? 'danger' : 'default'"
 				:icon="`el-icon-${openSearch ? 'close' : 'search'}`"
 				@click="onClickSearch"
 			>
@@ -159,9 +159,14 @@ export default {
 }
 
 .header--center {
+	display: flex;
+	align-items: center;
+	justify-content: center;
 	flex: 1 1 auto;
 	padding: 0 15px;
-	overflow: hidden;
+	height: 100%;
+	overflow-x: hidden;
+	overflow-y: visible;
 }
 
 .header--right {
