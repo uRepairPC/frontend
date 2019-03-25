@@ -1,5 +1,6 @@
 'use strict'
 
+import keepAliveRoutesName from '@/data/keepAliveComponents'
 import { DEFAULT_ROUTE_NAME } from '@/router'
 import sections from '@/data/sections'
 import menu from '@/data/menu'
@@ -28,14 +29,12 @@ export default {
 	 * in Default layout.
 	 */
 	activated() {
-		this.$nextTick(() => {
-			this.updateBreadcrumbs()
-		})
+		this.$nextTick(this.updateBreadcrumbs)
 	},
 	mounted() {
-		this.$nextTick(() => {
-			this.updateBreadcrumbs()
-		})
+		if (!this.$options.name || !keepAliveRoutesName.includes(this.$options.name)) {
+			this.$nextTick(this.updateBreadcrumbs)
+		}
 	},
 	methods: {
 		updateBreadcrumbs() {

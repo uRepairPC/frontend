@@ -17,22 +17,17 @@
 </template>
 
 <script>
-import breadcrumbs from '@/mixins/breadcrumbs'
 import sections from '@/data/sections'
 import menu from '@/data/menu'
 
 export default {
-	name: 'Settings',
-	breadcrumbs: [
-		{ title: menu[sections.settings].title }
-	],
-	mixins: [
-		breadcrumbs
-	],
 	computed: {
 		sectionMenu() {
 			const actions = menu[sections.settings].actions
-			const arr = []
+
+			const arr = [
+				{ label: 'Головна', name: sections.settings }
+			]
 
 			Object.entries(actions).forEach(([key, obj]) => {
 				if (obj.tag === 'page') {
