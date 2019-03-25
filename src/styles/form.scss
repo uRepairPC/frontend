@@ -1,5 +1,18 @@
 @import "~scss/_colors";
 
+.form--full {
+  .el-form-item__label {
+    float: none;
+  }
+  .el-select {
+    width: 100%;
+  }
+}
+
+/*
+ * Select
+ */
+
 .select--refresh {
   .el-select-dropdown__list {
     padding-bottom: 0;
