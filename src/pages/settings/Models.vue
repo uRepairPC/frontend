@@ -10,6 +10,7 @@
 
 <script>
 import CreateDialog from '@/components/equipments/models/dialogs/Create'
+import DeleteDialog from '@/components/equipments/models/dialogs/Delete'
 import EditDialog from '@/components/equipments/models/dialogs/Edit'
 import { equipmentModels as columns } from '@/data/columns'
 import BasicTable from '@/components/settings/BasicTable'
@@ -36,7 +37,7 @@ export default {
 			dialogs: {
 				create: CreateDialog,
 				edit: EditDialog,
-				// delete: DeleteDialog
+				delete: DeleteDialog
 			}
 		}
 	},
