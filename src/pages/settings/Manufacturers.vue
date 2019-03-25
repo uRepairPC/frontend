@@ -20,7 +20,8 @@
 </template>
 
 <script>
-import CreateDialog from '@/components/settings/manufacturers/Create'
+import CreateDialog from '@/components/settings/dialogs/manufacturers/Create'
+import EditDialog from '@/components/settings/dialogs/manufacturers/Edit'
 import { equipmentManufacturers as columns } from '@/data/columns'
 import Basic from '@/components/settings/Basic'
 import breadcrumbs from '@/mixins/breadcrumbs'
@@ -76,7 +77,7 @@ export default {
 		},
 		onEdit(obj) {
 			this.dialog.item = obj
-			// this.openDialog(EditDialog)
+			this.openDialog(EditDialog)
 		},
 		onDelete(obj) {
 			this.dialog.item = obj
