@@ -16,7 +16,7 @@
 				<el-button
 					size="small"
 					type="primary"
-					@click="onAdd"
+					@click="onCreate"
 				>
 					Додати
 				</el-button>
@@ -47,7 +47,7 @@
 					<el-button
 						type="text"
 						size="small"
-						@click="onEdit(scope.$index, scope.row)"
+						@click="onEdit(scope.row)"
 					>
 						Редагувати
 					</el-button>
@@ -55,13 +55,20 @@
 						type="text"
 						size="small"
 						class="danger"
-						@click="onDelete(scope.$index, scope.row)"
+						@click="onDelete(scope.row)"
 					>
 						Видалити
 					</el-button>
 				</template>
 			</el-table-column>
 		</el-table>
+
+		<!-- DIALOGS -->
+		<component
+			:is="dialog.component"
+			v-model="dialog.value"
+			:item="dialog.item"
+		/>
 	</div>
 </template>
 
@@ -84,6 +91,19 @@ export default {
 		columns: {
 			type: Array,
 			required: true
+		},
+		dialogs: {
+			type: Object,
+			required: true
+		}
+	},
+	data() {
+		return {
+			dialog: {
+				value: false,
+				component: null,
+				item: null
+			}
 		}
 	},
 	computed: {
@@ -93,6 +113,13 @@ export default {
 		title() {
 			const action = this.menu[sections.settings].actions[this.$route.name]
 			return action ? action.title : ''
+		}
+	},
+	watch: {
+		'dialog.value'(val) {
+			if (!val) {
+				this.closeDialog()
+			}
 		}
 	},
 	methods: {
@@ -106,17 +133,31 @@ export default {
 		isColumnDate(prop) {
 			return COLUMNS_DATES.includes(prop)
 		},
-		onAdd() {
-			this.$emit('add')
+		onCreate() {
+			this.openDialog(this.dialogs.create)
 		},
 		onUpdate() {
 			this.$emit('update')
 		},
-		onEdit(index, obj) {
-			this.$emit('edit', obj, index)
+		onEdit(obj) {
+			this.dialog.item = obj
+			this.openDialog(this.dialogs.edit)
 		},
-		onDelete(index, obj) {
-			this.$emit('delete', obj, index)
+		onDelete(obj) {
+			this.dialog.item = obj
+			this.openDialog(this.dialogs.delete)
+		},
+		openDialog(component) {
+			if (!component) {
+				return
+			}
+
+			this.dialog.component = component
+			this.dialog.value = true
+		},
+		closeDialog() {
+			this.dialog.value = false
+			this.dialog.component = null
 		}
 	}
 }

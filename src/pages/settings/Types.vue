@@ -1,22 +1,11 @@
 <template>
-	<div>
-		<basic
-			:list="list"
-			:loading="loading"
-			:columns="columns"
-			@add="onAdd"
-			@edit="onEdit"
-			@update="fetchRequest"
-			@delete="onDelete"
-		/>
-
-		<!-- DIALOGS -->
-		<component
-			:is="dialog.component"
-			v-model="dialog.value"
-			:item="dialog.item"
-		/>
-	</div>
+	<basic
+		:list="list"
+		:loading="loading"
+		:columns="columns"
+		:dialogs="dialogs"
+		@update="fetchRequest"
+	/>
 </template>
 
 <script>
@@ -45,10 +34,10 @@ export default {
 	data() {
 		return {
 			columns,
-			dialog: {
-				value: false,
-				component: null,
-				item: null
+			dialogs: {
+				create: CreateDialog,
+				edit: EditDialog,
+				delete: DeleteDialog
 			}
 		}
 	},
@@ -66,25 +55,6 @@ export default {
 	methods: {
 		fetchRequest() {
 			this.$store.dispatch('equipmentTypes/fetchList')
-		},
-		onAdd() {
-			this.openDialog(CreateDialog)
-		},
-		onEdit(obj) {
-			this.dialog.item = obj
-			this.openDialog(EditDialog)
-		},
-		onDelete(obj) {
-			this.dialog.item = obj
-			this.openDialog(DeleteDialog)
-		},
-		openDialog(component) {
-			this.dialog.component = component
-			this.dialog.value = true
-		},
-		closeDialog() {
-			this.dialog.value = false
-			this.dialog.component = null
 		}
 	}
 }

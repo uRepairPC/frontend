@@ -1,6 +1,6 @@
 <template>
 	<el-dialog
-		title="Додати тип обладнання"
+		title="Додати тип"
 		:visible="value"
 		class="dialog--default"
 		v-on="listeners"

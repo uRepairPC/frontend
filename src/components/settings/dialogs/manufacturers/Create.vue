@@ -1,6 +1,6 @@
 <template>
 	<el-dialog
-		title="Додати виробника обладнання"
+		title="Додати виробника"
 		:visible="value"
 		class="dialog--default"
 		v-on="listeners"
