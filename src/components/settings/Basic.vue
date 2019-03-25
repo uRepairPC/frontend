@@ -32,7 +32,16 @@
 				v-for="(column, index) in columns"
 				:key="index"
 				v-bind="column"
-			/>
+			>
+				<template slot-scope="scope">
+					<template v-if="isColumnDate(column.prop)">
+						{{ getDate(scope.row[column.prop]) }}
+					</template>
+					<template v-else>
+						{{ scope.row[column.prop] }}
+					</template>
+				</template>
+			</el-table-column>
 			<el-table-column width="200">
 				<template slot-scope="scope">
 					<el-button
@@ -57,8 +66,10 @@
 </template>
 
 <script>
+import { COLUMNS_DATES } from '@/data/columns'
 import sections from '@/data/sections'
 import { mapGetters } from 'vuex'
+import moment from 'moment'
 
 export default {
 	props: {
@@ -85,6 +96,16 @@ export default {
 		}
 	},
 	methods: {
+		getDate(date) {
+			if (!date) {
+				return null
+			}
+
+			return moment(date).format('LL')
+		},
+		isColumnDate(prop) {
+			return COLUMNS_DATES.includes(prop)
+		},
 		onAdd() {
 			this.$emit('add')
 		},
