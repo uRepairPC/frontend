@@ -6,9 +6,8 @@
 		<div
 			class="tips"
 			:key="index"
-		>
-			{{ currentTip.text }}
-		</div>
+			v-html="currentTip.text"
+		/>
 	</transition>
 </template>
 

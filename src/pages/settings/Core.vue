@@ -58,11 +58,6 @@ export default {
 .el-tabs--border-card {
 	border: none;
 	box-shadow: none;
-	height: 100%;
-	.el-tabs__content {
-		min-height: calc(100% - 39px);
-		background: #fff;
-	}
 }
 
 /deep/ .el-tabs__nav {
