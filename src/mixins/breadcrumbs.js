@@ -39,8 +39,6 @@ export default {
 	},
 	methods: {
 		updateBreadcrumbs() {
-			// eslint-disable-next-line
-			console.log(this.$options.breadcrumbs)
 			if (!this.$options.breadcrumbs) {
 				this.$store.commit('template/SET_BREADCRUMBS', [getFirstBreadcrumb(false)])
 				return

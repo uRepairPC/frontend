@@ -23,7 +23,9 @@
 				{{ sectionRequestMenuActions.add.title }}
 			</el-button>
 		</div>
-		<div class="header--center" />
+		<div class="header--center">
+			<tips />
+		</div>
 		<div class="header--right">
 			<el-button
 				size="mini"
@@ -56,10 +58,14 @@
 
 <script>
 import { DEFAULT_ROUTE_NAME } from '@/router'
+import Tips from '@/components/root/Tips'
 import sections from '@/data/sections'
 import { mapGetters } from 'vuex'
 
 export default {
+	components: {
+		Tips
+	},
 	computed: {
 		...mapGetters({
 			menu: 'template/menu'
@@ -114,6 +120,7 @@ export default {
 .header--left {
 	display: flex;
 	align-items: center;
+	justify-content: center;
 	.el-button {
 		margin-left: 25px;
 		> /deep/ span {
@@ -138,6 +145,7 @@ export default {
 	}
 	> img {
 		height: 45px;
+		min-width: 45px;
 	}
 	> span {
 		font-weight: bold;
@@ -152,6 +160,8 @@ export default {
 
 .header--center {
 	flex: 1 1 auto;
+	padding: 0 15px;
+	overflow: hidden;
 }
 
 .header--right {
