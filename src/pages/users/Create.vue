@@ -1,7 +1,9 @@
 <template>
 	<div class="user">
 		<div class="wrap">
-			<div class="title">{{ titlePage }}</div>
+			<div class="title">
+				{{ titlePage }}
+			</div>
 			<el-form
 				ref="form"
 				:model="form"

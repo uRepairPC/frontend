@@ -3,9 +3,10 @@
 		name="tips-anim"
 		mode="out-in"
 	>
+		<!--eslint-disable vue/no-v-html-->
 		<div
-			class="tips"
 			:key="index"
+			class="tips"
 			v-html="currentTip.text"
 		/>
 	</transition>

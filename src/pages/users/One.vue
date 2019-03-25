@@ -69,12 +69,12 @@ export default {
 		{ title: menu[sections.users].title, routeName: sections.users },
 		{ title: route => `ID: ${route.params.id}` }
 	],
-	mixins: [
-		breadcrumbs
-	],
 	components: {
 		UserImage, TopButtons, TagRole
 	},
+	mixins: [
+		breadcrumbs
+	],
 	data() {
 		return {
 			loading: false,

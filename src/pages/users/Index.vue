@@ -17,7 +17,9 @@
 						:role="row"
 						size="small"
 					/>
-					<template v-else>{{ row }}</template>
+					<template v-else>
+						{{ row }}
+					</template>
 				</template>
 			</table-component>
 		</template>

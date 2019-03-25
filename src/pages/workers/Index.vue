@@ -46,12 +46,12 @@ export default {
 	breadcrumbs: [
 		{ title: menu[sections.workers].title }
 	],
-	mixins: [
-		breadcrumbs
-	],
 	components: {
 		UserBlock, TopButtons
 	},
+	mixins: [
+		breadcrumbs
+	],
 	data() {
 		return {
 			listRoles

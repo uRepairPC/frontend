@@ -19,7 +19,10 @@
 					{{ getDate(scope.row[column.prop]) }}
 				</template>
 				<template v-else>
-					<slot :column="column" :row="scope.row[column.prop]">
+					<slot
+						:column="column"
+						:row="scope.row[column.prop]"
+					>
 						{{ scope.row[column.prop] }}
 					</slot>
 				</template>

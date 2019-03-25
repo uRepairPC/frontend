@@ -1,7 +1,9 @@
 <template>
 	<div>
 		<div class="header">
-			<div class="title">{{ title }}</div>
+			<div class="title">
+				{{ title }}
+			</div>
 			<div class="actions">
 				<el-button
 					:loading="loading"
