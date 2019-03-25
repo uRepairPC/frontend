@@ -21,6 +21,7 @@
 
 <script>
 import CreateDialog from '@/components/settings/dialogs/types/Create'
+import DeleteDialog from '@/components/settings/dialogs/types/Delete'
 import EditDialog from '@/components/settings/dialogs/types/Edit'
 import { equipmentTypes as columns } from '@/data/columns'
 import Basic from '@/components/settings/Basic'
@@ -75,7 +76,7 @@ export default {
 		},
 		onDelete(obj) {
 			this.dialog.item = obj
-			// this.openDialog(DeleteDialog)
+			this.openDialog(DeleteDialog)
 		},
 		openDialog(component) {
 			this.dialog.component = component

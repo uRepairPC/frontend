@@ -7,7 +7,7 @@
 	>
 		<div class="content">
 			<div>Ви дійсно хочете <strong>видалити</strong> цього користувача?</div>
-			<div>Для підтвердження - введіть ID користувача.</div>
+			<div>Для підтвердження - введіть ID елемента.</div>
 			<el-input-number
 				ref="input"
 				v-model="input"

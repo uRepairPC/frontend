@@ -6,7 +6,7 @@
 		v-on="listeners"
 	>
 		<div class="content">
-			<div>Ви дійсно хочете <strong>видалити</strong> цього виробника?</div>
+			<div>Ви дійсно хочете <strong>видалити</strong> цей тип?</div>
 			<div>Для підтвердження - введіть ID елемента.</div>
 			<el-input-number
 				ref="input"
@@ -67,9 +67,9 @@ export default {
 		fetchRequest() {
 			this.loading = true
 
-			this.$axios.delete(`equipments/manufacturers/${this.item.id}`)
+			this.$axios.delete(`equipments/types/${this.item.id}`)
 				.then(() => {
-					this.$store.dispatch('equipmentManufacturers/fetchList')
+					this.$store.dispatch('equipmentTypes/fetchList')
 					this.loading = false
 					this.close()
 				})
