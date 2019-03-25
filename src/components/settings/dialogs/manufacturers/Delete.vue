@@ -1,13 +1,13 @@
 <template>
 	<el-dialog
-		title="Видалення користувача"
+		:title="item.name"
 		:visible="value"
 		class="dialog--default delete"
 		v-on="listeners"
 	>
 		<div class="content">
-			<div>Ви дійсно хочете <strong>видалити</strong> цього користувача?</div>
-			<div>Для підтвердження - введіть ID користувача.</div>
+			<div>Ви дійсно хочете <strong>видалити</strong> цього виробника?</div>
+			<div>Для підтвердження - введіть ID виробника.</div>
 			<el-input-number
 				ref="input"
 				v-model="input"
@@ -30,8 +30,6 @@
 </template>
 
 <script>
-import sections from '@/data/sections'
-
 export default {
 	inheritAttrs: false,
 	props: {
@@ -39,7 +37,7 @@ export default {
 			type: Boolean,
 			default: false
 		},
-		user: {
+		item: {
 			type: Object,
 			required: true
 		}
@@ -62,18 +60,18 @@ export default {
 				return true
 			}
 
-			return !this.input || this.input !== this.user.id
+			return !this.input || this.input !== this.item.id
 		}
 	},
 	methods: {
 		fetchRequest() {
 			this.loading = true
 
-			this.$axios.delete(`users/${this.user.id}`)
+			this.$axios.delete(`equipments/manufacturers/${this.item.id}`)
 				.then(() => {
+					this.$store.dispatch('equipmentManufacturers/fetchList')
 					this.loading = false
 					this.close()
-					this.$router.push({ name: sections.users })
 				})
 				.catch(() => {
 					this.loading = false

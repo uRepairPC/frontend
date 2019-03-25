@@ -21,6 +21,7 @@
 
 <script>
 import CreateDialog from '@/components/settings/dialogs/manufacturers/Create'
+import DeleteDialog from '@/components/settings/dialogs/manufacturers/Delete'
 import EditDialog from '@/components/settings/dialogs/manufacturers/Edit'
 import { equipmentManufacturers as columns } from '@/data/columns'
 import Basic from '@/components/settings/Basic'
@@ -81,7 +82,7 @@ export default {
 		},
 		onDelete(obj) {
 			this.dialog.item = obj
-			// this.openDialog(DeleteDialog)
+			this.openDialog(DeleteDialog)
 		},
 		openDialog(component) {
 			this.dialog.component = component
