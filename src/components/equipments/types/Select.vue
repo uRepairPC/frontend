@@ -1,6 +1,6 @@
 <template>
 	<el-select
-		:value="value"
+		:value="displayValue"
 		:loading="loading"
 		popper-class="select--refresh"
 		placeholder="Обрати тип"
@@ -34,11 +34,23 @@ export default {
 			default: null
 		}
 	},
+	mounted() {
+		if (this.value && !this.hasItems) {
+			this.fetchList()
+		}
+	},
 	computed: {
 		...mapState({
 			list: state => state.equipmentTypes.list,
 			loading: state => state.equipmentTypes.loading
 		}),
+		displayValue() {
+			if (this.value && !this.hasItems && this.loading) {
+				return 'Завантаження'
+			}
+
+			return this.value
+		},
 		hasItems() {
 			return this.list.length
 		},
