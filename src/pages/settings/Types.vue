@@ -1,5 +1,5 @@
 <template>
-	<basic
+	<basic-table
 		:list="list"
 		:loading="loading"
 		:columns="columns"
@@ -9,11 +9,11 @@
 </template>
 
 <script>
-import CreateDialog from '@/components/settings/dialogs/types/Create'
-import DeleteDialog from '@/components/settings/dialogs/types/Delete'
-import EditDialog from '@/components/settings/dialogs/types/Edit'
+import CreateDialog from '@/components/equipments/types/dialogs/Create'
+import DeleteDialog from '@/components/equipments/types/dialogs/Delete'
+import EditDialog from '@/components/equipments/types/dialogs/Edit'
 import { equipmentTypes as columns } from '@/data/columns'
-import Basic from '@/components/settings/Basic'
+import BasicTable from '@/components/settings/BasicTable'
 import breadcrumbs from '@/mixins/breadcrumbs'
 import sections from '@/data/sections'
 import { mapState } from 'vuex'
@@ -26,7 +26,7 @@ export default {
 		{ title: menu[sections.settings].actions[sections.settingsTypes].title }
 	],
 	components: {
-		Basic
+		BasicTable
 	},
 	mixins: [
 		breadcrumbs
@@ -59,23 +59,3 @@ export default {
 	}
 }
 </script>
-
-<style lang="scss" scoped>
-.header {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	margin-bottom: 20px;
-}
-
-.title {
-	font-size: 1.2rem;
-	font-weight: bold;
-}
-
-.actions {
-	button {
-		min-width: 120px;
-	}
-}
-</style>

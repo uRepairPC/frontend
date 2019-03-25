@@ -1,17 +1,16 @@
 <template>
-	<basic
+	<basic-table
 		:list="list"
 		:loading="loading"
 		:columns="columns"
-		@add="onAdd"
-		@edit="onEdit"
+		:dialogs="dialogs"
 		@update="fetchRequest"
 	/>
 </template>
 
 <script>
 import { equipmentModels as columns } from '@/data/columns'
-import Basic from '@/components/settings/Basic'
+import BasicTable from '@/components/settings/BasicTable'
 import breadcrumbs from '@/mixins/breadcrumbs'
 import sections from '@/data/sections'
 import { mapState } from 'vuex'
@@ -24,14 +23,19 @@ export default {
 		{ title: menu[sections.settings].actions[sections.settingsModels].title }
 	],
 	components: {
-		Basic
+		BasicTable
 	},
 	mixins: [
 		breadcrumbs
 	],
 	data() {
 		return {
-			columns
+			columns,
+			dialogs: {
+				// create: CreateDialog,
+				// edit: EditDialog,
+				// delete: DeleteDialog
+			}
 		}
 	},
 	computed: {
@@ -48,33 +52,7 @@ export default {
 	methods: {
 		fetchRequest() {
 			this.$store.dispatch('equipmentModels/fetchList')
-		},
-		onAdd() {
-			// TODO
-		},
-		onEdit() {
-			// TODO
 		}
 	}
 }
 </script>
-
-<style lang="scss" scoped>
-.header {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	margin-bottom: 20px;
-}
-
-.title {
-	font-size: 1.2rem;
-	font-weight: bold;
-}
-
-.actions {
-	button {
-		min-width: 120px;
-	}
-}
-</style>
