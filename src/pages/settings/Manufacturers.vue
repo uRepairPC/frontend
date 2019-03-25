@@ -31,6 +31,7 @@ import { mapState } from 'vuex'
 import menu from '@/data/menu'
 
 export default {
+	name: 'Manufacturers',
 	breadcrumbs: [
 		{ title: menu[sections.settings].title, routeName: sections.settings },
 		{ title: menu[sections.settings].actions[sections.settingsManufacturers].title }

@@ -20,6 +20,7 @@
 </template>
 
 <script>
+import { root as keepAliveRoutesName } from '@/data/keepAliveComponents'
 import BreadcrumbsBox from '@/components/root/Breadcrumbs'
 import SidebarBox from '@/components/root/Sidebar'
 import HeaderBox from '@/components/root/Header'
@@ -31,9 +32,7 @@ export default {
 	},
 	data() {
 		return {
-			keepAliveRoutesName: [
-				'Home', 'Requests', 'Users', 'Workers', 'Settings'
-			]
+			keepAliveRoutesName
 		}
 	},
 	computed: {
