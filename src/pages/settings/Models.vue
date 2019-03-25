@@ -10,6 +10,7 @@
 
 <script>
 import CreateDialog from '@/components/equipments/models/dialogs/Create'
+import EditDialog from '@/components/equipments/models/dialogs/Edit'
 import { equipmentModels as columns } from '@/data/columns'
 import BasicTable from '@/components/settings/BasicTable'
 import breadcrumbs from '@/mixins/breadcrumbs'
@@ -34,7 +35,7 @@ export default {
 			columns,
 			dialogs: {
 				create: CreateDialog,
-				// edit: EditDialog,
+				edit: EditDialog,
 				// delete: DeleteDialog
 			}
 		}
