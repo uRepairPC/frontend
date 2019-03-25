@@ -21,6 +21,7 @@
 
 <script>
 import CreateDialog from '@/components/settings/dialogs/types/Create'
+import EditDialog from '@/components/settings/dialogs/types/Edit'
 import { equipmentTypes as columns } from '@/data/columns'
 import Basic from '@/components/settings/Basic'
 import breadcrumbs from '@/mixins/breadcrumbs'
@@ -70,7 +71,7 @@ export default {
 		},
 		onEdit(obj) {
 			this.dialog.item = obj
-			// this.openDialog(EditDialog)
+			this.openDialog(EditDialog)
 		},
 		onDelete(obj) {
 			this.dialog.item = obj
