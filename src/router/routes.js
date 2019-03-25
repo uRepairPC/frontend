@@ -50,6 +50,11 @@ const authorizedRoutes = {
 			component: loadPage('workers/Index')
 		},
 		{
+			path: `/${sections.equipments}`,
+			name: sections.equipments,
+			component: loadPage('equipments/Index')
+		},
+		{
 			path: `/${sections.settings}`,
 			component: loadPage('settings/Core'),
 			children: [
