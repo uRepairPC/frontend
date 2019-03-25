@@ -18,7 +18,7 @@ axios.interceptors.response.use(
 
 		return resp
 	},
-	(err) => {
+	async (err) => {
 		// Fatal error
 		if (!err || !err.response) {
 			return Promise.reject(err)
@@ -43,16 +43,13 @@ axios.interceptors.response.use(
 				config._retry = true
 
 				// Refresh token
-				return axios.post('auth/refresh')
-					.then(async ({ data }) => {
+				const res = await axios.post('auth/refresh')
+					.then(({ data }) => {
 						axios.defaults.headers['Authorization'] = 'Bearer ' + data.token
 						config.headers['Authorization'] = 'Bearer ' + data.token
 						localStorage.setItem('token', data.token)
 
-						// Enable interface
-						loadingService.close()
-
-						return await axios({
+						return axios({
 							...config,
 							// TODO Check on prod
 							url: config.url.replace(/^api\//, '')
@@ -61,6 +58,11 @@ axios.interceptors.response.use(
 					.catch(() => {
 						store.commit('profile/CLEAR_ALL')
 					})
+
+				// Enable interface
+				loadingService.close()
+
+				return res
 			}
 
 			store.commit('profile/CLEAR_ALL')
