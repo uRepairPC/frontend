@@ -28,7 +28,6 @@ export default {
 				title: 'Створити заявку',
 				icon: 'add',
 				type: types.PRIMARY,
-				tag: 'action',
 				action: () => router.push({ name: `${sections.requests}-create` })
 			}
 		}
@@ -47,7 +46,6 @@ export default {
 				icon: 'add',
 				type: types.PRIMARY,
 				access: [roles.ADMIN],
-				tag: 'action',
 				action: () => router.push({ name: `${sections.users}-create` })
 			}
 		}
@@ -65,7 +63,6 @@ export default {
 				title: 'Створити обладнання',
 				icon: 'add',
 				type: types.PRIMARY,
-				tag: 'action',
 				action: () => router.push({ name: `${sections.equipments}-create` })
 			}
 		}
@@ -84,21 +81,21 @@ export default {
 		children: {
 			[sections.settingsManufacturers]: {
 				title: 'Виробники обладнання',
-				icon: 'keyboard_arrow_right',
+				icon: 'dashboard',
 				tag: 'page',
-				action: () => router.push({ name: sections.settingsManufacturers })
+				route: { name: sections.settingsManufacturers }
 			},
 			[sections.settingsTypes]: {
 				title: 'Типи обладнання',
-				icon: 'keyboard_arrow_right',
+				icon: 'dashboard',
 				tag: 'page',
-				action: () => router.push({ name: sections.settingsTypes })
+				route: { name: sections.settingsTypes }
 			},
 			[sections.settingsModels]: {
 				title: 'Моделі обладнання',
-				icon: 'keyboard_arrow_right',
+				icon: 'dashboard',
 				tag: 'page',
-				action: () => router.push({ name: sections.settingsModels })
+				route: { name: sections.settingsModels }
 			}
 		}
 	}

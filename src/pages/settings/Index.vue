@@ -1,10 +1,13 @@
 <template>
 	<div class="settings">
-		{{ pages }}
+		<section-menu
+			:menu="pages"
+		/>
 	</div>
 </template>
 
 <script>
+import SectionMenu from '@/components/SectionMenu'
 import breadcrumbs from '@/mixins/breadcrumbs'
 import sections from '@/data/sections'
 import { mapGetters } from 'vuex'
@@ -15,6 +18,9 @@ export default {
 	breadcrumbs: [
 		{ title: menu[sections.settings].title }
 	],
+	components: {
+		SectionMenu
+	},
 	mixins: [
 		breadcrumbs
 	],
@@ -23,16 +29,7 @@ export default {
 			menu: 'template/menu'
 		}),
 		pages() {
-			const actions = this.menu[sections.settings].children
-			const arr = []
-
-			Object.entries(actions).forEach(([key, obj]) => {
-				if (obj.tag === 'page') {
-					arr.push({ label: obj.title, name: key })
-				}
-			})
-
-			return arr
+			return this.menu[sections.settings].children
 		}
 	}
 }
