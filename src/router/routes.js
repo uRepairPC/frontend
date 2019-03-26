@@ -3,6 +3,7 @@
 import { loadPage, loadLayout } from './helper'
 import sections from '@/data/sections'
 
+/** @type {object} */
 const notAuthorizedRoutes = {
 	path: `/${sections.auth}`,
 	component: loadLayout('NotAuthorized'),
@@ -15,6 +16,7 @@ const notAuthorizedRoutes = {
 	]
 }
 
+/** @type {object} */
 const authorizedRoutes = {
 	path: '',
 	component: loadLayout('Default'),
@@ -24,20 +26,17 @@ const authorizedRoutes = {
 			name: sections.home,
 			component: loadPage('Home')
 		},
+		// ------------------------------------------------ Requests
 		{
 			path: `/${sections.requests}`,
 			name: sections.requests,
 			component: loadPage('requests/Index')
 		},
+		// ------------------------------------------------ Users
 		{
 			path: `/${sections.users}`,
 			name: sections.users,
 			component: loadPage('users/Index')
-		},
-		{
-			path: `/${sections.users}/create`,
-			name: `${sections.users}-create`,
-			component: loadPage('users/Create')
 		},
 		{
 			path: `/${sections.users}/:id`,
@@ -45,20 +44,32 @@ const authorizedRoutes = {
 			component: loadPage('users/One')
 		},
 		{
+			path: `/${sections.users}/create`,
+			name: `${sections.users}-create`,
+			component: loadPage('users/Create')
+		},
+		{
 			path: `/${sections.workers}`,
 			name: sections.workers,
 			component: loadPage('workers/Index')
 		},
+		// ------------------------------------------------ Equipments
 		{
 			path: `/${sections.equipments}`,
 			name: sections.equipments,
 			component: loadPage('equipments/Index')
 		},
 		{
+			path: `/${sections.equipments}/:id`,
+			name: `${sections.equipments}-id`,
+			component: loadPage('equipments/One')
+		},
+		{
 			path: `/${sections.equipments}/create`,
 			name: `${sections.equipments}-create`,
 			component: loadPage('equipments/Create')
 		},
+		// ------------------------------------------------ Settings
 		{
 			path: `/${sections.settings}`,
 			component: loadPage('settings/Core'),
@@ -88,7 +99,12 @@ const authorizedRoutes = {
 	]
 }
 
-export const notAuthorizedRoutesName = notAuthorizedRoutes.children.map(route => route.name)
+/**
+ * For route guard.
+ * @type {array}
+ */
+export const notAuthorizedRoutesName = notAuthorizedRoutes.children
+	.map(route => route.name)
 
 export default [
 	notAuthorizedRoutes,
