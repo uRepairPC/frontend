@@ -59,9 +59,13 @@ export default {
 	},
 	methods: {
 		hotKeys(evt) {
-			// Open global Search - Ctrl + Shift + F
+			// Open/Close Global Search - Ctrl + Shift + F
 			if (evt.ctrlKey && evt.shiftKey && evt.code === 'KeyF') {
-				this.$store.commit('template/OPEN_SEARCH')
+				if (this.openSearch) {
+					this.$store.commit('template/CLOSE_SEARCH')
+				} else {
+					this.$store.commit('template/OPEN_SEARCH')
+				}
 			}
 		}
 	}
@@ -69,6 +73,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "~scss/_variables";
+
 .el-breadcrumb {
 	padding: 10px;
 	background: #fff;
@@ -85,7 +91,7 @@ export default {
 }
 
 .search--open {
-	transition: .2s;
+	transition: $searchTransition;
 	filter: blur(5px);
 }
 </style>

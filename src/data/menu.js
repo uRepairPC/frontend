@@ -57,7 +57,7 @@ export default {
 		access: [roles.ADMIN, roles.WORKER],
 		history: {
 			show: true,
-			callback: (obj) => `[${obj.id}] ${obj.serial_number}`
+			callback: (obj) => `[${obj.id}] ${obj.serial_number || ''} / ${obj.inventory_number || ''}`
 		},
 		children: {
 			add: {
