@@ -62,6 +62,42 @@ const getters = {
 
 			return true
 		})
+	},
+	// Type -> Manufacturer -> Model
+	cascaderOptions(state, getters, rootState) {
+		const types = rootState.equipmentTypes.list
+			.map(item => ({ children: [], ...item }))
+
+		// Has model and manufacturer
+		rootState.equipmentModels.list.forEach((model) => {
+			for (const type of types) {
+				if (type.id === model.type_id) {
+					let findManufacturer = false
+
+					// Disable double manufacturers
+					for (const manufacturer of type.children) {
+						if (manufacturer.id === model.manufacturer_id) {
+							manufacturer.children.push({ name: model.name, id: model.id })
+							findManufacturer = true
+							break
+						}
+					}
+
+					if (!findManufacturer) {
+						type.children.push({
+							name: model.manufacturer_name,
+							id: model.manufacturer_id,
+							children: [
+								{ name: model.name, id: model.id }
+							]
+						})
+					}
+					break
+				}
+			}
+		})
+
+		return types
 	}
 }
 

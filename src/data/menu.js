@@ -80,17 +80,17 @@ export default {
 		route: { name: sections.settings },
 		access: [roles.ADMIN, roles.WORKER],
 		children: {
-			[sections.settingsManufacturers]: {
-				title: 'Виробники обладнання',
-				icon: 'dashboard',
-				tag: 'page',
-				route: { name: sections.settingsManufacturers }
-			},
 			[sections.settingsTypes]: {
 				title: 'Типи обладнання',
 				icon: 'dashboard',
 				tag: 'page',
 				route: { name: sections.settingsTypes }
+			},
+			[sections.settingsManufacturers]: {
+				title: 'Виробники обладнання',
+				icon: 'dashboard',
+				tag: 'page',
+				route: { name: sections.settingsManufacturers }
 			},
 			[sections.settingsModels]: {
 				title: 'Моделі обладнання',
