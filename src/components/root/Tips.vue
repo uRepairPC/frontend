@@ -74,6 +74,7 @@ export default {
 	font-size: .9rem;
 	white-space: nowrap;
 	text-overflow: ellipsis;
+	overflow-x: hidden;
 }
 
 // <animation>

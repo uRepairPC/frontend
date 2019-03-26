@@ -145,7 +145,8 @@ export default {
 	}
 	> img {
 		height: 45px;
-		min-width: 45px;
+		min-width: 55px;
+		width: 55px;
 	}
 	> span {
 		font-weight: bold;

@@ -3,6 +3,7 @@
 		title="Редагування користувача"
 		:visible="value"
 		class="dialog--default"
+		v-bind="$attrs"
 		v-on="listeners"
 	>
 		<div class="content">
@@ -11,6 +12,7 @@
 				:model="form"
 				:rules="rules"
 				status-icon
+				class="form--full"
 				@submit.native.prevent="onSubmit"
 			>
 				<el-form-item
@@ -184,13 +186,7 @@ export default {
 .dialog--default {
 	/deep/ > .el-dialog {
 		margin-top: 5vh !important;
-		max-width: 700px;
-	}
-}
-
-.content {
-	/deep/ .el-select {
-		width: 100%;
+		max-width: 600px;
 	}
 }
 </style>
