@@ -214,6 +214,10 @@ export default {
 					this.loading = false
 				})
 				.catch(() => {
+					this.$store.commit('template/REMOVE_SIDEBAR_ITEM', {
+						section: sections.users,
+						id: this.$route.params.id
+					})
 					this.$router.push({ name: sections.users })
 					this.loading = false
 				})

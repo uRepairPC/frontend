@@ -51,10 +51,14 @@ const mutations = {
 	 *
 	 * @param state
 	 * @param {string} section - name (users, equipments, etc)
-	 * @param {object} data
+	 * @param {number|string} id
 	 */
-	REMOVE_SIDEBAR_ITEM(state, { section, data }) {
-		Vue.delete(state.sidebar[section], data.id)
+	REMOVE_SIDEBAR_ITEM(state, { section, id }) {
+		if (typeof id === 'undefined') {
+			return
+		}
+
+		Vue.delete(state.sidebar[section], id)
 	}
 }
 

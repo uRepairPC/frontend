@@ -68,7 +68,7 @@ export default {
 
 			this.$store.commit(`template/REMOVE_SIDEBAR_ITEM`, {
 				section,
-				data: historyItem
+				id: historyItem.id
 			})
 
 			if (this.$route.name === `${section}-id` && routeId === historyItem.id) {

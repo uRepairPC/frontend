@@ -1,44 +1,23 @@
 <template>
-	<el-dialog
+	<basic-delete
 		title="Видалення користувача"
-		:visible="value"
-		class="dialog--default delete"
+		:confirm="user.id"
+		:loading="loading"
 		v-on="listeners"
-	>
-		<div class="content">
-			<div>Ви дійсно хочете <strong>видалити</strong> цього користувача?</div>
-			<div>Для підтвердження - введіть ID елемента.</div>
-			<el-input-number
-				ref="input"
-				v-model="input"
-				:controls="false"
-				:min="0"
-			/>
-		</div>
-		<span slot="footer">
-			<el-button @click="close">Відмінити</el-button>
-			<el-button
-				type="danger"
-				:loading="loading"
-				:disabled="btnDisabled"
-				@click="fetchRequest"
-			>
-				Видалити
-			</el-button>
-		</span>
-	</el-dialog>
+		v-bind="$attrs"
+	/>
 </template>
 
 <script>
+import BasicDelete from '@/components/dialogs/BasicDelete'
 import sections from '@/data/sections'
 
 export default {
 	inheritAttrs: false,
+	components: {
+		BasicDelete
+	},
 	props: {
-		value: {
-			type: Boolean,
-			default: false
-		},
 		user: {
 			type: Object,
 			required: true
@@ -46,23 +25,15 @@ export default {
 	},
 	data() {
 		return {
-			loading: false,
-			input: ''
+			loading: false
 		}
 	},
 	computed: {
 		listeners() {
 			return {
 				...this.$listeners,
-				'update:visible': this.close
+				submit: this.fetchRequest
 			}
-		},
-		btnDisabled() {
-			if (this.loading) {
-				return true
-			}
-
-			return !this.input || this.input !== this.user.id
 		}
 	},
 	methods: {
@@ -71,16 +42,17 @@ export default {
 
 			this.$axios.delete(`users/${this.user.id}`)
 				.then(() => {
+					this.$store.commit('template/REMOVE_SIDEBAR_ITEM', {
+						section: sections.users,
+						id: this.user.id
+					})
 					this.loading = false
-					this.close()
+					this.$emit('input', false)
 					this.$router.push({ name: sections.users })
 				})
 				.catch(() => {
 					this.loading = false
 				})
-		},
-		close() {
-			this.$emit('input', false)
 		}
 	}
 }
