@@ -1,6 +1,6 @@
 <template>
 	<basic-delete
-		title="Видалення користувача"
+		:title="userClass.fullName"
 		:confirm="user.id"
 		:loading="loading"
 		v-on="listeners"
@@ -11,6 +11,7 @@
 <script>
 import BasicDelete from '@/components/dialogs/BasicDelete'
 import sections from '@/data/sections'
+import UserClass from '@/classes/User'
 
 export default {
 	inheritAttrs: false,
@@ -34,6 +35,9 @@ export default {
 				...this.$listeners,
 				submit: this.fetchRequest
 			}
+		},
+		userClass() {
+			return new UserClass(this.user)
 		}
 	},
 	methods: {

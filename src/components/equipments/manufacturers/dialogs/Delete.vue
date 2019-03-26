@@ -1,42 +1,22 @@
 <template>
-	<el-dialog
+	<basic-delete
 		:title="item.name"
-		:visible="value"
-		class="dialog--default delete"
+		:confirm="item.id"
+		:loading="loading"
 		v-on="listeners"
-	>
-		<div class="content">
-			<div>Ви дійсно хочете <strong>видалити</strong> цього виробника?</div>
-			<div>Для підтвердження - введіть ID елемента.</div>
-			<el-input-number
-				ref="input"
-				v-model="input"
-				:controls="false"
-				:min="0"
-			/>
-		</div>
-		<span slot="footer">
-			<el-button @click="close">Відмінити</el-button>
-			<el-button
-				type="danger"
-				:loading="loading"
-				:disabled="btnDisabled"
-				@click="fetchRequest"
-			>
-				Видалити
-			</el-button>
-		</span>
-	</el-dialog>
+		v-bind="$attrs"
+	/>
 </template>
 
 <script>
+import BasicDelete from '@/components/dialogs/BasicDelete'
+
 export default {
 	inheritAttrs: false,
+	components: {
+		BasicDelete
+	},
 	props: {
-		value: {
-			type: Boolean,
-			default: false
-		},
 		item: {
 			type: Object,
 			required: true
@@ -44,23 +24,15 @@ export default {
 	},
 	data() {
 		return {
-			loading: false,
-			input: ''
+			loading: false
 		}
 	},
 	computed: {
 		listeners() {
 			return {
 				...this.$listeners,
-				'update:visible': this.close
+				submit: this.fetchRequest
 			}
-		},
-		btnDisabled() {
-			if (this.loading) {
-				return true
-			}
-
-			return !this.input || this.input !== this.item.id
 		}
 	},
 	methods: {
@@ -71,14 +43,11 @@ export default {
 				.then(() => {
 					this.$store.dispatch('equipmentManufacturers/fetchList')
 					this.loading = false
-					this.close()
+					this.$emit('input', false)
 				})
 				.catch(() => {
 					this.loading = false
 				})
-		},
-		close() {
-			this.$emit('input', false)
 		}
 	}
 }
