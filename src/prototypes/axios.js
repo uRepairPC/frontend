@@ -1,6 +1,7 @@
 'use strict'
 
 import { Message, Notification, Loading } from 'element-ui'
+import StorageData from '@/classes/StorageData'
 import { isArray } from '@/scripts/helpers'
 import { axiosBaseUrl } from '@/data/env'
 import * as types from '@/enum/types'
@@ -37,7 +38,7 @@ axios.interceptors.response.use(
 				lock: true,
 				text: 'Оновлюється токен безпеки',
 				spinner: 'el-icon-loading',
-				background: 'rgba(0, 0, 0, 0.7)'
+				background: 'rgba(0, 0, 0, .7)'
 			})
 
 			// User is auth, probably token is expired, try renew
@@ -50,7 +51,7 @@ axios.interceptors.response.use(
 					.then(({ data }) => {
 						axios.defaults.headers['Authorization'] = 'Bearer ' + data.token
 						config.headers['Authorization'] = 'Bearer ' + data.token
-						localStorage.setItem('token', data.token)
+						StorageData.token = data.token
 
 						return axios({
 							...config,
