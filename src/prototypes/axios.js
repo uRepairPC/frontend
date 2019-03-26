@@ -1,6 +1,7 @@
 'use strict'
 
-import { Message, Loading } from 'element-ui'
+import { Message, Notification, Loading } from 'element-ui'
+import { isArray } from '@/scripts/helpers'
 import { axiosBaseUrl } from '@/data/env'
 import * as types from '@/enum/types'
 import store from '@/store'
@@ -76,8 +77,28 @@ axios.interceptors.response.use(
 		}
 
 		// Notification
-		if (response.data && typeof response.data === 'object' && response.data.message) {
-			Message({ message: response.data.message, type: types.ERROR })
+		if (response.data && typeof response.data === 'object') {
+			if (response.data.message) {
+				Message({ message: response.data.message, type: types.ERROR })
+			}
+
+			// Show validate form if exists from backend
+			if (response.data.errors && typeof response.data.errors === 'object') {
+				let message = ''
+
+				Object.entries(response.data.errors).forEach(([key, val]) => {
+					message += `<strong>${key}</strong>:<br>`
+					if (isArray(val)) {
+						message += '<ul>'
+						val.forEach((error) => {
+							message += '<li>' + error.replace(/<(?:.|\n)*?>/gm, '') + '</li>'
+						})
+						message += '</ul>'
+					}
+				})
+
+				Notification.error({ title: 'Помилка валідації', duration: 6000, dangerouslyUseHTMLString: true, message })
+			}
 		}
 		else if (response.status === 404) {
 			Message({ message: 'Ресурс не знайдений', type: types.WARNING })
