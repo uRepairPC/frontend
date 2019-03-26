@@ -1,12 +1,13 @@
 'use strict'
 
 import { isArray } from '@/scripts/helpers'
-import { listMenu } from '@/data/template'
 import sections from '@/data/sections'
+import menu from '@/data/menu'
 import Vue from 'vue'
 
 const state = {
 	openSearch: false,
+	breadcrumbs: [],
 	pagesScroll: {},
 	// History on left sidebar
 	// Required id property
@@ -19,6 +20,9 @@ const mutations = {
 	},
 	CLOSE_SEARCH(state) {
 		state.openSearch = false
+	},
+	SET_BREADCRUMBS(state, arr) {
+		state.breadcrumbs = arr
 	},
 	/**
 	 * @param state
@@ -47,10 +51,14 @@ const mutations = {
 	 *
 	 * @param state
 	 * @param {string} section - name (users, equipments, etc)
-	 * @param {object} data
+	 * @param {number|string} id
 	 */
-	REMOVE_SIDEBAR_ITEM(state, { section, data }) {
-		Vue.delete(state.sidebar[section], data.id)
+	REMOVE_SIDEBAR_ITEM(state, { section, id }) {
+		if (typeof id === 'undefined') {
+			return
+		}
+
+		Vue.delete(state.sidebar[section], id)
 	}
 }
 
@@ -78,27 +86,27 @@ const getters = {
 	 */
 	menu(state, getters, rootState) {
 		const userRole = rootState.profile.user.role
-		let menu = {}
+		const result = {}
 
-		for (const [key, obj] of Object.entries(listMenu)) {
+		for (const [key, obj] of Object.entries(menu)) {
 			if (isArray(obj.access)) {
 				if (!obj.access.includes(userRole)) {
 					continue
 				}
 			}
 
-			if (obj.actions && typeof obj.actions === 'object') {
-				Object.entries(obj.actions).forEach(([actionKey, action]) => {
+			if (obj.children && typeof obj.children === 'object') {
+				Object.entries(obj.children).forEach(([actionKey, action]) => {
 					if (isArray(action.access) && !action.access.includes(userRole)) {
-						delete obj.actions[actionKey]
+						delete obj.children[actionKey]
 					}
 				})
 			}
 
-			menu[key] = obj
+			result[key] = obj
 		}
 
-		return menu
+		return result
 	}
 }
 

@@ -12,21 +12,24 @@
 				<span>КНТЕУ</span>
 			</div>
 			<el-button
-				type="success"
+				v-if="sectionRequestMenuActions.add"
+				:type="sectionRequestMenuActions.add.type"
 				size="mini"
 				@click="onClickCreateRequest"
 			>
 				<i class="material-icons">
-					add
+					{{ sectionRequestMenuActions.add.icon }}
 				</i>
-				Створити заявку
+				{{ sectionRequestMenuActions.add.title }}
 			</el-button>
 		</div>
-		<div class="header--center" />
+		<div class="header--center">
+			<tips />
+		</div>
 		<div class="header--right">
 			<el-button
 				size="mini"
-				:type="openSearch ? 'primary' : 'default'"
+				:type="openSearch ? 'danger' : 'default'"
 				:icon="`el-icon-${openSearch ? 'close' : 'search'}`"
 				@click="onClickSearch"
 			>
@@ -55,15 +58,26 @@
 
 <script>
 import { DEFAULT_ROUTE_NAME } from '@/router'
+import Tips from '@/components/root/Tips'
 import sections from '@/data/sections'
+import { mapGetters } from 'vuex'
 
 export default {
+	components: {
+		Tips
+	},
 	computed: {
+		...mapGetters({
+			menu: 'template/menu'
+		}),
 		user() {
 			return this.$store.state.profile.user
 		},
 		openSearch() {
 			return this.$store.state.template.openSearch
+		},
+		sectionRequestMenuActions() {
+			return this.menu[sections.requests].children || {}
 		}
 	},
 	methods: {
@@ -74,7 +88,7 @@ export default {
 			this.$router.push({ name: DEFAULT_ROUTE_NAME })
 		},
 		onClickCreateRequest() {
-			this.$router.push({ name: 'requests-create' })
+			this.$router.push({ name: `${sections.requests}-create` })
 		},
 		onClickSearch() {
 			if (this.openSearch) {
@@ -88,7 +102,7 @@ export default {
 				section: sections.users,
 				data: this.user
 			})
-			this.$router.push({ name: 'users-id', params: { id: this.user.id } })
+			this.$router.push({ name: `${sections.users}-id`, params: { id: this.user.id } })
 		}
 	}
 }
@@ -106,6 +120,7 @@ export default {
 .header--left {
 	display: flex;
 	align-items: center;
+	justify-content: center;
 	.el-button {
 		margin-left: 25px;
 		> /deep/ span {
@@ -130,6 +145,8 @@ export default {
 	}
 	> img {
 		height: 45px;
+		min-width: 55px;
+		width: 55px;
 	}
 	> span {
 		font-weight: bold;
@@ -143,7 +160,14 @@ export default {
 }
 
 .header--center {
+	display: flex;
+	align-items: center;
+	justify-content: center;
 	flex: 1 1 auto;
+	padding: 0 15px;
+	height: 100%;
+	overflow-x: hidden;
+	overflow-y: visible;
 }
 
 .header--right {

@@ -30,9 +30,15 @@ export default {
 			clearTimeout(_timeout)
 
 			_timeout = setTimeout(() => {
+				// Component not displayed
+				if (wrapperEl.scrollHeight === 0) {
+					return
+				}
+
 				if (wrapperEl.scrollTop + wrapperEl.offsetHeight >= wrapperEl.scrollHeight - OFFSET_BOTTOM) {
 					binding.value()
 				}
+
 			}, WAIT_TIMEOUT)
 		})
 	}

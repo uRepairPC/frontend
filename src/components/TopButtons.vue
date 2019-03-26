@@ -10,7 +10,7 @@
 			plain
 			@click="btn.action"
 		>
-			{{ btn.text }}
+			{{ btn.title }}
 		</el-button>
 	</div>
 </template>

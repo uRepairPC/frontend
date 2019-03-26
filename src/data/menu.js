@@ -10,7 +10,7 @@ import router from '@/router'
  * template.sidebar store for show on left sidebar.
  * @type {object} of objects
  */
-const listMenu = {
+export default {
 	[sections.home]: {
 		icon: 'home',
 		title: 'Головна сторінка',
@@ -23,12 +23,12 @@ const listMenu = {
 		history: {
 			show: true
 		},
-		actions: {
+		children: {
 			add: {
-				text: 'Створити заявку',
+				title: 'Створити заявку',
 				icon: 'add',
 				type: types.PRIMARY,
-				action: () => router.push({ name: 'requests-create' })
+				action: () => router.push({ name: `${sections.requests}-create` })
 			}
 		}
 	},
@@ -40,13 +40,13 @@ const listMenu = {
 			show: true,
 			callback: (obj) => `[${obj.id}] ${obj.last_name} ${obj.first_name}`
 		},
-		actions: {
+		children: {
 			add: {
-				text: 'Створити користувача',
+				title: 'Створити користувача',
 				icon: 'add',
 				type: types.PRIMARY,
 				access: [roles.ADMIN],
-				action: () => router.push({ name: 'users-create' })
+				action: () => router.push({ name: `${sections.users}-create` })
 			}
 		}
 	},
@@ -58,12 +58,12 @@ const listMenu = {
 		history: {
 			show: true
 		},
-		actions: {
+		children: {
 			add: {
-				text: 'Створити обладнання',
+				title: 'Створити обладнання',
 				icon: 'add',
 				type: types.PRIMARY,
-				action: () => router.push({ name: 'equipments-create' })
+				action: () => router.push({ name: `${sections.equipments}-create` })
 			}
 		}
 	},
@@ -73,12 +73,30 @@ const listMenu = {
 		route: { name: sections.workers },
 		access: [roles.ADMIN]
 	},
-	[sections.config]: {
+	[sections.settings]: {
 		icon: 'settings',
 		title: 'Конфігурація',
-		route: { name: sections.config },
-		access: [roles.ADMIN, roles.WORKER]
+		route: { name: sections.settings },
+		access: [roles.ADMIN, roles.WORKER],
+		children: {
+			[sections.settingsManufacturers]: {
+				title: 'Виробники обладнання',
+				icon: 'dashboard',
+				tag: 'page',
+				route: { name: sections.settingsManufacturers }
+			},
+			[sections.settingsTypes]: {
+				title: 'Типи обладнання',
+				icon: 'dashboard',
+				tag: 'page',
+				route: { name: sections.settingsTypes }
+			},
+			[sections.settingsModels]: {
+				title: 'Моделі обладнання',
+				icon: 'dashboard',
+				tag: 'page',
+				route: { name: sections.settingsModels }
+			}
+		}
 	}
 }
-
-export { listMenu }

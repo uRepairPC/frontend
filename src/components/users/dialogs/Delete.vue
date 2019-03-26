@@ -1,44 +1,24 @@
 <template>
-	<el-dialog
-		title="Видалення користувача"
-		:visible="value"
-		class="dialog--default"
+	<basic-delete
+		:title="userClass.fullName"
+		:confirm="user.id"
+		:loading="loading"
 		v-on="listeners"
-	>
-		<div class="content">
-			<div>Ви дійсно хочете <strong>видалити</strong> цього користувача?</div>
-			<div>Для підтвердження - введіть ID користувача.</div>
-			<el-input-number
-				ref="input"
-				v-model="input"
-				:controls="false"
-				:min="0"
-			/>
-		</div>
-		<span slot="footer">
-			<el-button @click="close">Відмінити</el-button>
-			<el-button
-				type="danger"
-				:disabled="btnDisabled"
-				:loading="loading"
-				@click="fetchDelete"
-			>
-				Видалити
-			</el-button>
-		</span>
-	</el-dialog>
+		v-bind="$attrs"
+	/>
 </template>
 
 <script>
+import BasicDelete from '@/components/dialogs/BasicDelete'
 import sections from '@/data/sections'
+import UserClass from '@/classes/User'
 
 export default {
 	inheritAttrs: false,
+	components: {
+		BasicDelete
+	},
 	props: {
-		value: {
-			type: Boolean,
-			default: false
-		},
 		user: {
 			type: Object,
 			required: true
@@ -46,65 +26,38 @@ export default {
 	},
 	data() {
 		return {
-			loading: false,
-			input: null
+			loading: false
 		}
 	},
 	computed: {
 		listeners() {
 			return {
 				...this.$listeners,
-				'update:visible': this.close
+				submit: this.fetchRequest
 			}
 		},
-		btnDisabled() {
-			if (this.loading) {
-				return true
-			}
-
-			return !this.input || this.input !== this.user.id
-		}
-	},
-	watch: {
-		value(val) {
-			if (val) {
-				this.$nextTick(() => {
-					this.input = null
-					this.$refs.input.$refs.input.select()
-					this.$refs.input.$refs.input.focus()
-				})
-			}
+		userClass() {
+			return new UserClass(this.user)
 		}
 	},
 	methods: {
-		async fetchDelete() {
+		fetchRequest() {
 			this.loading = true
 
-			try {
-				const res = await this.$axios.delete(`users/${this.user.id}`)
-
-				if (res.status === 200) {
-					this.close()
+			this.$axios.delete(`users/${this.user.id}`)
+				.then(() => {
+					this.$store.commit('template/REMOVE_SIDEBAR_ITEM', {
+						section: sections.users,
+						id: this.user.id
+					})
+					this.loading = false
+					this.$emit('input', false)
 					this.$router.push({ name: sections.users })
-				}
-			} finally {
-				this.loading = false
-			}
-		},
-		close() {
-			this.$emit('input', false)
+				})
+				.catch(() => {
+					this.loading = false
+				})
 		}
 	}
 }
 </script>
-
-<style lang="scss" scoped>
-.content {
-	> div {
-		margin-bottom: 20px;
-		&:last-child {
-			margin-bottom: 0;
-		}
-	}
-}
-</style>

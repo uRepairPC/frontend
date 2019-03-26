@@ -1,14 +1,15 @@
 'use strict'
 
 import { loadPage, loadLayout } from './helper'
+import sections from '@/data/sections'
 
 const notAuthorizedRoutes = {
-	path: '/auth',
+	path: `/${sections.auth}`,
 	component: loadLayout('NotAuthorized'),
 	children: [
 		{
 			path: '/',
-			name: 'auth',
+			name: sections.auth,
 			component: loadPage('Auth')
 		}
 	]
@@ -20,33 +21,64 @@ const authorizedRoutes = {
 	children: [
 		{
 			path: '/',
-			name: 'home',
+			name: sections.home,
 			component: loadPage('Home')
 		},
 		{
-			path: '/requests',
-			name: 'requests',
+			path: `/${sections.requests}`,
+			name: sections.requests,
 			component: loadPage('requests/Index')
 		},
 		{
-			path: '/users',
-			name: 'users',
+			path: `/${sections.users}`,
+			name: sections.users,
 			component: loadPage('users/Index')
 		},
 		{
-			path: '/users/create',
-			name: 'users-create',
+			path: `/${sections.users}/create`,
+			name: `${sections.users}-create`,
 			component: loadPage('users/Create')
 		},
 		{
-			path: '/users/:id',
-			name: 'users-id',
+			path: `/${sections.users}/:id`,
+			name: `${sections.users}-id`,
 			component: loadPage('users/One')
 		},
 		{
-			path: '/workers',
-			name: 'workers',
+			path: `/${sections.workers}`,
+			name: sections.workers,
 			component: loadPage('workers/Index')
+		},
+		{
+			path: `/${sections.equipments}`,
+			name: sections.equipments,
+			component: loadPage('equipments/Index')
+		},
+		{
+			path: `/${sections.settings}`,
+			component: loadPage('settings/Core'),
+			children: [
+				{
+					path: `/${sections.settings}`,
+					name: sections.settings,
+					component: loadPage('settings/Index')
+				},
+				{
+					path: `/${sections.settings}/manufacturers`,
+					name: `${sections.settingsManufacturers}`,
+					component: loadPage('settings/Manufacturers')
+				},
+				{
+					path: `/${sections.settings}/types`,
+					name: `${sections.settingsTypes}`,
+					component: loadPage('settings/Types')
+				},
+				{
+					path: `/${sections.settings}/models`,
+					name: `${sections.settingsModels}`,
+					component: loadPage('settings/Models')
+				}
+			]
 		}
 	]
 }

@@ -1,8 +1,10 @@
 'use strict'
 
+import { Message, Notification, Loading } from 'element-ui'
+import StorageData from '@/classes/StorageData'
+import { isArray } from '@/scripts/helpers'
 import { axiosBaseUrl } from '@/data/env'
 import * as types from '@/enum/types'
-import { Message } from 'element-ui'
 import store from '@/store'
 import axios from 'axios'
 
@@ -18,7 +20,7 @@ axios.interceptors.response.use(
 
 		return resp
 	},
-	(err) => {
+	async (err) => {
 		// Fatal error
 		if (!err || !err.response) {
 			return Promise.reject(err)
@@ -29,19 +31,27 @@ axios.interceptors.response.use(
 		// User is not auth
 		if (response.status === 401) {
 
+			// FIXME Multiple request with 401 status code
+
+			// Disable all interface
+			const loadingService = Loading.service({
+				lock: true,
+				text: 'Оновлюється токен безпеки',
+				spinner: 'el-icon-loading',
+				background: 'rgba(0, 0, 0, .7)'
+			})
+
 			// User is auth, probably token is expired, try renew
 			// And send last request again
 			if (!config._retry && store.state.profile.isLogin) {
 				config._retry = true
 
-				// FIXME Block multiple request, queue/wait
-
 				// Refresh token
-				return axios.post('auth/refresh')
+				const res = await axios.post('auth/refresh')
 					.then(({ data }) => {
 						axios.defaults.headers['Authorization'] = 'Bearer ' + data.token
 						config.headers['Authorization'] = 'Bearer ' + data.token
-						localStorage.setItem('token', data.token)
+						StorageData.token = data.token
 
 						return axios({
 							...config,
@@ -52,6 +62,11 @@ axios.interceptors.response.use(
 					.catch(() => {
 						store.commit('profile/CLEAR_ALL')
 					})
+
+				// Enable interface
+				loadingService.close()
+
+				return res
 			}
 
 			store.commit('profile/CLEAR_ALL')
@@ -63,8 +78,28 @@ axios.interceptors.response.use(
 		}
 
 		// Notification
-		if (response.data && typeof response.data === 'object' && response.data.message) {
-			Message({ message: response.data.message, type: types.ERROR })
+		if (response.data && typeof response.data === 'object') {
+			if (response.data.message) {
+				Message({ message: response.data.message, type: types.ERROR })
+			}
+
+			// Show validate form if exists from backend
+			if (response.data.errors && typeof response.data.errors === 'object') {
+				let message = ''
+
+				Object.entries(response.data.errors).forEach(([key, val]) => {
+					message += `<strong>${key}</strong>:<br>`
+					if (isArray(val)) {
+						message += '<ul>'
+						val.forEach((error) => {
+							message += '<li>' + error.replace(/<(?:.|\n)*?>/gm, '') + '</li>'
+						})
+						message += '</ul>'
+					}
+				})
+
+				Notification.error({ title: 'Помилка валідації', duration: 6000, dangerouslyUseHTMLString: true, message })
+			}
 		}
 		else if (response.status === 404) {
 			Message({ message: 'Ресурс не знайдений', type: types.WARNING })

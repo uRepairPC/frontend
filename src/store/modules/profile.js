@@ -1,11 +1,9 @@
 'use strict'
 
+import StorageData from '@/classes/StorageData'
+import sections from '@/data/sections'
 import router from '@/router'
 import axios from 'axios'
-
-// localStorage
-const STORE_TOKEN = 'token'
-const STORE_USER = 'user'
 
 const state = {
 	loading: false,
@@ -16,7 +14,7 @@ const state = {
 const mutations = {
 	SET_USER(state, obj) {
 		state.user = obj
-		localStorage.setItem(STORE_USER, JSON.stringify(obj))
+		StorageData.profile = obj
 	},
 	SET_LOADING(state, toggle) {
 		state.loading = toggle
@@ -29,14 +27,14 @@ const mutations = {
 		axios.defaults.headers['Authorization'] = null
 
 		// Clear data from localStorage
-		localStorage.removeItem(STORE_TOKEN)
-		localStorage.removeItem(STORE_USER)
+		StorageData.removeToken()
+		StorageData.removeProfile()
 
 		// Clear data from store
 		state.user = {}
 		state.isLogin  =false
 
-		router.push({ name: 'auth' })
+		router.push({ name: sections.auth })
 	}
 }
 
@@ -45,24 +43,17 @@ const actions = {
 	 * Get data from localStorage and set init config.
 	 */
 	init({ commit }) {
-		const storageUserData = localStorage.getItem(STORE_USER)
-		const token = localStorage.getItem(STORE_TOKEN)
+		const profile = StorageData.profile
+		const token = StorageData.token
 
-		if (!storageUserData || !token) {
+		if (!profile.id || !token) {
 			commit('CLEAR_ALL')
-			return router.push({ name: 'auth' })
+			return router.push({ name: sections.auth })
 		}
 
-		try {
-			const user = JSON.parse(storageUserData)
-
-			axios.defaults.headers['Authorization'] = `Bearer ${token}`
-			commit('SET_USER', user)
-			commit('SET_IS_LOGIN', true)
-
-		} catch (e) {
-			commit('CLEAR_ALL')
-		}
+		axios.defaults.headers['Authorization'] = `Bearer ${token}`
+		commit('SET_USER', profile)
+		commit('SET_IS_LOGIN', true)
 	},
 	auth({ commit }, data) {
 		commit('SET_LOADING', true)
@@ -70,8 +61,8 @@ const actions = {
 		axios.post('auth/login', data)
 			.then(({ data }) => {
 				axios.defaults.headers['Authorization'] = `Bearer ${data.token}`
-				localStorage.setItem(STORE_TOKEN, data.token)
-				localStorage.setItem(STORE_USER, JSON.stringify(data.user))
+				StorageData.token = data.token
+				StorageData.profile = data.user
 				commit('SET_USER', data.user)
 				commit('SET_IS_LOGIN', true)
 				commit('SET_LOADING', false)

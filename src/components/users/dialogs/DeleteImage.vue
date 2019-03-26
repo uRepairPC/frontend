@@ -1,37 +1,26 @@
 <template>
-	<el-dialog
+	<basic-delete
 		title="Видалення зображення"
-		:visible="value"
-		class="dialog--default"
+		:loading="loading"
 		v-on="listeners"
+		v-bind="$attrs"
 	>
-		<div class="content">
+		<template slot="content-top">
 			Ви дійсно хочете видалити зображення?
-		</div>
-		<span slot="footer">
-			<el-button @click="close">Відмінити</el-button>
-			<el-button
-				type="danger"
-				:loading="loading"
-				:disabled="loading"
-				@click="fetchRequest"
-			>
-				Видалити
-			</el-button>
-		</span>
-	</el-dialog>
+		</template>
+	</basic-delete>
 </template>
 
 <script>
+import BasicDelete from '@/components/dialogs/BasicDelete'
 import sections from '@/data/sections'
 
 export default {
 	inheritAttrs: false,
+	components: {
+		BasicDelete
+	},
 	props: {
-		value: {
-			type: Boolean,
-			default: false
-		},
 		user: {
 			type: Object,
 			required: true
@@ -46,7 +35,7 @@ export default {
 		listeners() {
 			return {
 				...this.$listeners,
-				'update:visible': this.close
+				submit: this.fetchRequest
 			}
 		}
 	},
@@ -61,14 +50,11 @@ export default {
 						data: { ...this.user, image: null }
 					})
 					this.loading = false
-					this.close()
+					this.$emit('input', false)
 				})
 				.catch(() => {
 					this.loading = false
 				})
-		},
-		close() {
-			this.$emit('input', false)
 		}
 	}
 }

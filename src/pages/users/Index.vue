@@ -10,7 +10,18 @@
 				:loading-type="loadingType"
 				@row-click="onRowClick"
 				@sort-change="onSortChange"
-			/>
+			>
+				<template slot-scope="{ column, row }">
+					<tag-role
+						v-if="column.prop === 'role' && row"
+						:role="row"
+						size="small"
+					/>
+					<template v-else>
+						{{ row }}
+					</template>
+				</template>
+			</table-component>
 		</template>
 		<filter-core slot="right-column">
 			<filter-action
@@ -41,28 +52,31 @@
 </template>
 
 <script>
-import { users as columnsUsers } from '@/data/columns'
 import TemplatePage from '@/components/template/Page'
 import scrollTableMixin from '@/mixins/scrollTable'
-import { setColumnUsers } from '@/data/storage'
+import TagRole from '@/components/users/TagRole'
+import StorageData from '@/classes/StorageData'
 import TableComponent from '@/components/Table'
+import breadcrumbs from '@/mixins/breadcrumbs'
 import sections from '@/data/sections'
+import { mapGetters } from 'vuex'
+import menu from '@/data/menu'
 
 export default {
 	name: 'Users',
 	breadcrumbs: [
-		{ title: 'Користувачі' }
+		{ title: menu[sections.users].title }
 	],
 	components: {
-		TableComponent, TemplatePage
+		TableComponent, TemplatePage, TagRole
 	},
 	mixins: [
-		scrollTableMixin
+		scrollTableMixin, breadcrumbs
 	],
 	data() {
 		return {
 			sectionName: sections.users,
-			columns: columnsUsers(),
+			columns: [],
 			loadingType: 'rows',
 			fixed: null,
 			search: '',
@@ -70,6 +84,9 @@ export default {
 		}
 	},
 	computed: {
+		...mapGetters({
+			'userColumns': 'users/columns'
+		}),
 		list() {
 			return this.$store.state.users.list
 		},
@@ -94,6 +111,14 @@ export default {
 			return this.filterColumns.map(c => c.prop)
 		}
 	},
+	watch: {
+		userColumns: {
+			handler(arr) {
+				this.columns = arr
+			},
+			immediate: true
+		}
+	},
 	mounted() {
 		this.fetchList()
 	},
@@ -114,7 +139,7 @@ export default {
 			})
 		},
 		onChangeColumn() {
-			setColumnUsers(this.filterColumns.map(i => i.prop))
+			StorageData.columnUsers = this.filterColumns.map(i => i.prop)
 		},
 		onScroll() {
 			if (!this.loading && this.list.current_page < this.list.last_page) {
@@ -130,7 +155,7 @@ export default {
 				section: sections.users,
 				data: user
 			})
-			this.$router.push({ name: 'users-id', params: { id: user.id } })
+			this.$router.push({ name: `${sections.users}-id`, params: { id: user.id } })
 		},
 		onSortChange({ prop: column, order }) {
 			this.sort = { column, order }

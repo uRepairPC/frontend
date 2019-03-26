@@ -27,12 +27,7 @@
 					>
 						<template slot-scope="scope">
 							<span v-if="scope.row.key === 'role' && scope.row.value">
-								<el-tag
-									:type="listRoles[scope.row.value].color"
-									size="medium"
-								>
-									{{ listRoles[scope.row.value].name }}
-								</el-tag>
+								<tag-role :role="scope.row.value" />
 							</span>
 							<span v-else>{{ scope.row.value }}</span>
 						</template>
@@ -58,26 +53,30 @@ import EditEmailDialog from '@/components/users/dialogs/EditEmail'
 import DeleteDialog from '@/components/users/dialogs/Delete'
 import EditDialog from '@/components/users/dialogs/Edit'
 import TopButtons from '@/components/TopButtons'
-import { list as listRoles } from '@/data/roles'
+import TagRole from '@/components/users/TagRole'
 import UserImage from '@/components/users/Image'
+import breadcrumbs from '@/mixins/breadcrumbs'
 import { COLUMNS_DATES } from '@/data/columns'
 import { isArray } from '@/scripts/helpers'
 import sections from '@/data/sections'
 import * as types from '@/enum/types'
 import * as roles from '@/enum/roles'
+import menu from '@/data/menu'
 import moment from 'moment'
 
 export default {
 	breadcrumbs: [
-		{ title: 'Користувачі', route: { name: sections.users } },
+		{ title: menu[sections.users].title, routeName: sections.users },
 		{ title: route => `ID: ${route.params.id}` }
 	],
 	components: {
-		UserImage, TopButtons
+		UserImage, TopButtons, TagRole
 	},
+	mixins: [
+		breadcrumbs
+	],
 	data() {
 		return {
-			listRoles,
 			loading: false,
 			dialog: {
 				value: false,
@@ -112,44 +111,44 @@ export default {
 		buttons() {
 			return [
 				{
-					text: 'Оновити',
+					title: 'Оновити',
 					type: types.SUCCESS,
 					action: this.fetchUser,
 					disabled: this.loading
 				},
 				{
-					text: 'Редагувати дані',
+					title: 'Редагувати дані',
 					type: types.PRIMARY,
 					show: this.canBasicOperation,
 					action: () => this.openDialog(EditDialog)
 				},
 				{
-					text: 'Редагувати пароль',
+					title: 'Редагувати пароль',
 					type: types.PRIMARY,
 					show: this.canBasicOperation,
 					action: () => this.openDialog(EditPasswordDialog)
 				},
 				{
-					text: 'Редагувати зображення',
+					title: 'Редагувати зображення',
 					type: types.PRIMARY,
 					show: this.canBasicOperation,
 					action: () => this.openDialog(EditPhotoDialog)
 				},
 				{
-					text: 'Редагувати email',
+					title: 'Редагувати email',
 					type: types.PRIMARY,
 					show: this.canBasicOperation,
 					action: () => this.openDialog(EditEmailDialog)
 				},
 				{
-					text: 'Видалити зображення',
+					title: 'Видалити зображення',
 					type: types.WARNING,
 					show: this.canBasicOperation,
 					disabled: !this.user.image,
 					action: () => this.openDialog(DeletePhotoDialog)
 				},
 				{
-					text: 'Видалити користувача',
+					title: 'Видалити користувача',
 					type: types.DANGER,
 					show: this.isAdmin && this.profile.id !== this.user.id,
 					action: () => this.openDialog(DeleteDialog)
@@ -215,6 +214,10 @@ export default {
 					this.loading = false
 				})
 				.catch(() => {
+					this.$store.commit('template/REMOVE_SIDEBAR_ITEM', {
+						section: sections.users,
+						id: this.$route.params.id
+					})
 					this.$router.push({ name: sections.users })
 					this.loading = false
 				})

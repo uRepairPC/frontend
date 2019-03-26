@@ -1,7 +1,9 @@
 <template>
 	<div class="user">
 		<div class="wrap">
-			<div class="title">Створення користувача</div>
+			<div class="title">
+				{{ titlePage }}
+			</div>
 			<el-form
 				ref="form"
 				:model="form"
@@ -98,14 +100,19 @@
 
 <script>
 import { list as roleList } from '@/data/roles'
+import breadcrumbs from '@/mixins/breadcrumbs'
 import * as dataRules from '@/data/rules'
-import * as roles from '@/enum/roles'
 import sections from '@/data/sections'
+import * as roles from '@/enum/roles'
+import menu from '@/data/menu'
 
 export default {
 	breadcrumbs: [
-		{ title: 'Користувачі', route: { name: sections.users } },
-		{ title: 'Створення' }
+		{ title: menu[sections.users].title, routeName: sections.users },
+		{ title: menu[sections.users].children.add.title }
+	],
+	mixins: [
+		breadcrumbs
 	],
 	data() {
 		return {
@@ -123,6 +130,9 @@ export default {
 		}
 	},
 	computed: {
+		titlePage() {
+			return menu[sections.users].children.add.title
+		},
 		profile() {
 			return this.$store.state.profile.user
 		}
@@ -132,8 +142,12 @@ export default {
 			this.loading = true
 
 			this.$axios.post('users', this.form)
-				.then(() => {
-					this.$router.push({ name: 'users' })
+				.then(({ data }) => {
+					this.$store.dispatch('template/addSidebarItem', {
+						section: sections.users,
+						data: data.user
+					})
+					this.$router.push({ name: `${sections.users}-id`, params: { id: data.user.id } })
 				})
 				.catch(() => {
 					this.loading = false
@@ -154,7 +168,7 @@ export default {
 
 <style lang="scss" scoped>
 .wrap {
-	padding: 0 20px 20px;
+	padding: 10px 20px 40px;
 	max-width: 550px;
 	margin: 0 auto;
 }

@@ -3,7 +3,7 @@
 		<el-breadcrumb-item
 			v-for="(item, index) in list"
 			:key="index"
-			:to="item.route"
+			:to="{ name: item.routeName }"
 		>
 			{{ getTitle(item.title) }}
 		</el-breadcrumb-item>
@@ -12,10 +12,9 @@
 
 <script>
 export default {
-	props: {
-		list: {
-			type: Array,
-			required: true
+	computed: {
+		list() {
+			return this.$store.state.template.breadcrumbs
 		}
 	},
 	methods: {

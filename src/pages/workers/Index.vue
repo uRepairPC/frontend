@@ -36,16 +36,22 @@
 import TopButtons from '@/components/TopButtons'
 import UserBlock from '@/components/users/Block'
 import { list as listRoles} from '@/data/roles'
+import breadcrumbs from '@/mixins/breadcrumbs'
 import { SUCCESS } from '@/enum/types'
+import sections from '@/data/sections'
+import menu from '@/data/menu'
 
 export default {
 	name: 'Workers',
 	breadcrumbs: [
-		{ title: 'Працівники' }
+		{ title: menu[sections.workers].title }
 	],
 	components: {
 		UserBlock, TopButtons
 	},
+	mixins: [
+		breadcrumbs
+	],
 	data() {
 		return {
 			listRoles
@@ -64,7 +70,7 @@ export default {
 		buttons() {
 			return [
 				{
-					text: 'Оновити',
+					title: 'Оновити',
 					type: SUCCESS,
 					action: this.fetchList,
 					disabled: this.loading

@@ -19,7 +19,12 @@
 					{{ getDate(scope.row[column.prop]) }}
 				</template>
 				<template v-else>
-					{{ scope.row[column.prop] }}
+					<slot
+						:column="column"
+						:row="scope.row[column.prop]"
+					>
+						{{ scope.row[column.prop] }}
+					</slot>
 				</template>
 			</template>
 		</el-table-column>
