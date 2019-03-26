@@ -56,7 +56,8 @@ export default {
 		route: { name: sections.equipments },
 		access: [roles.ADMIN, roles.WORKER],
 		history: {
-			show: true
+			show: true,
+			callback: (obj) => `[${obj.id}] ${obj.serial_number}`
 		},
 		children: {
 			add: {
