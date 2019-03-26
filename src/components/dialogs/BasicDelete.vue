@@ -8,7 +8,7 @@
 		<div class="content">
 			<slot name="content-top">
 				<el-alert
-					title="Інші дані, які використовують цей об'єкт - також видаляться!"
+					title="Інші дані, в яких є взязок з цим об'єктом - також видаляться!"
 					description="Для підтвердження - введіть ID елемента."
 					:closable="false"
 					type="error"
@@ -79,7 +79,7 @@ export default {
 				return this.input !== this.confirm
 			}
 
-			return !this.input
+			return false
 		}
 	},
 	methods: {
