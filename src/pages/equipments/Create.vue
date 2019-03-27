@@ -36,6 +36,17 @@
 						placeholder="Інвертарний номер"
 					/>
 				</el-form-item>
+				<el-form-item
+					prop="description"
+					label="Опис"
+				>
+					<el-input
+						v-model="form.description"
+						type="textarea"
+						:autosize="{ minRows: 3 }"
+						placeholder="Опис"
+					/>
+				</el-form-item>
 				<div class="btn-wrap">
 					<el-button
 						type="primary"
@@ -92,8 +103,7 @@ export default {
 			this.loading = true
 
 			this.$axios.post('equipments', {
-				inventory_number: this.form.inventory_number,
-				serial_number: this.form.serial_number,
+				...this.form,
 				type_id: this.form.equipment[0],
 				manufacturer_id: this.form.equipment[1],
 				model_id: this.form.equipment[2]
