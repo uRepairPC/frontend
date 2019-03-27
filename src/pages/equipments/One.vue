@@ -8,21 +8,21 @@
 			>
 				<div class="header__wrap">
 					<div class="header-item">
-						<div class="header-item__title">Інвертарний номер</div>
-						<div
-							class="header-item__value"
-							@click="copy($event, equipment.inventory_number)"
-						>
-							<span>{{ equipment.inventory_number }}</span>
-						</div>
-					</div>
-					<div class="header-item">
 						<div class="header-item__title">Серійний номер</div>
 						<div
 							class="header-item__value"
 							@click="copy($event, equipment.serial_number)"
 						>
 							<span>{{ equipment.serial_number }}</span>
+						</div>
+					</div>
+					<div class="header-item">
+						<div class="header-item__title">Інвертарний номер</div>
+						<div
+							class="header-item__value"
+							@click="copy($event, equipment.inventory_number)"
+						>
+							<span>{{ equipment.inventory_number }}</span>
 						</div>
 					</div>
 				</div>
@@ -47,10 +47,18 @@
 				</el-table>
 			</div>
 		</div>
+
+		<!-- DIALOGS -->
+		<component
+			:is="dialog.component"
+			v-model="dialog.value"
+			:equipment="equipment"
+		/>
 	</div>
 </template>
 
 <script>
+import EditDialog from '@/components/equipments/dialogs/Edit'
 import TopButtons from '@/components/TopButtons'
 import breadcrumbs from '@/mixins/breadcrumbs'
 import { COLUMNS_DATES } from '@/data/columns'
@@ -98,6 +106,11 @@ export default {
 					type: types.SUCCESS,
 					action: this.fetchRequest,
 					disabled: this.loading
+				},
+				{
+					title: 'Редагувати',
+					type: types.PRIMARY,
+					action: () => this.openDialog(EditDialog)
 				}
 			]
 		},

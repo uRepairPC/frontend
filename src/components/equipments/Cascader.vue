@@ -20,6 +20,15 @@ export default {
 			default: () => []
 		}
 	},
+	mounted() {
+		if (!this.listTypes.length && this.value.length >= 1) {
+			this.$store.dispatch('equipmentTypes/fetchList')
+		}
+
+		if (!this.listModels.length && this.value.length >= 2) {
+			this.$store.dispatch('equipmentModels/fetchList')
+		}
+	},
 	computed: {
 		...mapState({
 			listTypes: state => state.equipmentTypes.list,
