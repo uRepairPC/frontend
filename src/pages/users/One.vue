@@ -113,7 +113,7 @@ export default {
 				{
 					title: 'Оновити',
 					type: types.SUCCESS,
-					action: this.fetchUser,
+					action: this.fetchRequest,
 					disabled: this.loading
 				},
 				{
@@ -192,17 +192,17 @@ export default {
 		},
 		'$route'() {
 			if (!this.user.id) {
-				this.fetchUser()
+				this.fetchRequest()
 			}
 		}
 	},
 	created() {
 		if (!this.user.id) {
-			this.fetchUser()
+			this.fetchRequest()
 		}
 	},
 	methods: {
-		fetchUser() {
+		fetchRequest() {
 			this.loading = true
 
 			this.$axios.get(`users/${this.$route.params.id}`)
