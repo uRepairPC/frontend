@@ -39,7 +39,7 @@ const authorizedRoutes = {
 			component: loadPage('users/Index')
 		},
 		{
-			path: `/${sections.users}/:id`,
+			path: `/${sections.users}/:id(\\d+)`,
 			name: `${sections.users}-id`,
 			component: loadPage('users/One')
 		},
@@ -60,7 +60,7 @@ const authorizedRoutes = {
 			component: loadPage('equipments/Index')
 		},
 		{
-			path: `/${sections.equipments}/:id`,
+			path: `/${sections.equipments}/:id(\\d+)`,
 			name: `${sections.equipments}-id`,
 			component: loadPage('equipments/One')
 		},
