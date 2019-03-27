@@ -9,13 +9,19 @@
 				<div class="header__wrap">
 					<div class="header-item">
 						<div class="header-item__title">Інвертарний номер</div>
-						<div class="header-item__value">
+						<div
+							class="header-item__value"
+							@click="copy($event, equipment.inventory_number)"
+						>
 							<span>{{ equipment.inventory_number }}</span>
 						</div>
 					</div>
 					<div class="header-item">
 						<div class="header-item__title">Серійний номер</div>
-						<div class="header-item__value">
+						<div
+							class="header-item__value"
+							@click="copy($event, equipment.serial_number)"
+						>
 							<span>{{ equipment.serial_number }}</span>
 						</div>
 					</div>
@@ -48,6 +54,7 @@
 import TopButtons from '@/components/TopButtons'
 import breadcrumbs from '@/mixins/breadcrumbs'
 import { COLUMNS_DATES } from '@/data/columns'
+import * as utils from '@/scripts/utils'
 import sections from '@/data/sections'
 import * as types from '@/enum/types'
 import menu from '@/data/menu'
@@ -154,6 +161,17 @@ export default {
 					this.loading = false
 				})
 		},
+		copy(evt, val) {
+			if (!val) {
+				return
+			}
+
+			utils.selectAll(evt.target)
+
+			if (utils.execCopy()) {
+				this.$message('Скопійовано в буфер')
+			}
+		},
 		openDialog(component) {
 			this.$set(this.dialog, 'component', component)
 			this.$set(this.dialog, 'value', true)
@@ -213,11 +231,17 @@ export default {
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	flex-wrap: wrap;
 	border: 1px solid #e6e6e6;
 	background: #fff;
 	padding: 10px 20px;
 	box-shadow: $lightShadow;
+	cursor: pointer;
 	height: 50px;
+	transition: .2s;
+	&:hover {
+		box-shadow: $basicShadow;
+	}
 	> span {
 		overflow: hidden;
 		text-overflow: ellipsis;
