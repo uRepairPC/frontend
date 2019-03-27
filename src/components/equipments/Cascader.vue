@@ -21,11 +21,11 @@ export default {
 		}
 	},
 	mounted() {
-		if (!this.listTypes.length && this.value.length >= 1) {
+		if (!this.listTypes.length) {
 			this.$store.dispatch('equipmentTypes/fetchList')
 		}
 
-		if (!this.listModels.length && this.value.length >= 2) {
+		if (!this.listModels.length) {
 			this.$store.dispatch('equipmentModels/fetchList')
 		}
 	},

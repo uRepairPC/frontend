@@ -58,6 +58,7 @@
 </template>
 
 <script>
+import DeleteDialog from '@/components/equipments/dialogs/Delete'
 import EditDialog from '@/components/equipments/dialogs/Edit'
 import TopButtons from '@/components/TopButtons'
 import breadcrumbs from '@/mixins/breadcrumbs'
@@ -111,6 +112,11 @@ export default {
 					title: 'Редагувати',
 					type: types.PRIMARY,
 					action: () => this.openDialog(EditDialog)
+				},
+				{
+					title: 'Видалили',
+					type: types.DANGER,
+					action: () => this.openDialog(DeleteDialog)
 				}
 			]
 		},
