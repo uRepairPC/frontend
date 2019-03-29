@@ -46,6 +46,9 @@
 					/>
 				</el-table>
 			</div>
+			<div class="max--width divider">
+				<span>Файли</span>
+			</div>
 		</div>
 
 		<!-- DIALOGS -->
@@ -218,7 +221,6 @@ export default {
 }
 
 .content {
-	margin-bottom: 30px;
 	background: #fff;
 	border: 1px solid #e6e6e6;
 }
