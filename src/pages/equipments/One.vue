@@ -49,6 +49,12 @@
 			<div class="max--width divider">
 				<span>Файли</span>
 			</div>
+			<div
+				class="max--width"
+				v-loading="loadingFiles"
+			>
+				<files-list :files="files" />
+			</div>
 		</div>
 
 		<!-- DIALOGS -->
@@ -56,6 +62,7 @@
 			:is="dialog.component"
 			v-model="dialog.value"
 			:equipment="equipment"
+			@fetch-files="fetchRequestFiles"
 		/>
 	</div>
 </template>
@@ -65,6 +72,7 @@ import FilesUpload from '@/components/equipments/dialogs/FilesUpload'
 import DeleteDialog from '@/components/equipments/dialogs/Delete'
 import EditDialog from '@/components/equipments/dialogs/Edit'
 import TopButtons from '@/components/TopButtons'
+import FilesList from '@/components/files/List'
 import breadcrumbs from '@/mixins/breadcrumbs'
 import { COLUMNS_DATES } from '@/data/columns'
 import * as utils from '@/scripts/utils'
@@ -79,7 +87,7 @@ export default {
 		{ title: route => `ID: ${route.params.id}` }
 	],
 	components: {
-		TopButtons
+		TopButtons, FilesList
 	},
 	mixins: [
 		breadcrumbs
@@ -87,6 +95,8 @@ export default {
 	data() {
 		return {
 			loading: false,
+			loadingFiles: false,
+			files: [],
 			dialog: {
 				value: false,
 				component: null
@@ -109,7 +119,10 @@ export default {
 				{
 					title: 'Оновити',
 					type: types.SUCCESS,
-					action: this.fetchRequest,
+					action: () => {
+						this.fetchRequest()
+						this.fetchRequestFiles()
+					},
 					disabled: this.loading
 				},
 				{
@@ -161,12 +174,14 @@ export default {
 			if (!this.equipment.id) {
 				this.fetchRequest()
 			}
+			this.fetchRequestFiles()
 		}
 	},
 	created() {
 		if (!this.equipment.id) {
 			this.fetchRequest()
 		}
+		this.fetchRequestFiles()
 	},
 	methods: {
 		fetchRequest() {
@@ -187,6 +202,18 @@ export default {
 					})
 					this.$router.push({ name: sections.equipments })
 					this.loading = false
+				})
+		},
+		fetchRequestFiles() {
+			this.loadingFiles = true
+
+			this.$axios.get(`equipments/${this.$route.params.id}/files`)
+				.then(({ data }) => {
+					this.files = data.files
+					this.loadingFiles = false
+				})
+				.catch(() => {
+					this.loadingFiles = false
 				})
 		},
 		copy(evt, val) {
@@ -214,6 +241,10 @@ export default {
 
 <style lang="scss" scoped>
 @import "~scss/_colors";
+
+.equipment__wrap {
+	padding-bottom: 50px;
+}
 
 .header,
 .content {
