@@ -61,6 +61,7 @@
 </template>
 
 <script>
+import FilesUpload from '@/components/equipments/dialogs/FilesUpload'
 import DeleteDialog from '@/components/equipments/dialogs/Delete'
 import EditDialog from '@/components/equipments/dialogs/Edit'
 import TopButtons from '@/components/TopButtons'
@@ -115,6 +116,11 @@ export default {
 					title: 'Редагувати',
 					type: types.PRIMARY,
 					action: () => this.openDialog(EditDialog)
+				},
+				{
+					title: 'Завантажити файл',
+					type: types.PRIMARY,
+					action: () => this.openDialog(FilesUpload)
 				},
 				{
 					title: 'Видалили',
