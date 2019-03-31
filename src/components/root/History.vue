@@ -32,6 +32,7 @@
 </template>
 
 <script>
+import { isObject } from '@/scripts/helpers'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -48,7 +49,7 @@ export default {
 			const list = {}
 
 			Object.entries(this.menu).forEach(([key, obj]) => {
-				if (obj.history && typeof obj.history === 'object' && obj.history.show) {
+				if (isObject(obj.history) && obj.history.show) {
 					list[key] = obj
 				}
 			})

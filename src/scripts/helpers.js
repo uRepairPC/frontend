@@ -4,8 +4,16 @@
  * @param {*} input
  * @return {boolean}
  */
+export function isObject(input) {
+	return !!input && typeof input === 'object'
+}
+
+/**
+ * @param {*} input
+ * @return {boolean}
+ */
 export const isArray = (input) => {
-	return !!input && typeof input === 'object' && !!Array.isArray(input)
+	return isObject(input) && !!Array.isArray(input)
 }
 
 /**

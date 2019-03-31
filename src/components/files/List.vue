@@ -7,6 +7,7 @@
 				:file="file"
 			/>
 		</div>
+		<!--TODO Loading component-->
 	</div>
 </template>
 
@@ -20,6 +21,10 @@ export default {
 	props: {
 		files: {
 			type: [Array, Object],
+			required: true
+		},
+		loading: {
+			type: Boolean,
 			required: true
 		}
 	}

@@ -14,7 +14,7 @@
 			</div>
 		</div>
 		<div class="file__right">
-<!--			TODO Edit, delete-->
+			<!--TODO Edit, delete-->
 		</div>
 	</div>
 </template>
@@ -63,7 +63,7 @@ $transition: .15s;
 		}
 	}
 	&:last-child {
-		margin-bottom: 0;
+		border-bottom: 0;
 	}
 }
 

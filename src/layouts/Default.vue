@@ -6,7 +6,10 @@
 				<sidebar-box />
 				<el-main>
 					<breadcrumbs-box />
-					<transition name="root-anim" mode="out-in">
+					<transition
+						name="root-anim"
+						mode="out-in"
+					>
 						<keep-alive :include="keepAliveRoutesName">
 							<router-view
 								ref="content"
@@ -38,12 +41,6 @@ export default {
 			keepAliveRoutesName
 		}
 	},
-	mounted() {
-		document.addEventListener('keypress', this.hotKeys)
-	},
-	beforeDestroy() {
-		document.removeEventListener('keypress', this.hotKeys)
-	},
 	computed: {
 		openSearch() {
 			return this.$store.state.template.openSearch
@@ -59,6 +56,12 @@ export default {
 				this.$store.commit('template/CLOSE_SEARCH')
 			}
 		}
+	},
+	mounted() {
+		document.addEventListener('keypress', this.hotKeys)
+	},
+	beforeDestroy() {
+		document.removeEventListener('keypress', this.hotKeys)
 	},
 	methods: {
 		hotKeys(evt) {

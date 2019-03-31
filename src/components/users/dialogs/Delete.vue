@@ -3,8 +3,8 @@
 		:title="userClass.fullName"
 		:confirm="user.id"
 		:loading="loading"
-		v-on="listeners"
 		v-bind="$attrs"
+		v-on="listeners"
 	/>
 </template>
 
@@ -14,10 +14,10 @@ import sections from '@/data/sections'
 import UserClass from '@/classes/User'
 
 export default {
-	inheritAttrs: false,
 	components: {
 		BasicDelete
 	},
+	inheritAttrs: false,
 	props: {
 		user: {
 			type: Object,

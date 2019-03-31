@@ -1,8 +1,8 @@
 'use strict'
 
 import { Message, Notification, Loading } from 'element-ui'
+import { isArray, isObject } from '@/scripts/helpers'
 import StorageData from '@/classes/StorageData'
-import { isArray } from '@/scripts/helpers'
 import { axiosBaseUrl } from '@/data/env'
 import * as types from '@/enum/types'
 import store from '@/store'
@@ -78,15 +78,23 @@ axios.interceptors.response.use(
 		}
 
 		// Notification
-		if (response.data && typeof response.data === 'object') {
+		if (isObject(response.data)) {
 			if (response.data.message) {
 				Message({ message: response.data.message, type: types.ERROR })
 			}
 
 			// Show validate form if exists from backend
-			if (response.data.errors && typeof response.data.errors === 'object') {
+			if (isObject(response.data.errors)) {
 				let message = ''
 
+				/**
+				 * @example {'image.png': ['File not saved']}
+				 *  <strong>image.png</strong>
+				 *  <ul>
+				 *    <li>File not saved<li>
+				 *    ...
+				 *  </ul>
+				 */
 				Object.entries(response.data.errors).forEach(([key, val]) => {
 					message += `<strong>${key}</strong>:<br>`
 					if (isArray(val)) {

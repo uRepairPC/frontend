@@ -6,7 +6,8 @@
 		v-on="listeners"
 	>
 		<div class="content">
-			<slot name="content-top">
+			<slot name="content-top" />
+			<slot name="content-alert">
 				<el-alert
 					title="Інші дані, в яких є взязок з цим об'єктом - також видаляться!"
 					description="Для підтвердження - введіть ID елемента."
@@ -14,6 +15,7 @@
 					type="error"
 				/>
 			</slot>
+			<slot name="content-after-alert" />
 			<el-input-number
 				v-if="confirm"
 				ref="input"
@@ -92,3 +94,9 @@ export default {
 	}
 }
 </script>
+
+<style lang="scss" scoped>
+.el-input-number {
+	display: block;
+}
+</style>

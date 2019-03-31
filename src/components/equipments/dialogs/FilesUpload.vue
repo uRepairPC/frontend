@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import { isArray } from '@/scripts/helpers'
+import { isArray, isObject } from '@/scripts/helpers'
 
 export default {
 	inheritAttrs: false,
@@ -90,7 +90,7 @@ export default {
 					const files = this.$refs.upload.uploadFiles
 
 					// Delete success uploaded files from list.
-					if (data.errors && typeof data.errors === 'object' && isArray(files)) {
+					if (isObject(data.errors) && isArray(files)) {
 						const filesErrorsNames = Object.keys(data.errors)
 
 						files.forEach((file, key) => {

@@ -72,10 +72,10 @@ import { required } from '@/data/rules'
 import sections from '@/data/sections'
 
 export default {
-	inheritAttrs: false,
 	components: {
 		EquipmentCascader
 	},
+	inheritAttrs: false,
 	props: {
 		value: {
 			type: Boolean,

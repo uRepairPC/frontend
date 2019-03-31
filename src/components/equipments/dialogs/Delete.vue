@@ -1,11 +1,18 @@
 <template>
 	<basic-delete
-		:title="`${equipment.serial_number} / ${equipment.inventory_number}`"
+		:title="`${equipment.serial_number || '-'} / ${equipment.inventory_number || '-'}`"
 		:confirm="equipment.id"
 		:loading="loading"
-		v-on="listeners"
 		v-bind="$attrs"
-	/>
+		v-on="listeners"
+	>
+		<el-checkbox
+			slot="content-bottom"
+			v-model="filesDelete"
+		>
+			Видалити всі файли
+		</el-checkbox>
+	</basic-delete>
 </template>
 
 <script>
@@ -13,10 +20,10 @@ import BasicDelete from '@/components/dialogs/BasicDelete'
 import sections from '@/data/sections'
 
 export default {
-	inheritAttrs: false,
 	components: {
 		BasicDelete
 	},
+	inheritAttrs: false,
 	props: {
 		equipment: {
 			type: Object,
@@ -25,7 +32,8 @@ export default {
 	},
 	data() {
 		return {
-			loading: false
+			loading: false,
+			filesDelete: true
 		}
 	},
 	computed: {
@@ -40,7 +48,11 @@ export default {
 		fetchRequest() {
 			this.loading = true
 
-			this.$axios.delete(`equipments/${this.equipment.id}`)
+			this.$axios.delete(`equipments/${this.equipment.id}`, {
+				data: {
+					files_delete: this.filesDelete
+				}
+			})
 				.then(() => {
 					this.$store.commit('template/REMOVE_SIDEBAR_ITEM', {
 						section: sections.equipments,

@@ -34,11 +34,6 @@ export default {
 			default: null
 		}
 	},
-	mounted() {
-		if (this.value && !this.hasItems) {
-			this.fetchList()
-		}
-	},
 	computed: {
 		...mapState({
 			list: state => state.equipmentManufacturers.list,
@@ -66,6 +61,11 @@ export default {
 					}
 				}
 			}
+		}
+	},
+	mounted() {
+		if (this.value && !this.hasItems) {
+			this.fetchList()
 		}
 	},
 	methods: {

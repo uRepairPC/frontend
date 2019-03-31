@@ -67,7 +67,7 @@ import moment from 'moment'
 export default {
 	breadcrumbs: [
 		{ title: menu[sections.users].title, routeName: sections.users },
-		{ title: route => `ID: ${route.params.id}` }
+		{ title: route => `ID: ${route.params.id || -1}` }
 	],
 	components: {
 		UserImage, TopButtons, TagRole

@@ -20,15 +20,6 @@ export default {
 			default: () => []
 		}
 	},
-	mounted() {
-		if (!this.listTypes.length) {
-			this.$store.dispatch('equipmentTypes/fetchList')
-		}
-
-		if (!this.listModels.length) {
-			this.$store.dispatch('equipmentModels/fetchList')
-		}
-	},
 	computed: {
 		...mapState({
 			listTypes: state => state.equipmentTypes.list,
@@ -53,6 +44,15 @@ export default {
 					}
 				}
 			}
+		}
+	},
+	mounted() {
+		if (!this.listTypes.length) {
+			this.$store.dispatch('equipmentTypes/fetchList')
+		}
+
+		if (!this.listModels.length) {
+			this.$store.dispatch('equipmentModels/fetchList')
 		}
 	}
 }

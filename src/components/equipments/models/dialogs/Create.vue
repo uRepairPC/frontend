@@ -68,10 +68,10 @@ import TypeSelect from '@/components/equipments/types/Select'
 import { required } from '@/data/rules'
 
 export default {
-	inheritAttrs: false,
 	components: {
 		TypeSelect, ManufacturerSelect
 	},
+	inheritAttrs: false,
 	props: {
 		value: {
 			type: Boolean,

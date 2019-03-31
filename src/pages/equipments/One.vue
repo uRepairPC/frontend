@@ -8,7 +8,9 @@
 			>
 				<div class="header__wrap">
 					<div class="header-item">
-						<div class="header-item__title">Серійний номер</div>
+						<div class="header-item__title">
+							Серійний номер
+						</div>
 						<div
 							class="header-item__value"
 							@click="copy($event, equipment.serial_number)"
@@ -17,7 +19,9 @@
 						</div>
 					</div>
 					<div class="header-item">
-						<div class="header-item__title">Інвертарний номер</div>
+						<div class="header-item__title">
+							Інвертарний номер
+						</div>
 						<div
 							class="header-item__value"
 							@click="copy($event, equipment.inventory_number)"
@@ -46,15 +50,17 @@
 					/>
 				</el-table>
 			</div>
-			<div class="max--width divider">
-				<span>Файли</span>
-			</div>
-			<div
-				class="max--width"
-				v-loading="loadingFiles"
-			>
-				<files-list :files="files" />
-			</div>
+			<template v-if="files.length || loadingFiles">
+				<div class="max--width divider">
+					<span>Файли</span>
+				</div>
+				<div class="max--width">
+					<files-list
+						:files="files"
+						:loading="loadingFiles"
+					/>
+				</div>
+			</template>
 		</div>
 
 		<!-- DIALOGS -->
@@ -84,7 +90,7 @@ import moment from 'moment'
 export default {
 	breadcrumbs: [
 		{ title: menu[sections.equipments].title, routeName: sections.equipments },
-		{ title: route => `ID: ${route.params.id}` }
+		{ title: route => `ID: ${route.params.id || -1}` }
 	],
 	components: {
 		TopButtons, FilesList

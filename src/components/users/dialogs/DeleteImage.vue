@@ -2,10 +2,10 @@
 	<basic-delete
 		title="Видалення зображення"
 		:loading="loading"
-		v-on="listeners"
 		v-bind="$attrs"
+		v-on="listeners"
 	>
-		<template slot="content-top">
+		<template slot="content-alert">
 			Ви дійсно хочете видалити зображення?
 		</template>
 	</basic-delete>
@@ -16,10 +16,10 @@ import BasicDelete from '@/components/dialogs/BasicDelete'
 import sections from '@/data/sections'
 
 export default {
-	inheritAttrs: false,
 	components: {
 		BasicDelete
 	},
+	inheritAttrs: false,
 	props: {
 		user: {
 			type: Object,

@@ -1,6 +1,6 @@
 'use strict'
 
-import { isArray } from '@/scripts/helpers'
+import { isArray, isObject } from '@/scripts/helpers'
 
 /** @type {string} */
 const COLUMN_USERS = 'column_users'
@@ -170,7 +170,7 @@ export default class StorageData {
 		if (localStorage.getItem(key)) {
 			try {
 				const data = JSON.parse(localStorage.getItem(key))
-				return data && typeof data === 'object' ? data : {}
+				return isObject(data) ? data : {}
 
 			} catch (e) {
 				return {}

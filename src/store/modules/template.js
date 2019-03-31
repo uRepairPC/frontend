@@ -1,6 +1,6 @@
 'use strict'
 
-import { isArray } from '@/scripts/helpers'
+import { isArray, isObject } from '@/scripts/helpers'
 import sections from '@/data/sections'
 import menu from '@/data/menu'
 import Vue from 'vue'
@@ -95,7 +95,7 @@ const getters = {
 				}
 			}
 
-			if (obj.children && typeof obj.children === 'object') {
+			if (isObject(obj.children)) {
 				Object.entries(obj.children).forEach(([actionKey, action]) => {
 					if (isArray(action.access) && !action.access.includes(userRole)) {
 						delete obj.children[actionKey]
