@@ -54,13 +54,13 @@
 					/>
 				</el-table>
 			</div>
-			<template v-if="(equipment.files && equipment.files.length) || loadingFiles">
+			<template v-if="files.length || loadingFiles">
 				<div class="max--width divider">
 					<span>Файли</span>
 				</div>
 				<div class="max--width">
 					<files-list
-						:files="equipment.files || []"
+						:files="files"
 						:loading="loadingFiles"
 						:url-download="(file) => `equipments/${$route.params.id}/files/${file.id}`"
 					/>
@@ -98,7 +98,8 @@ export default {
 	data() {
 		return {
 			loading: false,
-			loadingFiles: false
+			loadingFiles: false,
+			files: []
 		}
 	},
 	computed: {
@@ -174,9 +175,8 @@ export default {
 		fetchData() {
 			if (!this.equipment.id) {
 				this.fetchRequest()
-			} else if (!this.equipment.files || !this.equipment.files) {
-				this.fetchRequestFiles()
 			}
+			this.fetchRequestFiles()
 		},
 		fetchRequest() {
 			this.loading = true
@@ -205,12 +205,7 @@ export default {
 
 			this.$axios.get(`equipments/${this.$route.params.id}/files`)
 				.then(({ data }) => {
-					this.$store.commit('template/APPEND_SIDEBAR_ITEM_DATA', {
-						section: sections.equipments,
-						id: this.$route.params.id,
-						key: 'files',
-						data: data.files
-					})
+					this.files = data.files
 				})
 				.finally(() => {
 					this.loadingFiles = false

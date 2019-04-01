@@ -38,7 +38,7 @@ export default {
 	watch: {
 		dialog(val) {
 			if (val.component) {
-				this.component = { ...val.component }
+				this.component = { ...val.component } // FIXME Deep clone?
 				this.visible = true
 			}
 		}

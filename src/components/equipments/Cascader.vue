@@ -1,6 +1,5 @@
 <template>
 	<el-cascader
-		:value="value"
 		:options="options"
 		:props="{ label: 'name', value: 'id' }"
 		change-on-select
@@ -14,12 +13,6 @@ import { mapState, mapGetters } from 'vuex'
 
 export default {
 	inheritAttrs: false,
-	props: {
-		value: {
-			type: Array,
-			default: () => []
-		}
-	},
 	computed: {
 		...mapState({
 			listTypes: state => state.equipmentTypes.list,

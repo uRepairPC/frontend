@@ -65,16 +65,6 @@ const mutations = {
 	},
 	/**
 	 * @param state
-	 * @param {string} section - name (users, equipments, etc)
-	 * @param {number|string} id
-	 * @param {string} key
-	 * @param {*} data
-	 */
-	APPEND_SIDEBAR_ITEM_DATA(state, { section, id, key, data }) {
-		Vue.set(state.sidebar[section][id], key, data)
-	},
-	/**
-	 * @param state
 	 * @param { component, attrs, events } data
 	 */
 	OPEN_DIALOG(state, data) {

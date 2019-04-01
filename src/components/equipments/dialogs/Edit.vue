@@ -1,86 +1,69 @@
 <template>
-	<el-dialog
+	<basic-edit
 		:title="`${equipment.serial_number || '-'} / ${equipment.inventory_number || '-'}`"
-		:visible="value"
-		class="dialog--default"
+		:loading="loading"
 		v-bind="$attrs"
 		v-on="listeners"
 	>
-		<div class="content">
-			<el-form
-				ref="form"
-				:model="form"
-				:rules="rules"
-				status-icon
-				class="form--full"
-				@submit.native.prevent="onSubmit"
+		<el-form
+			ref="form"
+			:model="form"
+			:rules="rules"
+			status-icon
+			class="form--full"
+			@submit.native.prevent="onSubmit"
+		>
+			<el-form-item
+				prop="equipment"
+				label="Тип, Виробник, Модель"
 			>
-				<el-form-item
-					prop="equipment"
-					label="Тип, Виробник, Модель"
-				>
-					<equipment-cascader v-model="form.equipment" />
-				</el-form-item>
-				<el-form-item
-					prop="name"
-					label="Серійний номер"
-				>
-					<el-input
-						v-model="form.serial_number"
-						placeholder="Серійний номер"
-					/>
-				</el-form-item>
-				<el-form-item
-					prop="name"
-					label="Інвертарний номер"
-				>
-					<el-input
-						v-model="form.inventory_number"
-						placeholder="Інвертарний номер"
-					/>
-				</el-form-item>
-				<el-form-item
-					prop="description"
-					label="Опис"
-				>
-					<el-input
-						v-model="form.description"
-						type="textarea"
-						:autosize="{ minRows: 3 }"
-						placeholder="Опис"
-					/>
-				</el-form-item>
-			</el-form>
-		</div>
-		<span slot="footer">
-			<el-button @click="close">Закрити</el-button>
-			<el-button
-				type="primary"
-				:loading="loading"
-				:disabled="loading"
-				@click="onSubmit"
+				<equipment-cascader v-model="form.equipment" />
+			</el-form-item>
+			<el-form-item
+				prop="name"
+				label="Серійний номер"
 			>
-				Додати
-			</el-button>
-		</span>
-	</el-dialog>
+				<el-input
+					v-model="form.serial_number"
+					placeholder="Серійний номер"
+				/>
+			</el-form-item>
+			<el-form-item
+				prop="name"
+				label="Інвертарний номер"
+			>
+				<el-input
+					v-model="form.inventory_number"
+					placeholder="Інвертарний номер"
+				/>
+			</el-form-item>
+			<el-form-item
+				prop="description"
+				label="Опис"
+			>
+				<el-input
+					v-model="form.description"
+					type="textarea"
+					:autosize="{ minRows: 3 }"
+					placeholder="Опис"
+				/>
+			</el-form-item>
+		</el-form>
+	</basic-edit>
 </template>
 
 <script>
 import EquipmentCascader from '@/components/equipments/Cascader'
+import BasicEdit from '@/components/dialogs/BasicEdit'
 import { required } from '@/data/rules'
 import sections from '@/data/sections'
 
 export default {
 	components: {
-		EquipmentCascader
+		EquipmentCascader, BasicEdit
 	},
 	inheritAttrs: false,
 	props: {
-		value: {
-			type: Boolean,
-			default: false
-		},
 		equipment: {
 			type: Object,
 			required: true
@@ -104,7 +87,7 @@ export default {
 		listeners() {
 			return {
 				...this.$listeners,
-				'update:visible': this.close
+				submit: this.onSubmit
 			}
 		}
 	},
@@ -123,7 +106,7 @@ export default {
 						section: sections.equipments,
 						data: data.equipment
 					})
-					this.close()
+					this.$emit('close')
 				})
 				.finally(() => {
 					this.loading = false
@@ -137,9 +120,6 @@ export default {
 
 				this.fetchRequest()
 			})
-		},
-		close() {
-			this.$emit('input', false)
 		}
 	}
 }
