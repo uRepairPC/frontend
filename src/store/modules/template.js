@@ -54,7 +54,7 @@ const mutations = {
 	 * @param {number|string} id
 	 */
 	REMOVE_SIDEBAR_ITEM(state, { section, id }) {
-		if (typeof id === 'undefined') {
+		if (typeof id === 'undefined' || !state.sidebar[section]) {
 			return
 		}
 
