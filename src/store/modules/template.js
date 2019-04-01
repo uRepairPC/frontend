@@ -7,11 +7,15 @@ import Vue from 'vue'
 
 const state = {
 	openSearch: false,
+	// Uses on every page for display path
 	breadcrumbs: [],
+	// Restore user scroll on Page template
 	pagesScroll: {},
 	// History on left sidebar
 	// Required id property
-	sidebar: {}
+	sidebar: {},
+	// Set dialog global on all pages (in layout)
+	dialog: {}
 }
 
 const mutations = {
@@ -59,6 +63,16 @@ const mutations = {
 		}
 
 		Vue.delete(state.sidebar[section], id)
+	},
+	/**
+	 * @param state
+	 * @param { component, attrs, events } data
+	 */
+	OPEN_DIALOG(state, data) {
+		state.dialog = data
+	},
+	CLOSE_DIALOG(state) {
+		state.dialog = {}
 	}
 }
 
