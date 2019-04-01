@@ -35,13 +35,6 @@
 				</el-table>
 			</div>
 		</div>
-
-		<!-- DIALOGS -->
-		<component
-			:is="dialog.component"
-			v-model="dialog.value"
-			:user="user"
-		/>
 	</div>
 </template>
 
@@ -77,11 +70,7 @@ export default {
 	],
 	data() {
 		return {
-			loading: false,
-			dialog: {
-				value: false,
-				component: null
-			}
+			loading: false
 		}
 	},
 	computed: {
@@ -185,11 +174,6 @@ export default {
 		}
 	},
 	watch: {
-		'dialog.value'(val) {
-			if (!val) {
-				this.closeDialog()
-			}
-		},
 		'$route'() {
 			if (!this.user.id) {
 				this.fetchRequest()
@@ -223,12 +207,12 @@ export default {
 				})
 		},
 		openDialog(component) {
-			this.$set(this.dialog, 'component', component)
-			this.$set(this.dialog, 'value', true)
-		},
-		closeDialog() {
-			this.$set(this.dialog, 'value', false)
-			this.$set(this.dialog, 'component', null)
+			this.$store.commit('template/OPEN_DIALOG', {
+				component,
+				attrs: {
+					user: this.user
+				}
+			})
 		}
 	}
 }
