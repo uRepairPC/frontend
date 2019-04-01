@@ -1,6 +1,6 @@
 <template>
 	<el-dialog
-		:title="`${equipment.serial_number} / ${equipment.inventory_number}`"
+		:title="`${equipment.serial_number || '-'} / ${equipment.inventory_number || '-'}`"
 		:visible="value"
 		class="dialog--default"
 		v-bind="$attrs"

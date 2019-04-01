@@ -12,7 +12,9 @@
 							Серійний номер
 						</div>
 						<div
-							class="header-item__value"
+							:class="['header-item__value', {
+								'has_value': !!equipment.serial_number
+							}]"
 							@click="copy($event, equipment.serial_number)"
 						>
 							<span>{{ equipment.serial_number }}</span>
@@ -23,7 +25,9 @@
 							Інвертарний номер
 						</div>
 						<div
-							class="header-item__value"
+							:class="['header-item__value', {
+								'has_value': !!equipment.inventory_number
+							}]"
 							@click="copy($event, equipment.inventory_number)"
 						>
 							<span>{{ equipment.inventory_number }}</span>
@@ -301,9 +305,11 @@ export default {
 	background: #fff;
 	padding: 10px 20px;
 	box-shadow: $lightShadow;
-	cursor: pointer;
 	height: 50px;
 	transition: .2s;
+	&.has_value {
+		cursor: pointer;
+	}
 	&:hover {
 		box-shadow: $basicShadow;
 	}

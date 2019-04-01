@@ -1,9 +1,9 @@
 <template>
 	<div class="files-loading">
 		<div
-			class="file-loading"
 			v-for="i in 6"
 			:key="i"
+			class="file-loading"
 		>
 			<div class="file-loading-icon" />
 			<div class="file-loading-content">
@@ -34,6 +34,11 @@ export default {
 
 <style lang="scss" scoped>
 @import "~scss/keyframes";
+
+.files-loading {
+	border: 1px solid #e6e6e6;
+	background: #fff;
+}
 
 .file-loading {
 	display: flex;
