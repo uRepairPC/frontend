@@ -1,6 +1,6 @@
 <template>
 	<el-dialog
-		class="dialog--default edit"
+		class="dialog--default create"
 		v-bind="$attrs"
 		v-on="$listeners"
 	>
@@ -15,7 +15,7 @@
 				:disabled="loading"
 				@click="onSubmit"
 			>
-				{{ saveBtn }}
+				Додати
 			</el-button>
 		</span>
 	</el-dialog>
@@ -27,9 +27,6 @@ export default {
 	computed: {
 		loading() {
 			return this.$attrs.loading
-		},
-		saveBtn() {
-			return this.$attrs['save-btn'] || 'Зберегти'
 		}
 	},
 	methods: {
