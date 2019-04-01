@@ -54,27 +54,19 @@
 					/>
 				</el-table>
 			</div>
-			<template v-if="files.length || loadingFiles">
+			<template v-if="(equipment.files && equipment.files.length) || loadingFiles">
 				<div class="max--width divider">
 					<span>Файли</span>
 				</div>
 				<div class="max--width">
 					<files-list
-						:files="files"
+						:files="equipment.files || []"
 						:loading="loadingFiles"
 						:url-download="(file) => `equipments/${$route.params.id}/files/${file.id}`"
 					/>
 				</div>
 			</template>
 		</div>
-
-		<!-- DIALOGS -->
-		<component
-			:is="dialog.component"
-			v-model="dialog.value"
-			:equipment="equipment"
-			@fetch-files="fetchRequestFiles"
-		/>
 	</div>
 </template>
 
@@ -106,12 +98,7 @@ export default {
 	data() {
 		return {
 			loading: false,
-			loadingFiles: false,
-			files: [],
-			dialog: {
-				value: false,
-				component: null
-			}
+			loadingFiles: false
 		}
 	},
 	computed: {
@@ -176,25 +163,21 @@ export default {
 		}
 	},
 	watch: {
-		'dialog.value'(val) {
-			if (!val) {
-				this.closeDialog()
-			}
-		},
 		'$route'() {
-			if (!this.equipment.id) {
-				this.fetchRequest()
-			}
-			this.fetchRequestFiles()
+			this.fetchData()
 		}
 	},
 	created() {
-		if (!this.equipment.id) {
-			this.fetchRequest()
-		}
-		this.fetchRequestFiles()
+		this.fetchData()
 	},
 	methods: {
+		fetchData() {
+			if (!this.equipment.id) {
+				this.fetchRequest()
+			} else if (!this.equipment.files || !this.equipment.files) {
+				this.fetchRequestFiles()
+			}
+		},
 		fetchRequest() {
 			this.loading = true
 
@@ -204,6 +187,7 @@ export default {
 						section: sections.equipments,
 						data: data.equipment
 					})
+					this.fetchRequestFiles()
 				})
 				.catch(() => {
 					this.$store.commit('template/REMOVE_SIDEBAR_ITEM', {
@@ -221,7 +205,12 @@ export default {
 
 			this.$axios.get(`equipments/${this.$route.params.id}/files`)
 				.then(({ data }) => {
-					this.files = data.files
+					this.$store.commit('template/APPEND_SIDEBAR_ITEM_DATA', {
+						section: sections.equipments,
+						id: this.$route.params.id,
+						key: 'files',
+						data: data.files
+					})
 				})
 				.finally(() => {
 					this.loadingFiles = false
@@ -239,12 +228,15 @@ export default {
 			}
 		},
 		openDialog(component) {
-			this.$set(this.dialog, 'component', component)
-			this.$set(this.dialog, 'value', true)
-		},
-		closeDialog() {
-			this.$set(this.dialog, 'value', false)
-			this.$set(this.dialog, 'component', null)
+			this.$store.commit('template/OPEN_DIALOG', {
+				component,
+				attrs: {
+					equipment: this.equipment
+				},
+				events: {
+					'fetch-files': this.fetchRequestFiles
+				}
+			})
 		}
 	}
 }

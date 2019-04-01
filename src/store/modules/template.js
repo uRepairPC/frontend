@@ -52,7 +52,6 @@ const mutations = {
 		Vue.set(state.sidebar[section], data.id, data)
 	},
 	/**
-	 *
 	 * @param state
 	 * @param {string} section - name (users, equipments, etc)
 	 * @param {number|string} id
@@ -63,6 +62,16 @@ const mutations = {
 		}
 
 		Vue.delete(state.sidebar[section], id)
+	},
+	/**
+	 * @param state
+	 * @param {string} section - name (users, equipments, etc)
+	 * @param {number|string} id
+	 * @param {string} key
+	 * @param {*} data
+	 */
+	APPEND_SIDEBAR_ITEM_DATA(state, { section, id, key, data }) {
+		Vue.set(state.sidebar[section][id], key, data)
 	},
 	/**
 	 * @param state

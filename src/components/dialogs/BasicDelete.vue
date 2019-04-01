@@ -8,7 +8,7 @@
 			<slot name="content-top" />
 			<slot name="content-alert">
 				<el-alert
-					title="Інші дані, в яких є взязок з цим об'єктом - також видаляться!"
+					title="Ви дійсно хочете видалити ці дані?"
 					description="Для підтвердження - введіть ID елемента."
 					:closable="false"
 					type="error"
