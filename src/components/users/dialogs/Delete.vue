@@ -5,7 +5,14 @@
 		:loading="loading"
 		v-bind="$attrs"
 		v-on="listeners"
-	/>
+	>
+		<el-checkbox
+			slot="content-bottom"
+			v-model="imageDelete"
+		>
+			Видалити зображення
+		</el-checkbox>
+	</basic-delete>
 </template>
 
 <script>
@@ -26,7 +33,8 @@ export default {
 	},
 	data() {
 		return {
-			loading: false
+			loading: false,
+			imageDelete: true
 		}
 	},
 	computed: {
@@ -44,7 +52,11 @@ export default {
 		fetchRequest() {
 			this.loading = true
 
-			this.$axios.delete(`users/${this.user.id}`)
+			this.$axios.delete(`users/${this.user.id}`, {
+				data: {
+					image_delete: this.image_delete
+				}
+			})
 				.then(() => {
 					this.$store.commit('template/REMOVE_SIDEBAR_ITEM', {
 						section: sections.users,
