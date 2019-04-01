@@ -58,6 +58,7 @@
 					<files-list
 						:files="files"
 						:loading="loadingFiles"
+						:url-download="(file) => `equipments/${$route.params.id}/files/${file.id}`"
 					/>
 				</div>
 			</template>

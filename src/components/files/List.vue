@@ -5,6 +5,7 @@
 				v-for="(file, index) in files"
 				:key="index"
 				:file="file"
+				:url-download="urlDownload"
 			/>
 		</div>
 		<!--TODO Loading component-->
@@ -26,6 +27,10 @@ export default {
 		loading: {
 			type: Boolean,
 			required: true
+		},
+		urlDownload: {
+			type: Function,
+			default: null
 		}
 	}
 }

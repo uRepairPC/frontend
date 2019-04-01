@@ -1,5 +1,8 @@
 'use strict'
 
+import StorageData from '@/classes/StorageData'
+import axios from 'axios'
+
 /**
  * @param {String, Node} node
  */
@@ -16,6 +19,27 @@ export function selectAll(node) {
  */
 export function execCopy() {
 	return document.execCommand('copy')
+}
+
+/**
+ * @param data
+ * @param {string} fileName
+ */
+export function downloadFile(data, fileName) {
+	const url = window.URL.createObjectURL(new Blob([data]))
+	const link = document.createElement('a')
+	link.href = url
+	link.setAttribute('download', fileName)
+	document.body.appendChild(link)
+	link.click()
+}
+
+/**
+ * @param {string} path
+ * @returns {string}
+ */
+export function getSeverUrlAuth(path) {
+	return axios.defaults.baseURL + '/' + path + '?token=' + StorageData.token
 }
 
 /**
