@@ -16,7 +16,7 @@
 				<el-button
 					size="small"
 					type="primary"
-					@click="onCreate"
+					@click="openDialog('create')"
 				>
 					Додати
 				</el-button>
@@ -47,7 +47,7 @@
 					<el-button
 						type="text"
 						size="small"
-						@click="onEdit(scope.row)"
+						@click="openDialog('edit', scope.row)"
 					>
 						Редагувати
 					</el-button>
@@ -55,20 +55,13 @@
 						type="text"
 						size="small"
 						class="danger"
-						@click="onDelete(scope.row)"
+						@click="openDialog('delete', scope.row)"
 					>
 						Видалити
 					</el-button>
 				</template>
 			</el-table-column>
 		</el-table>
-
-		<!-- DIALOGS -->
-		<component
-			:is="dialog.component"
-			v-model="dialog.value"
-			:item="dialog.item"
-		/>
 	</div>
 </template>
 
@@ -97,15 +90,6 @@ export default {
 			required: true
 		}
 	},
-	data() {
-		return {
-			dialog: {
-				value: false,
-				component: null,
-				item: null
-			}
-		}
-	},
 	computed: {
 		...mapGetters({
 			menu: 'template/menu'
@@ -113,13 +97,6 @@ export default {
 		title() {
 			const action = this.menu[sections.settings].children[this.$route.name]
 			return action ? action.title : ''
-		}
-	},
-	watch: {
-		'dialog.value'(val) {
-			if (!val) {
-				this.closeDialog()
-			}
 		}
 	},
 	methods: {
@@ -133,31 +110,14 @@ export default {
 		isColumnDate(prop) {
 			return COLUMNS_DATES.includes(prop)
 		},
-		onCreate() {
-			this.openDialog(this.dialogs.create)
+		openDialog(dialogProperty, item = null) {
+			this.$store.commit('template/OPEN_DIALOG', {
+				component: this.dialogs[dialogProperty],
+				attrs: { item }
+			})
 		},
 		onUpdate() {
 			this.$emit('update')
-		},
-		onEdit(obj) {
-			this.dialog.item = obj
-			this.openDialog(this.dialogs.edit)
-		},
-		onDelete(obj) {
-			this.dialog.item = obj
-			this.openDialog(this.dialogs.delete)
-		},
-		openDialog(component) {
-			if (!component) {
-				return
-			}
-
-			this.dialog.component = component
-			this.dialog.value = true
-		},
-		closeDialog() {
-			this.dialog.value = false
-			this.dialog.component = null
 		}
 	}
 }

@@ -42,10 +42,9 @@ export default {
 			this.$axios.delete(`equipments/models/${this.item.id}`)
 				.then(() => {
 					this.$store.dispatch('equipmentModels/fetchList')
-					this.loading = false
-					this.$emit('input', false)
+					this.$emit('close')
 				})
-				.catch(() => {
+				.finally(() => {
 					this.loading = false
 				})
 		}

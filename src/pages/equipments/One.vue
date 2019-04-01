@@ -67,14 +67,6 @@
 				</div>
 			</template>
 		</div>
-
-		<!-- DIALOGS -->
-		<component
-			:is="dialog.component"
-			v-model="dialog.value"
-			:equipment="equipment"
-			@fetch-files="fetchRequestFiles"
-		/>
 	</div>
 </template>
 
@@ -107,11 +99,7 @@ export default {
 		return {
 			loading: false,
 			loadingFiles: false,
-			files: [],
-			dialog: {
-				value: false,
-				component: null
-			}
+			files: []
 		}
 	},
 	computed: {
@@ -176,25 +164,20 @@ export default {
 		}
 	},
 	watch: {
-		'dialog.value'(val) {
-			if (!val) {
-				this.closeDialog()
-			}
-		},
 		'$route'() {
+			this.fetchData()
+		}
+	},
+	created() {
+		this.fetchData()
+	},
+	methods: {
+		fetchData() {
 			if (!this.equipment.id) {
 				this.fetchRequest()
 			}
 			this.fetchRequestFiles()
-		}
-	},
-	created() {
-		if (!this.equipment.id) {
-			this.fetchRequest()
-		}
-		this.fetchRequestFiles()
-	},
-	methods: {
+		},
 		fetchRequest() {
 			this.loading = true
 
@@ -204,7 +187,7 @@ export default {
 						section: sections.equipments,
 						data: data.equipment
 					})
-					this.loading = false
+					this.fetchRequestFiles()
 				})
 				.catch(() => {
 					this.$store.commit('template/REMOVE_SIDEBAR_ITEM', {
@@ -212,6 +195,8 @@ export default {
 						id: this.$route.params.id
 					})
 					this.$router.push({ name: sections.equipments })
+				})
+				.finally(() => {
 					this.loading = false
 				})
 		},
@@ -221,9 +206,8 @@ export default {
 			this.$axios.get(`equipments/${this.$route.params.id}/files`)
 				.then(({ data }) => {
 					this.files = data.files
-					this.loadingFiles = false
 				})
-				.catch(() => {
+				.finally(() => {
 					this.loadingFiles = false
 				})
 		},
@@ -239,12 +223,15 @@ export default {
 			}
 		},
 		openDialog(component) {
-			this.$set(this.dialog, 'component', component)
-			this.$set(this.dialog, 'value', true)
-		},
-		closeDialog() {
-			this.$set(this.dialog, 'value', false)
-			this.$set(this.dialog, 'component', null)
+			this.$store.commit('template/OPEN_DIALOG', {
+				component,
+				attrs: {
+					equipment: this.equipment
+				},
+				events: {
+					'fetch-files': this.fetchRequestFiles
+				}
+			})
 		}
 	}
 }

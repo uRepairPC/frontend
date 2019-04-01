@@ -65,9 +65,8 @@ const actions = {
 				StorageData.profile = data.user
 				commit('SET_USER', data.user)
 				commit('SET_IS_LOGIN', true)
-				commit('SET_LOADING', false)
 			})
-			.catch(() => {
+			.finally(() => {
 				commit('SET_LOADING', false)
 			})
 	},
@@ -79,9 +78,8 @@ const actions = {
 		axios.get(`users/${state.user.id}`)
 			.then(({ data }) => {
 				commit('SET_USER', data.user)
-				commit('SET_LOADING', false)
 			})
-			.catch(() => {
+			.finally(() => {
 				commit('SET_LOADING', false)
 			})
 	},
@@ -91,9 +89,8 @@ const actions = {
 		axios.post('auth/logout')
 			.then(() => {
 				commit('CLEAR_ALL')
-				commit('SET_LOADING', false)
 			})
-			.catch(() => {
+			.finally(() => {
 				commit('SET_LOADING', false)
 			})
 	}

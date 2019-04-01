@@ -1,83 +1,65 @@
 <template>
-	<el-dialog
+	<basic-create
 		title="Додати модель обладнання"
-		:visible="value"
-		class="dialog--default"
+		:loading="loading"
+		v-bind="$attrs"
 		v-on="listeners"
 	>
-		<div class="content">
-			<el-form
-				ref="form"
-				:model="form"
-				:rules="rules"
-				status-icon
-				class="form--full"
-				@submit.native.prevent="onSubmit"
+		<el-form
+			ref="form"
+			:model="form"
+			:rules="rules"
+			status-icon
+			class="form--full"
+			@submit.native.prevent="onSubmit"
+		>
+			<el-form-item
+				prop="name"
+				label="Назва"
 			>
-				<el-form-item
-					prop="name"
-					label="Назва"
-				>
-					<el-input
-						v-model="form.name"
-						placeholder="Назва"
-					/>
-				</el-form-item>
-				<el-form-item
-					prop="type_id"
-					label="Тип обладнання"
-				>
-					<type-select v-model="form.type_id" />
-				</el-form-item>
-				<el-form-item
-					prop="manufacturer_id"
-					label="Виробник обладнання"
-				>
-					<manufacturer-select v-model="form.manufacturer_id" />
-				</el-form-item>
-				<el-form-item
-					prop="description"
-					label="Опис"
-				>
-					<el-input
-						v-model="form.description"
-						type="textarea"
-						:autosize="{ minRows: 3 }"
-						placeholder="Опис"
-					/>
-				</el-form-item>
-			</el-form>
-		</div>
-		<span slot="footer">
-			<el-button @click="close">Закрити</el-button>
-			<el-button
-				type="primary"
-				:loading="loading"
-				:disabled="loading"
-				@click="onSubmit"
+				<el-input
+					v-model="form.name"
+					placeholder="Назва"
+				/>
+			</el-form-item>
+			<el-form-item
+				prop="type_id"
+				label="Тип обладнання"
 			>
-				Додати
-			</el-button>
-		</span>
-	</el-dialog>
+				<type-select v-model="form.type_id" />
+			</el-form-item>
+			<el-form-item
+				prop="manufacturer_id"
+				label="Виробник обладнання"
+			>
+				<manufacturer-select v-model="form.manufacturer_id" />
+			</el-form-item>
+			<el-form-item
+				prop="description"
+				label="Опис"
+			>
+				<el-input
+					v-model="form.description"
+					type="textarea"
+					:autosize="{ minRows: 3 }"
+					placeholder="Опис"
+				/>
+			</el-form-item>
+		</el-form>
+	</basic-create>
 </template>
 
 <script>
 import ManufacturerSelect from '@/components/equipments/manufacturers/Select'
 import TypeSelect from '@/components/equipments/types/Select'
+import BasicCreate from '@/components/dialogs/BasicCreate'
 import { required } from '@/data/rules'
 
 export default {
 	components: {
-		TypeSelect, ManufacturerSelect
+		TypeSelect, ManufacturerSelect, BasicCreate
 	},
 	inheritAttrs: false,
-	props: {
-		value: {
-			type: Boolean,
-			default: false
-		}
-	},
 	data() {
 		return {
 			loading: false,
@@ -96,7 +78,7 @@ export default {
 		listeners() {
 			return {
 				...this.$listeners,
-				'update:visible': this.close
+				submit: this.fetchRequest
 			}
 		}
 	},
@@ -107,10 +89,9 @@ export default {
 			this.$axios.post('equipments/models', this.form)
 				.then(() => {
 					this.$store.dispatch('equipmentModels/fetchList')
-					this.loading = false
-					this.close()
+					this.$emit('close')
 				})
-				.catch(() => {
+				.finally(() => {
 					this.loading = false
 				})
 		},
@@ -122,9 +103,6 @@ export default {
 
 				this.fetchRequest()
 			})
-		},
-		close() {
-			this.$emit('input', false)
 		}
 	}
 }

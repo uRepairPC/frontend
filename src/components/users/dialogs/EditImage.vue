@@ -1,58 +1,45 @@
 <template>
-	<el-dialog
+	<basic-edit
 		title="Редагування зображення"
-		:visible="value"
-		class="dialog--default"
+		:loading="loading"
+		v-bind="$attrs"
 		v-on="listeners"
 	>
-		<div class="content">
-			<el-upload
-				ref="upload"
-				drag
-				:http-request="onHttpRequest"
-				:on-change="onChange"
-				:auto-upload="false"
-				list-type="picture"
-				:limit="1"
-				accept="image/jpeg, image/jpg, image/png"
-				action
+		<el-upload
+			ref="upload"
+			drag
+			:http-request="onHttpRequest"
+			:on-change="onChange"
+			:auto-upload="false"
+			list-type="picture"
+			:limit="1"
+			accept="image/jpeg, image/jpg, image/png"
+			action
+		>
+			<i class="el-icon-upload" />
+			<div class="el-upload__text">
+				Перетягніть файл сюди або <em>натисніть, щоб завантажити</em>
+			</div>
+			<div
+				slot="tip"
+				class="el-upload__tip"
 			>
-				<i class="el-icon-upload" />
-				<div class="el-upload__text">
-					Перетягніть файл сюди або <em>натисніть, щоб завантажити</em>
-				</div>
-				<div
-					slot="tip"
-					class="el-upload__tip"
-				>
-					jpeg/jpg/png зображення повинне мати не більше 2мб.
-				</div>
-			</el-upload>
-		</div>
-		<span slot="footer">
-			<el-button @click="close">Закрити</el-button>
-			<el-button
-				type="primary"
-				:loading="loading"
-				:disabled="loading"
-				@click="save"
-			>
-				Зберегти
-			</el-button>
-		</span>
-	</el-dialog>
+				jpeg/jpg/png зображення повинне мати не більше 2мб.
+			</div>
+		</el-upload>
+	</basic-edit>
 </template>
 
 <script>
+import BasicEdit from '@/components/dialogs/BasicEdit'
 import sections from '@/data/sections'
 
 export default {
+	components: {
+		BasicEdit
+	},
 	inheritAttrs: false,
 	props: {
-		value: {
-			type: Boolean,
-			default: false
-		},
 		user: {
 			type: Object,
 			required: true
@@ -68,7 +55,7 @@ export default {
 		listeners() {
 			return {
 				...this.$listeners,
-				'update:visible': this.close
+				submit: this.save
 			}
 		}
 	},
@@ -85,10 +72,9 @@ export default {
 						section: sections.users,
 						data: { ...this.user, image: data.image }
 					})
-					this.loading = false
-					this.close()
+					this.$emit('close')
 				})
-				.catch(() => {
+				.finally(() => {
 					this.loading = false
 				})
 		},
@@ -97,9 +83,6 @@ export default {
 		},
 		onChange(file) {
 			this.file = file
-		},
-		close() {
-			this.$emit('input', false)
 		}
 	}
 }

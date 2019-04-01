@@ -1,112 +1,98 @@
 <template>
-	<el-dialog
+	<basic-edit
 		title="Редагування користувача"
-		:visible="value"
-		class="dialog--default"
+		:loading="loading"
 		v-bind="$attrs"
 		v-on="listeners"
 	>
-		<div class="content">
-			<el-form
-				ref="form"
-				:model="form"
-				:rules="rules"
-				status-icon
-				class="form--full"
-				@submit.native.prevent="onSubmit"
+		<el-form
+			ref="form"
+			:model="form"
+			:rules="rules"
+			status-icon
+			class="form--full"
+			@submit.native.prevent="onSubmit"
+		>
+			<el-form-item
+				prop="first_name"
+				label="Ім'я"
 			>
-				<el-form-item
-					prop="first_name"
-					label="Ім'я"
-				>
-					<el-input
-						v-model="form.first_name"
-						placeholder="Ім'я"
-					/>
-				</el-form-item>
-				<el-form-item
-					prop="middle_name"
-					label="По-батькові"
-				>
-					<el-input
-						v-model="form.middle_name"
-						placeholder="По-батькові"
-					/>
-				</el-form-item>
-				<el-form-item
-					prop="last_name"
-					label="Прізвище"
-				>
-					<el-input
-						v-model="form.last_name"
-						placeholder="Прізвище"
-					/>
-				</el-form-item>
-				<el-form-item
-					v-if="canChangeRole"
-					label="Роль"
-					prop="role"
-				>
-					<el-select v-model="form.role">
-						<el-option
-							v-for="(role, key) in roleList"
-							:key="key"
-							:label="role.name"
-							:value="key"
-						>
-							<span :class="role.color">{{ role.name }}</span>
-						</el-option>
-					</el-select>
-				</el-form-item>
-				<el-form-item
-					prop="phone"
-					label="Телефон"
-				>
-					<el-input
-						v-model="form.phone"
-						placeholder="Телефон"
-					/>
-				</el-form-item>
-				<el-form-item
-					prop="description"
-					label="Опис"
-				>
-					<el-input
-						v-model="form.description"
-						type="textarea"
-						:autosize="{ minRows: 3 }"
-						placeholder="Опис"
-					/>
-				</el-form-item>
-			</el-form>
-		</div>
-		<span slot="footer">
-			<el-button @click="close">Закрити</el-button>
-			<el-button
-				type="primary"
-				:loading="loading"
-				:disabled="loading"
-				@click="onSubmit"
+				<el-input
+					v-model="form.first_name"
+					placeholder="Ім'я"
+				/>
+			</el-form-item>
+			<el-form-item
+				prop="middle_name"
+				label="По-батькові"
 			>
-				Зберегти
-			</el-button>
-		</span>
-	</el-dialog>
+				<el-input
+					v-model="form.middle_name"
+					placeholder="По-батькові"
+				/>
+			</el-form-item>
+			<el-form-item
+				prop="last_name"
+				label="Прізвище"
+			>
+				<el-input
+					v-model="form.last_name"
+					placeholder="Прізвище"
+				/>
+			</el-form-item>
+			<el-form-item
+				v-if="canChangeRole"
+				label="Роль"
+				prop="role"
+			>
+				<el-select v-model="form.role">
+					<el-option
+						v-for="(role, key) in roleList"
+						:key="key"
+						:label="role.name"
+						:value="key"
+					>
+						<span :class="role.color">{{ role.name }}</span>
+					</el-option>
+				</el-select>
+			</el-form-item>
+			<el-form-item
+				prop="phone"
+				label="Телефон"
+			>
+				<el-input
+					v-model="form.phone"
+					placeholder="Телефон"
+				/>
+			</el-form-item>
+			<el-form-item
+				prop="description"
+				label="Опис"
+			>
+				<el-input
+					v-model="form.description"
+					type="textarea"
+					:autosize="{ minRows: 3 }"
+					placeholder="Опис"
+				/>
+			</el-form-item>
+		</el-form>
+	</basic-edit>
 </template>
 
 <script>
+import BasicEdit from '@/components/dialogs/BasicEdit'
 import { list as roleList } from '@/data/roles'
 import { required } from '@/data/rules'
 import sections from '@/data/sections'
 import * as roles from '@/enum/roles'
 
 export default {
+	components: {
+		BasicEdit
+	},
 	inheritAttrs: false,
 	props: {
-		value: {
-			type: Boolean,
-			default: false
-		},
 		user: {
 			type: Object,
 			required: true
@@ -142,7 +128,7 @@ export default {
 		listeners() {
 			return {
 				...this.$listeners,
-				'update:visible': this.close
+				submit: this.onSubmit
 			}
 		},
 		canChangeRole() {
@@ -159,10 +145,9 @@ export default {
 						section: sections.users,
 						data: data.user
 					})
-					this.loading = false
-					this.close()
+					this.$emit('close')
 				})
-				.catch(() => {
+				.finally(() => {
 					this.loading = false
 				})
 		},
@@ -174,9 +159,6 @@ export default {
 
 				this.fetchRequest()
 			})
-		},
-		close() {
-			this.$emit('input', false)
 		}
 	}
 }

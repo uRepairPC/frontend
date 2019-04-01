@@ -58,11 +58,10 @@ export default {
 						section: sections.equipments,
 						id: this.equipment.id
 					})
-					this.loading = false
 					this.$emit('input', false)
 					this.$router.push({ name: sections.equipments })
 				})
-				.catch(() => {
+				.finally(() => {
 					this.loading = false
 				})
 		}

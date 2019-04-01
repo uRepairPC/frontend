@@ -62,11 +62,10 @@ export default {
 						section: sections.users,
 						id: this.user.id
 					})
-					this.loading = false
-					this.$emit('input', false)
+					this.$emit('close')
 					this.$router.push({ name: sections.users })
 				})
-				.catch(() => {
+				.finally(() => {
 					this.loading = false
 				})
 		}

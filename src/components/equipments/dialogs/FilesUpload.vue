@@ -1,55 +1,41 @@
 <template>
-	<el-dialog
+	<basic-edit
 		:title="`${equipment.serial_number || '-'} / ${equipment.inventory_number || '-'}`"
-		:visible="value"
-		class="dialog--default"
+		:loading="loading"
 		v-bind="$attrs"
 		v-on="listeners"
 	>
-		<div class="content">
-			<el-upload
-				ref="upload"
-				:auto-upload="false"
-				drag
-				multiple
-				action
+		<el-upload
+			ref="upload"
+			:auto-upload="false"
+			drag
+			multiple
+			action
+		>
+			<i class="el-icon-upload" />
+			<div class="el-upload__text">
+				Перетягніть файл сюди або <em>натисніть, щоб завантажити</em>
+			</div>
+			<div
+				slot="tip"
+				class="el-upload__tip"
 			>
-				<i class="el-icon-upload" />
-				<div class="el-upload__text">
-					Перетягніть файл сюди або <em>натисніть, щоб завантажити</em>
-				</div>
-				<div
-					slot="tip"
-					class="el-upload__tip"
-				>
-					файл повинен мати не більше 20мб.
-				</div>
-			</el-upload>
-		</div>
-		<span slot="footer">
-			<el-button @click="close">Закрити</el-button>
-			<el-button
-				type="primary"
-				:loading="loading"
-				:disabled="loading"
-				@click="onSubmit"
-			>
-				Додати
-			</el-button>
-		</span>
-	</el-dialog>
+				файл повинен мати не більше 20мб.
+			</div>
+		</el-upload>
+	</basic-edit>
 </template>
 
 <script>
+import BasicEdit from '@/components/dialogs/BasicEdit'
 import { isArray, isObject } from '@/scripts/helpers'
 
 export default {
 	inheritAttrs: false,
+	components: {
+		BasicEdit
+	},
 	props: {
-		value: {
-			type: Boolean,
-			default: false
-		},
 		equipment: {
 			type: Object,
 			required: true
@@ -57,19 +43,22 @@ export default {
 	},
 	data() {
 		return {
-			loading: false
+			loading: false,
+			isUploaded: false
 		}
 	},
 	computed: {
 		listeners() {
 			return {
 				...this.$listeners,
-				'update:visible': this.close
+				submit: this.onSubmit
 			}
 		}
 	},
 	beforeDestroy() {
-		this.$emit('fetch-files')
+		if (this.isUploaded) {
+			this.$emit('fetch-files')
+		}
 	},
 	methods: {
 		onSubmit() {
@@ -83,8 +72,8 @@ export default {
 
 			this.$axios.post(`equipments/${this.equipment.id}/files`, fd)
 				.then(() => {
-					this.loading = false
-					this.close()
+					this.isUploaded = true
+					this.$emit('close')
 				})
 				.catch(({ response: { data } }) => {
 					const files = this.$refs.upload.uploadFiles
@@ -99,12 +88,10 @@ export default {
 							}
 						})
 					}
-
+				})
+				.finally(() => {
 					this.loading = false
 				})
-		},
-		close() {
-			this.$emit('input', false)
 		}
 	}
 }

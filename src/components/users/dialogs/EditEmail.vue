@@ -1,58 +1,45 @@
 <template>
-	<el-dialog
+	<basic-edit
 		title="Редагування E-mail"
-		:visible="value"
-		class="dialog--default"
+		:loading="loading"
+		v-bind="$attrs"
 		v-on="listeners"
 	>
-		<div class="content">
-			<el-form
-				ref="form"
-				:model="form"
-				:rules="rules"
-				status-icon
-				@submit.native.prevent="onSubmit"
-			>
-				<el-form-item prop="email">
-					<el-input
-						v-model="form.email"
-						placeholder="E-mail"
+		<el-form
+			ref="form"
+			:model="form"
+			:rules="rules"
+			status-icon
+			@submit.native.prevent="onSubmit"
+		>
+			<el-form-item prop="email">
+				<el-input
+					v-model="form.email"
+					placeholder="E-mail"
+				>
+					<i
+						slot="prepend"
+						class="material-icons"
 					>
-						<i
-							slot="prepend"
-							class="material-icons"
-						>
-							email
-						</i>
-					</el-input>
-				</el-form-item>
-			</el-form>
-		</div>
-		<span slot="footer">
-			<el-button @click="close">Закрити</el-button>
-			<el-button
-				type="primary"
-				:loading="loading"
-				:disabled="loading"
-				@click="onSubmit"
-			>
-				Зберегти
-			</el-button>
-		</span>
-	</el-dialog>
+						email
+					</i>
+				</el-input>
+			</el-form-item>
+		</el-form>
+	</basic-edit>
 </template>
 
 <script>
+import BasicEdit from '@/components/dialogs/BasicEdit'
 import sections from '@/data/sections'
 import * as rules from '@/data/rules'
 
 export default {
+	components: {
+		BasicEdit
+	},
 	inheritAttrs: false,
 	props: {
-		value: {
-			type: Boolean,
-			default: false
-		},
 		user: {
 			type: Object,
 			required: true
@@ -73,7 +60,7 @@ export default {
 		listeners() {
 			return {
 				...this.$listeners,
-				'update:visible': this.close
+				submit: this.onSubmit
 			}
 		}
 	},
@@ -87,10 +74,9 @@ export default {
 						section: sections.users,
 						data: data.user
 					})
-					this.loading = false
-					this.close()
+					this.$emit('close')
 				})
-				.catch(() => {
+				.finally(() => {
 					this.loading = false
 				})
 		},
@@ -102,9 +88,6 @@ export default {
 
 				this.fetchRequest()
 			})
-		},
-		close() {
-			this.$emit('input', false)
 		}
 	}
 }

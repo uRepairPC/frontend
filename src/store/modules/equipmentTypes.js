@@ -23,9 +23,8 @@ const actions = {
 		axios.get('equipments/types')
 			.then(({ data }) => {
 				commit('SET_LIST', data)
-				commit('SET_LOADING', false)
 			})
-			.catch(() => {
+			.finally(() => {
 				commit('SET_LOADING', false)
 			})
 	}

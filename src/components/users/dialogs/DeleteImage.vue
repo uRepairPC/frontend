@@ -49,10 +49,9 @@ export default {
 						section: sections.users,
 						data: { ...this.user, image: null }
 					})
-					this.loading = false
-					this.$emit('input', false)
+					this.$emit('close')
 				})
-				.catch(() => {
+				.finally(() => {
 					this.loading = false
 				})
 		}

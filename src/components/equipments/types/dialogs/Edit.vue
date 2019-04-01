@@ -1,64 +1,51 @@
 <template>
-	<el-dialog
+	<basic-edit
 		:title="item.name"
-		:visible="value"
-		class="dialog--default"
+		:loading="loading"
+		v-bind="$attrs"
 		v-on="listeners"
 	>
-		<div class="content">
-			<el-form
-				ref="form"
-				:model="form"
-				:rules="rules"
-				status-icon
-				@submit.native.prevent="onSubmit"
+		<el-form
+			ref="form"
+			:model="form"
+			:rules="rules"
+			status-icon
+			@submit.native.prevent="onSubmit"
+		>
+			<el-form-item
+				prop="name"
+				label="Назва"
 			>
-				<el-form-item
-					prop="name"
-					label="Назва"
-				>
-					<el-input
-						v-model="form.name"
-						placeholder="Назва"
-					/>
-				</el-form-item>
-				<el-form-item
-					prop="description"
-					label="Опис"
-				>
-					<el-input
-						v-model="form.description"
-						type="textarea"
-						:autosize="{ minRows: 3 }"
-						placeholder="Опис"
-					/>
-				</el-form-item>
-			</el-form>
-		</div>
-		<span slot="footer">
-			<el-button @click="close">Закрити</el-button>
-			<el-button
-				type="primary"
-				:loading="loading"
-				:disabled="loading"
-				@click="onSubmit"
+				<el-input
+					v-model="form.name"
+					placeholder="Назва"
+				/>
+			</el-form-item>
+			<el-form-item
+				prop="description"
+				label="Опис"
 			>
-				Додати
-			</el-button>
-		</span>
-	</el-dialog>
+				<el-input
+					v-model="form.description"
+					type="textarea"
+					:autosize="{ minRows: 3 }"
+					placeholder="Опис"
+				/>
+			</el-form-item>
+		</el-form>
+	</basic-edit>
 </template>
 
 <script>
+import BasicEdit from '@/components/dialogs/BasicEdit'
 import { required } from '@/data/rules'
 
 export default {
+	components: {
+		BasicEdit
+	},
 	inheritAttrs: false,
 	props: {
-		value: {
-			type: Boolean,
-			default: false
-		},
 		item: {
 			type: Object,
 			required: true
@@ -80,7 +67,7 @@ export default {
 		listeners() {
 			return {
 				...this.$listeners,
-				'update:visible': this.close
+				submit: this.onSubmit
 			}
 		}
 	},
@@ -91,10 +78,9 @@ export default {
 			this.$axios.put(`equipments/types/${this.item.id}`, this.form)
 				.then(() => {
 					this.$store.dispatch('equipmentTypes/fetchList')
-					this.loading = false
-					this.close()
+					this.$emit('close')
 				})
-				.catch(() => {
+				.finally(() => {
 					this.loading = false
 				})
 		},
@@ -106,9 +92,6 @@ export default {
 
 				this.fetchRequest()
 			})
-		},
-		close() {
-			this.$emit('input', false)
 		}
 	}
 }
