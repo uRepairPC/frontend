@@ -1,6 +1,10 @@
 <template>
 	<div class="files-list">
-		<div class="items">
+		<loading v-if="loading" />
+		<div
+			class="items"
+			v-else
+		>
 			<one-file
 				v-for="(file, index) in files"
 				:key="index"
@@ -8,16 +12,16 @@
 				:url-download="urlDownload"
 			/>
 		</div>
-		<!--TODO Loading component-->
 	</div>
 </template>
 
 <script>
+import Loading from '@/components/files/Loading'
 import OneFile from '@/components/files/One'
 
 export default {
 	components: {
-		OneFile
+		OneFile, Loading
 	},
 	props: {
 		files: {
