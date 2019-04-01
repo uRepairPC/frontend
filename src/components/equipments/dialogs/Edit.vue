@@ -123,10 +123,9 @@ export default {
 						section: sections.equipments,
 						data: data.equipment
 					})
-					this.loading = false
 					this.close()
 				})
-				.catch(() => {
+				.finally(() => {
 					this.loading = false
 				})
 		},

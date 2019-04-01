@@ -72,10 +72,9 @@ export default {
 						section: sections.users,
 						data: { ...this.user, image: data.image }
 					})
-					this.loading = false
 					this.$emit('close')
 				})
-				.catch(() => {
+				.finally(() => {
 					this.loading = false
 				})
 		},

@@ -87,10 +87,9 @@ export default {
 			this.$axios.post('equipments/types', this.form)
 				.then(() => {
 					this.$store.dispatch('equipmentTypes/fetchList')
-					this.loading = false
 					this.close()
 				})
-				.catch(() => {
+				.finally(() => {
 					this.loading = false
 				})
 		},

@@ -115,7 +115,7 @@ export default {
 					})
 					this.$router.push({ name: `${sections.equipments}-id`, params: { id: data.equipment.id } })
 				})
-				.catch(() => {
+				.finally(() => {
 					this.loading = false
 				})
 		},

@@ -204,7 +204,6 @@ export default {
 						section: sections.equipments,
 						data: data.equipment
 					})
-					this.loading = false
 				})
 				.catch(() => {
 					this.$store.commit('template/REMOVE_SIDEBAR_ITEM', {
@@ -212,6 +211,8 @@ export default {
 						id: this.$route.params.id
 					})
 					this.$router.push({ name: sections.equipments })
+				})
+				.finally(() => {
 					this.loading = false
 				})
 		},
@@ -221,9 +222,8 @@ export default {
 			this.$axios.get(`equipments/${this.$route.params.id}/files`)
 				.then(({ data }) => {
 					this.files = data.files
-					this.loadingFiles = false
 				})
-				.catch(() => {
+				.finally(() => {
 					this.loadingFiles = false
 				})
 		},

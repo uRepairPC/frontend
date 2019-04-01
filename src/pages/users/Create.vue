@@ -149,7 +149,7 @@ export default {
 					})
 					this.$router.push({ name: `${sections.users}-id`, params: { id: data.user.id } })
 				})
-				.catch(() => {
+				.finally(() => {
 					this.loading = false
 				})
 		},

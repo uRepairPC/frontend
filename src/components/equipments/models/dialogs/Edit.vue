@@ -118,10 +118,9 @@ export default {
 			this.$axios.put(`equipments/models/${this.item.id}`, this.form)
 				.then(() => {
 					this.$store.dispatch('equipmentModels/fetchList')
-					this.loading = false
 					this.close()
 				})
-				.catch(() => {
+				.finally(() => {
 					this.loading = false
 				})
 		},

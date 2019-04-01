@@ -91,10 +91,9 @@ export default {
 			this.$axios.put(`equipments/manufacturers/${this.item.id}`, this.form)
 				.then(() => {
 					this.$store.dispatch('equipmentManufacturers/fetchList')
-					this.loading = false
 					this.close()
 				})
-				.catch(() => {
+				.finally(() => {
 					this.loading = false
 				})
 		},
