@@ -145,10 +145,9 @@ export default {
 						section: sections.users,
 						data: data.user
 					})
-					this.loading = false
 					this.$emit('close')
 				})
-				.catch(() => {
+				.finally(() => {
 					this.loading = false
 				})
 		},

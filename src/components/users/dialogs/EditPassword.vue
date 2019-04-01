@@ -1,76 +1,64 @@
 <template>
-	<el-dialog
+	<basic-edit
 		title="Редагування пароля"
-		:visible="value"
-		class="dialog--default"
+		:loading="loading"
+		save-btn="Скинути пароль"
+		v-bind="$attrs"
 		v-on="listeners"
 	>
-		<div class="content">
-			<el-form
-				v-if="profile.id === user.id"
-				ref="form"
-				:model="form"
-				:rules="rules"
-				status-icon
-				@submit.native.prevent="onSubmit"
-			>
-				<el-form-item prop="password">
-					<el-input
-						v-model="form.password"
-						type="password"
-						placeholder="Пароль"
+		<el-form
+			v-if="profile.id === user.id"
+			ref="form"
+			:model="form"
+			:rules="rules"
+			status-icon
+			@submit.native.prevent="onSubmit"
+		>
+			<el-form-item prop="password">
+				<el-input
+					v-model="form.password"
+					type="password"
+					placeholder="Пароль"
+				>
+					<i
+						slot="prepend"
+						class="material-icons"
 					>
-						<i
-							slot="prepend"
-							class="material-icons"
-						>
-							lock
-						</i>
-					</el-input>
-				</el-form-item>
-				<el-form-item prop="repeat_password">
-					<el-input
-						v-model="form.repeat_password"
-						type="password"
-						placeholder="Повторити пароль"
+						lock
+					</i>
+				</el-input>
+			</el-form-item>
+			<el-form-item prop="repeat_password">
+				<el-input
+					v-model="form.repeat_password"
+					type="password"
+					placeholder="Повторити пароль"
+				>
+					<i
+						slot="prepend"
+						class="material-icons"
 					>
-						<i
-							slot="prepend"
-							class="material-icons"
-						>
-							repeat
-						</i>
-					</el-input>
-				</el-form-item>
-			</el-form>
-			<template v-else>
-				Ви дійсно хочете згенерувати новий пароль і відправити його на пошту користувача?
-			</template>
-		</div>
-		<span slot="footer">
-			<el-button @click="close">Відмінити</el-button>
-			<el-button
-				type="danger"
-				:loading="loading"
-				:disabled="loading || !passwordEqual"
-				@click="onSubmit"
-			>
-				Скинути пароль
-			</el-button>
-		</span>
-	</el-dialog>
+						repeat
+					</i>
+				</el-input>
+			</el-form-item>
+		</el-form>
+		<template v-else>
+			Ви дійсно хочете згенерувати новий пароль і відправити його на пошту користувача?
+		</template>
+	</basic-edit>
 </template>
 
 <script>
+import BasicEdit from '@/components/dialogs/BasicEdit'
 import * as rules from '@/data/rules'
 
 export default {
+	components: {
+		BasicEdit
+	},
 	inheritAttrs: false,
 	props: {
-		value: {
-			type: Boolean,
-			default: false
-		},
 		user: {
 			type: Object,
 			required: true
@@ -96,7 +84,7 @@ export default {
 		listeners() {
 			return {
 				...this.$listeners,
-				'update:visible': this.close
+				submit: this.onSubmit
 			}
 		},
 		passwordEqual() {
@@ -109,10 +97,9 @@ export default {
 
 			this.$axios.post(`users/${this.user.id}/password`, this.form)
 				.then(() => {
-					this.loading = false
-					this.close()
+					this.$emit('close')
 				})
-				.catch(() => {
+				.finally(() => {
 					this.loading = false
 				})
 		},
@@ -132,9 +119,6 @@ export default {
 			} else {
 				this.fetchRequest()
 			}
-		},
-		close() {
-			this.$emit('input', false)
 		}
 	}
 }

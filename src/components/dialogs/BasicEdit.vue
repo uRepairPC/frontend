@@ -15,7 +15,7 @@
 				:disabled="loading"
 				@click="onSubmit"
 			>
-				Зберегти
+				{{ saveBtn }}
 			</el-button>
 		</span>
 	</el-dialog>
@@ -27,6 +27,9 @@ export default {
 	computed: {
 		loading() {
 			return this.$attrs.loading
+		},
+		saveBtn() {
+			return this.$attrs['save-btn'] || 'Зберегти'
 		}
 	},
 	methods: {
