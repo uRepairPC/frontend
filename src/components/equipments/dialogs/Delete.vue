@@ -1,13 +1,17 @@
 <template>
 	<basic-delete
-		title="Видалення зображення"
+		:title="`${equipment.serial_number || '-'} / ${equipment.inventory_number || '-'}`"
+		:confirm="equipment.id"
 		:loading="loading"
 		v-bind="$attrs"
 		v-on="listeners"
 	>
-		<template slot="content-alert">
-			Ви дійсно хочете видалити зображення?
-		</template>
+		<el-checkbox
+			slot="content-bottom"
+			v-model="filesDelete"
+		>
+			Видалити всі файли
+		</el-checkbox>
 	</basic-delete>
 </template>
 
@@ -21,14 +25,15 @@ export default {
 	},
 	inheritAttrs: false,
 	props: {
-		user: {
+		equipment: {
 			type: Object,
 			required: true
 		}
 	},
 	data() {
 		return {
-			loading: false
+			loading: false,
+			filesDelete: true
 		}
 	},
 	computed: {
@@ -43,13 +48,18 @@ export default {
 		fetchRequest() {
 			this.loading = true
 
-			this.$axios.delete(`users/${this.user.id}/image`)
+			this.$axios.delete(`equipments/${this.equipment.id}`, {
+				data: {
+					files_delete: this.filesDelete
+				}
+			})
 				.then(() => {
-					this.$store.dispatch('template/addSidebarItem', {
-						section: sections.users,
-						data: { ...this.user, image: null }
+					this.$store.commit('template/REMOVE_SIDEBAR_ITEM', {
+						section: sections.equipments,
+						id: this.equipment.id
 					})
-					this.$emit('close')
+					this.$emit('input', false)
+					this.$router.push({ name: sections.equipments })
 				})
 				.finally(() => {
 					this.loading = false

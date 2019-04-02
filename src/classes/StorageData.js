@@ -1,9 +1,12 @@
 'use strict'
 
-import { isArray } from '@/scripts/helpers'
+import { isArray, isObject } from '@/scripts/helpers'
 
 /** @type {string} */
 const COLUMN_USERS = 'column_users'
+
+/** @type {string} */
+const COLUMN_EQUIPMENTS = 'column_equipments'
 
 /** @type {string} */
 const TOKEN = 'token'
@@ -32,6 +35,22 @@ export default class StorageData {
 	/** @return {boolean} */
 	static removeColumnUsers() {
 		return this.remove(COLUMN_USERS)
+	}
+
+	/* Column Equipments -------------------------------------------------------------------- */
+
+	/** @return {Array} */
+	static get columnEquipments() {
+		return this.getArray(COLUMN_EQUIPMENTS)
+	}
+
+	static set columnEquipments(value) {
+		this.setArray(COLUMN_EQUIPMENTS, value)
+	}
+
+	/** @return {boolean} */
+	static removeColumnEquipments() {
+		return this.remove(COLUMN_EQUIPMENTS)
 	}
 
 	/* Token -------------------------------------------------------------------------------- */
@@ -151,7 +170,7 @@ export default class StorageData {
 		if (localStorage.getItem(key)) {
 			try {
 				const data = JSON.parse(localStorage.getItem(key))
-				return data && typeof data === 'object' ? data : {}
+				return isObject(data) ? data : {}
 
 			} catch (e) {
 				return {}

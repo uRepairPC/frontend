@@ -3,9 +3,16 @@
 		:title="userClass.fullName"
 		:confirm="user.id"
 		:loading="loading"
-		v-on="listeners"
 		v-bind="$attrs"
-	/>
+		v-on="listeners"
+	>
+		<el-checkbox
+			slot="content-bottom"
+			v-model="imageDelete"
+		>
+			Видалити зображення
+		</el-checkbox>
+	</basic-delete>
 </template>
 
 <script>
@@ -14,10 +21,10 @@ import sections from '@/data/sections'
 import UserClass from '@/classes/User'
 
 export default {
-	inheritAttrs: false,
 	components: {
 		BasicDelete
 	},
+	inheritAttrs: false,
 	props: {
 		user: {
 			type: Object,
@@ -26,7 +33,8 @@ export default {
 	},
 	data() {
 		return {
-			loading: false
+			loading: false,
+			imageDelete: true
 		}
 	},
 	computed: {
@@ -44,17 +52,20 @@ export default {
 		fetchRequest() {
 			this.loading = true
 
-			this.$axios.delete(`users/${this.user.id}`)
+			this.$axios.delete(`users/${this.user.id}`, {
+				data: {
+					image_delete: this.image_delete
+				}
+			})
 				.then(() => {
 					this.$store.commit('template/REMOVE_SIDEBAR_ITEM', {
 						section: sections.users,
 						id: this.user.id
 					})
-					this.loading = false
-					this.$emit('input', false)
+					this.$emit('close')
 					this.$router.push({ name: sections.users })
 				})
-				.catch(() => {
+				.finally(() => {
 					this.loading = false
 				})
 		}

@@ -1,6 +1,6 @@
 <template>
 	<basic-edit
-		:title="item.name"
+		:title="file.name"
 		:loading="loading"
 		v-bind="$attrs"
 		v-on="listeners"
@@ -21,17 +21,6 @@
 					placeholder="Назва"
 				/>
 			</el-form-item>
-			<el-form-item
-				prop="description"
-				label="Опис"
-			>
-				<el-input
-					v-model="form.description"
-					type="textarea"
-					:autosize="{ minRows: 3 }"
-					placeholder="Опис"
-				/>
-			</el-form-item>
 		</el-form>
 	</basic-edit>
 </template>
@@ -46,17 +35,24 @@ export default {
 	},
 	inheritAttrs: false,
 	props: {
-		item: {
+		equipment: {
 			type: Object,
 			required: true
+		},
+		file: {
+			type: Object,
+			required: true
+		},
+		index: {
+			type: Number,
+			default: 0
 		}
 	},
 	data() {
 		return {
 			loading: false,
 			form: {
-				name: this.item.name,
-				description: this.item.description
+				name: this.file.name
 			},
 			rules: {
 				name: required
@@ -75,9 +71,9 @@ export default {
 		fetchRequest() {
 			this.loading = true
 
-			this.$axios.put(`equipments/types/${this.item.id}`, this.form)
-				.then(() => {
-					this.$store.dispatch('equipmentTypes/fetchList')
+			this.$axios.put(`equipments/${this.equipment.id}/files/${this.file.id}`, this.form)
+				.then((res) => {
+					this.$emit('update-file', res.data.file, this.index)
 					this.$emit('close')
 				})
 				.finally(() => {

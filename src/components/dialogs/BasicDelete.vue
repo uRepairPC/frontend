@@ -1,19 +1,20 @@
 <template>
 	<el-dialog
-		:title="title"
-		:visible="value"
 		class="dialog--default delete"
-		v-on="listeners"
+		v-bind="$attrs"
+		v-on="$listeners"
 	>
 		<div class="content">
-			<slot name="content-top">
+			<slot name="content-top" />
+			<slot name="content-alert">
 				<el-alert
-					title="Інші дані, в яких є взязок з цим об'єктом - також видаляться!"
-					description="Для підтвердження - введіть ID елемента."
+					title="Ви дійсно хочете видалити ці дані?"
+					:description="confirm ? 'Для підтвердження - введіть ID елемента.' : ''"
 					:closable="false"
 					type="error"
 				/>
 			</slot>
+			<slot name="content-after-alert" />
 			<el-input-number
 				v-if="confirm"
 				ref="input"
@@ -40,35 +41,17 @@
 <script>
 export default {
 	inheritAttrs: false,
-	props: {
-		value: {
-			type: Boolean,
-			default: false
-		},
-		title: {
-			type: String,
-			default: ''
-		},
-		confirm: {
-			type: [String, Number],
-			default: null
-		},
-		loading: {
-			type: Boolean,
-			default: false
-		}
-	},
 	data() {
 		return {
 			input: ''
 		}
 	},
 	computed: {
-		listeners() {
-			return {
-				...this.$listeners,
-				'update:visible': this.close
-			}
+		confirm() {
+			return this.$attrs.confirm
+		},
+		loading() {
+			return this.$attrs.loading
 		},
 		btnDisabled() {
 			if (this.loading) {
@@ -87,8 +70,14 @@ export default {
 			this.$emit('submit')
 		},
 		close() {
-			this.$emit('input', false)
+			this.$emit('close')
 		}
 	}
 }
 </script>
+
+<style lang="scss" scoped>
+.el-input-number {
+	display: block;
+}
+</style>

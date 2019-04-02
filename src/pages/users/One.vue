@@ -35,13 +35,6 @@
 				</el-table>
 			</div>
 		</div>
-
-		<!-- DIALOGS -->
-		<component
-			:is="dialog.component"
-			v-model="dialog.value"
-			:user="user"
-		/>
 	</div>
 </template>
 
@@ -67,7 +60,7 @@ import moment from 'moment'
 export default {
 	breadcrumbs: [
 		{ title: menu[sections.users].title, routeName: sections.users },
-		{ title: route => `ID: ${route.params.id}` }
+		{ title: route => `ID: ${route.params.id || -1}` }
 	],
 	components: {
 		UserImage, TopButtons, TagRole
@@ -77,11 +70,7 @@ export default {
 	],
 	data() {
 		return {
-			loading: false,
-			dialog: {
-				value: false,
-				component: null
-			}
+			loading: false
 		}
 	},
 	computed: {
@@ -113,7 +102,7 @@ export default {
 				{
 					title: 'Оновити',
 					type: types.SUCCESS,
-					action: this.fetchUser,
+					action: this.fetchRequest,
 					disabled: this.loading
 				},
 				{
@@ -185,24 +174,19 @@ export default {
 		}
 	},
 	watch: {
-		'dialog.value'(val) {
-			if (!val) {
-				this.closeDialog()
-			}
-		},
 		'$route'() {
 			if (!this.user.id) {
-				this.fetchUser()
+				this.fetchRequest()
 			}
 		}
 	},
 	created() {
 		if (!this.user.id) {
-			this.fetchUser()
+			this.fetchRequest()
 		}
 	},
 	methods: {
-		fetchUser() {
+		fetchRequest() {
 			this.loading = true
 
 			this.$axios.get(`users/${this.$route.params.id}`)
@@ -211,7 +195,6 @@ export default {
 						section: sections.users,
 						data: data.user
 					})
-					this.loading = false
 				})
 				.catch(() => {
 					this.$store.commit('template/REMOVE_SIDEBAR_ITEM', {
@@ -219,16 +202,18 @@ export default {
 						id: this.$route.params.id
 					})
 					this.$router.push({ name: sections.users })
+				})
+				.finally(() => {
 					this.loading = false
 				})
 		},
 		openDialog(component) {
-			this.$set(this.dialog, 'component', component)
-			this.$set(this.dialog, 'value', true)
-		},
-		closeDialog() {
-			this.$set(this.dialog, 'value', false)
-			this.$set(this.dialog, 'component', null)
+			this.$store.commit('template/OPEN_DIALOG', {
+				component,
+				attrs: {
+					user: this.user
+				}
+			})
 		}
 	}
 }

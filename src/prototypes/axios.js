@@ -1,8 +1,8 @@
 'use strict'
 
 import { Message, Notification, Loading } from 'element-ui'
+import { isArray, isObject } from '@/scripts/helpers'
 import StorageData from '@/classes/StorageData'
-import { isArray } from '@/scripts/helpers'
 import { axiosBaseUrl } from '@/data/env'
 import * as types from '@/enum/types'
 import store from '@/store'
@@ -10,6 +10,12 @@ import axios from 'axios'
 
 // All request send to: http(s)://example.com/api/*
 axios.defaults.baseURL = axiosBaseUrl
+
+/** @type {Array} */
+let requestsToRefresh = []
+
+/** @type {boolean} */
+let isRequestToRefresh = false
 
 axios.interceptors.response.use(
 	(resp) => {
@@ -31,45 +37,57 @@ axios.interceptors.response.use(
 		// User is not auth
 		if (response.status === 401) {
 
-			// FIXME Multiple request with 401 status code
+			if (!store.state.profile.isLogin) {
+				return Promise.reject(err)
+			}
 
-			// Disable all interface
-			const loadingService = Loading.service({
-				lock: true,
-				text: 'Оновлюється токен безпеки',
-				spinner: 'el-icon-loading',
-				background: 'rgba(0, 0, 0, .7)'
+			// After token is refreshed - send requests to all 401 statusCode
+			const retryOriginalRequest = new Promise((resolve) => {
+				requestsToRefresh.push((access_token) => {
+					config.headers['Authorization'] = 'Bearer ' + access_token
+					resolve(axios({
+						...config,
+						// TODO Check on prod
+						url: config.url.replace(/^api\//, '')
+					}))
+				})
 			})
 
 			// User is auth, probably token is expired, try renew
-			// And send last request again
-			if (!config._retry && store.state.profile.isLogin) {
-				config._retry = true
+			// And send all failed requests again
+			if (!isRequestToRefresh) {
+				isRequestToRefresh = true
 
-				// Refresh token
-				const res = await axios.post('auth/refresh')
-					.then(({ data }) => {
-						axios.defaults.headers['Authorization'] = 'Bearer ' + data.token
-						config.headers['Authorization'] = 'Bearer ' + data.token
-						StorageData.token = data.token
+				// Disable all interface
+				const loadingService = Loading.service({
+					lock: true,
+					text: 'Оновлюється токен безпеки',
+					spinner: 'el-icon-loading',
+					background: 'rgba(0, 0, 0, .7)'
+				})
 
-						return axios({
-							...config,
-							// TODO Check on prod
-							url: config.url.replace(/^api\//, '')
+				// Send request to refresh token
+				try {
+					await axios.post('auth/refresh')
+						.then(({ data }) => {
+							axios.defaults.headers['Authorization'] = 'Bearer ' + data.token
+							StorageData.token = data.token
+							requestsToRefresh.forEach(callback => callback(data.token))
 						})
-					})
-					.catch(() => {
-						store.commit('profile/CLEAR_ALL')
-					})
-
-				// Enable interface
-				loadingService.close()
-
-				return res
+						.catch(() => {
+							store.commit('profile/CLEAR_ALL')
+						})
+						.finally(() => {
+							loadingService.close()
+							requestsToRefresh = []
+							isRequestToRefresh = false
+						})
+				} catch (e) {
+					return Promise.reject(err)
+				}
 			}
 
-			store.commit('profile/CLEAR_ALL')
+			return retryOriginalRequest
 		}
 
 		// No access, etc
@@ -77,16 +95,24 @@ axios.interceptors.response.use(
 			store.dispatch('profile/update')
 		}
 
-		// Notification
-		if (response.data && typeof response.data === 'object') {
+		// Notification / Message
+		if (isObject(response.data)) {
 			if (response.data.message) {
 				Message({ message: response.data.message, type: types.ERROR })
 			}
 
 			// Show validate form if exists from backend
-			if (response.data.errors && typeof response.data.errors === 'object') {
+			if (isObject(response.data.errors)) {
 				let message = ''
 
+				/**
+				 * @example {'image.png': ['File not saved']}
+				 *  <strong>image.png</strong>
+				 *  <ul>
+				 *    <li>File not saved<li>
+				 *    ...
+				 *  </ul>
+				 */
 				Object.entries(response.data.errors).forEach(([key, val]) => {
 					message += `<strong>${key}</strong>:<br>`
 					if (isArray(val)) {
@@ -100,9 +126,6 @@ axios.interceptors.response.use(
 
 				Notification.error({ title: 'Помилка валідації', duration: 6000, dangerouslyUseHTMLString: true, message })
 			}
-		}
-		else if (response.status === 404) {
-			Message({ message: 'Ресурс не знайдений', type: types.WARNING })
 		}
 
 		return Promise.reject(err)

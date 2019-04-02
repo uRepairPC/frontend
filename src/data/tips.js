@@ -13,7 +13,7 @@ const adminUser = `<strong class="${roleList[roles.ADMIN].color}">${roleList[rol
  */
 export default [
 	{
-		text: '<strong>Esc</strong> - закрити глобальний пошук.'
+		text: '<strong>Ctrl + Shift + F / Esc</strong> - закрити глобальний пошук.'
 	},
 	{
 		text: '<strong>Shift + Mouse Wheel</strong> - переміщати горизонтальний скролл.'

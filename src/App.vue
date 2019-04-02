@@ -1,20 +1,20 @@
 <template>
 	<div id="app">
 		<router-view />
+		<store-dialogs />
 	</div>
 </template>
 
 <script>
+import StoreDialogs from '@/components/root/StoreDialogs'
 import { DEFAULT_ROUTE_NAME } from '@/router'
 
 export default {
-	computed: {
-		isLogin() {
-			return this.$store.state.profile.isLogin
-		}
+	components: {
+		StoreDialogs
 	},
 	watch: {
-		isLogin(val) {
+		'$store.state.profile.isLogin'(val) {
 			this.$router.push({ name: val ? DEFAULT_ROUTE_NAME : 'auth' })
 		}
 	}

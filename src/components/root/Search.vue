@@ -59,6 +59,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "~scss/_variables";
+
 .root {
 	position: absolute;
 	top: 60px;
@@ -79,10 +81,10 @@ export default {
 
 // <animation>
 .search-anim-enter-active {
-	transition: .2s;
+	transition: $searchTransition;
 	opacity: 0;
 	.input {
-		transition: .2s;
+		transition: $searchTransition;
 		opacity: 0;
 		transform: translateY(-20px);
 	}
@@ -97,9 +99,9 @@ export default {
 }
 
 .search-anim-leave-active {
-	transition: .2s;
+	transition: $searchTransition;
 	.input {
-		transition: .2s;
+		transition: $searchTransition;
 	}
 }
 

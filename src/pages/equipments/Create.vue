@@ -9,66 +9,31 @@
 				:model="form"
 				:rules="rules"
 				status-icon
+				class="form--full"
 				@submit.native.prevent="onSubmit"
 			>
 				<el-form-item
-					prop="email"
-					label="E-mail"
+					prop="equipment"
+					label="Тип, Виробник, Модель"
+				>
+					<equipment-cascader v-model="form.equipment" />
+				</el-form-item>
+				<el-form-item
+					prop="serial_number"
+					label="Серійний номер"
 				>
 					<el-input
-						v-model="form.email"
-						placeholder="E-mail"
+						v-model="form.serial_number"
+						placeholder="Серійний номер"
 					/>
 				</el-form-item>
 				<el-form-item
-					prop="first_name"
-					label="Ім'я"
+					prop="inventory_number"
+					label="Інвертарний номер"
 				>
 					<el-input
-						v-model="form.first_name"
-						placeholder="Ім'я"
-					/>
-				</el-form-item>
-				<el-form-item
-					prop="middle_name"
-					label="По-батькові"
-				>
-					<el-input
-						v-model="form.middle_name"
-						placeholder="По-батькові"
-					/>
-				</el-form-item>
-				<el-form-item
-					prop="last_name"
-					label="Прізвище"
-				>
-					<el-input
-						v-model="form.last_name"
-						placeholder="Прізвище"
-					/>
-				</el-form-item>
-				<el-form-item
-					label="Роль"
-					prop="role"
-				>
-					<el-select v-model="form.role">
-						<el-option
-							v-for="(role, key) in roleList"
-							:key="key"
-							:label="role.name"
-							:value="key"
-						>
-							<span :class="role.color">{{ role.name }}</span>
-						</el-option>
-					</el-select>
-				</el-form-item>
-				<el-form-item
-					prop="phone"
-					label="Телефон"
-				>
-					<el-input
-						v-model="form.phone"
-						placeholder="Телефон"
+						v-model="form.inventory_number"
+						placeholder="Інвертарний номер"
 					/>
 				</el-form-item>
 				<el-form-item
@@ -99,39 +64,35 @@
 </template>
 
 <script>
-import { list as roleList } from '@/data/roles'
+import EquipmentCascader from '@/components/equipments/Cascader'
 import breadcrumbs from '@/mixins/breadcrumbs'
-import * as dataRules from '@/data/rules'
+import { required } from '@/data/rules'
 import sections from '@/data/sections'
-import * as roles from '@/enum/roles'
 import menu from '@/data/menu'
 
 export default {
 	breadcrumbs: [
-		{ title: menu[sections.users].title, routeName: sections.users },
-		{ title: menu[sections.users].children.add.title }
+		{ title: menu[sections.equipments].title, routeName: sections.equipments },
+		{ title: menu[sections.equipments].children.add.title }
 	],
+	components: {
+		EquipmentCascader
+	},
 	mixins: [
 		breadcrumbs
 	],
 	data() {
 		return {
-			roleList,
 			loading: false,
-			form: {
-				role: roles.USER
-			},
+			form: {},
 			rules: {
-				email: dataRules.email,
-				first_name: dataRules.required,
-				last_name: dataRules.required,
-				role: dataRules.required
+				equipment: required
 			}
 		}
 	},
 	computed: {
 		titlePage() {
-			return menu[sections.users].children.add.title
+			return menu[sections.equipments].children.add.title
 		},
 		profile() {
 			return this.$store.state.profile.user
@@ -141,13 +102,18 @@ export default {
 		fetchRequest() {
 			this.loading = true
 
-			this.$axios.post('users', this.form)
+			this.$axios.post('equipments', {
+				...this.form,
+				type_id: this.form.equipment[0],
+				manufacturer_id: this.form.equipment[1],
+				model_id: this.form.equipment[2]
+			})
 				.then(({ data }) => {
 					this.$store.dispatch('template/addSidebarItem', {
-						section: sections.users,
-						data: data.user
+						section: sections.equipments,
+						data: data.equipment
 					})
-					this.$router.push({ name: `${sections.users}-id`, params: { id: data.user.id } })
+					this.$router.push({ name: `${sections.equipments}-id`, params: { id: data.equipment.id } })
 				})
 				.finally(() => {
 					this.loading = false

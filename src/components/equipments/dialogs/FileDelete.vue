@@ -1,7 +1,6 @@
 <template>
 	<basic-delete
-		:title="item.name"
-		:confirm="item.id"
+		:title="file.name"
 		:loading="loading"
 		v-bind="$attrs"
 		v-on="listeners"
@@ -17,9 +16,17 @@ export default {
 	},
 	inheritAttrs: false,
 	props: {
-		item: {
+		equipment: {
 			type: Object,
 			required: true
+		},
+		file: {
+			type: Object,
+			required: true
+		},
+		index: {
+			type: Number,
+			default: 0
 		}
 	},
 	data() {
@@ -39,9 +46,9 @@ export default {
 		fetchRequest() {
 			this.loading = true
 
-			this.$axios.delete(`equipments/types/${this.item.id}`)
+			this.$axios.delete(`equipments/${this.equipment.id}/files/${this.file.id}`)
 				.then(() => {
-					this.$store.dispatch('equipmentTypes/fetchList')
+					this.$emit('delete-file', this.index)
 					this.$emit('close')
 				})
 				.finally(() => {

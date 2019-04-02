@@ -56,7 +56,8 @@ export default {
 		route: { name: sections.equipments },
 		access: [roles.ADMIN, roles.WORKER],
 		history: {
-			show: true
+			show: true,
+			callback: (obj) => `[${obj.id}] ${obj.serial_number || ''} / ${obj.inventory_number || ''}`
 		},
 		children: {
 			add: {
@@ -79,17 +80,17 @@ export default {
 		route: { name: sections.settings },
 		access: [roles.ADMIN, roles.WORKER],
 		children: {
-			[sections.settingsManufacturers]: {
-				title: 'Виробники обладнання',
-				icon: 'dashboard',
-				tag: 'page',
-				route: { name: sections.settingsManufacturers }
-			},
 			[sections.settingsTypes]: {
 				title: 'Типи обладнання',
 				icon: 'dashboard',
 				tag: 'page',
 				route: { name: sections.settingsTypes }
+			},
+			[sections.settingsManufacturers]: {
+				title: 'Виробники обладнання',
+				icon: 'dashboard',
+				tag: 'page',
+				route: { name: sections.settingsManufacturers }
 			},
 			[sections.settingsModels]: {
 				title: 'Моделі обладнання',

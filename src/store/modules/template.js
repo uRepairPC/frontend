@@ -1,17 +1,21 @@
 'use strict'
 
-import { isArray } from '@/scripts/helpers'
+import { isArray, isObject } from '@/scripts/helpers'
 import sections from '@/data/sections'
 import menu from '@/data/menu'
 import Vue from 'vue'
 
 const state = {
 	openSearch: false,
+	// Uses on every page for display path
 	breadcrumbs: [],
+	// Restore user scroll on Page template
 	pagesScroll: {},
 	// History on left sidebar
 	// Required id property
-	sidebar: {}
+	sidebar: {},
+	// Set dialog global on all pages (in layout)
+	dialog: {}
 }
 
 const mutations = {
@@ -48,17 +52,26 @@ const mutations = {
 		Vue.set(state.sidebar[section], data.id, data)
 	},
 	/**
-	 *
 	 * @param state
 	 * @param {string} section - name (users, equipments, etc)
 	 * @param {number|string} id
 	 */
 	REMOVE_SIDEBAR_ITEM(state, { section, id }) {
-		if (typeof id === 'undefined') {
+		if (typeof id === 'undefined' || !state.sidebar[section]) {
 			return
 		}
 
 		Vue.delete(state.sidebar[section], id)
+	},
+	/**
+	 * @param state
+	 * @param { component, attrs, events } data
+	 */
+	OPEN_DIALOG(state, data) {
+		state.dialog = data
+	},
+	CLOSE_DIALOG(state) {
+		state.dialog = {}
 	}
 }
 
@@ -95,7 +108,7 @@ const getters = {
 				}
 			}
 
-			if (obj.children && typeof obj.children === 'object') {
+			if (isObject(obj.children)) {
 				Object.entries(obj.children).forEach(([actionKey, action]) => {
 					if (isArray(action.access) && !action.access.includes(userRole)) {
 						delete obj.children[actionKey]

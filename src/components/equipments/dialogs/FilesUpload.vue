@@ -1,19 +1,15 @@
 <template>
 	<basic-edit
-		title="Редагування зображення"
+		:title="`${equipment.serial_number || '-'} / ${equipment.inventory_number || '-'}`"
 		:loading="loading"
 		v-bind="$attrs"
 		v-on="listeners"
 	>
 		<el-upload
 			ref="upload"
-			drag
-			:http-request="onHttpRequest"
-			:on-change="onChange"
 			:auto-upload="false"
-			list-type="picture"
-			:limit="1"
-			accept="image/jpeg, image/jpg, image/png"
+			drag
+			multiple
 			action
 		>
 			<i class="el-icon-upload" />
@@ -24,7 +20,7 @@
 				slot="tip"
 				class="el-upload__tip"
 			>
-				jpeg/jpg/png зображення повинне мати не більше 2мб.
+				файл повинен мати не більше 20мб.
 			</div>
 		</el-upload>
 	</basic-edit>
@@ -32,22 +28,21 @@
 
 <script>
 import BasicEdit from '@/components/dialogs/BasicEdit'
-import sections from '@/data/sections'
+import { isArray, isObject } from '@/scripts/helpers'
 
 export default {
+	inheritAttrs: false,
 	components: {
 		BasicEdit
 	},
-	inheritAttrs: false,
 	props: {
-		user: {
+		equipment: {
 			type: Object,
 			required: true
 		}
 	},
 	data() {
 		return {
-			file: null,
 			loading: false
 		}
 	},
@@ -55,34 +50,42 @@ export default {
 		listeners() {
 			return {
 				...this.$listeners,
-				submit: this.save
+				submit: this.onSubmit
 			}
 		}
 	},
 	methods: {
-		onHttpRequest() {
+		onSubmit() {
+			const files = this.$refs.upload.uploadFiles
+			const fd = new FormData
 			this.loading = true
 
-			const fd = new FormData
-			fd.append('image', this.file.raw)
+			files.forEach((file) => {
+				fd.append('files[]', file.raw, file.name)
+			})
 
-			this.$axios.post(`users/${this.user.id}/image`, fd)
-				.then(({ data }) => {
-					this.$store.dispatch('template/addSidebarItem', {
-						section: sections.users,
-						data: { ...this.user, image: data.image }
-					})
+			this.$axios.post(`equipments/${this.equipment.id}/files`, fd)
+				.then(() => {
+					this.$emit('fetch-files')
 					this.$emit('close')
+				})
+				.catch(({ response: { data } }) => {
+					const files = this.$refs.upload.uploadFiles
+
+					// Delete success uploaded files from list.
+					if (isObject(data.errors) && isArray(files)) {
+						const filesErrorsNames = Object.keys(data.errors)
+
+						files.forEach((file, key) => {
+							if (!filesErrorsNames.includes(file.name)) {
+								this.$delete(files, key)
+							}
+						})
+					}
 				})
 				.finally(() => {
 					this.loading = false
 				})
-		},
-		save() {
-			this.$refs.upload.submit()
-		},
-		onChange(file) {
-			this.file = file
 		}
 	}
 }

@@ -3,7 +3,7 @@
 		<el-button
 			v-for="(btn, index) in list"
 			:key="index"
-			size="small"
+			size="mini"
 			:disabled="btn.disabled"
 			:loading="btn.loading"
 			:type="btn.type"
@@ -35,7 +35,7 @@ export default {
 
 <style lang="scss" scoped>
 .top-buttons {
-	padding: 10px;
+	padding: 5px;
 	background: #fff;
 	border-bottom: 1px solid #e6e6e6;
 	> button {

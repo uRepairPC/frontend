@@ -6,12 +6,18 @@
 				<sidebar-box />
 				<el-main>
 					<breadcrumbs-box />
-					<keep-alive :include="keepAliveRoutesName">
-						<router-view
-							ref="content"
-							class="page"
-						/>
-					</keep-alive>
+					<transition
+						name="root-anim"
+						mode="out-in"
+					>
+						<keep-alive :include="keepAliveRoutesName">
+							<router-view
+								ref="content"
+								:key="$route.params.id"
+								class="page"
+							/>
+						</keep-alive>
+					</transition>
 				</el-main>
 			</el-container>
 		</el-container>
@@ -35,12 +41,6 @@ export default {
 			keepAliveRoutesName
 		}
 	},
-	mounted() {
-		document.addEventListener('keypress', this.hotKeys)
-	},
-	beforeDestroy() {
-		document.removeEventListener('keypress', this.hotKeys)
-	},
 	computed: {
 		openSearch() {
 			return this.$store.state.template.openSearch
@@ -57,11 +57,21 @@ export default {
 			}
 		}
 	},
+	mounted() {
+		document.addEventListener('keypress', this.hotKeys)
+	},
+	beforeDestroy() {
+		document.removeEventListener('keypress', this.hotKeys)
+	},
 	methods: {
 		hotKeys(evt) {
-			// Open global Search - Ctrl + Shift + F
+			// Open/Close Global Search - Ctrl + Shift + F
 			if (evt.ctrlKey && evt.shiftKey && evt.code === 'KeyF') {
-				this.$store.commit('template/OPEN_SEARCH')
+				if (this.openSearch) {
+					this.$store.commit('template/CLOSE_SEARCH')
+				} else {
+					this.$store.commit('template/OPEN_SEARCH')
+				}
 			}
 		}
 	}
@@ -69,6 +79,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "~scss/_variables";
+
 .el-breadcrumb {
 	padding: 10px;
 	background: #fff;
@@ -85,7 +97,26 @@ export default {
 }
 
 .search--open {
-	transition: .2s;
+	transition: $searchTransition;
 	filter: blur(5px);
+}
+
+// <animation>
+.root-anim-enter-active {
+	transition: .15s;
+	opacity: 0;
+}
+
+.root-anim-enter-to {
+	opacity: 1;
+}
+
+.root-anim-leave-active {
+	transition: .05s;
+	opacity: 1;
+}
+
+.root-anim-leave-to {
+	opacity: 0;
 }
 </style>
