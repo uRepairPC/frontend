@@ -71,10 +71,10 @@ export default {
 			}
 		},
 		onClickEdit() {
-			// TODO
+			this.$emit('edit', this.file)
 		},
 		onClickDelete() {
-			// TODO
+			this.$emit('delete', this.file)
 		}
 	}
 }

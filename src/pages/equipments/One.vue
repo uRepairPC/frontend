@@ -63,6 +63,10 @@
 						:files="files"
 						:loading="loadingFiles"
 						:url-download="(file) => `equipments/${$route.params.id}/files/${file.id}`"
+						@add="onAdd"
+						@edit="onEdit"
+						@delete="onDelete"
+						@refresh="fetchRequestFiles"
 					/>
 				</div>
 			</template>
@@ -232,6 +236,15 @@ export default {
 					'fetch-files': this.fetchRequestFiles
 				}
 			})
+		},
+		onAdd() {
+			this.openDialog(FilesUpload)
+		},
+		onEdit(file) {
+			console.log(file)
+		},
+		onDelete(file) {
+			console.log(file)
 		}
 	}
 }
