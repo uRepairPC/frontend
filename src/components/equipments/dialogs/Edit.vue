@@ -55,8 +55,8 @@
 <script>
 import EquipmentCascader from '@/components/equipments/Cascader'
 import BasicEdit from '@/components/dialogs/BasicEdit'
+import EquipmentClass from '@/classes/Equipment'
 import { required } from '@/data/rules'
-import sections from '@/data/sections'
 
 export default {
 	components: {
@@ -95,17 +95,14 @@ export default {
 		fetchRequest() {
 			this.loading = true
 
-			this.$axios.put(`equipments/${this.equipment.id}`, {
+			EquipmentClass.fetchEdit(this.equipment.id, {
 				...this.form,
 				type_id: this.form.equipment[0] || null,
 				manufacturer_id: this.form.equipment[1] || null,
 				model_id: this.form.equipment[2] || null
 			})
-				.then(({ data }) => {
-					this.$store.dispatch('template/addSidebarItem', {
-						section: sections.equipments,
-						data: data.equipment
-					})
+				.then(() => {
+					this.$emit('edit')
 					this.$emit('close')
 				})
 				.finally(() => {

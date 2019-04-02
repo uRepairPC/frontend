@@ -27,6 +27,7 @@
 </template>
 
 <script>
+import EquipmentFileClass from '@/classes/EquipmentFile'
 import BasicEdit from '@/components/dialogs/BasicEdit'
 import { isArray, isObject } from '@/scripts/helpers'
 
@@ -64,7 +65,7 @@ export default {
 				fd.append('files[]', file.raw, file.name)
 			})
 
-			this.$axios.post(`equipments/${this.equipment.id}/files`, fd)
+			EquipmentFileClass.fetchStore(this.equipment.id, fd)
 				.then(() => {
 					this.$emit('fetch-files')
 					this.$emit('close')

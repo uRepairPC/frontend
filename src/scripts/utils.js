@@ -1,6 +1,7 @@
 'use strict'
 
 import StorageData from '@/classes/StorageData'
+import { Message } from 'element-ui'
 import axios from 'axios'
 
 /**
@@ -19,6 +20,19 @@ export function selectAll(node) {
  */
 export function execCopy() {
 	return document.execCommand('copy')
+}
+
+/**
+ * @param {Node} node
+ */
+export function copyNode(node) {
+	selectAll(node)
+
+	if (execCopy()) {
+		Message('Скопійовано в буфер')
+	} else {
+		Message('Виникла помилка')
+	}
 }
 
 /**

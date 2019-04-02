@@ -6,7 +6,7 @@ import store from '@/store'
 import axios from 'axios'
 
 /** @type {string} */
-const API_POINT = 'users'
+export const API_POINT = 'users'
 
 export default class User {
 
@@ -54,7 +54,7 @@ export default class User {
 	 */
 
 	/**
-	 * Get user by id and working with leftSidebar.
+	 * Get resource list.
 	 *
 	 * @param {AxiosRequestConfig} config
 	 * @return {Promise<AxiosPromise<any>>}
@@ -64,7 +64,7 @@ export default class User {
 	}
 
 	/**
-	 * Get user by id and working with leftSidebar.
+	 * Get resource by id and working with leftSidebar.
 	 *
 	 * @param {number} id
 	 * @param {AxiosRequestConfig} config
@@ -83,7 +83,7 @@ export default class User {
 	}
 
 	/**
-	 * Edit user data by id and working with leftSidebar.
+	 * Edit resource data by id and working with leftSidebar.
 	 *
 	 * @param {number} id
 	 * @param {*} data
@@ -99,7 +99,7 @@ export default class User {
 	}
 
 	/**
-	 * Edit user email by id and working with leftSidebar.
+	 * Edit resource email by id and working with leftSidebar.
 	 *
 	 * @param {number} id
 	 * @param {*} data
@@ -115,7 +115,7 @@ export default class User {
 	}
 
 	/**
-	 * Edit user image by id and working with leftSidebar.
+	 * Edit resource image by id and working with leftSidebar.
 	 *
 	 * @param {number} id
 	 * @param {*} data
@@ -136,7 +136,7 @@ export default class User {
 	}
 
 	/**
-	 * Edit user password by id.
+	 * Edit resource password by id.
 	 *
 	 * @param {number} id
 	 * @param {*} data
@@ -148,7 +148,7 @@ export default class User {
 	}
 
 	/**
-	 * Delete user by id and working with leftSidebar.
+	 * Store resource by id and working with leftSidebar.
 	 *
 	 * @param {*} data
 	 * @param {AxiosRequestConfig} config
@@ -163,7 +163,7 @@ export default class User {
 	}
 
 	/**
-	 * Delete user by id and working with leftSidebar.
+	 * Delete resource by id and working with leftSidebar.
 	 *
 	 * @param {number} id
 	 * @param {AxiosRequestConfig} config
@@ -178,7 +178,7 @@ export default class User {
 	}
 
 	/**
-	 * Delete user image by id and working with leftSidebar.
+	 * Delete resource image by id and working with leftSidebar.
 	 *
 	 * @param {number} id
 	 * @param {AxiosRequestConfig} config

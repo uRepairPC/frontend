@@ -59,6 +59,7 @@
 <script>
 import { DEFAULT_ROUTE_NAME } from '@/router'
 import Tips from '@/components/root/Tips'
+import UserClass from '@/classes/User'
 import sections from '@/data/sections'
 import { mapGetters } from 'vuex'
 
@@ -98,10 +99,7 @@ export default {
 			}
 		},
 		onClickEmail() {
-			this.$store.dispatch('template/addSidebarItem', {
-				section: sections.users,
-				data: this.user
-			})
+			UserClass.sidebar().add(this.user)
 			this.$router.push({ name: `${sections.users}-id`, params: { id: this.user.id } })
 		}
 	}

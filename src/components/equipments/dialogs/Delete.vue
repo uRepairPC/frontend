@@ -17,7 +17,7 @@
 
 <script>
 import BasicDelete from '@/components/dialogs/BasicDelete'
-import sections from '@/data/sections'
+import EquipmentClass from '@/classes/Equipment'
 
 export default {
 	components: {
@@ -48,18 +48,14 @@ export default {
 		fetchRequest() {
 			this.loading = true
 
-			this.$axios.delete(`equipments/${this.equipment.id}`, {
+			EquipmentClass.fetchDelete(this.equipment.id, {
 				data: {
 					files_delete: this.filesDelete
 				}
 			})
 				.then(() => {
-					this.$store.commit('template/REMOVE_SIDEBAR_ITEM', {
-						section: sections.equipments,
-						id: this.equipment.id
-					})
+					this.$emit('delete')
 					this.$emit('input', false)
-					this.$router.push({ name: sections.equipments })
 				})
 				.finally(() => {
 					this.loading = false

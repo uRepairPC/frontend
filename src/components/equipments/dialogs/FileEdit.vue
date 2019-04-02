@@ -26,6 +26,7 @@
 </template>
 
 <script>
+import EquipmentFileClass from '@/classes/EquipmentFile'
 import BasicEdit from '@/components/dialogs/BasicEdit'
 import { required } from '@/data/rules'
 
@@ -71,9 +72,9 @@ export default {
 		fetchRequest() {
 			this.loading = true
 
-			this.$axios.put(`equipments/${this.equipment.id}/files/${this.file.id}`, this.form)
-				.then((res) => {
-					this.$emit('update-file', res.data.file, this.index)
+			EquipmentFileClass.fetchEdit(this.equipment.id, this.file.id, this.form)
+				.then(({ data }) => {
+					this.$emit('update-file', data.file, this.index)
 					this.$emit('close')
 				})
 				.finally(() => {

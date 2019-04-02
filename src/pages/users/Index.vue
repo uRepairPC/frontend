@@ -58,6 +58,7 @@ import TagRole from '@/components/users/TagRole'
 import StorageData from '@/classes/StorageData'
 import TableComponent from '@/components/Table'
 import breadcrumbs from '@/mixins/breadcrumbs'
+import UserClass from '@/classes/User'
 import sections from '@/data/sections'
 import { mapGetters } from 'vuex'
 import menu from '@/data/menu'
@@ -151,10 +152,7 @@ export default {
 				return
 			}
 
-			this.$store.dispatch('template/addSidebarItem', {
-				section: sections.users,
-				data: user
-			})
+			UserClass.sidebar().add(user)
 			this.$router.push({ name: `${sections.users}-id`, params: { id: user.id } })
 		},
 		onSortChange({ prop: column, order }) {
