@@ -27,8 +27,8 @@
 					:key="index"
 					:file="file"
 					:url-download="urlDownload"
-					@edit="onEdit"
-					@delete="onDelete"
+					@edit="onEdit($event, index)"
+					@delete="onDelete($event, index)"
 				/>
 			</div>
 		</div>

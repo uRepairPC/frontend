@@ -43,8 +43,7 @@ export default {
 	},
 	data() {
 		return {
-			loading: false,
-			isUploaded: false
+			loading: false
 		}
 	},
 	computed: {
@@ -53,11 +52,6 @@ export default {
 				...this.$listeners,
 				submit: this.onSubmit
 			}
-		}
-	},
-	beforeDestroy() {
-		if (this.isUploaded) {
-			this.$emit('fetch-files')
 		}
 	},
 	methods: {
@@ -72,7 +66,7 @@ export default {
 
 			this.$axios.post(`equipments/${this.equipment.id}/files`, fd)
 				.then(() => {
-					this.isUploaded = true
+					this.$emit('fetch-files')
 					this.$emit('close')
 				})
 				.catch(({ response: { data } }) => {

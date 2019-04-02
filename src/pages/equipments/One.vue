@@ -75,7 +75,8 @@
 </template>
 
 <script>
-import FilesUpload from '@/components/equipments/dialogs/FilesUpload'
+import FilesUploadDialog from '@/components/equipments/dialogs/FilesUpload'
+import FileEditDialog from '@/components/equipments/dialogs/FileEdit'
 import DeleteDialog from '@/components/equipments/dialogs/Delete'
 import EditDialog from '@/components/equipments/dialogs/Edit'
 import TopButtons from '@/components/TopButtons'
@@ -136,7 +137,7 @@ export default {
 				{
 					title: 'Завантажити файл',
 					type: types.PRIMARY,
-					action: () => this.openDialog(FilesUpload)
+					action: () => this.openDialog(FilesUploadDialog)
 				},
 				{
 					title: 'Видалили',
@@ -226,22 +227,29 @@ export default {
 				this.$message('Скопійовано в буфер')
 			}
 		},
-		openDialog(component) {
+		openDialog(component, attrs = {}) {
 			this.$store.commit('template/OPEN_DIALOG', {
 				component,
 				attrs: {
-					equipment: this.equipment
+					equipment: this.equipment,
+					...attrs
 				},
 				events: {
-					'fetch-files': this.fetchRequestFiles
+					'fetch-files': this.fetchRequestFiles,
+					'update-file': (file, index) => {
+						this.$set(this.files, index, file)
+					},
+					'delete-file': (index) => {
+						this.$delete(this.file, index)
+					}
 				}
 			})
 		},
 		onAdd() {
-			this.openDialog(FilesUpload)
+			this.openDialog(FilesUploadDialog)
 		},
-		onEdit(file) {
-			console.log(file)
+		onEdit(file, index) {
+			this.openDialog(FileEditDialog, { file, index })
 		},
 		onDelete(file) {
 			console.log(file)
