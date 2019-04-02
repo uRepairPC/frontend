@@ -9,7 +9,7 @@
 			<slot name="content-alert">
 				<el-alert
 					title="Ви дійсно хочете видалити ці дані?"
-					description="Для підтвердження - введіть ID елемента."
+					:description="confirm ? 'Для підтвердження - введіть ID елемента.' : ''"
 					:closable="false"
 					type="error"
 				/>

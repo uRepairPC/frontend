@@ -76,6 +76,7 @@
 
 <script>
 import FilesUploadDialog from '@/components/equipments/dialogs/FilesUpload'
+import FileDeleteDialog from '@/components/equipments/dialogs/FileDelete'
 import FileEditDialog from '@/components/equipments/dialogs/FileEdit'
 import DeleteDialog from '@/components/equipments/dialogs/Delete'
 import EditDialog from '@/components/equipments/dialogs/Edit'
@@ -240,7 +241,7 @@ export default {
 						this.$set(this.files, index, file)
 					},
 					'delete-file': (index) => {
-						this.$delete(this.file, index)
+						this.$delete(this.files, index)
 					}
 				}
 			})
@@ -251,8 +252,8 @@ export default {
 		onEdit(file, index) {
 			this.openDialog(FileEditDialog, { file, index })
 		},
-		onDelete(file) {
-			console.log(file)
+		onDelete(file, index) {
+			this.openDialog(FileDeleteDialog, { file, index })
 		}
 	}
 }
