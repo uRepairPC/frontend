@@ -52,6 +52,7 @@
 <script>
 import ManufacturerSelect from '@/components/equipments/manufacturers/Select'
 import TypeSelect from '@/components/equipments/types/Select'
+import EquipmentModelClass from '@/classes/EquipmentModel'
 import BasicCreate from '@/components/dialogs/BasicCreate'
 import { required } from '@/data/rules'
 
@@ -86,9 +87,10 @@ export default {
 		fetchRequest() {
 			this.loading = true
 
-			this.$axios.post('equipments/models', this.form)
+			EquipmentModelClass.fetchStore(this.form)
 				.then(() => {
 					this.$store.dispatch('equipmentModels/fetchList')
+					this.$emit('create')
 					this.$emit('close')
 				})
 				.finally(() => {

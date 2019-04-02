@@ -10,6 +10,7 @@
 
 <script>
 import BasicDelete from '@/components/dialogs/BasicDelete'
+import EquipmentTypeClass from '@/classes/EquipmentType'
 
 export default {
 	components: {
@@ -39,9 +40,10 @@ export default {
 		fetchRequest() {
 			this.loading = true
 
-			this.$axios.delete(`equipments/types/${this.item.id}`)
+			EquipmentTypeClass.fetchDelete(this.item.id)
 				.then(() => {
 					this.$store.dispatch('equipmentTypes/fetchList')
+					this.$emit('delete')
 					this.$emit('close')
 				})
 				.finally(() => {

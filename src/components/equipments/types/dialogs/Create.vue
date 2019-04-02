@@ -38,6 +38,7 @@
 
 <script>
 import BasicCreate from '@/components/dialogs/BasicCreate'
+import EquipmentTypeClass from '@/classes/EquipmentType'
 import { required } from '@/data/rules'
 
 export default {
@@ -69,9 +70,10 @@ export default {
 		fetchRequest() {
 			this.loading = true
 
-			this.$axios.post('equipments/types', this.form)
+			EquipmentTypeClass.fetchStore(this.form)
 				.then(() => {
 					this.$store.dispatch('equipmentTypes/fetchList')
+					this.$emit('create')
 					this.$emit('close')
 				})
 				.finally(() => {

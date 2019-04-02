@@ -9,6 +9,7 @@
 </template>
 
 <script>
+import EquipmentManufacturerClass from '@/classes/EquipmentManufacturer'
 import BasicDelete from '@/components/dialogs/BasicDelete'
 
 export default {
@@ -39,9 +40,10 @@ export default {
 		fetchRequest() {
 			this.loading = true
 
-			this.$axios.delete(`equipments/manufacturers/${this.item.id}`)
+			EquipmentManufacturerClass.fetchDelete(this.item.id)
 				.then(() => {
 					this.$store.dispatch('equipmentManufacturers/fetchList')
+					this.$emit('delete')
 					this.$emit('close')
 				})
 				.finally(() => {

@@ -1,6 +1,6 @@
 'use strict'
 
-import axios from 'axios'
+import EquipmentTypeClass from '@/classes/EquipmentType'
 
 const state = {
 	loading: false,
@@ -20,7 +20,7 @@ const actions = {
 	fetchList({ commit }) {
 		commit('SET_LOADING', true)
 
-		axios.get('equipments/types')
+		EquipmentTypeClass.fetchAll()
 			.then(({ data }) => {
 				commit('SET_LIST', data)
 			})
