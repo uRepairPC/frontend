@@ -13,7 +13,7 @@
 
 <script>
 import BasicDelete from '@/components/dialogs/BasicDelete'
-import sections from '@/data/sections'
+import UserClass from '@/classes/User'
 
 export default {
 	components: {
@@ -43,12 +43,9 @@ export default {
 		fetchRequest() {
 			this.loading = true
 
-			this.$axios.delete(`users/${this.user.id}/image`)
+			UserClass.fetchDeleteImage(this.user.id)
 				.then(() => {
-					this.$store.dispatch('template/addSidebarItem', {
-						section: sections.users,
-						data: { ...this.user, image: null }
-					})
+					this.$emit('delete-image')
 					this.$emit('close')
 				})
 				.finally(() => {

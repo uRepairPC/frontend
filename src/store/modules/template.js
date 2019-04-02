@@ -1,7 +1,6 @@
 'use strict'
 
 import { isArray, isObject } from '@/scripts/helpers'
-import sections from '@/data/sections'
 import menu from '@/data/menu'
 import Vue from 'vue'
 
@@ -78,17 +77,11 @@ const mutations = {
 const actions = {
 	/**
 	 * @param commit
-	 * @param rootState
 	 * @param {string} section - name (users, equipments, etc)
 	 * @param {Object} data
 	 */
-	addSidebarItem({ commit, rootState }, { section, data }) {
+	addSidebarItem({ commit }, { section, data }) {
 		commit('ADD_SIDEBAR_ITEM', { section, data })
-
-		// Update the current user if move to profile page
-		if (section === sections.users && data.id === rootState.profile.user.id) {
-			commit('profile/SET_USER', data, { root: true })
-		}
 	}
 }
 

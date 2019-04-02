@@ -2,7 +2,7 @@
 
 import { users as userColumns } from '@/data/columns'
 import { isArray } from '@/scripts/helpers'
-import axios from 'axios'
+import UserClass from '@/classes/User'
 import Vue from 'vue'
 
 const state = {
@@ -32,7 +32,7 @@ const actions = {
 	fetchList({ commit }, params) {
 		commit('SET_LOADING', true)
 
-		axios.get('users', { params })
+		UserClass.fetchAll({ params })
 			.then(({ data }) => {
 				if (params.page > 1) {
 					commit('APPEND_LIST', data)

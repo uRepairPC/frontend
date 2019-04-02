@@ -17,7 +17,6 @@
 
 <script>
 import BasicDelete from '@/components/dialogs/BasicDelete'
-import sections from '@/data/sections'
 import UserClass from '@/classes/User'
 
 export default {
@@ -52,18 +51,14 @@ export default {
 		fetchRequest() {
 			this.loading = true
 
-			this.$axios.delete(`users/${this.user.id}`, {
+			UserClass.fetchDelete(this.user.id, {
 				data: {
-					image_delete: this.image_delete
+					image_delete: this.imageDelete
 				}
 			})
 				.then(() => {
-					this.$store.commit('template/REMOVE_SIDEBAR_ITEM', {
-						section: sections.users,
-						id: this.user.id
-					})
+					this.$emit('delete')
 					this.$emit('close')
-					this.$router.push({ name: sections.users })
 				})
 				.finally(() => {
 					this.loading = false

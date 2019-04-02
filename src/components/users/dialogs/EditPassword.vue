@@ -51,6 +51,7 @@
 
 <script>
 import BasicEdit from '@/components/dialogs/BasicEdit'
+import UserClass from '@/classes/User'
 import * as rules from '@/data/rules'
 
 export default {
@@ -95,8 +96,9 @@ export default {
 		fetchRequest() {
 			this.loading = true
 
-			this.$axios.post(`users/${this.user.id}/password`, this.form)
+			UserClass.fetchEditPassword(this.user.id, this.form)
 				.then(() => {
+					this.$emit('edit-password')
 					this.$emit('close')
 				})
 				.finally(() => {
