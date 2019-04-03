@@ -8,6 +8,7 @@
 			:key="index"
 			class="tips"
 			v-html="currentTip.text"
+			@click.prevent="onClick"
 		/>
 	</transition>
 </template>
@@ -16,15 +17,15 @@
 import { isArray, getRndInteger } from '@/scripts/helpers'
 import tips from '@/data/tips'
 
-/** @type {number} - milliseconds */
-const INTERVAL = 8000
-
 export default {
 	data() {
 		return {
 			index: 0,
 			currentTip: ''
 		}
+	},
+	created() {
+		this.changeTip()
 	},
 	computed: {
 		profile() {
@@ -43,25 +44,20 @@ export default {
 			})
 		}
 	},
-	watch: {
-		tipsList: {
-			handler(arr) {
-				this.currentTip = ''
+	methods: {
+		onClick() {
+			this.changeTip()
+		},
+		changeTip() {
+			let newIndex = getRndInteger(0, this.len - 1)
 
-				const setCurrentTip = () => {
-					this.index = getRndInteger(0, this.len - 1)
-					this.currentTip = arr[this.index]
-				}
+			if (newIndex === this.index) {
+				newIndex = ++newIndex >= this.len ? 0 : newIndex
+			}
 
-				setCurrentTip()
-
-				this._interval = setInterval(setCurrentTip, INTERVAL)
-			},
-			immediate: true
+			this.index = newIndex
+			this.currentTip = this.tipsList[this.index]
 		}
-	},
-	beforeDestroy() {
-		clearInterval(this._interval)
 	}
 }
 </script>
@@ -75,6 +71,7 @@ export default {
 	white-space: nowrap;
 	text-overflow: ellipsis;
 	overflow-x: hidden;
+	cursor: pointer;
 }
 
 // <animation>
