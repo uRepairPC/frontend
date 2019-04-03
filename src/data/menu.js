@@ -80,6 +80,12 @@ export default {
 		route: { name: sections.settings },
 		access: [roles.ADMIN, roles.WORKER],
 		children: {
+			[sections.settingsGlobal]: {
+				title: 'Глобальні',
+				icon: 'dashboard',
+				tag: 'page',
+				route: { name: sections.settingsGlobal }
+			},
 			[sections.settingsTypes]: {
 				title: 'Типи обладнання',
 				icon: 'dashboard',

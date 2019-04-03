@@ -80,6 +80,11 @@ const authorizedRoutes = {
 					component: loadPage('settings/Index')
 				},
 				{
+					path: `/${sections.settings}/global`,
+					name: `${sections.settingsGlobal}`,
+					component: loadPage('settings/Global')
+				},
+				{
 					path: `/${sections.settings}/manufacturers`,
 					name: `${sections.settingsManufacturers}`,
 					component: loadPage('settings/Manufacturers')

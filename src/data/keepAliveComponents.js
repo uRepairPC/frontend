@@ -1,5 +1,6 @@
 'use strict'
 
+/** @type {array} */
 export const root = [
 	'Home',
 	'Requests',
@@ -8,10 +9,12 @@ export const root = [
 	'Settings'
 ]
 
+/** @type {array} */
 export const settings = [
 	'Manufacturers',
 	'Models',
-	'Types'
+	'Types',
+	'Global'
 ]
 
 export default [

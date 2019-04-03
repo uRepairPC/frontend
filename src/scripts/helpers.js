@@ -13,7 +13,7 @@ export function isObject(input) {
  * @return {boolean}
  */
 export const isArray = (input) => {
-	return isObject(input) && !!Array.isArray(input)
+	return isObject(input) && Array.isArray(input)
 }
 
 /**
