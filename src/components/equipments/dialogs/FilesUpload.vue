@@ -1,6 +1,6 @@
 <template>
 	<basic-edit
-		:title="`${equipment.serial_number || '-'} / ${equipment.inventory_number || '-'}`"
+		:title="equipmentClass.title"
 		:loading="loading"
 		v-bind="$attrs"
 		v-on="listeners"
@@ -30,6 +30,7 @@
 import EquipmentFileClass from '@/classes/EquipmentFile'
 import BasicEdit from '@/components/dialogs/BasicEdit'
 import { isArray, isObject } from '@/scripts/helpers'
+import EquipmentClass from '@/classes/Equipment'
 
 export default {
 	inheritAttrs: false,
@@ -53,6 +54,9 @@ export default {
 				...this.$listeners,
 				submit: this.onSubmit
 			}
+		},
+		equipmentClass() {
+			return new EquipmentClass(this.equipment)
 		}
 	},
 	methods: {

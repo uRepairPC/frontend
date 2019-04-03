@@ -122,4 +122,14 @@ export default class Equipment {
 				return response
 			})
 	}
+
+	/* | ------------------------------------------------------------------------------------------------
+	 * | - Getters -
+	 * | ------------------------------------------------------------------------------------------------
+	 */
+
+	/** @return {string} */
+	get title() {
+		return `${this.equipment.serial_number || '-'} / ${this.equipment.inventory_number || '-'}`
+	}
 }

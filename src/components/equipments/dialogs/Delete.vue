@@ -1,6 +1,6 @@
 <template>
 	<basic-delete
-		:title="`${equipment.serial_number || '-'} / ${equipment.inventory_number || '-'}`"
+		:title="equipmentClass.title"
 		:confirm="equipment.id"
 		:loading="loading"
 		v-bind="$attrs"
@@ -42,6 +42,9 @@ export default {
 				...this.$listeners,
 				submit: this.fetchRequest
 			}
+		},
+		equipmentClass() {
+			return new EquipmentClass(this.equipment)
 		}
 	},
 	methods: {

@@ -1,6 +1,6 @@
 <template>
 	<basic-edit
-		:title="`${equipment.serial_number || '-'} / ${equipment.inventory_number || '-'}`"
+		:title="equipmentClass.title"
 		:loading="loading"
 		v-bind="$attrs"
 		v-on="listeners"
@@ -89,6 +89,9 @@ export default {
 				...this.$listeners,
 				submit: this.onSubmit
 			}
+		},
+		equipmentClass() {
+			return new EquipmentClass(this.equipment)
 		}
 	},
 	methods: {
