@@ -18,8 +18,10 @@
 			</el-timeline-item>
 		</el-timeline>
 		<div class="btn-block">
-<!--			TODO-->
-			<el-button type="primary">
+			<el-button
+				type="primary"
+				@click="onClickEdit"
+			>
 				Редагувати
 			</el-button>
 		</div>
@@ -28,6 +30,8 @@
 
 <script>
 import FrontendItem from '@/components/settings/FrontendItem'
+import StoreDialog from '@/components/settings/dialogs/Store'
+import SettingsFrontend from '@/classes/SettingsFrontend'
 import breadcrumbs from '@/mixins/breadcrumbs'
 import sections from '@/data/sections'
 import menu from '@/data/menu'
@@ -39,21 +43,14 @@ export default {
 		{ title: menu[sections.settings].children[sections.settingsGlobal].title }
 	],
 	components: {
-		FrontendItem
+		FrontendItem, StoreDialog
 	},
 	mixins: [
 		breadcrumbs
 	],
 	data() {
 		return {
-			rows: [
-				{ title: 'Назва', attr: 'app_name', type: 'text' },
-				{ title: 'Favicon', attr: 'favicon', type: 'img' },
-				{ title: 'Назва вкладки', attr: 'meta_title', type: 'text' },
-				{ title: 'Фотографія при авторізації', attr: 'logo_auth', type: 'img' },
-				{ title: 'Фотографія в шапці', attr: 'logo_header', type: 'img' },
-				{ title: 'Фотографія і назва - разом', attr: 'name_and_logo', type: 'bool' }
-			]
+			rows: SettingsFrontend.rows
 		}
 	},
 	computed: {
@@ -62,6 +59,13 @@ export default {
 		},
 		title() {
 			return menu[sections.settings].children[sections.settingsGlobal].title
+		}
+	},
+	methods: {
+		onClickEdit() {
+			this.$store.commit('template/OPEN_DIALOG', {
+				component: StoreDialog
+			})
 		}
 	}
 }

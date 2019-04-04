@@ -39,14 +39,22 @@ export default class SettingsFrontend {
 
 			SettingsFrontend.fetchGet()
 				.then(({ data }) => {
-					StorageData.settings = { ...data, timestamp: +serverTimestamp }
-					store.commit('template/SET_SETTINGS', { ...data, timestamp: +serverTimestamp })
+					SettingsFrontend.updateData(data, +serverTimestamp)
 					SettingsFrontend.updateDOM()
 				})
 				.finally(() => {
 					hasRequest = false
 				})
 		}
+	}
+
+	/**
+	 * @param {object} data
+	 * @param {number} timestamp
+	 */
+	static updateData(data, timestamp) {
+		StorageData.settings = { ...data, timestamp }
+		store.commit('template/SET_SETTINGS', { ...data, timestamp })
 	}
 
 	static updateDOM() {
@@ -82,7 +90,7 @@ export default class SettingsFrontend {
 	}
 
 	/**
-	 * Store resource.
+	 * Store resource and update global data.
 	 *
 	 * @param {*} data
 	 * @param {AxiosRequestConfig} config
@@ -90,6 +98,11 @@ export default class SettingsFrontend {
 	 */
 	static fetchStore(data = null, config = null) {
 		return axios.post(API_POINT, data, config)
+			.then((res) => {
+				SettingsFrontend.updateData(res.data.settings, res.data.modified)
+				SettingsFrontend.updateDOM()
+				return res
+			})
 	}
 
 	/* | -------------------------------------------------------------------------------------
@@ -99,5 +112,16 @@ export default class SettingsFrontend {
 
 	static get HEADER_NAME() {
 		return 'app-settings-modified'
+	}
+
+	static get rows() {
+		return [
+			{ title: 'Назва', attr: 'app_name', type: 'text' },
+			{ title: 'Favicon', attr: 'favicon', type: 'img', mimes: 'image/png, image/x-icon' },
+			{ title: 'Назва вкладки', attr: 'meta_title', type: 'text' },
+			{ title: 'Фотографія при авторізації', attr: 'logo_auth', type: 'img', mimes: 'image/jpeg, image/jpg, image/png' },
+			{ title: 'Фотографія в шапці', attr: 'logo_header', type: 'img', mimes: 'image/jpeg, image/jpg, image/png' },
+			{ title: 'Фотографія в шапці і назва - разом', attr: 'name_and_logo', type: 'bool' }
+		]
 	}
 }

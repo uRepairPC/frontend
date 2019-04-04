@@ -10,7 +10,9 @@
 					:src="logo"
 					alt="logo"
 				>
-				<div>{{ settings.app_name }}</div>
+				<div v-if="!settings.logo_header || (settings.logo_header && settings.name_and_logo)">
+					{{ settings.app_name }}
+				</div>
 			</div>
 			<el-button
 				v-if="sectionRequestMenuActions.add"
