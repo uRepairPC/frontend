@@ -3,7 +3,7 @@
 import axios from 'axios'
 
 /** @type {string} */
-export const API_POINT = `equipments/manufacturers`
+export const API_POINT = 'equipments/manufacturers'
 
 export default class EquipmentManufacturer {
 
@@ -13,7 +13,7 @@ export default class EquipmentManufacturer {
 	 */
 
 	/**
-	 * Get resource by id.
+	 * Get resource.
 	 *
 	 * @param {AxiosRequestConfig} config
 	 * @return {Promise<AxiosPromise<any>>}

@@ -14,6 +14,9 @@ const TOKEN = 'token'
 /** @type {string} */
 const PROFILE = 'profile'
 
+/** @type {string} */
+const SETTINGS = 'settings'
+
 export default class StorageData {
 
 	/* | -------------------------------------------------------------------------------------
@@ -83,6 +86,22 @@ export default class StorageData {
 	/** @return {boolean} */
 	static removeProfile() {
 		return this.remove(PROFILE)
+	}
+
+	/* SettingsFrontend ----------------------------------------------------------------------------- */
+
+	/** @return {object} */
+	static get settings() {
+		return this.getObject(SETTINGS)
+	}
+
+	static set settings(value) {
+		this.setObject(SETTINGS, value)
+	}
+
+	/** @return {boolean} */
+	static removeSettings() {
+		return this.remove(SETTINGS)
 	}
 
 	/* | -------------------------------------------------------------------------------------

@@ -14,7 +14,9 @@ const state = {
 	// Required id property
 	sidebar: {},
 	// Set dialog global on all pages (in layout)
-	dialog: {}
+	dialog: {},
+	// Global settings for the website (logo, title, etc)
+	settings: {}
 }
 
 const mutations = {
@@ -61,6 +63,13 @@ const mutations = {
 		}
 
 		Vue.delete(state.sidebar[section], id)
+	},
+	/**
+	 * @param state
+	 * @param {object} data
+	 */
+	SET_SETTINGS(state, data) {
+		state.settings = data
 	},
 	/**
 	 * @param state

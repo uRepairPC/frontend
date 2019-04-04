@@ -1,8 +1,8 @@
 'use strict'
 
+import router, { DEFAULT_ROUTE_NAME } from '@/router'
 import StorageData from '@/classes/StorageData'
 import sections from '@/data/sections'
-import router from '@/router'
 import axios from 'axios'
 
 const state = {
@@ -31,8 +31,7 @@ const mutations = {
 		StorageData.removeProfile()
 
 		// Clear data from store
-		state.user = {}
-		state.isLogin  =false
+		state.isLogin = false
 
 		router.push({ name: sections.auth })
 	}
@@ -58,13 +57,14 @@ const actions = {
 	auth({ commit }, data) {
 		commit('SET_LOADING', true)
 
-		axios.post('auth/login', data)
+		return axios.post('auth/login', data)
 			.then(({ data }) => {
 				axios.defaults.headers['Authorization'] = `Bearer ${data.token}`
 				StorageData.token = data.token
 				StorageData.profile = data.user
 				commit('SET_USER', data.user)
 				commit('SET_IS_LOGIN', true)
+				router.push({ name: DEFAULT_ROUTE_NAME })
 			})
 			.finally(() => {
 				commit('SET_LOADING', false)

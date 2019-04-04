@@ -19,7 +19,7 @@ export default class EquipmentFile {
 	 */
 
 	/**
-	 * Get resource by id.
+	 * Get resource.
 	 *
 	 * @param {number} equipmentId
 	 * @param {AxiosRequestConfig} config
