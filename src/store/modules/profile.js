@@ -1,7 +1,7 @@
 'use strict'
 
 import router, { DEFAULT_ROUTE_NAME } from '@/router'
-import { runLoadingService } from '@/scripts/utils'
+import { runLoadingService } from '@/scripts/dom'
 import StorageData from '@/classes/StorageData'
 import sections from '@/data/sections'
 import axios from 'axios'

@@ -2,8 +2,8 @@
 
 import SettingsFrontend from '@/classes/SettingsFrontend'
 import { isArray, isObject } from '@/scripts/helpers'
-import { runLoadingService } from '@/scripts/utils'
 import { Message, Notification } from 'element-ui'
+import { runLoadingService } from '@/scripts/dom'
 import StorageData from '@/classes/StorageData'
 import { serverProd, isProd } from '@/data/env'
 import * as types from '@/enum/types'

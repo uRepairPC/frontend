@@ -1,6 +1,8 @@
 'use strict'
 
 import StorageData from '@/classes/StorageData'
+import { setFavicon } from '@/scripts/dom'
+import { server } from '@/data/env'
 import store from '@/store'
 import axios from 'axios'
 
@@ -17,6 +19,7 @@ export default class SettingsFrontend {
 
 		if (settings.timestamp) {
 			store.commit('template/SET_SETTINGS', settings)
+			SettingsFrontend.updateDOM()
 		} else {
 			SettingsFrontend.checkUpdate(-1)
 		}
@@ -38,10 +41,28 @@ export default class SettingsFrontend {
 				.then(({ data }) => {
 					StorageData.settings = { ...data, timestamp: +serverTimestamp }
 					store.commit('template/SET_SETTINGS', { ...data, timestamp: +serverTimestamp })
+					SettingsFrontend.updateDOM()
 				})
 				.finally(() => {
 					hasRequest = false
 				})
+		}
+	}
+
+	static updateDOM() {
+		const data = StorageData.settings
+
+		// Favicon
+		if (data.favicon) {
+			setFavicon(server + data.favicon)
+		}
+
+		// Meta title
+		if (data.meta_title) {
+			const el = document.querySelector('head title')
+			if (el) {
+				el.innerText = data.meta_title
+			}
 		}
 	}
 
