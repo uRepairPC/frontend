@@ -8,6 +8,9 @@
 			>
 			<span v-else>-</span>
 		</template>
+		<template v-else-if="type === 'bool'">
+			{{ value ? 'Так' : 'Ні' }}
+		</template>
 		<template v-else>
 			{{ value }}
 		</template>
@@ -27,7 +30,7 @@ export default {
 			type: String,
 			required: true,
 			validator: (val) => {
-				return ~['text', 'img'].indexOf(val)
+				return ~['text', 'img', 'bool'].indexOf(val)
 			}
 		},
 		attr: {

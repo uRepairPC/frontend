@@ -52,6 +52,7 @@ export default {
 				{ title: 'Назва вкладки', attr: 'meta_title', type: 'text' },
 				{ title: 'Фотографія при авторізації', attr: 'logo_auth', type: 'img' },
 				{ title: 'Фотографія в шапці', attr: 'logo_header', type: 'img' },
+				{ title: 'Фотографія і назва - разом', attr: 'name_and_logo', type: 'bool' }
 			]
 		}
 	},
