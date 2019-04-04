@@ -15,7 +15,7 @@ import axios from 'axios'
  * In dev mode, all requests are sent to the server via
  * PROXY_PATH (webpack), to bypass CORS.
  */
-axios.defaults.baseURL = isProd ? serverProd + 'api' : 'api'
+axios.defaults.baseURL = isProd ? serverProd + '/api' : 'api'
 
 /** @type {Array} */
 let requestsToRefresh = []
@@ -57,7 +57,7 @@ axios.interceptors.response.use(
 					resolve(axios({
 						...config,
 						// TODO Check on prod
-						url: config.url.replace(/^api\//, '')
+						url: config.urlDomain.replace(/^api\//, '')
 					}))
 				})
 			})

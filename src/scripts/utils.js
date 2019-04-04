@@ -75,3 +75,19 @@ export function formatBytes(bytes, decimals = 2) {
 
 	return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i]
 }
+
+/**
+ * @param {string|null} input
+ * @return {string|null}
+ */
+export function withoutLastSlash(input) {
+	if (!input) {
+		return input
+	}
+
+	if (input.slice(-1) === '/') {
+		return input.slice(0, input.length - 1)
+	}
+
+	return input
+}
