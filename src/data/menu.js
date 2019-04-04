@@ -81,7 +81,7 @@ export default {
 		access: [roles.ADMIN, roles.WORKER],
 		children: {
 			[sections.settingsGlobal]: {
-				title: 'Глобальні',
+				title: 'Глобальні налаштування',
 				icon: 'dashboard',
 				tag: 'page',
 				route: { name: sections.settingsGlobal }

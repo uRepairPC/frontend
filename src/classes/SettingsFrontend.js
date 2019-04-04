@@ -37,7 +37,7 @@ export default class SettingsFrontend {
 		if (+localTimestamp !== +serverTimestamp && !hasRequest) {
 			hasRequest = true
 
-			SettingsFrontend.fetchRequest()
+			SettingsFrontend.fetchGet()
 				.then(({ data }) => {
 					StorageData.settings = { ...data, timestamp: +serverTimestamp }
 					store.commit('template/SET_SETTINGS', { ...data, timestamp: +serverTimestamp })
@@ -77,8 +77,19 @@ export default class SettingsFrontend {
 	 * @param {AxiosRequestConfig} config
 	 * @return {Promise<AxiosPromise<any>>}
 	 */
-	static fetchRequest(config = null) {
+	static fetchGet(config = null) {
 		return axios.get(API_POINT, config)
+	}
+
+	/**
+	 * Store resource.
+	 *
+	 * @param {*} data
+	 * @param {AxiosRequestConfig} config
+	 * @return {Promise<AxiosPromise<any>>}
+	 */
+	static fetchStore(data = null, config = null) {
+		return axios.post(API_POINT, data, config)
 	}
 
 	/* | -------------------------------------------------------------------------------------
