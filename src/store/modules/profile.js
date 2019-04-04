@@ -1,6 +1,7 @@
 'use strict'
 
 import router, { DEFAULT_ROUTE_NAME } from '@/router'
+import { runLoadingService } from '@/scripts/utils'
 import StorageData from '@/classes/StorageData'
 import sections from '@/data/sections'
 import axios from 'axios'
@@ -84,14 +85,14 @@ const actions = {
 			})
 	},
 	logout({ commit }) {
-		commit('SET_LOADING', true)
+		const loadingService = runLoadingService('Виходимо з системи')
 
 		axios.post('auth/logout')
 			.then(() => {
 				commit('CLEAR_ALL')
 			})
 			.finally(() => {
-				commit('SET_LOADING', false)
+				loadingService.close()
 			})
 	}
 }

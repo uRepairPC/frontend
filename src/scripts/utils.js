@@ -1,7 +1,7 @@
 'use strict'
 
+import { Loading, Message } from 'element-ui'
 import StorageData from '@/classes/StorageData'
-import { Message } from 'element-ui'
 import axios from 'axios'
 
 /**
@@ -90,4 +90,17 @@ export function withoutLastSlash(input) {
 	}
 
 	return input
+}
+
+/**
+ * @param {string} text
+ * @returns {ElLoadingComponent}
+ */
+export function runLoadingService(text) {
+	return Loading.service({
+		lock: true,
+		text,
+		spinner: 'el-icon-loading',
+		background: 'rgba(0, 0, 0, .7)'
+	})
 }

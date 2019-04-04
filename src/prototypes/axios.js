@@ -1,8 +1,9 @@
 'use strict'
 
-import { Message, Notification, Loading } from 'element-ui'
 import SettingsFrontend from '@/classes/SettingsFrontend'
 import { isArray, isObject } from '@/scripts/helpers'
+import { runLoadingService } from '@/scripts/utils'
+import { Message, Notification } from 'element-ui'
 import StorageData from '@/classes/StorageData'
 import { serverProd, isProd } from '@/data/env'
 import * as types from '@/enum/types'
@@ -68,12 +69,7 @@ axios.interceptors.response.use(
 				isRequestToRefresh = true
 
 				// Disable all interface
-				const loadingService = Loading.service({
-					lock: true,
-					text: 'Оновлюється токен безпеки',
-					spinner: 'el-icon-loading',
-					background: 'rgba(0, 0, 0, .7)'
-				})
+				const loadingService = runLoadingService('Оновлюється токен безпеки')
 
 				// Send request to refresh token
 				try {
