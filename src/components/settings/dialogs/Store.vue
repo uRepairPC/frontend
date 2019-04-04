@@ -56,7 +56,6 @@
 					v-model="form[row.attr]"
 					:placeholder="row.title"
 				/>
-				{{ form[row.attr] }}
 			</el-form-item>
 		</el-form>
 	</basic-edit>
