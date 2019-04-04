@@ -2,7 +2,7 @@
 'use strict'
 
 /** @return {boolean} */
-export const isProd = !['dev', 'development'].includes(process.env.APP_ENV)
+export const isProd = !['dev', 'development'].includes(process.env.NODE_ENV)
 
 /** @return {string} */
-export const axiosBaseUrl = process.env.AXIOS_BASE_URL || 'api'
+export const serverProd = process.env.SERVER_PROD || 'http://localhost/'

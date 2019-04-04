@@ -3,13 +3,18 @@
 import { Message, Notification, Loading } from 'element-ui'
 import { isArray, isObject } from '@/scripts/helpers'
 import StorageData from '@/classes/StorageData'
-import { axiosBaseUrl } from '@/data/env'
+import { serverProd, isProd } from '@/data/env'
 import * as types from '@/enum/types'
 import store from '@/store'
 import axios from 'axios'
 
-// All request send to: http(s)://example.com/api/*
-axios.defaults.baseURL = axiosBaseUrl
+/*
+ * The server API should be accessible at the following address:
+ *  http(s)://example.com/api
+ * In dev mode, all requests are sent to the server via
+ * PROXY_PATH (webpack), to bypass CORS.
+ */
+axios.defaults.baseURL = isProd ? serverProd + 'api' : 'api'
 
 /** @type {Array} */
 let requestsToRefresh = []
