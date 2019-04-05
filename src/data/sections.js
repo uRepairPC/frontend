@@ -12,5 +12,6 @@ export default {
 	settings: 'settings',
 	settingsManufacturers: 'settings-manufacturers',
 	settingsModels: 'settings-models',
-	settingsTypes: 'settings-types'
+	settingsTypes: 'settings-types',
+	settingsGlobal: 'settings-global'
 }

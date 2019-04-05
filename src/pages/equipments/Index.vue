@@ -43,6 +43,7 @@
 <script>
 import TemplatePage from '@/components/template/Page'
 import scrollTableMixin from '@/mixins/scrollTable'
+import EquipmentClass from '@/classes/Equipment'
 import StorageData from '@/classes/StorageData'
 import TableComponent from '@/components/Table'
 import breadcrumbs from '@/mixins/breadcrumbs'
@@ -139,10 +140,7 @@ export default {
 				return
 			}
 
-			this.$store.dispatch('template/addSidebarItem', {
-				section: sections.equipments,
-				data: equipment
-			})
+			EquipmentClass.sidebar().add(equipment)
 			this.$router.push({ name: `${sections.equipments}-id`, params: { id: equipment.id } })
 		},
 		onSortChange({ prop: column, order }) {

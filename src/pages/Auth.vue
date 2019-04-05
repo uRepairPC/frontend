@@ -2,9 +2,16 @@
 	<div id="auth">
 		<div class="logo">
 			<img
-				src="@/images/logo.png"
+				v-if="settings.logo_auth"
+				:src="logo"
 				alt="logo"
+			/>
+			<span
+				v-else
+				class="title"
 			>
+				{{ settings.app_name }}
+			</span>
 		</div>
 		<el-form
 			ref="form"
@@ -55,8 +62,8 @@
 </template>
 
 <script>
+import { isProd, server } from '@/data/env'
 import * as rules from '@/data/rules'
-import { isProd } from '@/data/env'
 
 export default {
 	data() {
@@ -72,6 +79,12 @@ export default {
 		}
 	},
 	computed: {
+		settings() {
+			return this.$store.state.template.settings
+		},
+		logo() {
+			return server + this.settings.logo_auth
+		},
 		loading() {
 			return this.$store.state.profile.loading
 		}
@@ -107,7 +120,14 @@ export default {
 	text-align: center;
 	margin-bottom: 40px;
 	> img {
-		max-width: 200px;
+		max-width: 250px;
+		max-height: 200px;
+	}
+	.title {
+		display: block;
+		font-weight: bold;
+		font-size: 1.5rem;
+		margin: 30px 0 70px;
 	}
 }
 

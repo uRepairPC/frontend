@@ -1,7 +1,6 @@
 'use strict'
 
 import { isArray, isObject } from '@/scripts/helpers'
-import sections from '@/data/sections'
 import menu from '@/data/menu'
 import Vue from 'vue'
 
@@ -15,7 +14,9 @@ const state = {
 	// Required id property
 	sidebar: {},
 	// Set dialog global on all pages (in layout)
-	dialog: {}
+	dialog: {},
+	// Global settings for the website (logo, title, etc)
+	settings: {}
 }
 
 const mutations = {
@@ -65,6 +66,13 @@ const mutations = {
 	},
 	/**
 	 * @param state
+	 * @param {object} data
+	 */
+	SET_SETTINGS(state, data) {
+		state.settings = data
+	},
+	/**
+	 * @param state
 	 * @param { component, attrs, events } data
 	 */
 	OPEN_DIALOG(state, data) {
@@ -78,17 +86,11 @@ const mutations = {
 const actions = {
 	/**
 	 * @param commit
-	 * @param rootState
 	 * @param {string} section - name (users, equipments, etc)
 	 * @param {Object} data
 	 */
-	addSidebarItem({ commit, rootState }, { section, data }) {
+	addSidebarItem({ commit }, { section, data }) {
 		commit('ADD_SIDEBAR_ITEM', { section, data })
-
-		// Update the current user if move to profile page
-		if (section === sections.users && data.id === rootState.profile.user.id) {
-			commit('profile/SET_USER', data, { root: true })
-		}
 	}
 }
 

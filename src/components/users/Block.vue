@@ -27,17 +27,9 @@ export default {
 			required: true
 		}
 	},
-	computed: {
-		userClass() {
-			return new UserClass(this.user)
-		}
-	},
 	methods: {
 		onClick() {
-			this.$store.dispatch('template/addSidebarItem', {
-				section: sections.users,
-				data: this.user
-			})
+			UserClass.sidebar().add(this.user)
 			this.$router.push({ name: `${sections.users}-id`, params: { id: this.user.id } })
 		}
 	}

@@ -1,6 +1,6 @@
 <template>
 	<basic-delete
-		:title="`${equipment.serial_number || '-'} / ${equipment.inventory_number || '-'}`"
+		:title="equipmentClass.title"
 		:confirm="equipment.id"
 		:loading="loading"
 		v-bind="$attrs"
@@ -17,7 +17,7 @@
 
 <script>
 import BasicDelete from '@/components/dialogs/BasicDelete'
-import sections from '@/data/sections'
+import EquipmentClass from '@/classes/Equipment'
 
 export default {
 	components: {
@@ -42,24 +42,23 @@ export default {
 				...this.$listeners,
 				submit: this.fetchRequest
 			}
+		},
+		equipmentClass() {
+			return new EquipmentClass(this.equipment)
 		}
 	},
 	methods: {
 		fetchRequest() {
 			this.loading = true
 
-			this.$axios.delete(`equipments/${this.equipment.id}`, {
+			EquipmentClass.fetchDelete(this.equipment.id, {
 				data: {
 					files_delete: this.filesDelete
 				}
 			})
 				.then(() => {
-					this.$store.commit('template/REMOVE_SIDEBAR_ITEM', {
-						section: sections.equipments,
-						id: this.equipment.id
-					})
+					this.$emit('delete')
 					this.$emit('input', false)
-					this.$router.push({ name: sections.equipments })
 				})
 				.finally(() => {
 					this.loading = false

@@ -32,7 +32,7 @@
 
 <script>
 import BasicEdit from '@/components/dialogs/BasicEdit'
-import sections from '@/data/sections'
+import UserClass from '@/classes/User'
 
 export default {
 	components: {
@@ -66,12 +66,9 @@ export default {
 			const fd = new FormData
 			fd.append('image', this.file.raw)
 
-			this.$axios.post(`users/${this.user.id}/image`, fd)
-				.then(({ data }) => {
-					this.$store.dispatch('template/addSidebarItem', {
-						section: sections.users,
-						data: { ...this.user, image: data.image }
-					})
+			UserClass.fetchEditImage(this.user.id, fd)
+				.then(() => {
+					this.$emit('edit-image')
 					this.$emit('close')
 				})
 				.finally(() => {

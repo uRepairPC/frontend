@@ -1,6 +1,7 @@
 'use strict'
 
 import '@babel/polyfill'
+import SettingsFrontend from '@/classes/SettingsFrontend'
 import filterComponents from '@/components/filters/index'
 import locale from 'element-ui/lib/locale/lang/ua'
 import prototypes from '@/prototypes'
@@ -52,7 +53,8 @@ filterComponents.forEach((component) => {
 	Vue.use(component)
 })
 
-// Set user from localStorage
+// Set init config
+SettingsFrontend.init()
 store.dispatch('profile/init')
 
 new Vue({

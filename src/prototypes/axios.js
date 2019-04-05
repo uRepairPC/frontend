@@ -1,15 +1,22 @@
 'use strict'
 
-import { Message, Notification, Loading } from 'element-ui'
+import SettingsFrontend from '@/classes/SettingsFrontend'
 import { isArray, isObject } from '@/scripts/helpers'
+import { Message, Notification } from 'element-ui'
+import { runLoadingService } from '@/scripts/dom'
 import StorageData from '@/classes/StorageData'
-import { axiosBaseUrl } from '@/data/env'
+import { serverProd, isProd } from '@/data/env'
 import * as types from '@/enum/types'
 import store from '@/store'
 import axios from 'axios'
 
-// All request send to: http(s)://example.com/api/*
-axios.defaults.baseURL = axiosBaseUrl
+/*
+ * The server API should be accessible at the following address:
+ *  http(s)://example.com/api
+ * In dev mode, all requests are sent to the server via
+ * PROXY_PATH (webpack), to bypass CORS.
+ */
+axios.defaults.baseURL = isProd ? serverProd + '/api' : 'api'
 
 /** @type {Array} */
 let requestsToRefresh = []
@@ -23,6 +30,9 @@ axios.interceptors.response.use(
 		if (resp.config.method !== 'get' && resp.data.message) {
 			Message({ message: resp.data.message, type: types.SUCCESS })
 		}
+
+		// Check for update frontend, global settings
+		SettingsFrontend.checkUpdate(resp.headers[SettingsFrontend.HEADER_NAME])
 
 		return resp
 	},
@@ -48,7 +58,7 @@ axios.interceptors.response.use(
 					resolve(axios({
 						...config,
 						// TODO Check on prod
-						url: config.url.replace(/^api\//, '')
+						url: config.urlDomain.replace(/^api\//, '')
 					}))
 				})
 			})
@@ -59,12 +69,7 @@ axios.interceptors.response.use(
 				isRequestToRefresh = true
 
 				// Disable all interface
-				const loadingService = Loading.service({
-					lock: true,
-					text: 'Оновлюється токен безпеки',
-					spinner: 'el-icon-loading',
-					background: 'rgba(0, 0, 0, .7)'
-				})
+				const loadingService = runLoadingService('Оновлюється токен безпеки')
 
 				// Send request to refresh token
 				try {

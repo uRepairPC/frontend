@@ -37,6 +37,7 @@
 </template>
 
 <script>
+import EquipmentManufacturerClass from '@/classes/EquipmentManufacturer'
 import BasicEdit from '@/components/dialogs/BasicEdit'
 import { required } from '@/data/rules'
 
@@ -75,9 +76,10 @@ export default {
 		fetchRequest() {
 			this.loading = true
 
-			this.$axios.put(`equipments/manufacturers/${this.item.id}`, this.form)
+			EquipmentManufacturerClass.fetchEdit(this.item.id, this.form)
 				.then(() => {
 					this.$store.dispatch('equipmentManufacturers/fetchList')
+					this.$emit('edit')
 					this.$emit('close')
 				})
 				.finally(() => {

@@ -9,6 +9,7 @@
 
 <script>
 import BasicDelete from '@/components/dialogs/BasicDelete'
+import EquipmentFileClass from '@/classes/EquipmentFile'
 
 export default {
 	components: {
@@ -46,7 +47,7 @@ export default {
 		fetchRequest() {
 			this.loading = true
 
-			this.$axios.delete(`equipments/${this.equipment.id}/files/${this.file.id}`)
+			EquipmentFileClass.fetchDelete(this.equipment.id, this.file.id)
 				.then(() => {
 					this.$emit('delete-file', this.index)
 					this.$emit('close')

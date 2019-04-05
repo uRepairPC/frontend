@@ -31,7 +31,7 @@
 
 <script>
 import BasicEdit from '@/components/dialogs/BasicEdit'
-import sections from '@/data/sections'
+import UserClass from '@/classes/User'
 import * as rules from '@/data/rules'
 
 export default {
@@ -68,12 +68,9 @@ export default {
 		fetchRequest() {
 			this.loading = true
 
-			this.$axios.post(`users/${this.user.id}/email`, this.form)
-				.then(({ data }) => {
-					this.$store.dispatch('template/addSidebarItem', {
-						section: sections.users,
-						data: data.user
-					})
+			UserClass.fetchEditEmail(this.user.id, this.form)
+				.then(() => {
+					this.$emit('edit-email')
 					this.$emit('close')
 				})
 				.finally(() => {

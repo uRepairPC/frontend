@@ -51,6 +51,7 @@ import UserImage from '@/components/users/Image'
 import breadcrumbs from '@/mixins/breadcrumbs'
 import { COLUMNS_DATES } from '@/data/columns'
 import { isArray } from '@/scripts/helpers'
+import UserClass from '@/classes/User'
 import sections from '@/data/sections'
 import * as types from '@/enum/types'
 import * as roles from '@/enum/roles'
@@ -189,18 +190,8 @@ export default {
 		fetchRequest() {
 			this.loading = true
 
-			this.$axios.get(`users/${this.$route.params.id}`)
-				.then(({ data }) => {
-					this.$store.dispatch('template/addSidebarItem', {
-						section: sections.users,
-						data: data.user
-					})
-				})
+			UserClass.fetchOne(+this.$route.params.id)
 				.catch(() => {
-					this.$store.commit('template/REMOVE_SIDEBAR_ITEM', {
-						section: sections.users,
-						id: this.$route.params.id
-					})
 					this.$router.push({ name: sections.users })
 				})
 				.finally(() => {
@@ -212,6 +203,11 @@ export default {
 				component,
 				attrs: {
 					user: this.user
+				},
+				events: {
+					delete: () => {
+						this.$router.push({ name: sections.users })
+					}
 				}
 			})
 		}

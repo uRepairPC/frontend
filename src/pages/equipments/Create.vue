@@ -65,6 +65,7 @@
 
 <script>
 import EquipmentCascader from '@/components/equipments/Cascader'
+import EquipmentClass from '@/classes/Equipment'
 import breadcrumbs from '@/mixins/breadcrumbs'
 import { required } from '@/data/rules'
 import sections from '@/data/sections'
@@ -102,17 +103,13 @@ export default {
 		fetchRequest() {
 			this.loading = true
 
-			this.$axios.post('equipments', {
+			EquipmentClass.fetchStore({
 				...this.form,
 				type_id: this.form.equipment[0],
 				manufacturer_id: this.form.equipment[1],
 				model_id: this.form.equipment[2]
 			})
 				.then(({ data }) => {
-					this.$store.dispatch('template/addSidebarItem', {
-						section: sections.equipments,
-						data: data.equipment
-					})
 					this.$router.push({ name: `${sections.equipments}-id`, params: { id: data.equipment.id } })
 				})
 				.finally(() => {

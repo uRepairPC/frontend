@@ -84,7 +84,7 @@
 import BasicEdit from '@/components/dialogs/BasicEdit'
 import { list as roleList } from '@/data/roles'
 import { required } from '@/data/rules'
-import sections from '@/data/sections'
+import UserClass from '@/classes/User'
 import * as roles from '@/enum/roles'
 
 export default {
@@ -139,12 +139,9 @@ export default {
 		fetchRequest() {
 			this.loading = true
 
-			this.$axios.put(`users/${this.user.id}`, this.form)
-				.then(({ data }) => {
-					this.$store.dispatch('template/addSidebarItem', {
-						section: sections.users,
-						data: data.user
-					})
+			UserClass.fetchEdit(this.user.id, this.form)
+				.then(() => {
+					this.$emit('edit')
 					this.$emit('close')
 				})
 				.finally(() => {

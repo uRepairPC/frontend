@@ -80,11 +80,13 @@ import FileDeleteDialog from '@/components/equipments/dialogs/FileDelete'
 import FileEditDialog from '@/components/equipments/dialogs/FileEdit'
 import DeleteDialog from '@/components/equipments/dialogs/Delete'
 import EditDialog from '@/components/equipments/dialogs/Edit'
+import EquipmentFileClass from '@/classes/EquipmentFile'
+import EquipmentClass from '@/classes/Equipment'
 import TopButtons from '@/components/TopButtons'
 import FilesList from '@/components/files/List'
 import breadcrumbs from '@/mixins/breadcrumbs'
 import { COLUMNS_DATES } from '@/data/columns'
-import * as utils from '@/scripts/utils'
+import { copyNode } from '@/scripts/dom'
 import sections from '@/data/sections'
 import * as types from '@/enum/types'
 import menu from '@/data/menu'
@@ -182,24 +184,16 @@ export default {
 			if (!this.equipment.id) {
 				this.fetchRequest()
 			}
-			this.fetchRequestFiles()
+			this.fetchRequestFiles() // FIXME always requests, set to equipment object*
 		},
 		fetchRequest() {
 			this.loading = true
 
-			this.$axios.get(`equipments/${this.$route.params.id}`)
-				.then(({ data }) => {
-					this.$store.dispatch('template/addSidebarItem', {
-						section: sections.equipments,
-						data: data.equipment
-					})
+			EquipmentClass.fetchOne(+this.$route.params.id)
+				.then(() => {
 					this.fetchRequestFiles()
 				})
 				.catch(() => {
-					this.$store.commit('template/REMOVE_SIDEBAR_ITEM', {
-						section: sections.equipments,
-						id: this.$route.params.id
-					})
 					this.$router.push({ name: sections.equipments })
 				})
 				.finally(() => {
@@ -209,7 +203,7 @@ export default {
 		fetchRequestFiles() {
 			this.loadingFiles = true
 
-			this.$axios.get(`equipments/${this.$route.params.id}/files`)
+			EquipmentFileClass.fetchAll(+this.$route.params.id)
 				.then(({ data }) => {
 					this.files = data.files
 				})
@@ -222,11 +216,7 @@ export default {
 				return
 			}
 
-			utils.selectAll(evt.target)
-
-			if (utils.execCopy()) {
-				this.$message('Скопійовано в буфер')
-			}
+			copyNode(evt.target)
 		},
 		openDialog(component, attrs = {}) {
 			this.$store.commit('template/OPEN_DIALOG', {
@@ -236,6 +226,9 @@ export default {
 					...attrs
 				},
 				events: {
+					delete: () => {
+						this.$router.push({ name: sections.equipments })
+					},
 					'fetch-files': this.fetchRequestFiles,
 					'update-file': (file, index) => {
 						this.$set(this.files, index, file)

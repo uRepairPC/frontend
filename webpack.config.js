@@ -8,7 +8,7 @@ const path = require('path')
 require('dotenv').config()
 
 module.exports = {
-	mode: ['dev', 'development'].includes(process.env.APP_ENV) ? 'development' : 'production',
+	mode: ['dev', 'development'].includes(process.env.NODE_ENV) ? 'development' : 'production',
 	entry: [
 		'./src/main.js'
 	],
@@ -26,7 +26,7 @@ module.exports = {
 		disableHostCheck: true,
 		proxy: {
 			'/api/*': {
-				target: process.env.PROXY_TARGET || 'http://localhost/',
+				target: process.env.SERVER_DEV || 'http://localhost/',
 				changeOrigin: true
 			}
 		}
@@ -68,8 +68,8 @@ module.exports = {
 		]
 	},
 	plugins: [
-		new Dotenv(),
-		new VueLoaderPlugin(),
+		new Dotenv,
+		new VueLoaderPlugin,
 		new CleanWebpackPlugin({
 			verbose: true
 		}),

@@ -102,6 +102,7 @@
 import { list as roleList } from '@/data/roles'
 import breadcrumbs from '@/mixins/breadcrumbs'
 import * as dataRules from '@/data/rules'
+import UserClass from '@/classes/User'
 import sections from '@/data/sections'
 import * as roles from '@/enum/roles'
 import menu from '@/data/menu'
@@ -141,12 +142,8 @@ export default {
 		fetchRequest() {
 			this.loading = true
 
-			this.$axios.post('users', this.form)
+			UserClass.fetchStore(this.form)
 				.then(({ data }) => {
-					this.$store.dispatch('template/addSidebarItem', {
-						section: sections.users,
-						data: data.user
-					})
 					this.$router.push({ name: `${sections.users}-id`, params: { id: data.user.id } })
 				})
 				.finally(() => {

@@ -6,10 +6,13 @@
 				@click="onClickLogo"
 			>
 				<img
-					src="@/images/logo.png"
+					v-if="settings.logo_header"
+					:src="logo"
 					alt="logo"
 				>
-				<span>КНТЕУ</span>
+				<div v-if="!settings.logo_header || (settings.logo_header && settings.name_and_logo)">
+					{{ settings.app_name }}
+				</div>
 			</div>
 			<el-button
 				v-if="sectionRequestMenuActions.add"
@@ -59,7 +62,9 @@
 <script>
 import { DEFAULT_ROUTE_NAME } from '@/router'
 import Tips from '@/components/root/Tips'
+import UserClass from '@/classes/User'
 import sections from '@/data/sections'
+import { server } from '@/data/env'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -75,6 +80,12 @@ export default {
 		},
 		openSearch() {
 			return this.$store.state.template.openSearch
+		},
+		settings() {
+			return this.$store.state.template.settings
+		},
+		logo() {
+			return server + this.settings.logo_header
 		},
 		sectionRequestMenuActions() {
 			return this.menu[sections.requests].children || {}
@@ -98,10 +109,7 @@ export default {
 			}
 		},
 		onClickEmail() {
-			this.$store.dispatch('template/addSidebarItem', {
-				section: sections.users,
-				data: this.user
-			})
+			UserClass.sidebar().add(this.user)
 			this.$router.push({ name: `${sections.users}-id`, params: { id: this.user.id } })
 		}
 	}
@@ -138,23 +146,29 @@ export default {
 	display: flex;
 	align-items: center;
 	cursor: pointer;
+	width: 210px;
+	overflow: hidden;
 	&:hover {
-		> span {
+		> div {
 			opacity: 1;
 		}
 	}
 	> img {
 		height: 45px;
-		min-width: 55px;
-		width: 55px;
+		width: auto;
+		+ div {
+			margin-left: 15px;
+		}
 	}
-	> span {
+	> div {
+		width: 100%;
 		font-weight: bold;
-		margin-left: 15px;
 		font-size: 1.2em;
-		border-bottom: 2px solid #555;
 		color: #333;
-		opacity: .8;
+		opacity: .7;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
 		transition: opacity .2s;
 	}
 }
