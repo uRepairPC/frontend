@@ -190,9 +190,6 @@ export default {
 			this.loading = true
 
 			EquipmentClass.fetchOne(+this.$route.params.id)
-				.then(() => {
-					this.fetchRequestFiles()
-				})
 				.catch(() => {
 					this.$router.push({ name: sections.equipments })
 				})
