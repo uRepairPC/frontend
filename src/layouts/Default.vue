@@ -91,6 +91,10 @@ export default {
 	padding: 0;
 }
 
+.el-container {
+	will-change: filter;
+}
+
 .page {
 	height: calc(100% - 36px);
 	overflow: auto;

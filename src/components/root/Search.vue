@@ -68,6 +68,7 @@ export default {
 	width: 100%;
 	background: rgba(255, 255, 255, .8);
 	overflow: auto;
+	will-change: transform, opacity;
 }
 
 .wrap {
