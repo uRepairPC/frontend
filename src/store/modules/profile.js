@@ -9,13 +9,18 @@ import axios from 'axios'
 const state = {
 	loading: false,
 	isLogin: false,
-	user: {}
+	user: {},
+	permissions: []
 }
 
 const mutations = {
 	SET_USER(state, obj) {
 		state.user = obj
 		StorageData.profile = obj
+	},
+	SET_PERMISSIONS(state, arr) {
+		state.permissions = arr
+		StorageData.permissions = arr
 	},
 	SET_LOADING(state, toggle) {
 		state.loading = toggle
@@ -30,6 +35,7 @@ const mutations = {
 		// Clear data from localStorage
 		StorageData.removeToken()
 		StorageData.removeProfile()
+		StorageData.removePermissions()
 
 		// Clear data from store
 		state.isLogin = false
@@ -53,6 +59,7 @@ const actions = {
 
 		axios.defaults.headers['Authorization'] = `Bearer ${token}`
 		commit('SET_USER', profile)
+		commit('SET_PERMISSIONS', StorageData.permissions)
 		commit('SET_IS_LOGIN', true)
 	},
 	auth({ commit }, data) {
@@ -62,8 +69,8 @@ const actions = {
 			.then(({ data }) => {
 				axios.defaults.headers['Authorization'] = `Bearer ${data.token}`
 				StorageData.token = data.token
-				StorageData.profile = data.user
 				commit('SET_USER', data.user)
+				commit('SET_PERMISSIONS', data.permissions)
 				commit('SET_IS_LOGIN', true)
 				router.push({ name: DEFAULT_ROUTE_NAME })
 			})
@@ -79,6 +86,7 @@ const actions = {
 		axios.get(`users/${state.user.id}`)
 			.then(({ data }) => {
 				commit('SET_USER', data.user)
+				commit('SET_PERMISSIONS', data.permissions)
 			})
 			.finally(() => {
 				commit('SET_LOADING', false)
