@@ -68,12 +68,6 @@ export default {
 			}
 		}
 	},
-	[sections.workers]: {
-		icon: 'people',
-		title: 'Працівники',
-		route: { name: sections.workers },
-		access: [roles.ADMIN]
-	},
 	[sections.settings]: {
 		icon: 'settings',
 		title: 'Конфігурація',
