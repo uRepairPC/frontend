@@ -1,6 +1,7 @@
 'use strict'
 
 import StorageData from '@/classes/StorageData'
+import { isArray } from '@/scripts/helpers'
 import axios from 'axios'
 
 /**
@@ -45,4 +46,19 @@ export function withoutLastSlash(input) {
 	}
 
 	return input
+}
+
+/**
+ * Check permission(s) with user permissions.
+ *
+ * @param {array|string} findPermissions
+ * @param {array} comparePermissions
+ * @return {boolean}
+ */
+export function includePermission(findPermissions, comparePermissions) {
+	if (isArray(findPermissions)) {
+		return findPermissions.some(permission => comparePermissions.includes(permission))
+	}
+
+	return comparePermissions.includes(findPermissions)
 }

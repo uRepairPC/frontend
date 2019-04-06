@@ -1,13 +1,14 @@
 'use strict'
 
+import * as permissions from '@/enum/permissions'
 import sections from '@/data/sections'
-import * as roles from '@/enum/roles'
 import * as types from '@/enum/types'
 import router from '@/router'
 
 /**
  * Display on sidebar. Route name must be equal to
  * template.sidebar store for show on left sidebar.
+ * In store menu will be filtered by permissions
  * @type {object} of objects
  */
 export default {
@@ -16,6 +17,7 @@ export default {
 		title: 'Головна сторінка',
 		route: { name: sections.home }
 	},
+	// TODO Permissions
 	[sections.requests]: {
 		icon: 'description',
 		title: 'Заявки',
@@ -24,6 +26,7 @@ export default {
 			show: true
 		},
 		children: {
+			// TODO Permissions
 			add: {
 				title: 'Створити заявку',
 				icon: 'add',
@@ -36,6 +39,7 @@ export default {
 		icon: 'people_outline',
 		title: 'Користувачі',
 		route: { name: sections.users },
+		permissions: permissions.USERS_VIEW,
 		history: {
 			show: true,
 			callback: (obj) => `[${obj.id}] ${obj.last_name} ${obj.first_name}`
@@ -45,7 +49,7 @@ export default {
 				title: 'Створити користувача',
 				icon: 'add',
 				type: types.PRIMARY,
-				access: [roles.ADMIN],
+				permissions: permissions.USERS_CREATE,
 				action: () => router.push({ name: `${sections.users}-create` })
 			}
 		}
@@ -54,7 +58,7 @@ export default {
 		icon: 'storage',
 		title: 'Обладнання',
 		route: { name: sections.equipments },
-		access: [roles.ADMIN, roles.WORKER],
+		permissions: permissions.EQUIPMENTS_VIEW,
 		history: {
 			show: true,
 			callback: (obj) => `[${obj.id}] ${obj.serial_number || ''} / ${obj.inventory_number || ''}`
@@ -64,6 +68,7 @@ export default {
 				title: 'Створити обладнання',
 				icon: 'add',
 				type: types.PRIMARY,
+				permissions: permissions.EQUIPMENTS_CREATE,
 				action: () => router.push({ name: `${sections.equipments}-create` })
 			}
 		}
@@ -72,30 +77,37 @@ export default {
 		icon: 'settings',
 		title: 'Конфігурація',
 		route: { name: sections.settings },
-		access: [roles.ADMIN, roles.WORKER],
+		permissions: [
+			permissions.EQUIPMENTS_VIEW,
+			permissions.OTHER_GLOBAL_SETTINGS
+		],
 		children: {
 			[sections.settingsGlobal]: {
 				title: 'Глобальні налаштування',
 				icon: 'dashboard',
 				tag: 'page',
+				permissions: permissions.OTHER_GLOBAL_SETTINGS,
 				route: { name: sections.settingsGlobal }
 			},
 			[sections.settingsTypes]: {
 				title: 'Типи обладнання',
 				icon: 'dashboard',
 				tag: 'page',
+				permissions: permissions.EQUIPMENTS_VIEW,
 				route: { name: sections.settingsTypes }
 			},
 			[sections.settingsManufacturers]: {
 				title: 'Виробники обладнання',
 				icon: 'dashboard',
 				tag: 'page',
+				permissions: permissions.EQUIPMENTS_VIEW,
 				route: { name: sections.settingsManufacturers }
 			},
 			[sections.settingsModels]: {
 				title: 'Моделі обладнання',
 				icon: 'dashboard',
 				tag: 'page',
+				permissions: permissions.EQUIPMENTS_VIEW,
 				route: { name: sections.settingsModels }
 			}
 		}

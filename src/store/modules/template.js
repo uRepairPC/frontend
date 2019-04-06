@@ -1,6 +1,7 @@
 'use strict'
 
-import { isArray, isObject } from '@/scripts/helpers'
+import { includePermission } from '@/scripts/utils'
+import { isObject } from '@/scripts/helpers'
 import menu from '@/data/menu'
 import Vue from 'vue'
 
@@ -100,20 +101,19 @@ const getters = {
 	 * by depends user role.
 	 */
 	menu(state, getters, rootState) {
-		const userRole = rootState.profile.user.role
+		const userPermissions = rootState.profile.permissions
 		const result = {}
 
 		for (const [key, obj] of Object.entries(menu)) {
-			if (isArray(obj.access)) {
-				if (!obj.access.includes(userRole)) {
-					continue
-				}
+			if (obj.permissions && !includePermission(obj.permissions, userPermissions)) {
+				continue
 			}
 
+			// Check children attribute (sub menu)
 			if (isObject(obj.children)) {
-				Object.entries(obj.children).forEach(([actionKey, action]) => {
-					if (isArray(action.access) && !action.access.includes(userRole)) {
-						delete obj.children[actionKey]
+				Object.entries(obj.children).forEach(([childKey, childItem]) => {
+					if (childItem.permissions && !includePermission(childItem.permissions, userPermissions)) {
+						delete obj.children[childKey]
 					}
 				})
 			}
