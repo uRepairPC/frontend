@@ -31,10 +31,14 @@ export default class User {
 			},
 			add(user) {
 				if (store.state.profile.user.id === user.id) {
-					store.commit('profile/SET_USER', user)
+					// Prevent delete custom attributes (relationship), like roles
+					store.commit('profile/SET_USER', {
+						...user,
+						...store.state.profile.user
+					})
 				}
 
-				store.dispatch('template/addSidebarItem', {
+				store.commit('template/ADD_SIDEBAR_ITEM', {
 					section: sections.users,
 					data: user
 				})

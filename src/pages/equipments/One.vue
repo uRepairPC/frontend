@@ -54,13 +54,13 @@
 					/>
 				</el-table>
 			</div>
-			<template v-if="files.length || loadingFiles">
+			<template v-if="equipment.files && (equipment.files.length || loadingFiles)">
 				<div class="max--width divider">
 					<span>Файли</span>
 				</div>
 				<div class="max--width">
 					<files-list
-						:files="files"
+						:files="equipment.files"
 						:loading="loadingFiles"
 						:url-download="(file) => `equipments/${$route.params.id}/files/${file.id}`"
 						@add="onAdd"
@@ -106,8 +106,7 @@ export default {
 	data() {
 		return {
 			loading: false,
-			loadingFiles: false,
-			files: []
+			loadingFiles: false
 		}
 	},
 	computed: {
@@ -183,8 +182,8 @@ export default {
 		fetchData() {
 			if (!this.equipment.id) {
 				this.fetchRequest()
+				this.fetchRequestFiles()
 			}
-			this.fetchRequestFiles() // FIXME always requests, set to equipment object*
 		},
 		fetchRequest() {
 			this.loading = true
@@ -199,10 +198,11 @@ export default {
 		},
 		fetchRequestFiles() {
 			this.loadingFiles = true
+			this.updateFiles([])
 
 			EquipmentFileClass.fetchAll(+this.$route.params.id)
 				.then(({ data }) => {
-					this.files = data.files
+					this.updateFiles(data.files)
 				})
 				.finally(() => {
 					this.loadingFiles = false
@@ -228,13 +228,20 @@ export default {
 					},
 					'fetch-files': this.fetchRequestFiles,
 					'update-file': (file, index) => {
-						this.$set(this.files, index, file)
+						const files = this.equipment.files
+						files[index] = file
+						this.updateFiles(files)
 					},
 					'delete-file': (index) => {
-						this.$delete(this.files, index)
+						const files = this.equipment.files
+						delete files[index]
+						this.updateFiles(files)
 					}
 				}
 			})
+		},
+		updateFiles(files) {
+			EquipmentClass.sidebar().add({ id: +this.$route.params.id, files })
 		},
 		onAdd() {
 			this.openDialog(FilesUploadDialog)

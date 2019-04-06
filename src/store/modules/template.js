@@ -45,13 +45,23 @@ const mutations = {
 	REMOVE_PAGE_SCROLL(state, pageName) {
 		Vue.delete(state.pagesScroll, pageName)
 	},
-	/** @see actions */
+	/**
+	 * @param state
+	 * @param {string} section - name (users, equipments, etc)
+	 * @param {{id|*}} data
+	 */
 	ADD_SIDEBAR_ITEM(state, { section, data }) {
 		if (!state.sidebar[section]) {
 			Vue.set(state.sidebar, section, {})
 		}
 
-		Vue.set(state.sidebar[section], data.id, data)
+		// Prevent delete custom attributes (relationship)
+		const oldValue = state.sidebar[section][data.id]
+
+		Vue.set(state.sidebar[section], data.id, {
+			...oldValue,
+			...data
+		})
 	},
 	/**
 	 * @param state
@@ -85,14 +95,7 @@ const mutations = {
 }
 
 const actions = {
-	/**
-	 * @param commit
-	 * @param {string} section - name (users, equipments, etc)
-	 * @param {Object} data
-	 */
-	addSidebarItem({ commit }, { section, data }) {
-		commit('ADD_SIDEBAR_ITEM', { section, data })
-	}
+	//
 }
 
 const getters = {
