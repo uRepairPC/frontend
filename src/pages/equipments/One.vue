@@ -233,8 +233,8 @@ export default {
 						this.updateFiles(files)
 					},
 					'delete-file': (index) => {
-						const files = this.equipment.files
-						delete files[index]
+						const files = [...this.equipment.files]
+						files.splice(index, 1)
 						this.updateFiles(files)
 					}
 				}

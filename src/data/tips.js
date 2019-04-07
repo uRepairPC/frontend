@@ -1,15 +1,12 @@
 'use strict'
 
-import { list as roleList} from '@/data/roles'
-import * as roles from '@/enum/roles'
-
-const adminUser = `<strong class="${roleList[roles.ADMIN].color}">${roleList[roles.ADMIN].name}</strong>`
+// TODO More tips
 
 /**
  * @var {array}
  * @example
  *  - text (string)
- *  - access (array of enum roles)
+ *  - permissions (array of enum permissions)
  */
 export default [
 	{
@@ -20,17 +17,5 @@ export default [
 	},
 	{
 		text: '<strong>Ctrl + Shift + F</strong> - відкрити глобальний пошук.'
-	},
-	{
-		text: `Тільки ${adminUser} має можливість бачити ролі інших користувачів.`,
-		access: [roles.ADMIN]
-	},
-	{
-		text: `${adminUser} не може змінювати пароль користувача вручну, тільки сгенерувати.`,
-		access: [roles.ADMIN, roles.WORKER]
-	},
-	{
-		text: 'Всі фотографії на сайті доступні тільки для зареєстрованих користувачів.',
-		access: [roles.ADMIN, roles.WORKER]
 	}
 ]

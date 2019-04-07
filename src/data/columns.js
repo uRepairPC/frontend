@@ -1,12 +1,17 @@
 'use strict'
 
+import * as permissions from '@/enum/permissions'
 import StorageData from '@/classes/StorageData'
-import * as roles from '@/enum/roles'
+
+// TODO All columns to vuex?
 
 /** @type {array} */
 export const COLUMNS_DATES = ['updated_at', 'created_at']
 
-/** @return {array} */
+/**
+ * - Support permissions -
+ * @return {array}
+ */
 function userData() {
 	const defaultActive = ['first_name', 'last_name', 'email', 'phone']
 
@@ -15,7 +20,7 @@ function userData() {
 		{ prop: 'first_name', label: 'Ім\'я', 'min-width': 150, sortable: true },
 		{ prop: 'middle_name', label: 'По-батькові', 'min-width': 150, sortable: true },
 		{ prop: 'last_name', label: 'Прізвище', 'min-width': 150, sortable: true },
-		{ prop: 'role', label: 'Роль', 'min-width': 150, access: [roles.ADMIN], sortable: true },
+		{ prop: 'roles', label: 'Ролі', 'min-width': 150, permissions: permissions.GROUPS_VIEW, sortable: true },
 		{ prop: 'email', label: 'E-mail', 'min-width': 250, sortable: true },
 		{ prop: 'phone', label: 'Телефон', 'min-width': 150, sortable: true },
 		{ prop: 'updated_at', label: 'Оновлено', 'min-width': 150, sortable: true },
@@ -29,7 +34,10 @@ function userData() {
 	})
 }
 
-/** @return {array} */
+/**
+ * - Support permissions -
+ * @return {array}
+ */
 function equipmentData() {
 	const defaultActive = ['serial_number', 'inventory_number', 'type_name', 'manufacturer_name', 'model_name']
 
@@ -52,7 +60,7 @@ function equipmentData() {
 }
 
 /*
- * Export
+ * Export const
  */
 
 /** @return {array} */

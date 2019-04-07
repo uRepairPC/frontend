@@ -14,7 +14,8 @@
 </template>
 
 <script>
-import { isArray, getRndInteger } from '@/scripts/helpers'
+import { includePermission } from '@/scripts/utils'
+import { getRndInteger } from '@/scripts/helpers'
 import tips from '@/data/tips'
 
 export default {
@@ -35,13 +36,7 @@ export default {
 			return this.tipsList.length
 		},
 		tipsList() {
-			return tips.filter((tip) => {
-				if (isArray(tip.access)) {
-					return tip.access.includes(this.profile.role)
-				}
-
-				return true
-			})
+			return tips.filter(obj => includePermission(obj.permissions))
 		}
 	},
 	methods: {

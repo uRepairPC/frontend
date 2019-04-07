@@ -101,21 +101,20 @@ const actions = {
 const getters = {
 	/**
 	 * Filter global menu (sidebar, another places)
-	 * by depends user role.
+	 * depends by user permissions.
 	 */
-	menu(state, getters, rootState) {
-		const userPermissions = rootState.profile.permissions
+	menu() {
 		const result = {}
 
 		for (const [key, obj] of Object.entries(menu)) {
-			if (obj.permissions && !includePermission(obj.permissions, userPermissions)) {
+			if (!includePermission(obj.permissions)) {
 				continue
 			}
 
 			// Check children attribute (sub menu)
 			if (isObject(obj.children)) {
 				Object.entries(obj.children).forEach(([childKey, childItem]) => {
-					if (childItem.permissions && !includePermission(childItem.permissions, userPermissions)) {
+					if (!includePermission(childItem.permissions)) {
 						delete obj.children[childKey]
 					}
 				})

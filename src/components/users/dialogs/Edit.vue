@@ -41,22 +41,6 @@
 				/>
 			</el-form-item>
 			<el-form-item
-				v-if="canChangeRole"
-				label="Роль"
-				prop="role"
-			>
-				<el-select v-model="form.role">
-					<el-option
-						v-for="(role, key) in roleList"
-						:key="key"
-						:label="role.name"
-						:value="key"
-					>
-						<span :class="role.color">{{ role.name }}</span>
-					</el-option>
-				</el-select>
-			</el-form-item>
-			<el-form-item
 				prop="phone"
 				label="Телефон"
 			>
@@ -82,10 +66,8 @@
 
 <script>
 import BasicEdit from '@/components/dialogs/BasicEdit'
-import { list as roleList } from '@/data/roles'
 import { required } from '@/data/rules'
 import UserClass from '@/classes/User'
-import * as roles from '@/enum/roles'
 
 export default {
 	components: {
@@ -107,18 +89,13 @@ export default {
 			phone: this.user.phone
 		}
 
-		if (this.user.role) {
-			form.role = this.user.role
-		}
-
 		return {
-			roleList,
+			form,
 			loading: false,
 			rules: {
 				first_name: required,
 				last_name: required
-			},
-			form
+			}
 		}
 	},
 	computed: {
@@ -130,9 +107,6 @@ export default {
 				...this.$listeners,
 				submit: this.onSubmit
 			}
-		},
-		canChangeRole() {
-			return this.profile.role === roles.ADMIN && this.profile.id !== this.user.id
 		}
 	},
 	methods: {

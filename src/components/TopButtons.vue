@@ -16,6 +16,8 @@
 </template>
 
 <script>
+import { includePermission } from '@/scripts/utils'
+
 export default {
 	props: {
 		buttons: {
@@ -26,7 +28,7 @@ export default {
 	computed: {
 		list() {
 			return this.buttons.filter((obj) => {
-				return typeof obj.show === 'undefined' || obj.show
+				return includePermission(obj.permissions) && !obj.hide
 			})
 		}
 	}

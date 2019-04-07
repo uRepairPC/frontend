@@ -2,6 +2,7 @@
 
 import StorageData from '@/classes/StorageData'
 import { isArray } from '@/scripts/helpers'
+import store from '@/store'
 import axios from 'axios'
 
 /**
@@ -50,12 +51,17 @@ export function withoutLastSlash(input) {
 
 /**
  * Check permission(s) with user permissions.
+ * findPermissions is null - available to all.
  *
- * @param {array|string} findPermissions
+ * @param {array|string|null} findPermissions
  * @param {array} comparePermissions
  * @return {boolean}
  */
-export function includePermission(findPermissions, comparePermissions) {
+export function includePermission(findPermissions, comparePermissions = store.state.profile.permissions) {
+	if (!findPermissions) {
+		return true
+	}
+
 	if (isArray(findPermissions)) {
 		return findPermissions.some(permission => comparePermissions.includes(permission))
 	}
