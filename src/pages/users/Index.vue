@@ -107,7 +107,9 @@ export default {
 			return this.$store.state.users.loading
 		},
 		activeColumnProps() {
-			return this.filterColumns.map(c => c.prop)
+			return this.filterColumns
+				.filter(c => !c.disableSearch)
+				.map(c => c.prop)
 		}
 	},
 	watch: {

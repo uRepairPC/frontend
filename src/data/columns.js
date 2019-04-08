@@ -3,12 +3,11 @@
 import * as permissions from '@/enum/permissions'
 import StorageData from '@/classes/StorageData'
 
-// TODO All columns to vuex?
-
 /** @type {array} */
 export const COLUMNS_DATES = ['updated_at', 'created_at']
 
 /**
+ * Get from store - template module.
  * - Support permissions -
  * @return {array}
  */
@@ -16,15 +15,15 @@ function userData() {
 	const defaultActive = ['first_name', 'last_name', 'email', 'phone']
 
 	const columns = [
-		{ prop: 'id', label: 'ID', 'min-width': 70, sortable: true },
-		{ prop: 'first_name', label: 'Ім\'я', 'min-width': 150, sortable: true },
-		{ prop: 'middle_name', label: 'По-батькові', 'min-width': 150, sortable: true },
-		{ prop: 'last_name', label: 'Прізвище', 'min-width': 150, sortable: true },
-		{ prop: 'roles', label: 'Ролі', 'min-width': 150, permissions: permissions.GROUPS_VIEW, sortable: true },
-		{ prop: 'email', label: 'E-mail', 'min-width': 250, sortable: true },
-		{ prop: 'phone', label: 'Телефон', 'min-width': 150, sortable: true },
-		{ prop: 'updated_at', label: 'Оновлено', 'min-width': 150, sortable: true },
-		{ prop: 'created_at', label: 'Створений', 'min-width': 150, sortable: true }
+		{ prop: 'id', label: 'ID', 'min-width': 70, sortable: 'custom' },
+		{ prop: 'first_name', label: 'Ім\'я', 'min-width': 150, sortable: 'custom' },
+		{ prop: 'middle_name', label: 'По-батькові', 'min-width': 150, sortable: 'custom' },
+		{ prop: 'last_name', label: 'Прізвище', 'min-width': 150, sortable: 'custom' },
+		{ prop: 'roles', label: 'Ролі', 'min-width': 150, permissions: permissions.GROUPS_VIEW, disableSearch: true },
+		{ prop: 'email', label: 'E-mail', 'min-width': 250, sortable: 'custom' },
+		{ prop: 'phone', label: 'Телефон', 'min-width': 150, sortable: 'custom' },
+		{ prop: 'updated_at', label: 'Оновлено', 'min-width': 150, sortable: 'custom' },
+		{ prop: 'created_at', label: 'Створений', 'min-width': 150, sortable: 'custom' }
 	]
 
 	const data = StorageData.columnUsers.length ? StorageData.columnUsers : defaultActive
@@ -35,6 +34,7 @@ function userData() {
 }
 
 /**
+ * Get from store - template module.
  * - Support permissions -
  * @return {array}
  */
@@ -42,14 +42,14 @@ function equipmentData() {
 	const defaultActive = ['serial_number', 'inventory_number', 'type_name', 'manufacturer_name', 'model_name']
 
 	const columns = [
-		{ prop: 'id', label: 'ID', 'min-width': 70, sortable: true },
-		{ prop: 'serial_number', label: 'Серійний номер', 'min-width': 200, sortable: true },
-		{ prop: 'inventory_number', label: 'Інвертарний номер', 'min-width': 200, sortable: true },
-		{ prop: 'type_name', label: 'Тип', 'min-width': 150, sortable: true },
-		{ prop: 'manufacturer_name', label: 'Виробник', 'min-width': 150, sortable: true },
-		{ prop: 'model_name', label: 'Модель', 'min-width': 150, sortable: true },
-		{ prop: 'updated_at', label: 'Оновлено', 'min-width': 150, sortable: true },
-		{ prop: 'created_at', label: 'Створений', 'min-width': 150, sortable: true }
+		{ prop: 'id', label: 'ID', 'min-width': 70, sortable: 'custom' },
+		{ prop: 'serial_number', label: 'Серійний номер', 'min-width': 200, sortable: 'custom' },
+		{ prop: 'inventory_number', label: 'Інвертарний номер', 'min-width': 200, sortable: 'custom' },
+		{ prop: 'type_name', label: 'Тип', 'min-width': 150, sortable: 'custom' },
+		{ prop: 'manufacturer_name', label: 'Виробник', 'min-width': 150, sortable: 'custom' },
+		{ prop: 'model_name', label: 'Модель', 'min-width': 150, sortable: 'custom' },
+		{ prop: 'updated_at', label: 'Оновлено', 'min-width': 150, sortable: 'custom' },
+		{ prop: 'created_at', label: 'Створений', 'min-width': 150, sortable: 'custom' }
 	]
 
 	const data = StorageData.columnEquipments.length ? StorageData.columnEquipments : defaultActive
@@ -73,7 +73,7 @@ export const equipments = equipmentData()
 export const equipmentTypes = [
 	{ prop: 'id', label: 'ID', 'min-width': 70, sortable: true },
 	{ prop: 'name', label: 'Назва', 'min-width': 150, sortable: true },
-	{ prop: 'description', label: 'Опис', 'min-width': 200, sortable: false },
+	{ prop: 'description', label: 'Опис', 'min-width': 200 },
 	{ prop: 'updated_at', label: 'Оновлено', 'min-width': 150, sortable: true },
 	{ prop: 'created_at', label: 'Створений', 'min-width': 150, sortable: true }
 ]
@@ -82,7 +82,7 @@ export const equipmentTypes = [
 export const equipmentManufacturers = [
 	{ prop: 'id', label: 'ID', 'min-width': 70, sortable: true },
 	{ prop: 'name', label: 'Назва', 'min-width': 150, sortable: true },
-	{ prop: 'description', label: 'Опис', 'min-width': 200, sortable: false },
+	{ prop: 'description', label: 'Опис', 'min-width': 200 },
 	{ prop: 'updated_at', label: 'Оновлено', 'min-width': 150, sortable: true },
 	{ prop: 'created_at', label: 'Створений', 'min-width': 150, sortable: true }
 ]
@@ -93,7 +93,7 @@ export const equipmentModels = [
 	{ prop: 'name', label: 'Назва', 'min-width': 150, sortable: true },
 	{ prop: 'manufacturer_name', label: 'Виробник', 'min-width': 150, sortable: true },
 	{ prop: 'type_name', label: 'Тип', 'min-width': 150, sortable: true },
-	{ prop: 'description', label: 'Опис', 'min-width': 200, sortable: false },
+	{ prop: 'description', label: 'Опис', 'min-width': 200 },
 	{ prop: 'updated_at', label: 'Оновлено', 'min-width': 150, sortable: true },
 	{ prop: 'created_at', label: 'Створений', 'min-width': 150, sortable: true }
 ]
