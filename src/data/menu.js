@@ -55,6 +55,24 @@ export default {
 			}
 		}
 	},
+	[sections.roles]: {
+		icon: 'group',
+		title: 'Групи',
+		route: { name: sections.roles },
+		permissions: permissions.GROUPS_VIEW,
+		history: {
+			show: true
+		},
+		children: {
+			add: {
+				title: 'Створити групу',
+				icon: 'add',
+				type: types.PRIMARY,
+				permissions: permissions.GROUPS_MANAGE,
+				action: () => router.push({ name: `${sections.roles}-create` })
+			}
+		}
+	},
 	[sections.equipments]: {
 		icon: 'storage',
 		title: 'Обладнання',

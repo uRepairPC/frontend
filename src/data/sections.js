@@ -8,6 +8,7 @@ export default {
 	requests: 'requests',
 	users: 'users',
 	equipments: 'equipments',
+	roles: 'roles',
 	settings: 'settings',
 	settingsManufacturers: 'settings-manufacturers',
 	settingsModels: 'settings-models',

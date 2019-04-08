@@ -48,6 +48,12 @@ const authorizedRoutes = {
 			name: `${sections.users}-create`,
 			component: loadPage('users/Create')
 		},
+		// ------------------------------------------------ Roles
+		{
+			path: `/${sections.roles}`,
+			name: sections.roles,
+			component: loadPage('roles/Index')
+		},
 		// ------------------------------------------------ Equipments
 		{
 			path: `/${sections.equipments}`,
