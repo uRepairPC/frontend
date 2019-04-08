@@ -1,11 +1,11 @@
 <template>
 	<div class="equipment">
 		<div class="equipment__wrap">
-			<top-buttons :buttons="buttons" />
-			<div
-				v-loading="loading"
-				class="header max--width"
-			>
+			<top-buttons
+				:buttons="buttons"
+				:disabled="loading"
+			/>
+			<div class="header max--width">
 				<div class="header__wrap">
 					<div class="header-item">
 						<div class="header-item__title">

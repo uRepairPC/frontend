@@ -4,7 +4,7 @@
 			v-for="(btn, index) in list"
 			:key="index"
 			size="mini"
-			:disabled="btn.disabled"
+			:disabled="btn.disabled || disabled"
 			:loading="btn.loading"
 			:type="btn.type"
 			plain
@@ -23,6 +23,10 @@ export default {
 		buttons: {
 			type: Array,
 			required: true
+		},
+		disabled: {
+			type: Boolean,
+			default: false
 		}
 	},
 	computed: {

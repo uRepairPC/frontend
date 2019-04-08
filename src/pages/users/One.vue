@@ -1,7 +1,10 @@
 <template>
 	<div class="user">
 		<div class="user__wrap">
-			<top-buttons :buttons="buttons" />
+			<top-buttons
+				:buttons="buttons"
+				:disabled="loading"
+			/>
 			<div
 				v-loading="loading"
 				class="header max--width"
