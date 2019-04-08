@@ -134,12 +134,3 @@ export default {
 	}
 }
 </script>
-
-<style lang="scss" scoped>
-.dialog--default {
-	/deep/ > .el-dialog {
-		margin-top: 5vh !important;
-		max-width: 600px;
-	}
-}
-</style>
