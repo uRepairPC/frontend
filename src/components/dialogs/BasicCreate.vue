@@ -24,10 +24,9 @@
 <script>
 export default {
 	inheritAttrs: false,
-	computed: {
-		loading() {
-			return this.$attrs.loading
-		}
+	props: {
+		type: Boolean,
+		default: false
 	},
 	methods: {
 		onSubmit() {

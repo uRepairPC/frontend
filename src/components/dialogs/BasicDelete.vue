@@ -41,18 +41,22 @@
 <script>
 export default {
 	inheritAttrs: false,
+	props: {
+		confirm: {
+			type: [Boolean, Number, String],
+			default: ''
+		},
+		loading: {
+			type: Boolean,
+			default: false
+		}
+	},
 	data() {
 		return {
 			input: ''
 		}
 	},
 	computed: {
-		confirm() {
-			return this.$attrs.confirm
-		},
-		loading() {
-			return this.$attrs.loading
-		},
 		btnDisabled() {
 			if (this.loading) {
 				return true

@@ -28,14 +28,17 @@ import { mapState } from 'vuex'
 
 export default {
 	inheritAttrs: false,
+	props: {
+		value: {
+			type: Number,
+			default: null
+		}
+	},
 	computed: {
 		...mapState({
 			list: state => state.equipmentTypes.list,
 			loading: state => state.equipmentTypes.loading
 		}),
-		value() {
-			return +this.$attrs.value || null
-		},
 		displayValue() {
 			if (this.value && !this.hasItems && this.loading) {
 				return 'Завантаження'

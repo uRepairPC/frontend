@@ -1,7 +1,7 @@
 <template>
 	<component
 		:visible="visible"
-		:is="component"
+		:is="dialog.component"
 		v-bind="dialog.attrs"
 		v-on="listeners"
 	/>
@@ -11,8 +11,7 @@
 export default {
 	data() {
 		return {
-			visible: false,
-			component: null
+			visible: false
 		}
 	},
 	computed: {
@@ -36,10 +35,16 @@ export default {
 		}
 	},
 	watch: {
+		/**
+		 * FIXME Temporary fix problem
+		 * @see https://stackoverflow.com/a/49122742/9612245
+		 */
 		dialog(val) {
 			if (val.component) {
-				this.component = { ...val.component } // FIXME Deep clone?
+				this.$store._committing = true
 				this.visible = true
+			} else {
+				this.$store._committing = false
 			}
 		}
 	}

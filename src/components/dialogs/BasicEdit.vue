@@ -24,12 +24,14 @@
 <script>
 export default {
 	inheritAttrs: false,
-	computed: {
-		loading() {
-			return this.$attrs.loading
+	props: {
+		loading: {
+			type: Boolean,
+			default: false
 		},
-		saveBtn() {
-			return this.$attrs['save-btn'] || 'Зберегти'
+		saveBtn: {
+			type: String,
+			default: 'Зберегти'
 		}
 	},
 	methods: {
