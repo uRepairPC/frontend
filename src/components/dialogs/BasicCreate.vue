@@ -25,8 +25,10 @@
 export default {
 	inheritAttrs: false,
 	props: {
-		type: Boolean,
-		default: false
+		loading: {
+			type: Boolean,
+			default: false
+		}
 	},
 	methods: {
 		onSubmit() {
