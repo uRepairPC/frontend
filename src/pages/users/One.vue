@@ -40,9 +40,9 @@
 </template>
 
 <script>
-// TODO Change roles dialog
 import EditPasswordDialog from '@/components/users/dialogs/EditPassword'
 import DeletePhotoDialog from '@/components/users/dialogs/DeleteImage'
+import EditRolesDialog from '@/components/users/dialogs/EditRoles'
 import EditPhotoDialog from '@/components/users/dialogs/EditImage'
 import EditEmailDialog from '@/components/users/dialogs/EditEmail'
 import DeleteDialog from '@/components/users/dialogs/Delete'
@@ -120,6 +120,12 @@ export default {
 					type: types.PRIMARY,
 					permissions: permissions.USERS_EDIT,
 					action: () => this.openDialog(EditEmailDialog)
+				},
+				{
+					title: 'Редагування ролей',
+					type: types.PRIMARY,
+					permissions: permissions.GROUPS_MANAGE,
+					action: () => this.openDialog(EditRolesDialog)
 				},
 				{
 					title: 'Видалити зображення',

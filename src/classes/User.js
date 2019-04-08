@@ -152,7 +152,28 @@ export default class User {
 	}
 
 	/**
-	 * Store resource by id and working with leftSidebar.
+	 * Edit resource password by id.
+	 *
+	 * @param {number} id
+	 * @param {*} data
+	 * @param {AxiosRequestConfig} config
+	 * @return {Promise<AxiosPromise<any>>}
+	 */
+	static fetchEditRoles(id, data = null, config = null) {
+		return axios.put(`${API_POINT}/${id}/roles`, data, config)
+			.then((response) => {
+				const user = User.sidebar().get(id)
+
+				if (user) {
+					User.sidebar().add(response.data.user)
+				}
+
+				return response
+			})
+	}
+
+	/**
+	 * Store resource and working with leftSidebar.
 	 *
 	 * @param {*} data
 	 * @param {AxiosRequestConfig} config
