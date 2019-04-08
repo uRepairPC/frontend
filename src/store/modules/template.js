@@ -111,16 +111,20 @@ const getters = {
 				continue
 			}
 
+			let children = null
+
 			// Check children attribute (sub menu)
 			if (isObject(obj.children)) {
+				children = {}
+
 				Object.entries(obj.children).forEach(([childKey, childItem]) => {
-					if (!includePermission(childItem.permissions)) {
-						delete obj.children[childKey]
+					if (includePermission(childItem.permissions)) {
+						children[childKey] = childItem
 					}
 				})
 			}
 
-			result[key] = obj
+			result[key] = { ...obj, children }
 		}
 
 		return result

@@ -6,9 +6,9 @@ import * as types from '@/enum/types'
 import router from '@/router'
 
 /**
- * Display on sidebar. Route name must be equal to
- * template.sidebar store for show on left sidebar.
- * In store menu will be filtered by permissions
+ * Display on sidebar. Route name must be equal to template.sidebar
+ * store for show on the left sidebar
+ * In store menu will be filtered by permissions.
  * @type {object} of objects
  */
 export default {
@@ -45,7 +45,6 @@ export default {
 			callback: (obj) => `[${obj.id}] ${obj.last_name} ${obj.first_name}`
 		},
 		children: {
-			// TODO After logout (role: user), and again login (role: admin) - btn not visible
 			add: {
 				title: 'Створити користувача',
 				icon: 'add',
