@@ -19,7 +19,7 @@ function userData() {
 		{ prop: 'first_name', label: 'Ім\'я', 'min-width': 150, sortable: 'custom' },
 		{ prop: 'middle_name', label: 'По-батькові', 'min-width': 150, sortable: 'custom' },
 		{ prop: 'last_name', label: 'Прізвище', 'min-width': 150, sortable: 'custom' },
-		{ prop: 'roles', label: 'Ролі', 'min-width': 150, permissions: permissions.GROUPS_VIEW, disableSearch: true },
+		{ prop: 'roles', label: 'Ролі', 'min-width': 150, permissions: permissions.ROLES_VIEW, disableSearch: true },
 		{ prop: 'email', label: 'E-mail', 'min-width': 250, sortable: 'custom' },
 		{ prop: 'phone', label: 'Телефон', 'min-width': 150, sortable: 'custom' },
 		{ prop: 'updated_at', label: 'Оновлено', 'min-width': 150, sortable: 'custom' },

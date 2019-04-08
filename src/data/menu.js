@@ -56,9 +56,9 @@ export default {
 	},
 	[sections.roles]: {
 		icon: 'group',
-		title: 'Групи',
+		title: 'Ролі',
 		route: { name: sections.roles },
-		permissions: permissions.GROUPS_VIEW,
+		permissions: permissions.ROLES_VIEW,
 		history: {
 			show: true
 		},
@@ -67,7 +67,7 @@ export default {
 				title: 'Створити групу',
 				icon: 'add',
 				type: types.PRIMARY,
-				permissions: permissions.GROUPS_MANAGE,
+				permissions: permissions.ROLES_MANAGE,
 				action: () => router.push({ name: `${sections.roles}-create` })
 			}
 		}

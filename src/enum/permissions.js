@@ -14,10 +14,10 @@ export const USERS_DELETE = 'users.delete'
 export const PROFILE_EDIT = 'profile.edit'
 
 /*
- * Groups
+ * Roles
  */
-export const GROUPS_VIEW = 'groups.view'
-export const GROUPS_MANAGE = 'groups.manage'
+export const ROLES_VIEW = 'roles.view'
+export const ROLES_MANAGE = 'roles.manage'
 
 /*
  * Equipments
