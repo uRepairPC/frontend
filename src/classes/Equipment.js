@@ -94,7 +94,7 @@ export default class Equipment {
 	}
 
 	/**
-	 * Store resource by id and working with leftSidebar.
+	 * Store resource and working with leftSidebar.
 	 *
 	 * @param {*} data
 	 * @param {AxiosRequestConfig} config
