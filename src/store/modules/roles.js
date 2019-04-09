@@ -1,12 +1,14 @@
 'use strict'
 
+import { roles as roleColumns } from '@/data/columns'
+import { includePermission } from '@/scripts/utils'
 import Role from '@/classes/Role'
 import Vue from 'vue'
 
 const state = {
 	loading: false,
 	popover: {},
-	list: []
+	list: {}
 }
 
 const mutations = {
@@ -22,10 +24,10 @@ const mutations = {
 }
 
 const actions = {
-	fetchList({ commit }) {
+	fetchList({ commit }, params) {
 		commit('SET_LOADING', true)
 
-		Role.fetchAll()
+		Role.fetchAll({ params })
 			.then(({ data }) => {
 				commit('SET_LIST', data)
 			})
@@ -41,6 +43,15 @@ const actions = {
 	}
 }
 
+const getters = {
+	/*
+	 * Display on table.
+	 */
+	columns() {
+		return roleColumns.filter(column => includePermission(column.permissions))
+	}
+}
+
 export default {
-	state, mutations, actions
+	state, mutations, actions, getters
 }
