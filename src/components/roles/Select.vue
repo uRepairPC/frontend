@@ -57,7 +57,7 @@ export default {
 			const params = { count: 10 }
 			this.loading = true
 
-			if (query) {
+			if (query && query.trim()) {
 				params.search = query
 				params.columns = ['display_name']
 			}

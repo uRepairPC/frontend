@@ -250,10 +250,9 @@ export default class User {
 	/** @return {string|null} */
 	get backgroundImage() {
 		if (this.user.image) {
-			const path = encodeURIComponent(this.user.image)
 			const token = StorageData.token
 
-			return `background-image: url(/api/users/get/image?path=${path}&token=${token})`
+			return `background-image: url(/api/users/${this.user.id}/image?token=${token})`
 		}
 
 		return null
