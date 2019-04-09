@@ -24,7 +24,7 @@
 		<div class="content">
 			<div class="title">Доступи</div>
 			<div
-				v-if="hasRoleStore"
+				v-if="hasRolePermissions"
 				class="sections"
 			>
 				<div
@@ -66,13 +66,13 @@ export default {
 		roleStore() {
 			return Role.sidebar().get(this.role.id)
 		},
-		hasRoleStore() {
-			return !!this.roleStore
+		hasRolePermissions() {
+			return !!this.roleStore && !!this.roleStore.permissions_grouped
 		}
 	},
 	methods: {
 		onPopoverShow() {
-			if (!this.hasRoleStore) {
+			if (!this.hasRolePermissions) {
 				Role.fetchOne(this.role.id)
 					.then(() => {
 						this.$refs.popover.updatePopper()
