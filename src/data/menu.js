@@ -65,7 +65,7 @@ export default {
 		},
 		children: {
 			add: {
-				title: 'Створити групу',
+				title: 'Створити роль',
 				icon: 'add',
 				type: types.PRIMARY,
 				permissions: permissions.ROLES_MANAGE,

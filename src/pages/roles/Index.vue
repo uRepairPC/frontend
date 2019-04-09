@@ -8,6 +8,7 @@
 				:list="roles"
 				:loading="loading"
 				:loading-type="loadingType"
+				:row-style="onRowStyle"
 				@row-click="onRowClick"
 				@sort-change="onSortChange"
 			>
@@ -157,6 +158,9 @@ export default {
 		onSortChange({ prop: column, order }) {
 			this.sort = { column, order }
 			this.fetchList()
+		},
+		onRowStyle({ row }) {
+			return { 'background-color': row.color + '10' }
 		}
 	}
 }
