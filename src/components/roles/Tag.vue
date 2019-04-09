@@ -3,6 +3,9 @@
 		ref="popover"
 		placement="top-start"
 		trigger="hover"
+		:open-delay="500"
+		v-bind="$attrs"
+		v-on="$listeners"
 		@show="onPopoverShow"
 	>
 		<el-tag
@@ -40,6 +43,7 @@
 
 <script>
 export default {
+	inheritAttrs: false,
 	props: {
 		role: {
 			type: Object,
@@ -67,7 +71,7 @@ export default {
 
 <style lang="scss" scoped>
 .role-tag {
-	margin: 5px 10px 5px 0;
+	margin: 2px 5px 2px 0;
 }
 
 .section {

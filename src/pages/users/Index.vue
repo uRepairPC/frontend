@@ -12,9 +12,12 @@
 				@sort-change="onSortChange"
 			>
 				<template slot-scope="{ column, row }">
-					<template v-if="column.prop === 'roles' && row">
-						<!--TODO Component + save in vuex after popover (fetch)-->
-						Roles component
+					<template v-if="column.prop === 'roles'">
+						<role-tag
+							v-for="(role, index) in row"
+							:key="index"
+							:role="role"
+						/>
 					</template>
 					<template v-else>
 						{{ row }}
@@ -56,6 +59,7 @@ import scrollTableMixin from '@/mixins/scrollTable'
 import StorageData from '@/classes/StorageData'
 import TableComponent from '@/components/Table'
 import breadcrumbs from '@/mixins/breadcrumbs'
+import RoleTag from '@/components/roles/Tag'
 import UserClass from '@/classes/User'
 import sections from '@/data/sections'
 import { mapGetters } from 'vuex'
@@ -67,7 +71,7 @@ export default {
 		{ title: menu[sections.users].title }
 	],
 	components: {
-		TableComponent, TemplatePage
+		TableComponent, TemplatePage, RoleTag
 	},
 	mixins: [
 		scrollTableMixin, breadcrumbs
