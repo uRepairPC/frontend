@@ -14,7 +14,7 @@
 		>
 			<el-form-item
 				prop="name"
-				label="Оберіть ролі"
+				label="Оберіть ролі (введіть текст для отримання списку)"
 			>
 				<select-roles
 					v-model="form.roles"

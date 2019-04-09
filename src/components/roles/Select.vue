@@ -13,10 +13,14 @@
 		v-bind="$attrs"
 	>
 		<el-option
-			v-for="(item, index) in list"
-			:key="index"
+			v-for="item in list"
+			:key="item.name"
 			:label="item.display_name"
 			:value="item.name"
+			:style="{
+				'background-color': item.color + '10',
+				color: item.color
+			}"
 		/>
 	</el-select>
 </template>
@@ -44,6 +48,9 @@ export default {
 	created() {
 		this.list = this.defaultRoles
 		this.$emit('input', this.list.map(item => item.name))
+	},
+	mounted() {
+		this.list = []
 	},
 	methods: {
 		fetchRequest(query) {
