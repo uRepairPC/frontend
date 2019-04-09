@@ -23,6 +23,17 @@ export default class Role {
 	}
 
 	/**
+	 * Get resource by id.
+	 *
+	 * @param {number} id
+	 * @param {AxiosRequestConfig} config
+	 * @return {Promise<AxiosPromise<any>>}
+	 */
+	static fetchOne(id, config = null) {
+		return axios.get(`${API_POINT}/${id}`, config)
+	}
+
+	/**
 	 * Store resource.
 	 *
 	 * @param {*} data

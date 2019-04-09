@@ -5,10 +5,7 @@
 				:buttons="buttons"
 				:disabled="loading"
 			/>
-			<div
-				v-loading="loading"
-				class="header max--width"
-			>
+			<div class="header max--width">
 				<user-image :user="user" />
 			</div>
 			<div
@@ -29,9 +26,12 @@
 						label="Значення"
 					>
 						<template slot-scope="scope">
-							<span v-if="scope.row.key === 'roles' && scope.row.value">
-								<!--TODO Output roles, make component (with popover on hover)-->
-								Roles
+							<span v-if="scope.row.key === 'roles'">
+								<role-tag
+									v-for="(role, index) in scope.row.value"
+									:key="index"
+									:role="role"
+								/>
 							</span>
 							<span v-else>{{ scope.row.value }}</span>
 						</template>
@@ -56,6 +56,7 @@ import TopButtons from '@/components/TopButtons'
 import UserImage from '@/components/users/Image'
 import breadcrumbs from '@/mixins/breadcrumbs'
 import { COLUMNS_DATES } from '@/data/columns'
+import RoleTag from '@/components/roles/Tag'
 import UserClass from '@/classes/User'
 import sections from '@/data/sections'
 import * as types from '@/enum/types'
@@ -68,7 +69,7 @@ export default {
 		{ title: route => `ID: ${route.params.id || -1}` }
 	],
 	components: {
-		UserImage, TopButtons
+		UserImage, TopButtons, RoleTag
 	},
 	mixins: [
 		breadcrumbs
@@ -127,7 +128,7 @@ export default {
 				{
 					title: 'Редагування ролей',
 					type: types.PRIMARY,
-					permissions: permissions.GROUPS_MANAGE,
+					permissions: permissions.ROLES_MANAGE,
 					action: () => this.openDialog(EditRolesDialog)
 				},
 				{
@@ -155,7 +156,7 @@ export default {
 		},
 		tableData() {
 			return [
-				{ name: 'Ролі', key: 'roles', permissions: permissions.GROUPS_VIEW },
+				{ name: 'Ролі', key: 'roles', permissions: permissions.ROLES_VIEW },
 				{ name: 'E-mail', key: 'email' },
 				{ name: 'Опис', key: 'description' },
 				{ name: 'Телефон', key: 'phone' },
