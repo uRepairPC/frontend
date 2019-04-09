@@ -54,6 +54,11 @@ const authorizedRoutes = {
 			name: sections.roles,
 			component: loadPage('roles/Index')
 		},
+		{
+			path: `/${sections.roles}/create`,
+			name: `${sections.roles}-create`,
+			component: loadPage('roles/Create')
+		},
 		// ------------------------------------------------ Equipments
 		{
 			path: `/${sections.equipments}`,
