@@ -60,7 +60,8 @@ export default {
 		route: { name: sections.roles },
 		permissions: permissions.ROLES_VIEW,
 		history: {
-			show: true
+			show: true,
+			callback: (obj) => `[${obj.id}] ${obj.display_name}`
 		},
 		children: {
 			add: {

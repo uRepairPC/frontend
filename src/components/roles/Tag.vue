@@ -2,8 +2,8 @@
 	<el-popover
 		ref="popover"
 		placement="top-start"
-		trigger="hover"
-		:open-delay="500"
+		trigger="click"
+		popper-class="popover-role"
 		v-bind="$attrs"
 		v-on="$listeners"
 		@show="onPopoverShow"
@@ -21,27 +21,39 @@
 			{{ role.display_name }}
 		</el-tag>
 		<!--Content-->
-		<div v-if="loading">Завантаження..</div>
-		<div class="sections">
+		<div class="content">
+			<div class="title">Доступи</div>
 			<div
-				v-for="(section, key) in permissions"
-				:key="key"
-				class="section"
+				v-if="hasRoleStore"
+				class="sections"
 			>
-				<div class="section-title">{{ key }}</div>
 				<div
-					v-for="(item, index) in section"
-					:key="index"
-					class="section-list"
+					v-for="(section, key) in roleStore.permissions_grouped"
+					:key="key"
+					class="section"
 				>
-					{{ item.display_name }}
+					<div class="section-title">{{ key }}</div>
+					<div
+						v-for="(item, index) in section"
+						:key="index"
+						class="section-list"
+					>
+						{{ item.display_name }}
+					</div>
 				</div>
 			</div>
+			<div
+				class="loading"
+				v-loading="true"
+				v-else
+			/>
 		</div>
 	</el-popover>
 </template>
 
 <script>
+import Role from '@/classes/Role'
+
 export default {
 	inheritAttrs: false,
 	props: {
@@ -51,18 +63,20 @@ export default {
 		}
 	},
 	computed: {
-		permissions() {
-			return this.$store.state.roles.popover[this.role.id]
+		roleStore() {
+			return Role.sidebar().get(this.role.id)
 		},
-		loading() {
-			return !this.permissions
+		hasRoleStore() {
+			return !!this.roleStore
 		}
 	},
 	methods: {
-		async onPopoverShow() {
-			if (!this.permissions) {
-				await this.$store.dispatch('roles/fetchPopover', this.role.id)
-				this.$refs.popover.updatePopper()
+		onPopoverShow() {
+			if (!this.hasRoleStore) {
+				Role.fetchOne(this.role.id)
+					.then(() => {
+						this.$refs.popover.updatePopper()
+					})
 			}
 		}
 	}
@@ -70,8 +84,26 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "~scss/_colors";
+
 .role-tag {
 	margin: 2px 5px 2px 0;
+	user-select: none;
+	cursor: pointer;
+}
+
+.title {
+	text-align: center;
+	font-weight: bold;
+	padding: 5px;
+	border-bottom: 1px solid $baseBorder;
+	box-shadow: $lightShadow;
+}
+
+.sections {
+	padding: 12px;
+	max-height: 300px;
+	overflow: auto;
 }
 
 .section {
@@ -87,5 +119,9 @@ export default {
 
 .section-list {
 	margin-left: 10px;
+}
+
+.loading {
+	height: 100px;
 }
 </style>

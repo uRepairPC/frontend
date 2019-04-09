@@ -1,7 +1,7 @@
 <template>
 	<div class="history">
 		<div class="history-title">
-			Відкриті сторінки
+			Збережені сторінки
 		</div>
 		<el-collapse v-model="activeNames">
 			<el-collapse-item
