@@ -1,9 +1,13 @@
 'use strict'
 
+import EquipmentManufacturerDialog from '@/components/equipments/manufacturers/dialogs/Create'
+import EquipmentModelDialog from '@/components/equipments/models/dialogs/Create'
+import EquipmentTypeDialog from '@/components/equipments/types/dialogs/Create'
 import * as permissions from '@/enum/permissions'
 import sections from '@/data/sections'
 import * as types from '@/enum/types'
 import router from '@/router'
+import store from '@/store'
 
 /**
  * Display on sidebar. Route name must be equal to template.sidebar
@@ -113,21 +117,60 @@ export default {
 				icon: 'dashboard',
 				tag: 'page',
 				permissions: permissions.EQUIPMENTS_VIEW,
-				route: { name: sections.settingsTypes }
+				route: { name: sections.settingsTypes },
+				children: {
+					add: {
+						title: 'Створити тип',
+						icon: 'add',
+						type: types.PRIMARY,
+						permissions: permissions.EQUIPMENTS_CREATE,
+						action: () => {
+							store.commit('template/OPEN_DIALOG', {
+								component: EquipmentTypeDialog
+							})
+						}
+					}
+				}
 			},
 			[sections.settingsManufacturers]: {
 				title: 'Виробники обладнання',
 				icon: 'dashboard',
 				tag: 'page',
 				permissions: permissions.EQUIPMENTS_VIEW,
-				route: { name: sections.settingsManufacturers }
+				route: { name: sections.settingsManufacturers },
+				children: {
+					add: {
+						title: 'Створити виробника',
+						icon: 'add',
+						type: types.PRIMARY,
+						permissions: permissions.EQUIPMENTS_CREATE,
+						action: () => {
+							store.commit('template/OPEN_DIALOG', {
+								component: EquipmentManufacturerDialog
+							})
+						}
+					}
+				}
 			},
 			[sections.settingsModels]: {
 				title: 'Моделі обладнання',
 				icon: 'dashboard',
 				tag: 'page',
 				permissions: permissions.EQUIPMENTS_VIEW,
-				route: { name: sections.settingsModels }
+				route: { name: sections.settingsModels },
+				children: {
+					add: {
+						title: 'Створити модель',
+						icon: 'add',
+						type: types.PRIMARY,
+						permissions: permissions.EQUIPMENTS_CREATE,
+						action: () => {
+							store.commit('template/OPEN_DIALOG', {
+								component: EquipmentModelDialog
+							})
+						}
+					}
+				}
 			}
 		}
 	}

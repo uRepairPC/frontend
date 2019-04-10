@@ -1,7 +1,7 @@
 'use strict'
 
+import { isArray, isObject } from '@/scripts/helpers'
 import StorageData from '@/classes/StorageData'
-import { isArray } from '@/scripts/helpers'
 import store from '@/store'
 import axios from 'axios'
 
@@ -67,4 +67,28 @@ export function includePermission(findPermissions, comparePermissions = store.st
 	}
 
 	return comparePermissions.includes(findPermissions)
+}
+
+/**
+ * Recursively go around the object (children)
+ * and check for permissions.
+ *
+ * @param {object} data
+ */
+export function filterByPermission(data) {
+	const result = {}
+
+	for (const [key, obj] of Object.entries(data)) {
+		if (!includePermission(obj.permissions)) {
+			continue
+		}
+
+		result[key] = obj
+
+		if (isObject(obj.children)) {
+			result[key].children = filterByPermission(obj.children)
+		}
+	}
+
+	return result
 }

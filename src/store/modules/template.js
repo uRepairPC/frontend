@@ -1,7 +1,6 @@
 'use strict'
 
-import { includePermission } from '@/scripts/utils'
-import { isObject } from '@/scripts/helpers'
+import { filterByPermission } from '@/scripts/utils'
 import menu from '@/data/menu'
 import Vue from 'vue'
 
@@ -104,30 +103,7 @@ const getters = {
 	 * depends by user permissions.
 	 */
 	menu() {
-		const result = {}
-
-		for (const [key, obj] of Object.entries(menu)) {
-			if (!includePermission(obj.permissions)) {
-				continue
-			}
-
-			let children = null
-
-			// Check children attribute (sub menu)
-			if (isObject(obj.children)) {
-				children = {}
-
-				Object.entries(obj.children).forEach(([childKey, childItem]) => {
-					if (includePermission(childItem.permissions)) {
-						children[childKey] = childItem
-					}
-				})
-			}
-
-			result[key] = { ...obj, children }
-		}
-
-		return result
+		return filterByPermission(menu)
 	}
 }
 

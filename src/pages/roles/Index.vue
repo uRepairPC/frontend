@@ -13,7 +13,7 @@
 				@sort-change="onSortChange"
 			>
 				<template slot-scope="{ column, row }">
-					<template v-if="column.prop === 'default'">
+					<template v-if="column.prop === 'default' && row && !row.disable">
 						{{ row ? 'Так' : 'Ні' }}
 					</template>
 					<template v-else>
