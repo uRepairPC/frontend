@@ -33,8 +33,8 @@ export default class User {
 				if (store.state.profile.user.id === user.id) {
 					// Prevent delete custom attributes (relationship), like roles
 					store.commit('profile/SET_USER', {
-						...user,
-						...store.state.profile.user
+						...store.state.profile.user,
+						...user
 					})
 				}
 
