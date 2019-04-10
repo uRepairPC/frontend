@@ -88,7 +88,9 @@ export default {
 			return server + this.settings.logo_header
 		},
 		sectionRequestMenuActions() {
-			return this.menu[sections.requests].children || {}
+			const section = this.menu[sections.requests] || {}
+
+			return section.children || {}
 		}
 	},
 	methods: {

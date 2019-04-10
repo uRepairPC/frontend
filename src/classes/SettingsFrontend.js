@@ -97,11 +97,16 @@ export default class SettingsFrontend {
 	 * @return {Promise<AxiosPromise<any>>}
 	 */
 	static fetchStore(data = null, config = null) {
+		hasRequest = true
+
 		return axios.post(API_POINT, data, config)
 			.then((res) => {
 				SettingsFrontend.updateData(res.data.settings, res.data.modified)
 				SettingsFrontend.updateDOM()
 				return res
+			})
+			.finally(() => {
+				hasRequest = false
 			})
 	}
 

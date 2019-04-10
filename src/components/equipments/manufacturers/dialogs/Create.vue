@@ -62,7 +62,7 @@ export default {
 		listeners() {
 			return {
 				...this.$listeners,
-				submit: this.fetchRequest
+				submit: this.onSubmit
 			}
 		}
 	},

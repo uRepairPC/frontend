@@ -1,8 +1,8 @@
 'use strict'
 
 import { equipments as equipmentColumns } from '@/data/columns'
+import { includePermission } from '@/scripts/utils'
 import EquipmentClass from '@/classes/Equipment'
-import { isArray } from '@/scripts/helpers'
 import Vue from 'vue'
 
 const state = {
@@ -50,16 +50,8 @@ const getters = {
 	/*
 	 * Display on table.
 	 */
-	columns(state, getters, rootState) {
-		const userRole = rootState.profile.user.role
-
-		return equipmentColumns.filter((column) => {
-			if (isArray(column.access)) {
-				return column.access.includes(userRole)
-			}
-
-			return true
-		})
+	columns() {
+		return equipmentColumns.filter(column => includePermission(column.permissions))
 	},
 	// Type -> Manufacturer -> Model
 	cascaderOptions(state, getters, rootState) {

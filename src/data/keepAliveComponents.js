@@ -5,8 +5,8 @@ export const root = [
 	'Home',
 	'Requests',
 	'Users',
-	'Workers',
-	'Settings'
+	'Settings',
+	'Roles'
 ]
 
 /** @type {array} */

@@ -31,10 +31,14 @@ export default class User {
 			},
 			add(user) {
 				if (store.state.profile.user.id === user.id) {
-					store.commit('profile/SET_USER', user)
+					// Prevent delete custom attributes (relationship), like roles
+					store.commit('profile/SET_USER', {
+						...store.state.profile.user,
+						...user
+					})
 				}
 
-				store.dispatch('template/addSidebarItem', {
+				store.commit('template/ADD_SIDEBAR_ITEM', {
 					section: sections.users,
 					data: user
 				})
@@ -148,7 +152,28 @@ export default class User {
 	}
 
 	/**
-	 * Store resource by id and working with leftSidebar.
+	 * Edit resource password by id.
+	 *
+	 * @param {number} id
+	 * @param {*} data
+	 * @param {AxiosRequestConfig} config
+	 * @return {Promise<AxiosPromise<any>>}
+	 */
+	static fetchEditRoles(id, data = null, config = null) {
+		return axios.put(`${API_POINT}/${id}/roles`, data, config)
+			.then((response) => {
+				const user = User.sidebar().get(id)
+
+				if (user) {
+					User.sidebar().add(response.data.user)
+				}
+
+				return response
+			})
+	}
+
+	/**
+	 * Store resource and working with leftSidebar.
 	 *
 	 * @param {*} data
 	 * @param {AxiosRequestConfig} config
@@ -225,10 +250,9 @@ export default class User {
 	/** @return {string|null} */
 	get backgroundImage() {
 		if (this.user.image) {
-			const path = encodeURIComponent(this.user.image)
 			const token = StorageData.token
 
-			return `background-image: url(/api/users/get/image?path=${path}&token=${token})`
+			return `background-image: url(/api/users/${this.user.id}/image?token=${token})`
 		}
 
 		return null

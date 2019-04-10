@@ -4,6 +4,10 @@
 			<div class="title">
 				{{ titlePage }}
 			</div>
+			<el-alert type="info">
+				Фотографію, роль або ж інші дані можно будет змінити після створення.<br>
+				Роль за умовчанням буде присвоєно в залежності від налаштувань.
+			</el-alert>
 			<el-form
 				ref="form"
 				:model="form"
@@ -48,21 +52,6 @@
 					/>
 				</el-form-item>
 				<el-form-item
-					label="Роль"
-					prop="role"
-				>
-					<el-select v-model="form.role">
-						<el-option
-							v-for="(role, key) in roleList"
-							:key="key"
-							:label="role.name"
-							:value="key"
-						>
-							<span :class="role.color">{{ role.name }}</span>
-						</el-option>
-					</el-select>
-				</el-form-item>
-				<el-form-item
 					prop="phone"
 					label="Телефон"
 				>
@@ -99,12 +88,10 @@
 </template>
 
 <script>
-import { list as roleList } from '@/data/roles'
 import breadcrumbs from '@/mixins/breadcrumbs'
 import * as dataRules from '@/data/rules'
 import UserClass from '@/classes/User'
 import sections from '@/data/sections'
-import * as roles from '@/enum/roles'
 import menu from '@/data/menu'
 
 export default {
@@ -117,16 +104,12 @@ export default {
 	],
 	data() {
 		return {
-			roleList,
 			loading: false,
-			form: {
-				role: roles.USER
-			},
+			form: {},
 			rules: {
 				email: dataRules.email,
 				first_name: dataRules.required,
-				last_name: dataRules.required,
-				role: dataRules.required
+				last_name: dataRules.required
 			}
 		}
 	},
@@ -175,6 +158,10 @@ export default {
 	font-size: 1.5rem;
 	font-weight: bold;
 	margin: 25px 15px;
+}
+
+.el-alert {
+	margin-bottom: 20px;
 }
 
 .el-select {

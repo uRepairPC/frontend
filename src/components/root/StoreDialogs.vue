@@ -1,8 +1,8 @@
 <template>
 	<component
-		:visible="visible"
-		:is="component"
-		v-bind="dialog.attrs"
+		:visible.sync="visible"
+		:is="dialog.component"
+		v-bind="attrs"
 		v-on="listeners"
 	/>
 </template>
@@ -11,8 +11,7 @@
 export default {
 	data() {
 		return {
-			visible: false,
-			component: null
+			visible: false
 		}
 	},
 	computed: {
@@ -22,24 +21,32 @@ export default {
 		listeners() {
 			return {
 				...this.dialog.events,
-				close: () => {
-					this.visible = false
-				},
-				closed: this.closeDialog
+				close: this.closeDialog
+			}
+		},
+		attrs() {
+			return {
+				'close-on-click-modal': false,
+				...this.dialog.attrs
 			}
 		}
 	},
 	methods: {
 		closeDialog() {
-			this.component = null
 			this.$store.commit('template/CLOSE_DIALOG')
 		}
 	},
 	watch: {
+		/**
+		 * FIXME Temporary fix problem on assign component (object)
+		 * @see https://stackoverflow.com/a/49122742/9612245
+		 */
 		dialog(val) {
 			if (val.component) {
-				this.component = { ...val.component } // FIXME Deep clone?
+				this.$store._committing = true
 				this.visible = true
+			} else {
+				this.$store._committing = false
 			}
 		}
 	}

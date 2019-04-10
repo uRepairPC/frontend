@@ -58,7 +58,7 @@ export default {
 			})
 				.then(() => {
 					this.$emit('delete')
-					this.$emit('input', false)
+					this.$emit('close')
 				})
 				.finally(() => {
 					this.loading = false

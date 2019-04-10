@@ -1,36 +1,32 @@
 'use strict'
 
-import { list as roleList} from '@/data/roles'
-import * as roles from '@/enum/roles'
-
-const adminUser = `<strong class="${roleList[roles.ADMIN].color}">${roleList[roles.ADMIN].name}</strong>`
+import * as permissions from '@/enum/permissions'
 
 /**
  * @var {array}
  * @example
  *  - text (string)
- *  - access (array of enum roles)
+ *  - permissions (array of enum permissions)
  */
 export default [
 	{
-		text: '<strong>Ctrl + Shift + F / Esc</strong> - закрити глобальний пошук.'
+		text: '<code>Ctrl + Shift + F / Esc</code> - закрити глобальний пошук.'
 	},
 	{
-		text: '<strong>Shift + Mouse Wheel</strong> - переміщати горизонтальний скролл.'
+		text: '<code>Shift + Mouse Wheel</code> - переміщати горизонтальний скролл.'
 	},
 	{
-		text: '<strong>Ctrl + Shift + F</strong> - відкрити глобальний пошук.'
+		text: '<code>Ctrl + Shift + F</code> - відкрити глобальний пошук.'
 	},
 	{
-		text: `Тільки ${adminUser} має можливість бачити ролі інших користувачів.`,
-		access: [roles.ADMIN]
+		text: 'Ви можете призначати декілька ролей на одного користувача.',
+		permissions: permissions.ROLES_MANAGE
 	},
 	{
-		text: `${adminUser} не може змінювати пароль користувача вручну, тільки сгенерувати.`,
-		access: [roles.ADMIN, roles.WORKER]
+		text: '<code>Esc</code> - закрити модальне вікно'
 	},
 	{
-		text: 'Всі фотографії на сайті доступні тільки для зареєстрованих користувачів.',
-		access: [roles.ADMIN, roles.WORKER]
+		text: 'Користувач після створення має <strong>ролі за замовчуванням</strong>',
+		permissions: permissions.ROLES_VIEW
 	}
 ]

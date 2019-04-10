@@ -149,11 +149,3 @@ export default {
 	}
 }
 </script>
-
-<style lang="scss" scoped>
-.dialog--default {
-	/deep/ > .el-dialog {
-		margin-top: 5vh !important;
-	}
-}
-</style>

@@ -12,7 +12,6 @@
 			v-for="(column, index) in columns"
 			:key="index"
 			v-bind="column"
-			sortable="custom"
 		>
 			<template slot-scope="scope">
 				<template v-if="isColumnDate(column.prop)">

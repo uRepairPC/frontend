@@ -55,11 +55,8 @@ axios.interceptors.response.use(
 			const retryOriginalRequest = new Promise((resolve) => {
 				requestsToRefresh.push((access_token) => {
 					config.headers['Authorization'] = 'Bearer ' + access_token
-					resolve(axios({
-						...config,
-						// TODO Check on prod
-						url: config.urlDomain.replace(/^api\//, '')
-					}))
+					config.baseURL = null
+					resolve(axios(config))
 				})
 			})
 

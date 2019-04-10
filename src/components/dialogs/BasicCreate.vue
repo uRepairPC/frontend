@@ -24,9 +24,10 @@
 <script>
 export default {
 	inheritAttrs: false,
-	computed: {
-		loading() {
-			return this.$attrs.loading
+	props: {
+		loading: {
+			type: Boolean,
+			default: false
 		}
 	},
 	methods: {

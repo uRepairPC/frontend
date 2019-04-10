@@ -35,7 +35,7 @@ export default class EquipmentModel {
 	}
 
 	/**
-	 * Store resource by id.
+	 * Store resource.
 	 *
 	 * @param {*} data
 	 * @param {AxiosRequestConfig} config

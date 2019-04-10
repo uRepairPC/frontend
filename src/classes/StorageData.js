@@ -9,10 +9,16 @@ const COLUMN_USERS = 'column_users'
 const COLUMN_EQUIPMENTS = 'column_equipments'
 
 /** @type {string} */
+const COLUMN_ROLES = 'column_roles'
+
+/** @type {string} */
 const TOKEN = 'token'
 
 /** @type {string} */
 const PROFILE = 'profile'
+
+/** @type {string} */
+const PERMISSIONS = 'permissions'
 
 /** @type {string} */
 const SETTINGS = 'settings'
@@ -56,6 +62,22 @@ export default class StorageData {
 		return this.remove(COLUMN_EQUIPMENTS)
 	}
 
+	/* Column Roles ------------------------------------------------------------------------- */
+
+	/** @return {Array} */
+	static get columnRoles() {
+		return this.getArray(COLUMN_ROLES)
+	}
+
+	static set columnRoles(value) {
+		this.setArray(COLUMN_ROLES, value)
+	}
+
+	/** @return {boolean} */
+	static removeColumnRoles() {
+		return this.remove(COLUMN_ROLES)
+	}
+
 	/* Token -------------------------------------------------------------------------------- */
 
 	/** @return {string} */
@@ -86,6 +108,22 @@ export default class StorageData {
 	/** @return {boolean} */
 	static removeProfile() {
 		return this.remove(PROFILE)
+	}
+
+	/* Permissions ---------------------------------------------------------------------------------- */
+
+	/** @return {array} */
+	static get permissions() {
+		return this.getArray(PERMISSIONS)
+	}
+
+	static set permissions(value) {
+		this.setArray(PERMISSIONS, value)
+	}
+
+	/** @return {boolean} */
+	static removePermissions() {
+		return this.remove(PERMISSIONS)
 	}
 
 	/* SettingsFrontend ----------------------------------------------------------------------------- */

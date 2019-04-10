@@ -5,19 +5,16 @@
 				slot="left-column"
 				v-scroll="onScroll"
 				:columns="filterColumns"
-				:list="users"
+				:list="roles"
 				:loading="loading"
 				:loading-type="loadingType"
+				:row-style="onRowStyle"
 				@row-click="onRowClick"
 				@sort-change="onSortChange"
 			>
 				<template slot-scope="{ column, row }">
-					<template v-if="column.prop === 'roles'">
-						<role-tag
-							v-for="(role, index) in row"
-							:key="index"
-							:role="role"
-						/>
+					<template v-if="column.prop === 'default' && row && !row.disable">
+						{{ row ? 'Так' : 'Ні' }}
 					</template>
 					<template v-else>
 						{{ row }}
@@ -59,26 +56,25 @@ import scrollTableMixin from '@/mixins/scrollTable'
 import StorageData from '@/classes/StorageData'
 import TableComponent from '@/components/Table'
 import breadcrumbs from '@/mixins/breadcrumbs'
-import RoleTag from '@/components/roles/Tag'
-import UserClass from '@/classes/User'
 import sections from '@/data/sections'
+import Role from '@/classes/Role'
 import { mapGetters } from 'vuex'
 import menu from '@/data/menu'
 
 export default {
-	name: 'Users',
+	name: 'Roles',
 	breadcrumbs: [
-		{ title: menu[sections.users].title }
+		{ title: menu[sections.roles].title }
 	],
 	components: {
-		TableComponent, TemplatePage, RoleTag
+		TableComponent, TemplatePage
 	},
 	mixins: [
 		scrollTableMixin, breadcrumbs
 	],
 	data() {
 		return {
-			sectionName: sections.users,
+			sectionName: sections.roles,
 			columns: [],
 			loadingType: 'rows',
 			fixed: null,
@@ -88,12 +84,12 @@ export default {
 	},
 	computed: {
 		...mapGetters({
-			'userColumns': 'users/columns'
+			'roleColumns': 'roles/columns'
 		}),
 		list() {
-			return this.$store.state.users.list
+			return this.$store.state.roles.list
 		},
-		users() {
+		roles() {
 			return this.list.data || []
 		},
 		filterColumns() {
@@ -108,7 +104,7 @@ export default {
 			return columns
 		},
 		loading() {
-			return this.$store.state.users.loading
+			return this.$store.state.roles.loading
 		},
 		activeColumnProps() {
 			return this.filterColumns
@@ -117,7 +113,7 @@ export default {
 		}
 	},
 	watch: {
-		userColumns: {
+		roleColumns: {
 			handler(arr) {
 				this.columns = arr
 			},
@@ -129,13 +125,13 @@ export default {
 	},
 	methods: {
 		fetchList(page = 1) {
-			this.loadingType = page === 1 && this.users.length ? 'directive' : 'rows'
+			this.loadingType = page === 1 && this.roles.length ? 'directive' : 'rows'
 
 			if (this.loadingType === 'directive') {
 				this.$refs.buttons.scrollTop()
 			}
 
-			this.$store.dispatch('users/fetchList', {
+			this.$store.dispatch('roles/fetchList', {
 				page,
 				sortColumn: this.sort.column,
 				sortOrder: this.sort.order,
@@ -144,24 +140,27 @@ export default {
 			})
 		},
 		onChangeColumn() {
-			StorageData.columnUsers = this.filterColumns.map(i => i.prop)
+			StorageData.columnRoles = this.filterColumns.map(i => i.prop)
 		},
 		onScroll() {
 			if (!this.loading && this.list.current_page < this.list.last_page) {
 				this.fetchList(this.list.current_page + 1)
 			}
 		},
-		onRowClick(user) {
-			if (user.disable) {
+		onRowClick(role) {
+			if (role.disable) {
 				return
 			}
 
-			UserClass.sidebar().add(user)
-			this.$router.push({ name: `${sections.users}-id`, params: { id: user.id } })
+			Role.sidebar().add(role)
+			this.$router.push({ name: `${sections.roles}-id`, params: { id: role.id } })
 		},
 		onSortChange({ prop: column, order }) {
 			this.sort = { column, order }
 			this.fetchList()
+		},
+		onRowStyle({ row }) {
+			return { 'background-color': row.color + '10' }
 		}
 	}
 }

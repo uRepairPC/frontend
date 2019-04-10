@@ -14,7 +14,8 @@
 </template>
 
 <script>
-import { isArray, getRndInteger } from '@/scripts/helpers'
+import { includePermission } from '@/scripts/utils'
+import { getRndInteger } from '@/scripts/helpers'
 import tips from '@/data/tips'
 
 export default {
@@ -35,13 +36,7 @@ export default {
 			return this.tipsList.length
 		},
 		tipsList() {
-			return tips.filter((tip) => {
-				if (isArray(tip.access)) {
-					return tip.access.includes(this.profile.role)
-				}
-
-				return true
-			})
+			return tips.filter(obj => includePermission(obj.permissions))
 		}
 	},
 	methods: {
@@ -72,6 +67,15 @@ export default {
 	text-overflow: ellipsis;
 	overflow-x: hidden;
 	cursor: pointer;
+	/deep/ code {
+		display: inline-block;
+		background: #f7f7f7;
+		padding: 3px 10px;
+		font-weight: bold;
+		border-radius: 5px;
+		color: #333;
+		border: 1px solid #dadada;
+	}
 }
 
 // <animation>

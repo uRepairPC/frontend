@@ -29,7 +29,7 @@ export default class Equipment {
 				return equipments[id]
 			},
 			add(equipment) {
-				store.dispatch('template/addSidebarItem', {
+				store.commit('template/ADD_SIDEBAR_ITEM', {
 					section: sections.equipments,
 					data: equipment
 				})
@@ -94,7 +94,7 @@ export default class Equipment {
 	}
 
 	/**
-	 * Store resource by id and working with leftSidebar.
+	 * Store resource and working with leftSidebar.
 	 *
 	 * @param {*} data
 	 * @param {AxiosRequestConfig} config
