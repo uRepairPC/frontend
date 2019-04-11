@@ -182,6 +182,8 @@ export default {
 		fetchData() {
 			if (!this.equipment.id) {
 				this.fetchRequest()
+			}
+			if (!this.equipment.files) {
 				this.fetchRequestFiles()
 			}
 		},
