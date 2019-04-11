@@ -74,7 +74,18 @@ export default {
 			},
 			rules: {
 				password: rules.password,
-				repeat_password: rules.password
+				repeat_password: [
+					...rules.password,
+					{
+						validator: (rule, value, callback) => {
+							if (this.passwordEqual) {
+								callback()
+							} else {
+								callback(new Error('Паролі не співпадають'))
+							}
+						}
+					}
+				]
 			}
 		}
 	},
@@ -107,10 +118,6 @@ export default {
 		},
 		onSubmit() {
 			if (this.profile.id === this.user.id) {
-				if (!this.passwordEqual) {
-					return
-				}
-
 				this.$refs.form.validate((valid) => {
 					if (!valid) {
 						return
