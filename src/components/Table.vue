@@ -14,7 +14,8 @@
 			v-bind="column"
 		>
 			<template slot-scope="scope">
-				<template v-if="isColumnDate(column.prop)">
+				<template v-if="loading && loadingRows" />
+				<template v-else-if="isColumnDate(column.prop)">
 					{{ getDate(scope.row[column.prop]) }}
 				</template>
 				<template v-else>
