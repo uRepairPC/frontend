@@ -77,6 +77,11 @@ export default class User {
 	static fetchOne(id, config = null) {
 		return axios.get(`${API_POINT}/${id}`, config)
 			.then((response) => {
+				// Update for current user new permissions
+				if (store.state.profile.user.id === id && response.data.permissions) {
+					store.commit('profile/SET_PERMISSIONS', response.data.permissions)
+				}
+
 				User.sidebar().add(response.data.user)
 				return response
 			})
