@@ -31,6 +31,7 @@
 </template>
 
 <script>
+import StoreDialog from '@/components/settings/dialogs/Store'
 import FrontendItem from '@/components/settings/FrontendItem'
 import SettingsFrontend from '@/classes/SettingsFrontend'
 import breadcrumbs from '@/mixins/breadcrumbs'

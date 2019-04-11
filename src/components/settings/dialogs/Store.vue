@@ -114,7 +114,7 @@ export default {
 				if (typeof val === 'boolean') {
 					fd.append(key, +val)
 				} else {
-					fd.append(key, val)
+					fd.append(key, val || '')
 				}
 			})
 

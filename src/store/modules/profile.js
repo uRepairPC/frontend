@@ -37,6 +37,8 @@ const mutations = {
 		StorageData.removeProfile()
 		StorageData.removePermissions()
 
+		// FIXME Clear all data on exit? - list of users, roles, etc..
+
 		// Clear data from store
 		state.isLogin = false
 
