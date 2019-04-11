@@ -14,7 +14,7 @@
 			v-bind="column"
 		>
 			<template slot-scope="scope">
-				<template v-if="loading && loadingRows" />
+				<template v-if="loading && loadingRows && scope.row.loading" />
 				<template v-else-if="isColumnDate(column.prop)">
 					{{ getDate(scope.row[column.prop]) }}
 				</template>
@@ -60,7 +60,7 @@ export default {
 	computed: {
 		dataList() {
 			if (this.loading && this.loadingType === 'rows') {
-				return [...this.list, ...Array(10).fill({ disable: true })]
+				return [...this.list, ...Array(10).fill({ disable: true, loading: true })]
 			}
 
 			return this.list
