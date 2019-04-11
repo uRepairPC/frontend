@@ -83,7 +83,7 @@ export function filterByPermission(data) {
 			continue
 		}
 
-		result[key] = obj
+		result[key] = { ...obj }
 
 		if (isObject(obj.children)) {
 			result[key].children = filterByPermission(obj.children)
