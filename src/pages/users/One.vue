@@ -128,6 +128,7 @@ export default {
 				{
 					title: 'Редагування ролей',
 					type: types.PRIMARY,
+					disabled: this.profile.id === this.user.id,
 					permissions: permissions.ROLES_MANAGE,
 					action: () => this.openDialog(EditRolesDialog)
 				},

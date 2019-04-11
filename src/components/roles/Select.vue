@@ -9,6 +9,7 @@
 		placeholder="Введіть текст для отримання списку"
 		:remote-method="fetchRequest"
 		:loading="loading"
+		@focus="onFocus"
 		v-on="$listeners"
 		v-bind="$attrs"
 	>
@@ -69,6 +70,11 @@ export default {
 				.finally(() => {
 					this.loading = false
 				})
+		},
+		onFocus() {
+			if (!this.list.length) {
+				this.fetchRequest()
+			}
 		}
 	}
 }
