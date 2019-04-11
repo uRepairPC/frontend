@@ -52,7 +52,7 @@
 					{{ row.title }}
 				</el-checkbox>
 				<el-input
-					v-else="row.type === 'text'"
+					v-else
 					v-model="form[row.attr]"
 					:placeholder="row.title"
 				/>
@@ -79,18 +79,6 @@ export default {
 			form: {}
 		}
 	},
-	created() {
-		this.rows.forEach((row) => {
-			switch (row.type) {
-				case 'bool':
-					this.$set(this.form, row.attr, !!this.settings[row.attr])
-					break
-				case 'text':
-					this.$set(this.form, row.attr, this.settings[row.attr])
-					break
-			}
-		})
-	},
 	computed: {
 		listeners() {
 			return {
@@ -104,6 +92,18 @@ export default {
 		settings() {
 			return this.$store.state.template.settings
 		}
+	},
+	created() {
+		this.rows.forEach((row) => {
+			switch (row.type) {
+			case 'bool':
+				this.$set(this.form, row.attr, !!this.settings[row.attr])
+				break
+			case 'text':
+				this.$set(this.form, row.attr, this.settings[row.attr])
+				break
+			}
+		})
 	},
 	methods: {
 		fetchRequest() {

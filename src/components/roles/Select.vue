@@ -9,9 +9,9 @@
 		placeholder="Введіть текст для отримання списку"
 		:remote-method="fetchRequest"
 		:loading="loading"
+		v-bind="$attrs"
 		@focus="onFocus"
 		v-on="$listeners"
-		v-bind="$attrs"
 	>
 		<el-option
 			v-for="item in list"

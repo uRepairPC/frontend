@@ -7,8 +7,8 @@
 		<div
 			:key="index"
 			class="tips"
-			v-html="currentTip.text"
 			@click.prevent="onClick"
+			v-html="currentTip.text"
 		/>
 	</transition>
 </template>
@@ -25,9 +25,6 @@ export default {
 			currentTip: ''
 		}
 	},
-	created() {
-		this.changeTip()
-	},
 	computed: {
 		profile() {
 			return this.$store.state.profile.user
@@ -38,6 +35,9 @@ export default {
 		tipsList() {
 			return tips.filter(obj => includePermission(obj.permissions))
 		}
+	},
+	created() {
+		this.changeTip()
 	},
 	methods: {
 		onClick() {

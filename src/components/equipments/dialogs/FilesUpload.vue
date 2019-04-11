@@ -33,10 +33,10 @@ import { isArray, isObject } from '@/scripts/helpers'
 import EquipmentClass from '@/classes/Equipment'
 
 export default {
-	inheritAttrs: false,
 	components: {
 		BasicEdit
 	},
+	inheritAttrs: false,
 	props: {
 		equipment: {
 			type: Object,

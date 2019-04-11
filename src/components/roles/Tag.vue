@@ -22,7 +22,9 @@
 		</el-tag>
 		<!--Content-->
 		<div class="content">
-			<div class="title">Доступи</div>
+			<div class="title">
+				Доступи
+			</div>
 			<div
 				v-if="hasRolePermissions"
 				class="sections"
@@ -32,7 +34,9 @@
 					:key="key"
 					class="section"
 				>
-					<div class="section-title">{{ key }}</div>
+					<div class="section-title">
+						{{ key }}
+					</div>
 					<div
 						v-for="(item, index) in section"
 						:key="index"
@@ -43,9 +47,9 @@
 				</div>
 			</div>
 			<div
-				class="loading"
-				v-loading="true"
 				v-else
+				v-loading="true"
+				class="loading"
 			/>
 		</div>
 	</el-popover>

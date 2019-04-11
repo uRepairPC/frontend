@@ -5,7 +5,7 @@
 				v-if="settings.logo_auth"
 				:src="logo"
 				alt="logo"
-			/>
+			>
 			<span
 				v-else
 				class="title"
