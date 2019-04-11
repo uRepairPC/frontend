@@ -13,4 +13,7 @@ export const serverProd = withoutLastSlash(process.env.SERVER_PROD) || 'http://l
 export const serverDev = withoutLastSlash(process.env.SERVER_DEV) || 'http://localhost'
 
 /** @return {string} */
+export const serverSocket = withoutLastSlash(process.env.SERVER_SOCKET) || 'http://localhost:3000'
+
+/** @return {string} */
 export const server = isProd ? serverProd : serverDev

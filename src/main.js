@@ -4,6 +4,8 @@ import '@babel/polyfill'
 import SettingsFrontend from '@/classes/SettingsFrontend'
 import filterComponents from '@/components/filters/index'
 import locale from 'element-ui/lib/locale/lang/ua'
+import { serverSocket, isProd } from '@/data/env'
+import VueSocketIO from 'vue-socket.io'
 import prototypes from '@/prototypes'
 import directives from '@/directives'
 import ElementUI from 'element-ui'
@@ -19,6 +21,15 @@ import '@/styles/index'
 
 // Connect libraries to Vue
 Vue.use(ElementUI, { locale })
+Vue.use(new VueSocketIO({
+	debug: !isProd,
+	connection: serverSocket,
+	vuex: {
+		store,
+		actionPrefix: 'SOCKET_',
+		mutationPrefix: 'SOCKET_'
+	}
+}))
 
 // Prevent the production tip on Vue startup
 Vue.config.productionTip = false
