@@ -1,5 +1,5 @@
 <template>
-	<template-page>
+	<template-list>
 		<template slot="left-column">
 			<table-component
 				slot="left-column"
@@ -50,11 +50,11 @@
 				@update="fetchList"
 			/>
 		</filter-core>
-	</template-page>
+	</template-list>
 </template>
 
 <script>
-import TemplatePage from '@/components/template/Page'
+import TemplateList from '@/components/template/List'
 import scrollTableMixin from '@/mixins/scrollTable'
 import StorageData from '@/classes/StorageData'
 import TableComponent from '@/components/Table'
@@ -71,7 +71,7 @@ export default {
 		{ title: menu[sections.users].title }
 	],
 	components: {
-		TableComponent, TemplatePage, RoleTag
+		TableComponent, TemplateList, RoleTag
 	},
 	mixins: [
 		scrollTableMixin, breadcrumbs

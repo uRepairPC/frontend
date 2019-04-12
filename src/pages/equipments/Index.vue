@@ -1,5 +1,5 @@
 <template>
-	<template-page>
+	<template-list>
 		<template slot="left-column">
 			<table-component
 				slot="left-column"
@@ -37,11 +37,11 @@
 				@update="fetchList"
 			/>
 		</filter-core>
-	</template-page>
+	</template-list>
 </template>
 
 <script>
-import TemplatePage from '@/components/template/Page'
+import TemplateList from '@/components/template/List'
 import scrollTableMixin from '@/mixins/scrollTable'
 import EquipmentClass from '@/classes/Equipment'
 import StorageData from '@/classes/StorageData'
@@ -57,7 +57,7 @@ export default {
 		{ title: menu[sections.equipments].title }
 	],
 	components: {
-		TableComponent, TemplatePage
+		TableComponent, TemplateList
 	},
 	mixins: [
 		scrollTableMixin, breadcrumbs
