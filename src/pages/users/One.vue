@@ -3,11 +3,10 @@
 		:buttons="buttons"
 		:table-data="tableData"
 		:loading="loading"
-		class="user"
 	>
 		<user-image
 			slot="header"
-			:user="user"
+			:user="model"
 		/>
 		<div
 			slot="table"
@@ -39,24 +38,20 @@ import TopButtons from '@/components/TopButtons'
 import UserImage from '@/components/users/Image'
 import breadcrumbs from '@/mixins/breadcrumbs'
 import RoleTag from '@/components/roles/Tag'
-import UserClass from '@/classes/User'
 import sections from '@/data/sections'
+import onePage from '@/mixins/onePage'
 import * as types from '@/enum/types'
-import menu from '@/data/menu'
+import User from '@/classes/User'
 
 // !id -> { loadings: ['general'] }
 // !roles -> { loadings: ['general', 'roles'] }
 
 export default {
-	breadcrumbs: [
-		{ title: menu[sections.users].title, routeName: sections.users },
-		{ title: route => `ID: ${route.params.id || -1}` }
-	],
 	components: {
 		UserImage, TopButtons, RoleTag, TemplateOne
 	},
 	mixins: [
-		breadcrumbs
+		breadcrumbs, onePage(sections.users)
 	],
 	data() {
 		return {
@@ -66,16 +61,6 @@ export default {
 	computed: {
 		profile() {
 			return this.$store.state.profile.user
-		},
-		user() {
-			const users = this.$store.state.template.sidebar[sections.users]
-			const id = this.$route.params.id
-
-			if (users && users[id]) {
-				return users[id]
-			}
-
-			return {}
 		},
 		buttons() {
 			return [
@@ -112,27 +97,27 @@ export default {
 				{
 					title: 'Редагування ролей',
 					type: types.PRIMARY,
-					disabled: this.profile.id === this.user.id,
+					disabled: this.profile.id === this.model.id,
 					permissions: permissions.ROLES_MANAGE,
 					action: () => this.openDialog(EditRolesDialog)
 				},
 				{
 					title: 'Видалити зображення',
 					type: types.WARNING,
-					disabled: !this.user.image,
+					disabled: !this.model.image,
 					permissions: permissions.USERS_EDIT,
 					action: () => this.openDialog(DeletePhotoDialog)
 				},
 				{
 					title: 'Видалити користувача',
 					type: types.DANGER,
-					disabled: this.profile.id === this.user.id,
+					disabled: this.profile.id === this.model.id,
 					permissions: permissions.USERS_DELETE,
 					action: () => this.openDialog(DeleteDialog)
 				}
 			]
 				.map((obj) => {
-					if (this.profile.id === this.user.id && obj.permissions === permissions.USERS_EDIT) {
+					if (this.profile.id === this.model.id && obj.permissions === permissions.USERS_EDIT) {
 						return { ...obj, permissions: [obj.permissions, permissions.PROFILE_EDIT] }
 					}
 
@@ -149,28 +134,21 @@ export default {
 				{ name: 'Останнє оновлення', prop: 'updated_at' }
 			]
 				.reduce((result, obj) => {
-					result.push({ ...obj, value: this.user[obj.prop] })
+					result.push({ ...obj, value: this.model[obj.prop] })
 					return result
 				}, [])
 		}
 	},
-	watch: {
-		'$route'() {
-			if (!this.user.id) {
+	methods: {
+		fetchData() {
+			if (!this.model.id) {
 				this.fetchRequest()
 			}
-		}
-	},
-	created() {
-		if (!this.user.id) {
-			this.fetchRequest()
-		}
-	},
-	methods: {
+		},
 		fetchRequest() {
 			this.loading = true
 
-			UserClass.fetchOne(+this.$route.params.id)
+			User.fetchOne(+this.$route.params.id)
 				.catch(() => {
 					this.$router.push({ name: sections.users })
 				})
@@ -182,7 +160,7 @@ export default {
 			this.$store.commit('template/OPEN_DIALOG', {
 				component,
 				attrs: {
-					user: this.user
+					user: this.model
 				},
 				events: {
 					delete: () => {
