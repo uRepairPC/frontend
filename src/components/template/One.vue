@@ -8,7 +8,8 @@
 			/>
 			<div
 				v-if="!!$slots.header"
-				class="template-header max--width">
+				class="template-header max--width"
+			>
 				<slot name="header" />
 			</div>
 			<div
@@ -53,10 +54,13 @@ import ColumnData from '@/components/ColumnData'
 import TopButtons from '@/components/TopButtons'
 
 export default {
+	components: {
+		TopButtons, ColumnData
+	},
 	props: {
 		buttons: {
 			type: Array,
-			required: null
+			default: null
 		},
 		loading: {
 			type: Boolean,
@@ -66,9 +70,6 @@ export default {
 			type: Array,
 			default: null
 		}
-	},
-	components: {
-		TopButtons, ColumnData
 	},
 	computed: {
 		columns() {

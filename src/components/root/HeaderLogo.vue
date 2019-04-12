@@ -29,11 +29,6 @@ export default {
 	components: {
 		LogoLeftFontSvg
 	},
-	methods: {
-		onClickLogo() {
-			this.$router.push({ name: DEFAULT_ROUTE_NAME })
-		}
-	},
 	computed: {
 		settings() {
 			return this.$store.state.template.settings
@@ -47,6 +42,11 @@ export default {
 			}
 
 			return this.settings.logo_header && this.settings.app_name && this.settings.name_and_logo
+		}
+	},
+	methods: {
+		onClickLogo() {
+			this.$router.push({ name: DEFAULT_ROUTE_NAME })
 		}
 	}
 }

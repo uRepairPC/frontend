@@ -3,7 +3,7 @@
 		{{ dateValue }}
 	</div>
 	<div v-else-if="isBool">
-		{{ this.row.value ? 'Так' : 'Ні' }}
+		{{ row.value ? 'Так' : 'Ні' }}
 	</div>
 	<div v-else>
 		<slot />

@@ -34,7 +34,6 @@ import DeleteDialog from '@/components/users/dialogs/Delete'
 import EditDialog from '@/components/users/dialogs/Edit'
 import TemplateOne from '@/components/template/One'
 import * as permissions from '@/enum/permissions'
-import TopButtons from '@/components/TopButtons'
 import UserImage from '@/components/users/Image'
 import breadcrumbs from '@/mixins/breadcrumbs'
 import RoleTag from '@/components/roles/Tag'
@@ -45,7 +44,7 @@ import User from '@/classes/User'
 
 export default {
 	components: {
-		UserImage, TopButtons, RoleTag, TemplateOne
+		UserImage, RoleTag, TemplateOne
 	},
 	mixins: [
 		breadcrumbs, onePage(sections.users)
