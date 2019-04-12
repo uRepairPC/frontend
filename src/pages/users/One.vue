@@ -43,9 +43,6 @@ import onePage from '@/mixins/onePage'
 import * as types from '@/enum/types'
 import User from '@/classes/User'
 
-// !id -> { loadings: ['general'] }
-// !roles -> { loadings: ['general', 'roles'] }
-
 export default {
 	components: {
 		UserImage, TopButtons, RoleTag, TemplateOne
@@ -63,6 +60,8 @@ export default {
 			return this.$store.state.profile.user
 		},
 		buttons() {
+			const ownProfile = this.profile.id === this.model.id
+
 			return [
 				{
 					title: 'Оновити',
@@ -97,7 +96,7 @@ export default {
 				{
 					title: 'Редагування ролей',
 					type: types.PRIMARY,
-					disabled: this.profile.id === this.model.id,
+					disabled: ownProfile,
 					permissions: permissions.ROLES_MANAGE,
 					action: () => this.openDialog(EditRolesDialog)
 				},
@@ -111,13 +110,13 @@ export default {
 				{
 					title: 'Видалити користувача',
 					type: types.DANGER,
-					disabled: this.profile.id === this.model.id,
+					disabled: ownProfile,
 					permissions: permissions.USERS_DELETE,
 					action: () => this.openDialog(DeleteDialog)
 				}
 			]
 				.map((obj) => {
-					if (this.profile.id === this.model.id && obj.permissions === permissions.USERS_EDIT) {
+					if (ownProfile && obj.permissions === permissions.USERS_EDIT) {
 						return { ...obj, permissions: [obj.permissions, permissions.PROFILE_EDIT] }
 					}
 
@@ -130,8 +129,8 @@ export default {
 				{ name: 'E-mail', prop: 'email' },
 				{ name: 'Опис', prop: 'description' },
 				{ name: 'Телефон', prop: 'phone' },
-				{ name: 'Створений', prop: 'created_at' },
-				{ name: 'Останнє оновлення', prop: 'updated_at' }
+				{ name: 'Створений', prop: 'created_at', type: { key: 'timestamp', value: 'LL' } },
+				{ name: 'Останнє оновлення', prop: 'updated_at', type: { key: 'timestamp', value: 'LL' } }
 			]
 				.reduce((result, obj) => {
 					result.push({ ...obj, value: this.model[obj.prop] })

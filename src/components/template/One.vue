@@ -30,30 +30,27 @@
 						label="Значення"
 					>
 						<template slot-scope="{ row }">
-							<template v-if="isColumnDate(row.prop)">
-								{{ getDate(row.value) }}
-							</template>
-							<template v-else>
+							<column-data :row="row">
 								<slot
 									name="table"
 									:row="row"
 								>
 									{{ row.value }}
 								</slot>
-							</template>
+							</column-data>
 						</template>
 					</el-table-column>
 				</el-table>
 			</div>
+			<slot />
 		</div>
 	</div>
 </template>
 
 <script>
 import { includePermission } from '@/scripts/utils'
+import ColumnData from '@/components/ColumnData'
 import TopButtons from '@/components/TopButtons'
-import { COLUMNS_DATES } from '@/data/columns'
-import moment from 'moment'
 
 export default {
 	props: {
@@ -71,24 +68,12 @@ export default {
 		}
 	},
 	components: {
-		TopButtons
+		TopButtons, ColumnData
 	},
 	computed: {
 		columns() {
 			return this.tableData
 				.filter(obj => includePermission(obj.permissions))
-		}
-	},
-	methods: {
-		getDate(date) {
-			if (!date) {
-				return null
-			}
-
-			return moment(date).format('LL')
-		},
-		isColumnDate(prop) {
-			return COLUMNS_DATES.includes(prop)
 		}
 	}
 }
