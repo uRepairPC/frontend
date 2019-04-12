@@ -1,6 +1,7 @@
 'use strict'
 
 import StorageData from '@/classes/StorageData'
+import defaultFavicon from '@/images/icon.png'
 import { setFavicon } from '@/scripts/dom'
 import { server } from '@/data/env'
 import store from '@/store'
@@ -22,6 +23,7 @@ export default class SettingsFrontend {
 			SettingsFrontend.updateDOM()
 		} else {
 			SettingsFrontend.checkUpdate(-1)
+			setFavicon(defaultFavicon)
 		}
 	}
 
@@ -63,6 +65,8 @@ export default class SettingsFrontend {
 		// Favicon
 		if (data.favicon) {
 			setFavicon(server + data.favicon)
+		} else {
+			setFavicon(defaultFavicon)
 		}
 
 		// Meta title
