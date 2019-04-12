@@ -55,6 +55,11 @@ const authorizedRoutes = {
 			component: loadPage('roles/Index')
 		},
 		{
+			path: `/${sections.roles}/:id(\\d+)`,
+			name: `${sections.roles}-id`,
+			component: loadPage('roles/One')
+		},
+		{
 			path: `/${sections.roles}/create`,
 			name: `${sections.roles}-create`,
 			component: loadPage('roles/Create')
