@@ -1,45 +1,28 @@
 <template>
-	<div class="user">
-		<div class="user__wrap">
-			<top-buttons
-				:buttons="buttons"
-				:disabled="loading"
-			/>
-			<div class="header max--width">
-				<user-image :user="user" />
-			</div>
-			<div
-				v-loading="loading"
-				class="content max--width"
-			>
-				<el-table
-					:data="tableData"
-					style="width: 100%"
-				>
-					<el-table-column
-						prop="name"
-						label="Назва"
-						width="200"
-					/>
-					<el-table-column
-						prop="value"
-						label="Значення"
-					>
-						<template slot-scope="scope">
-							<span v-if="scope.row.key === 'roles'">
-								<role-tag
-									v-for="(role, index) in scope.row.value"
-									:key="index"
-									:role="role"
-								/>
-							</span>
-							<span v-else>{{ scope.row.value }}</span>
-						</template>
-					</el-table-column>
-				</el-table>
-			</div>
+	<template-one
+		:buttons="buttons"
+		:table-data="tableData"
+		:loading="loading"
+		class="user"
+	>
+		<user-image
+			slot="header"
+			:user="user"
+		/>
+		<div
+			slot="table"
+			slot-scope="{ row }"
+		>
+			<span v-if="row.prop === 'roles'">
+				<role-tag
+					v-for="(role, index) in row.value"
+					:key="index"
+					:role="role"
+				/>
+			</span>
+			<span v-else>{{ row.value }}</span>
 		</div>
-	</div>
+	</template-one>
 </template>
 
 <script>
@@ -50,18 +33,19 @@ import EditPhotoDialog from '@/components/users/dialogs/EditImage'
 import EditEmailDialog from '@/components/users/dialogs/EditEmail'
 import DeleteDialog from '@/components/users/dialogs/Delete'
 import EditDialog from '@/components/users/dialogs/Edit'
-import { includePermission } from '@/scripts/utils'
+import TemplateOne from '@/components/template/One'
 import * as permissions from '@/enum/permissions'
 import TopButtons from '@/components/TopButtons'
 import UserImage from '@/components/users/Image'
 import breadcrumbs from '@/mixins/breadcrumbs'
-import { COLUMNS_DATES } from '@/data/columns'
 import RoleTag from '@/components/roles/Tag'
 import UserClass from '@/classes/User'
 import sections from '@/data/sections'
 import * as types from '@/enum/types'
 import menu from '@/data/menu'
-import moment from 'moment'
+
+// !id -> { loadings: ['general'] }
+// !roles -> { loadings: ['general', 'roles'] }
 
 export default {
 	breadcrumbs: [
@@ -69,7 +53,7 @@ export default {
 		{ title: route => `ID: ${route.params.id || -1}` }
 	],
 	components: {
-		UserImage, TopButtons, RoleTag
+		UserImage, TopButtons, RoleTag, TemplateOne
 	},
 	mixins: [
 		breadcrumbs
@@ -157,22 +141,16 @@ export default {
 		},
 		tableData() {
 			return [
-				{ name: 'Ролі', key: 'roles', permissions: permissions.ROLES_VIEW },
-				{ name: 'E-mail', key: 'email' },
-				{ name: 'Опис', key: 'description' },
-				{ name: 'Телефон', key: 'phone' },
-				{ name: 'Створений', key: 'created_at' },
-				{ name: 'Останнє оновлення', key: 'updated_at' }
+				{ name: 'Ролі', prop: 'roles', permissions: permissions.ROLES_VIEW },
+				{ name: 'E-mail', prop: 'email' },
+				{ name: 'Опис', prop: 'description' },
+				{ name: 'Телефон', prop: 'phone' },
+				{ name: 'Створений', prop: 'created_at' },
+				{ name: 'Останнє оновлення', prop: 'updated_at' }
 			]
-				.filter(obj => includePermission(obj.permissions))
 				.reduce((result, obj) => {
-					const value = COLUMNS_DATES.includes(obj.key)
-						? moment(this.user[obj.key]).format('LLL')
-						: this.user[obj.key]
-
-					result.push({ ...obj, value })
+					result.push({ ...obj, value: this.user[obj.prop] })
 					return result
-
 				}, [])
 		}
 	},
@@ -216,28 +194,3 @@ export default {
 	}
 }
 </script>
-
-<style lang="scss" scoped>
-.header,
-.content {
-	margin-top: 20px;
-	padding: 20px;
-}
-
-.header {
-	padding: 30px;
-	text-align: center;
-}
-
-.content {
-	margin-bottom: 30px;
-	background: #fff;
-	border: 1px solid #e6e6e6;
-}
-
-.max--width {
-	max-width: 900px;
-	margin-left: auto;
-	margin-right: auto;
-}
-</style>
