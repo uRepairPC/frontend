@@ -26,8 +26,8 @@
 </template>
 
 <script>
-import EquipmentFileClass from '@/classes/EquipmentFile'
 import BasicEdit from '@/components/dialogs/BasicEdit'
+import EquipmentFile from '@/classes/EquipmentFile'
 import { required } from '@/data/rules'
 
 export default {
@@ -72,7 +72,7 @@ export default {
 		fetchRequest() {
 			this.loading = true
 
-			EquipmentFileClass.fetchEdit(this.equipment.id, this.file.id, this.form)
+			EquipmentFile.fetchEdit(this.equipment.id, this.file.id, this.form)
 				.then(({ data }) => {
 					this.$emit('update-file', data.file, this.index)
 					this.$emit('close')

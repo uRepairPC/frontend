@@ -52,8 +52,8 @@
 <script>
 import ManufacturerSelect from '@/components/equipments/manufacturers/Select'
 import TypeSelect from '@/components/equipments/types/Select'
-import EquipmentModelClass from '@/classes/EquipmentModel'
 import BasicCreate from '@/components/dialogs/BasicCreate'
+import EquipmentModel from '@/classes/EquipmentModel'
 import { required } from '@/data/rules'
 
 export default {
@@ -87,7 +87,7 @@ export default {
 		fetchRequest() {
 			this.loading = true
 
-			EquipmentModelClass.fetchStore(this.form)
+			EquipmentModel.fetchStore(this.form)
 				.then(() => {
 					this.$store.dispatch('equipmentModels/fetchList')
 					this.$emit('create')

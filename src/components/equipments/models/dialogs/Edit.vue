@@ -56,8 +56,8 @@
 <script>
 import ManufacturerSelect from '@/components/equipments/manufacturers/Select'
 import TypeSelect from '@/components/equipments/types/Select'
-import EquipmentModelClass from '@/classes/EquipmentModel'
 import BasicEdit from '@/components/dialogs/BasicEdit'
+import EquipmentModel from '@/classes/EquipmentModel'
 import { required } from '@/data/rules'
 
 export default {
@@ -100,7 +100,7 @@ export default {
 		fetchRequest() {
 			this.loading = true
 
-			EquipmentModelClass.fetchEdit(this.item.id, this.form)
+			EquipmentModel.fetchEdit(this.item.id, this.form)
 				.then(() => {
 					this.$store.dispatch('equipmentModels/fetchList')
 					this.$emit('edit')

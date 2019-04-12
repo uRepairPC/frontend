@@ -60,8 +60,8 @@ import StorageData from '@/classes/StorageData'
 import TableComponent from '@/components/Table'
 import breadcrumbs from '@/mixins/breadcrumbs'
 import RoleTag from '@/components/roles/Tag'
-import UserClass from '@/classes/User'
 import sections from '@/data/sections'
+import User from '@/classes/User'
 import { mapGetters } from 'vuex'
 import menu from '@/data/menu'
 
@@ -156,7 +156,7 @@ export default {
 				return
 			}
 
-			UserClass.sidebar().add(user)
+			User.sidebar().add(user)
 			this.$router.push({ name: `${sections.users}-id`, params: { id: user.id } })
 		},
 		onSortChange({ prop: column, order }) {

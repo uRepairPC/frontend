@@ -37,8 +37,8 @@
 </template>
 
 <script>
-import EquipmentTypeClass from '@/classes/EquipmentType'
 import BasicEdit from '@/components/dialogs/BasicEdit'
+import EquipmentType from '@/classes/EquipmentType'
 import { required } from '@/data/rules'
 
 export default {
@@ -76,7 +76,7 @@ export default {
 		fetchRequest() {
 			this.loading = true
 
-			EquipmentTypeClass.fetchEdit(this.item.id, this.form)
+			EquipmentType.fetchEdit(this.item.id, this.form)
 				.then(() => {
 					this.$store.dispatch('equipmentTypes/fetchList')
 					this.$emit('edit')

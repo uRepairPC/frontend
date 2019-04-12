@@ -38,7 +38,7 @@
 
 <script>
 import BasicCreate from '@/components/dialogs/BasicCreate'
-import EquipmentTypeClass from '@/classes/EquipmentType'
+import EquipmentType from '@/classes/EquipmentType'
 import { required } from '@/data/rules'
 
 export default {
@@ -70,7 +70,7 @@ export default {
 		fetchRequest() {
 			this.loading = true
 
-			EquipmentTypeClass.fetchStore(this.form)
+			EquipmentType.fetchStore(this.form)
 				.then(() => {
 					this.$store.dispatch('equipmentTypes/fetchList')
 					this.$emit('create')

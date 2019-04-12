@@ -4,21 +4,21 @@
 			:class="['image', {
 				'image_has': !!user.image
 			}]"
-			:style="userClass.backgroundImage"
+			:style="userObj.backgroundImage"
 		>
 			<template v-if="!user.image">
 				<i class="material-icons">face</i>
-				{{ userClass.initials }}
+				{{ userObj.initials }}
 			</template>
 		</div>
 		<div class="name">
-			{{ userClass.fullName }}
+			{{ userObj.fullName }}
 		</div>
 	</div>
 </template>
 
 <script>
-import UserClass from '@/classes/User'
+import User from '@/classes/User'
 
 export default {
 	props: {
@@ -28,8 +28,8 @@ export default {
 		}
 	},
 	computed: {
-		userClass() {
-			return new UserClass(this.user)
+		userObj() {
+			return new User(this.user)
 		}
 	}
 }

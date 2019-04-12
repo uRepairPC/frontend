@@ -67,7 +67,7 @@
 <script>
 import BasicEdit from '@/components/dialogs/BasicEdit'
 import { required } from '@/data/rules'
-import UserClass from '@/classes/User'
+import User from '@/classes/User'
 
 export default {
 	components: {
@@ -113,7 +113,7 @@ export default {
 		fetchRequest() {
 			this.loading = true
 
-			UserClass.fetchEdit(this.user.id, this.form)
+			User.fetchEdit(this.user.id, this.form)
 				.then(() => {
 					this.$emit('edit')
 					this.$emit('close')

@@ -2,7 +2,7 @@
 
 import { equipments as equipmentColumns } from '@/data/columns'
 import { includePermission } from '@/scripts/utils'
-import EquipmentClass from '@/classes/Equipment'
+import Equipment from '@/classes/Equipment'
 import Vue from 'vue'
 
 const state = {
@@ -32,7 +32,7 @@ const actions = {
 	fetchList({ commit }, params) {
 		commit('SET_LOADING', true)
 
-		EquipmentClass.fetchAll({ params })
+		Equipment.fetchAll({ params })
 			.then(({ data }) => {
 				if (params.page > 1) {
 					commit('APPEND_LIST', data)

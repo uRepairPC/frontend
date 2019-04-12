@@ -80,12 +80,12 @@ import FileDeleteDialog from '@/components/equipments/dialogs/FileDelete'
 import FileEditDialog from '@/components/equipments/dialogs/FileEdit'
 import DeleteDialog from '@/components/equipments/dialogs/Delete'
 import EditDialog from '@/components/equipments/dialogs/Edit'
-import EquipmentFileClass from '@/classes/EquipmentFile'
-import EquipmentClass from '@/classes/Equipment'
+import EquipmentFile from '@/classes/EquipmentFile'
 import TopButtons from '@/components/TopButtons'
 import FilesList from '@/components/files/List'
 import breadcrumbs from '@/mixins/breadcrumbs'
 import { COLUMNS_DATES } from '@/data/columns'
+import Equipment from '@/classes/Equipment'
 import { copyNode } from '@/scripts/dom'
 import sections from '@/data/sections'
 import * as types from '@/enum/types'
@@ -190,7 +190,7 @@ export default {
 		fetchRequest() {
 			this.loading = true
 
-			EquipmentClass.fetchOne(+this.$route.params.id)
+			Equipment.fetchOne(+this.$route.params.id)
 				.catch(() => {
 					this.$router.push({ name: sections.equipments })
 				})
@@ -202,7 +202,7 @@ export default {
 			this.loadingFiles = true
 			this.updateFiles([])
 
-			EquipmentFileClass.fetchAll(+this.$route.params.id)
+			EquipmentFile.fetchAll(+this.$route.params.id)
 				.then(({ data }) => {
 					this.updateFiles(data.files)
 				})
@@ -243,7 +243,7 @@ export default {
 			})
 		},
 		updateFiles(files) {
-			EquipmentClass.sidebar().add({ id: +this.$route.params.id, files })
+			Equipment.sidebar().add({ id: +this.$route.params.id, files })
 		},
 		onAdd() {
 			this.openDialog(FilesUploadDialog)

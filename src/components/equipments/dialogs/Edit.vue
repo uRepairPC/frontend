@@ -1,6 +1,6 @@
 <template>
 	<basic-edit
-		:title="equipmentClass.title"
+		:title="equipmentObj.title"
 		:loading="loading"
 		v-bind="$attrs"
 		v-on="listeners"
@@ -55,7 +55,7 @@
 <script>
 import EquipmentCascader from '@/components/equipments/Cascader'
 import BasicEdit from '@/components/dialogs/BasicEdit'
-import EquipmentClass from '@/classes/Equipment'
+import Equipment from '@/classes/Equipment'
 import { required } from '@/data/rules'
 
 export default {
@@ -90,15 +90,15 @@ export default {
 				submit: this.onSubmit
 			}
 		},
-		equipmentClass() {
-			return new EquipmentClass(this.equipment)
+		equipmentObj() {
+			return new Equipment(this.equipment)
 		}
 	},
 	methods: {
 		fetchRequest() {
 			this.loading = true
 
-			EquipmentClass.fetchEdit(this.equipment.id, {
+			Equipment.fetchEdit(this.equipment.id, {
 				...this.form,
 				type_id: this.form.equipment[0] || null,
 				manufacturer_id: this.form.equipment[1] || null,

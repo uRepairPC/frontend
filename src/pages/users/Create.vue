@@ -90,8 +90,8 @@
 <script>
 import breadcrumbs from '@/mixins/breadcrumbs'
 import * as dataRules from '@/data/rules'
-import UserClass from '@/classes/User'
 import sections from '@/data/sections'
+import User from '@/classes/User'
 import menu from '@/data/menu'
 
 export default {
@@ -125,7 +125,7 @@ export default {
 		fetchRequest() {
 			this.loading = true
 
-			UserClass.fetchStore(this.form)
+			User.fetchStore(this.form)
 				.then(({ data }) => {
 					this.$router.push({ name: `${sections.users}-id`, params: { id: data.user.id } })
 				})

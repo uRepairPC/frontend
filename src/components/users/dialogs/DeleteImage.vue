@@ -13,7 +13,7 @@
 
 <script>
 import BasicDelete from '@/components/dialogs/BasicDelete'
-import UserClass from '@/classes/User'
+import User from '@/classes/User'
 
 export default {
 	components: {
@@ -43,7 +43,7 @@ export default {
 		fetchRequest() {
 			this.loading = true
 
-			UserClass.fetchDeleteImage(this.user.id)
+			User.fetchDeleteImage(this.user.id)
 				.then(() => {
 					this.$emit('delete-image')
 					this.$emit('close')

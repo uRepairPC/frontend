@@ -65,8 +65,8 @@
 
 <script>
 import EquipmentCascader from '@/components/equipments/Cascader'
-import EquipmentClass from '@/classes/Equipment'
 import breadcrumbs from '@/mixins/breadcrumbs'
+import Equipment from '@/classes/Equipment'
 import { required } from '@/data/rules'
 import sections from '@/data/sections'
 import menu from '@/data/menu'
@@ -103,7 +103,7 @@ export default {
 		fetchRequest() {
 			this.loading = true
 
-			EquipmentClass.fetchStore({
+			Equipment.fetchStore({
 				...this.form,
 				type_id: this.form.equipment[0],
 				manufacturer_id: this.form.equipment[1],

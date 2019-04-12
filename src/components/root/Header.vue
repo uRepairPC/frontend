@@ -50,8 +50,8 @@
 <script>
 import HeaderLogo from '@/components/root/HeaderLogo'
 import Tips from '@/components/root/Tips'
-import UserClass from '@/classes/User'
 import sections from '@/data/sections'
+import User from '@/classes/User'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -89,7 +89,7 @@ export default {
 			}
 		},
 		onClickEmail() {
-			UserClass.sidebar().add(this.user)
+			User.sidebar().add(this.user)
 			this.$router.push({ name: `${sections.users}-id`, params: { id: this.user.id } })
 		}
 	}

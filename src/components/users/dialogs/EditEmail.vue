@@ -31,8 +31,8 @@
 
 <script>
 import BasicEdit from '@/components/dialogs/BasicEdit'
-import UserClass from '@/classes/User'
 import * as rules from '@/data/rules'
+import User from '@/classes/User'
 
 export default {
 	components: {
@@ -68,7 +68,7 @@ export default {
 		fetchRequest() {
 			this.loading = true
 
-			UserClass.fetchEditEmail(this.user.id, this.form)
+			User.fetchEditEmail(this.user.id, this.form)
 				.then(() => {
 					this.$emit('edit-email')
 					this.$emit('close')

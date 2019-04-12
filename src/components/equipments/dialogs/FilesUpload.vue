@@ -1,6 +1,6 @@
 <template>
 	<basic-edit
-		:title="equipmentClass.title"
+		:title="equipmentObj.title"
 		:loading="loading"
 		v-bind="$attrs"
 		v-on="listeners"
@@ -27,10 +27,10 @@
 </template>
 
 <script>
-import EquipmentFileClass from '@/classes/EquipmentFile'
 import BasicEdit from '@/components/dialogs/BasicEdit'
 import { isArray, isObject } from '@/scripts/helpers'
-import EquipmentClass from '@/classes/Equipment'
+import EquipmentFile from '@/classes/EquipmentFile'
+import Equipment from '@/classes/Equipment'
 
 export default {
 	components: {
@@ -55,8 +55,8 @@ export default {
 				submit: this.onSubmit
 			}
 		},
-		equipmentClass() {
-			return new EquipmentClass(this.equipment)
+		equipmentObj() {
+			return new Equipment(this.equipment)
 		}
 	},
 	methods: {
@@ -69,7 +69,7 @@ export default {
 				fd.append('files[]', file.raw, file.name)
 			})
 
-			EquipmentFileClass.fetchStore(this.equipment.id, fd)
+			EquipmentFile.fetchStore(this.equipment.id, fd)
 				.then(() => {
 					this.$emit('fetch-files')
 					this.$emit('close')
