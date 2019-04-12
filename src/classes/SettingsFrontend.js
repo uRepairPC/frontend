@@ -70,11 +70,9 @@ export default class SettingsFrontend {
 		}
 
 		// Meta title
-		if (data.meta_title) {
-			const el = document.querySelector('head title')
-			if (el) {
-				el.innerText = data.meta_title
-			}
+		const el = document.querySelector('head title')
+		if (el) {
+			el.innerText = data.meta_title || 'uRepairPC'
 		}
 	}
 
