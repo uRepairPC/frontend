@@ -1,67 +1,35 @@
 <template>
-	<div class="role">
-		<div class="role__wrap">
-			<top-buttons
-				:buttons="buttons"
-				:disabled="loading"
-			/>
-			<div class="header max--width">
-				<div class="header__wrap">
-					<div class="title">
-						{{ role.display_name }}
-					</div>
-					<div
-						v-if="role.color"
-						class="color"
-						:style="{ 'background-color': role.color }"
-					/>
-				</div>
+	<template-one
+		:buttons="buttons"
+		:table-data="tableData"
+		:loading="loading"
+	>
+		<template slot="header">
+			<div class="title">
+				{{ role.display_name }}
 			</div>
 			<div
-				v-loading="loading"
-				class="content max--width"
-			>
-				<el-table
-					:data="tableData"
-					style="width: 100%"
-				>
-					<el-table-column
-						prop="name"
-						label="Назва"
-						width="200"
-					/>
-					<el-table-column
-						prop="value"
-						label="Значення"
-					/>
-				</el-table>
-			</div>
-		</div>
-	</div>
+				v-if="role.color"
+				class="color"
+				:style="{ 'background-color': role.color }"
+			/>
+		</template>
+	</template-one>
 </template>
 
 <script>
-import TopButtons from '@/components/TopButtons'
-import { COLUMNS_DATES } from '@/data/columns'
-import breadcrumbs from '@/mixins/breadcrumbs'
+import TemplateOne from '@/components/template/One'
 import sections from '@/data/sections'
+import onePage from '@/mixins/onePage'
 import * as types from '@/enum/types'
 import Role from '@/classes/Role'
-import menu from '@/data/menu'
-import moment from 'moment'
-
-// TODO Permissions data
 
 export default {
-	breadcrumbs: [
-		{ title: menu[sections.roles].title, routeName: sections.roles },
-		{ title: route => `ID: ${route.params.id || -1}` }
-	],
 	components: {
-		TopButtons
+		TemplateOne
 	},
 	mixins: [
-		breadcrumbs
+		onePage(sections.roles)
 	],
 	data() {
 		return {
@@ -90,37 +58,22 @@ export default {
 			]
 		},
 		tableData() {
-			const displayProps = [
-				{ name: 'Ім\'я', key: 'name' },
-				{ name: 'Колір', key: 'color' },
-				{ name: 'За замовчуванням', key: 'default' },
-				{ name: 'Створений', key: 'created_at' },
-				{ name: 'Останнє оновлення', key: 'updated_at' }
-			]
+			const props = ['name', 'color', 'default', 'created_at', 'updated_at']
+			const result = []
 
-			return displayProps
-				.reduce((result, obj) => {
-					let value = COLUMNS_DATES.includes(obj.key)
-						? moment(this.role[obj.key]).format('LLL')
-						: this.role[obj.key]
+			this.$store.getters['roles/columns']
+				.forEach((obj) => {
+					if (props.includes(obj.prop)) {
+						const customType = obj.customType === 'timestamp'
+							? { key: 'timestamp', value: 'LLL' }
+							: obj.customType
 
-					if (obj.key === 'default') {
-						value = this.role[obj.key] ? 'Так' : 'Ні'
+						result.push({ ...obj, customType, value: this.model[obj.prop] })
 					}
+				})
 
-					result.push({ ...obj, value })
-					return result
-
-				}, [])
+			return result
 		}
-	},
-	watch: {
-		'$route'() {
-			this.fetchData()
-		}
-	},
-	created() {
-		this.fetchData()
 	},
 	methods: {
 		fetchData() {
@@ -153,24 +106,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~scss/_colors";
-
-.header,
-.content {
-	margin-top: 20px;
-	padding: 20px;
-}
-
-.header {
-	padding: 30px;
-	text-align: center;
-}
-
-.content {
-	background: #fff;
-	border: 1px solid #e6e6e6;
-}
-
 .title {
 	font-size: 1.5rem;
 	font-weight: bold;
@@ -180,11 +115,5 @@ export default {
 	width: 100px;
 	height: 5px;
 	margin: 15px auto 0;
-}
-
-.max--width {
-	max-width: 900px;
-	margin-left: auto;
-	margin-right: auto;
 }
 </style>

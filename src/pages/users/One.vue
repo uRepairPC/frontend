@@ -38,7 +38,6 @@ import EditDialog from '@/components/users/dialogs/Edit'
 import TemplateOne from '@/components/template/One'
 import * as permissions from '@/enum/permissions'
 import UserImage from '@/components/users/Image'
-import breadcrumbs from '@/mixins/breadcrumbs'
 import RoleTag from '@/components/roles/Tag'
 import sections from '@/data/sections'
 import onePage from '@/mixins/onePage'
@@ -50,7 +49,7 @@ export default {
 		UserImage, RoleTag, TemplateOne
 	},
 	mixins: [
-		breadcrumbs, onePage(sections.users)
+		onePage(sections.users)
 	],
 	data() {
 		return {

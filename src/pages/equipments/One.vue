@@ -66,8 +66,6 @@ import EditDialog from '@/components/equipments/dialogs/Edit'
 import TemplateOne from '@/components/template/One'
 import EquipmentFile from '@/classes/EquipmentFile'
 import FilesList from '@/components/files/List'
-import breadcrumbs from '@/mixins/breadcrumbs'
-import { isObject } from '@/scripts/helpers'
 import Equipment from '@/classes/Equipment'
 import { copyNode } from '@/scripts/dom'
 import sections from '@/data/sections'
@@ -79,7 +77,7 @@ export default {
 		TemplateOne, FilesList
 	},
 	mixins: [
-		breadcrumbs, onePage(sections.equipments)
+		onePage(sections.equipments)
 	],
 	data() {
 		return {
