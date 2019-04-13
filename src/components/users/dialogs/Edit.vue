@@ -81,17 +81,15 @@ export default {
 		}
 	},
 	data() {
-		const form = {
-			first_name: this.user.first_name,
-			middle_name: this.user.middle_name,
-			last_name: this.user.last_name,
-			description: this.user.description,
-			phone: this.user.phone
-		}
-
 		return {
-			form,
 			loading: false,
+			form: {
+				first_name: this.user.first_name,
+				middle_name: this.user.middle_name,
+				last_name: this.user.last_name,
+				description: this.user.description,
+				phone: this.user.phone
+			},
 			rules: {
 				first_name: required,
 				last_name: required
@@ -99,9 +97,6 @@ export default {
 		}
 	},
 	computed: {
-		profile() {
-			return this.$store.state.profile.user
-		},
 		listeners() {
 			return {
 				...this.$listeners,

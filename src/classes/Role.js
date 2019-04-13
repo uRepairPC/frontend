@@ -79,5 +79,9 @@ export default class Role {
 	 */
 	static fetchStore(data = null, config = null) {
 		return axios.post(API_POINT, data, config)
+			.then((response) => {
+				Role.sidebar().add(response.data.role)
+				return response
+			})
 	}
 }
