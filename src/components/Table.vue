@@ -18,6 +18,7 @@
 				<column-data
 					v-else
 					:column="column"
+					:value="row[column.prop]"
 				>
 					<slot
 						:column="column"

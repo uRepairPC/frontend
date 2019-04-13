@@ -3,7 +3,7 @@
 		{{ dateValue }}
 	</div>
 	<div v-else-if="isBool">
-		{{ column.value ? 'Так' : 'Ні' }}
+		{{ value ? 'Так' : 'Ні' }}
 	</div>
 	<div v-else>
 		<slot />
@@ -19,6 +19,10 @@ export default {
 		column: {
 			type: Object,
 			required: true
+		},
+		value: {
+			type: [Array, Object, Number, String],
+			default: null
 		}
 	},
 	computed: {
@@ -45,7 +49,7 @@ export default {
 				format = this.column.customType.value
 			}
 
-			return moment(this.column.value).format(format)
+			return moment(this.value).format(format)
 		}
 	}
 }

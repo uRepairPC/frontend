@@ -31,7 +31,10 @@
 						label="Значення"
 					>
 						<template slot-scope="{ row }">
-							<column-data :column="row">
+							<column-data
+								:column="row"
+								:value="row.value"
+							>
 								<slot
 									name="table"
 									:row="row"
