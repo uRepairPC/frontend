@@ -23,26 +23,26 @@ export default {
 	},
 	computed: {
 		typeIsObject() {
-			return isObject(this.column['value-type'])
+			return isObject(this.column.customType)
 		},
 		type() {
 			if (this.typeIsObject) {
-				return this.column['value-type'].key
+				return this.column.customType.key
 			}
 
-			return this.column['value-type']
+			return this.column.customType
 		},
 		isBool() {
 			return this.type === 'bool' || this.type === 'boolean'
 		},
 		isDate() {
-			return this.type === 'timestamp' || this.type === 'date'
+			return this.type === 'timestamp'
 		},
 		dateValue() {
-			let format = 'LLL'
+			let format = 'LL'
 
-			if (this.typeIsObject && this.column['value-type'].value) {
-				format = this.column['value-type'].value
+			if (this.typeIsObject && this.column.customType.value) {
+				format = this.column.customType.value
 			}
 
 			return moment(this.column.value).format(format)

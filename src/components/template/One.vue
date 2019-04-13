@@ -81,6 +81,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.template__wrap {
+	margin-bottom: 50px;
+}
+
 .template-header,
 .template-table {
 	margin-top: 20px;
@@ -93,7 +97,6 @@ export default {
 }
 
 .template-table {
-	margin-bottom: 30px;
 	background: #fff;
 	border: 1px solid #e6e6e6;
 }

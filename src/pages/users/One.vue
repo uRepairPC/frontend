@@ -39,7 +39,6 @@ import TemplateOne from '@/components/template/One'
 import * as permissions from '@/enum/permissions'
 import UserImage from '@/components/users/Image'
 import breadcrumbs from '@/mixins/breadcrumbs'
-import { isObject } from '@/scripts/helpers'
 import RoleTag from '@/components/roles/Tag'
 import sections from '@/data/sections'
 import onePage from '@/mixins/onePage'
@@ -133,11 +132,11 @@ export default {
 			this.$store.getters['users/columns']
 				.forEach((obj) => {
 					if (props.includes(obj.prop)) {
-						const type = isObject(obj.type) && ['date', 'timestamp'].includes(obj.type.key)
-							? { key: 'date', value: 'LLL' }
-							: obj.type
+						const customType = obj.customType === 'timestamp'
+							? { key: 'timestamp', value: 'LLL' }
+							: obj.customType
 
-						result.push({ ...obj, type, value: this.model[obj.prop] })
+						result.push({ ...obj, customType, value: this.model[obj.prop] })
 					}
 				})
 

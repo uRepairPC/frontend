@@ -51,7 +51,8 @@ const getters = {
 	 * Display on table.
 	 * Attributes:
 	 *  - disableSearch |Boolean| - disable send column on list of resources
-	 *  - value-type |String, Object { key, value }| - transform value depends on type (bool, timestamp)
+	 *  - customType |String| - transform value depends on type (bool, timestamp)
+	 *  - hideList |Boolean| - display column on page (Index)
 	 * @returns {(*|{model: boolean})[]}
 	 */
 	columns() {
@@ -64,9 +65,9 @@ const getters = {
 			{ prop: 'type_name', label: 'Тип', 'min-width': 150, sortable: 'custom' },
 			{ prop: 'manufacturer_name', label: 'Виробник', 'min-width': 150, sortable: 'custom' },
 			{ prop: 'model_name', label: 'Модель', 'min-width': 150, sortable: 'custom' },
-			{ prop: 'description', label: 'Опис', 'min-width': 250, disableSearch: true },
-			{ prop: 'updated_at', label: 'Оновлено', 'min-width': 150, sortable: 'custom', 'value-type': { key: 'date', value: 'LL' } },
-			{ prop: 'created_at', label: 'Створений', 'min-width': 150, sortable: 'custom', 'value-type': { key: 'date', value: 'LL' } }
+			{ prop: 'description', label: 'Опис', 'min-width': 250, disableSearch: true, hideList: true },
+			{ prop: 'updated_at', label: 'Оновлено', 'min-width': 150, sortable: 'custom', customType: 'timestamp' },
+			{ prop: 'created_at', label: 'Створений', 'min-width': 150, sortable: 'custom', customType: 'timestamp' }
 		]
 
 		const data = StorageData.columnEquipments.length ? StorageData.columnEquipments : defaultActive

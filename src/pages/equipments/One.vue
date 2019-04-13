@@ -123,11 +123,11 @@ export default {
 			this.$store.getters['equipments/columns']
 				.forEach((obj) => {
 					if (props.includes(obj.prop)) {
-						const type = isObject(obj.type) && ['date', 'timestamp'].includes(obj.type.key)
-							? { key: 'date', value: 'LLL' }
-							: obj.type
+						const customType = obj.customType === 'timestamp'
+							? { key: 'timestamp', value: 'LLL' }
+							: obj.customType
 
-						result.push({ ...obj, type, value: this.model[obj.prop] })
+						result.push({ ...obj, customType, value: this.model[obj.prop] })
 					}
 				})
 
