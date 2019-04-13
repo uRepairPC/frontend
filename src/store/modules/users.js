@@ -48,8 +48,12 @@ const actions = {
 }
 
 const getters = {
-	/*
+	/**
 	 * Display on table.
+	 * Attributes:
+	 *  - disableSearch |Boolean| - disable send column on list of resources
+	 *  - value-type |String, Object { key, value }| - transform value depends on type (bool, timestamp)
+	 * @returns {(*|{model: boolean})[]}
 	 */
 	columns() {
 		const defaultActive = ['first_name', 'last_name', 'email', 'phone']
@@ -63,8 +67,8 @@ const getters = {
 			{ prop: 'email', label: 'E-mail', 'min-width': 250, sortable: 'custom' },
 			{ prop: 'phone', label: 'Телефон', 'min-width': 150, sortable: 'custom' },
 			{ prop: 'description', label: 'Опис', 'min-width': 250, disableSearch: true },
-			{ prop: 'updated_at', label: 'Оновлено', 'min-width': 150, sortable: 'custom' },
-			{ prop: 'created_at', label: 'Створений', 'min-width': 150, sortable: 'custom' }
+			{ prop: 'updated_at', label: 'Оновлено', 'min-width': 150, sortable: 'custom', 'value-type': { key: 'date', value: 'LL' } },
+			{ prop: 'created_at', label: 'Створений', 'min-width': 150, sortable: 'custom', 'value-type': { key: 'date', value: 'LL' } }
 		]
 
 		const data = StorageData.columnUsers.length ? StorageData.columnUsers : defaultActive

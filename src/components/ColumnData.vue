@@ -3,7 +3,7 @@
 		{{ dateValue }}
 	</div>
 	<div v-else-if="isBool">
-		{{ row.value ? 'Так' : 'Ні' }}
+		{{ column.value ? 'Так' : 'Ні' }}
 	</div>
 	<div v-else>
 		<slot />
@@ -11,22 +11,26 @@
 </template>
 
 <script>
+import { isObject } from '@/scripts/helpers'
 import moment from 'moment'
 
 export default {
 	props: {
-		row: {
+		column: {
 			type: Object,
 			required: true
 		}
 	},
 	computed: {
+		typeIsObject() {
+			return isObject(this.column['value-type'])
+		},
 		type() {
-			if (typeof this.row.type === 'object') {
-				return this.row.type.key
+			if (this.typeIsObject) {
+				return this.column['value-type'].key
 			}
 
-			return this.row.type
+			return this.column['value-type']
 		},
 		isBool() {
 			return this.type === 'bool' || this.type === 'boolean'
@@ -37,11 +41,11 @@ export default {
 		dateValue() {
 			let format = 'LLL'
 
-			if (typeof this.row.type === 'object' && this.row.type.value) {
-				format = this.row.type.value
+			if (this.typeIsObject && this.column['value-type'].value) {
+				format = this.column['value-type'].value
 			}
 
-			return moment(this.row.value).format(format)
+			return moment(this.column.value).format(format)
 		}
 	}
 }

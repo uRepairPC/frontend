@@ -31,6 +31,15 @@ img {
   max-height: 100%;
 }
 
+a {
+  color: $primary;
+  text-decoration: none !important;
+  transition: color .2s;
+  &:hover {
+    color: $warning;
+  }
+}
+
 #app, .layout {
   height: inherit;
   > .el-container {

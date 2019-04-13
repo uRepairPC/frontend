@@ -31,7 +31,7 @@
 						label="Значення"
 					>
 						<template slot-scope="{ row }">
-							<column-data :row="row">
+							<column-data :column="row">
 								<slot
 									name="table"
 									:row="row"

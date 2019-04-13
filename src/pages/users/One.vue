@@ -19,6 +19,9 @@
 					:role="role"
 				/>
 			</span>
+			<span v-else-if="row.prop === 'email'">
+				<a :href="`mailto:${row.value}`">{{ row.value }}</a>
+			</span>
 			<span v-else>{{ row.value }}</span>
 		</div>
 	</template-one>
@@ -36,6 +39,7 @@ import TemplateOne from '@/components/template/One'
 import * as permissions from '@/enum/permissions'
 import UserImage from '@/components/users/Image'
 import breadcrumbs from '@/mixins/breadcrumbs'
+import { isObject } from '@/scripts/helpers'
 import RoleTag from '@/components/roles/Tag'
 import sections from '@/data/sections'
 import onePage from '@/mixins/onePage'
@@ -129,7 +133,11 @@ export default {
 			this.$store.getters['users/columns']
 				.forEach((obj) => {
 					if (props.includes(obj.prop)) {
-						result.push({ ...obj, value: this.model[obj.prop] })
+						const type = isObject(obj.type) && ['date', 'timestamp'].includes(obj.type.key)
+							? { key: 'date', value: 'LLL' }
+							: obj.type
+
+						result.push({ ...obj, type, value: this.model[obj.prop] })
 					}
 				})
 
