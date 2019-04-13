@@ -1,44 +1,20 @@
 'use strict'
 
-import StorageData from '@/classes/StorageData'
-
-// TODO Move all function/const to store
+/*
+ * Display on table.
+ * Some columns are in store
+ *
+ * Attributes:
+ *  - disableSearch |Boolean| - disable send column on list of resources
+ *  - customType |String| - transform value depends on type (bool, timestamp)
+ *  - hideList |Boolean| - display column on page (Index)
+ */
 
 /**
  * @type {array}
- * @deprecated
+ * @deprecated TODO
  */
 export const COLUMNS_DATES = ['updated_at', 'created_at']
-
-/**
- * Get from store.
- * @return {array}
- */
-function roleData() {
-	const defaultActive = ['name', 'display_name']
-
-	const columns = [
-		{ prop: 'id', label: 'ID', 'min-width': 70, sortable: 'custom' },
-		{ prop: 'name', label: 'Ім\'я', 'min-width': 200, sortable: 'custom' },
-		{ prop: 'display_name', label: 'Відображене ім\'я', 'min-width': 200, sortable: 'custom' },
-		{ prop: 'default', label: 'За замовчуванням', 'min-width': 100, sortable: 'custom' },
-		{ prop: 'updated_at', label: 'Оновлено', 'min-width': 150, sortable: 'custom' },
-		{ prop: 'created_at', label: 'Створений', 'min-width': 150, sortable: 'custom' }
-	]
-
-	const data = StorageData.columnRoles.length ? StorageData.columnRoles : defaultActive
-
-	return columns.map((column) => {
-		return { ...column, model: data.includes(column.prop) }
-	})
-}
-
-/*
- * Export const
- */
-
-/** @return {array} */
-export const roles = roleData()
 
 /** @return {array} */
 export const equipmentTypes = [

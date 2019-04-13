@@ -8,13 +8,15 @@
 				:list="roles"
 				:loading="loading"
 				:loading-type="loadingType"
-				:row-style="onRowStyle"
 				@row-click="onRowClick"
 				@sort-change="onSortChange"
 			>
 				<template slot-scope="{ column, row }">
-					<template v-if="column.prop === 'default'">
-						{{ row ? 'Так' : 'Ні' }}
+					<template v-if="column.prop === 'color'">
+						<div
+							class="color"
+							:style="{ 'background-color': row }"
+						/>
 					</template>
 					<template v-else>
 						{{ row }}
@@ -116,6 +118,7 @@ export default {
 		roleColumns: {
 			handler(arr) {
 				this.columns = arr
+					.filter(obj => !obj.hideList)
 			},
 			immediate: true
 		}
@@ -158,10 +161,16 @@ export default {
 		onSortChange({ prop: column, order }) {
 			this.sort = { column, order }
 			this.fetchList()
-		},
-		onRowStyle({ row }) {
-			return { 'background-color': row.color + '10' }
 		}
 	}
 }
 </script>
+
+<style lang="scss" scoped>
+.color {
+	width: 50%;
+	max-width: 40px;
+	height: 10px;
+	border-radius: 5px;
+}
+</style>

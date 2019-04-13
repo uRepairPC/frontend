@@ -81,6 +81,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.template-one {
+	overflow-y: scroll;
+}
+
 .template__wrap {
 	margin-bottom: 50px;
 }
