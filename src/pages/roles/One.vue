@@ -6,14 +6,23 @@
 	>
 		<template slot="header">
 			<div class="title">
-				{{ role.display_name }}
+				{{ model.display_name }}
 			</div>
 			<div
-				v-if="role.color"
+				v-if="model.color"
 				class="color"
-				:style="{ 'background-color': role.color }"
+				:style="{ 'background-color': model.color }"
 			/>
 		</template>
+		<div class="page--width">
+			<div class="divider">
+				<span>Доступи</span>
+			</div>
+			<div>
+				{{ permissionsLoading }}
+				{{ permissions }}
+			</div>
+		</div>
 	</template-one>
 </template>
 
@@ -37,15 +46,11 @@ export default {
 		}
 	},
 	computed: {
-		role() {
-			const roles = this.$store.state.template.sidebar[sections.roles]
-			const id = this.$route.params.id
-
-			if (roles && roles[id]) {
-				return roles[id]
-			}
-
-			return {}
+		permissions() {
+			return this.$store.state.permissions.listGrouped
+		},
+		permissionsLoading() {
+			return this.$store.state.permissions.loading
 		},
 		buttons() {
 			return [
@@ -77,8 +82,11 @@ export default {
 	},
 	methods: {
 		fetchData() {
-			if (!this.role.id) {
+			if (!this.model.id) {
 				this.fetchRequest()
+			}
+			if (!Object.keys(this.permissions).length) {
+				this.$store.dispatch('permissions/fetchListGrouped')
 			}
 		},
 		fetchRequest() {
@@ -96,7 +104,7 @@ export default {
 			this.$store.commit('template/OPEN_DIALOG', {
 				component,
 				attrs: {
-					role: this.role,
+					role: this.model,
 					...attrs
 				}
 			})
@@ -115,5 +123,6 @@ export default {
 	width: 100px;
 	height: 5px;
 	margin: 15px auto 0;
+	border-radius: 5px;
 }
 </style>
