@@ -111,7 +111,7 @@ export default {
 				{
 					title: 'Видалити користувача',
 					type: types.DANGER,
-					disabled: ownProfile,
+					disabled: ownProfile || this.model.id === 1,
 					permissions: permissions.USERS_DELETE,
 					action: () => this.openDialog(DeleteDialog)
 				}

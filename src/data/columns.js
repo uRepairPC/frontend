@@ -10,12 +10,6 @@
  *  - hideList |Boolean| - display column on page (Index)
  */
 
-/**
- * @type {array}
- * @deprecated TODO
- */
-export const COLUMNS_DATES = ['updated_at', 'created_at']
-
 /** @return {array} */
 export const equipmentTypes = [
 	{ prop: 'id', label: 'ID', 'min-width': 70, sortable: true },
