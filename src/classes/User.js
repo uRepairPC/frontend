@@ -2,6 +2,7 @@
 
 import StorageData from '@/classes/StorageData'
 import sections from '@/data/sections'
+import { server } from '@/data/env'
 import store from '@/store'
 import axios from 'axios'
 
@@ -257,7 +258,7 @@ export default class User {
 		if (this.user.image) {
 			const token = StorageData.token
 
-			return `background-image: url(/api/users/${this.user.id}/image?token=${token})`
+			return `background-image: url(${server}/users/${this.user.id}/image?token=${token})`
 		}
 
 		return null
