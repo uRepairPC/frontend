@@ -1,24 +1,19 @@
 <template>
-	<div class="filter-table-top">
-		<div>
-			<el-button
-				type="success"
-				size="small"
-				@click="onUpdateClick"
-			>
-				Оновити дані
-			</el-button>
-		</div>
-		<div>
-			<el-button
-				class="filter-table-top"
-				size="small"
-				type="primary"
-				@click="scrollTop"
-			>
-				Стрибнути вгору
-			</el-button>
-		</div>
+	<div class="filter filter-table-buttons">
+		<el-button
+			size="small"
+			icon="el-icon-refresh"
+			type="success"
+			circle
+			@click="onUpdateClick"
+		/>
+		<el-button
+			size="small"
+			icon="el-icon-arrow-up"
+			type="info"
+			circle
+			@click="scrollTop"
+		/>
 	</div>
 </template>
 

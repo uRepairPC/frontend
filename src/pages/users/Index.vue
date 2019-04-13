@@ -26,6 +26,10 @@
 			</table-component>
 		</template>
 		<filter-core slot="right-column">
+			<filter-table-buttons
+				ref="buttons"
+				@update="fetchList"
+			/>
 			<filter-action
 				:section="sectionName"
 			/>
@@ -43,11 +47,6 @@
 			<filter-fixed
 				v-model="fixed"
 				:columns="columns"
-			/>
-			<filter-table-buttons
-				ref="buttons"
-				slot="bottom"
-				@update="fetchList"
 			/>
 		</filter-core>
 	</template-list>

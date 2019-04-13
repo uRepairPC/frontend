@@ -3,9 +3,6 @@
 		<div class="filters-core__content">
 			<slot />
 		</div>
-		<div class="filters-core__bottom">
-			<slot name="bottom" />
-		</div>
 	</div>
 </template>
 

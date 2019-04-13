@@ -85,7 +85,7 @@ export default {
 
 <style lang="scss" scoped>
 .template-one {
-	overflow-y: scroll;
+	overflow-y: scroll !important;
 }
 
 .template__wrap {
