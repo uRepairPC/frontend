@@ -47,6 +47,10 @@
 					:files="model.files"
 					:loading="loadingFiles"
 					:url-download="(file) => `equipments/${model.id}/files/${file.id}`"
+					:permission-create="permissions.EQUIPMENTS_FILES_CREATE"
+					:permission-download="permissions.EQUIPMENTS_FILES_DOWNLOAD"
+					:permission-edit="permissions.EQUIPMENTS_FILES_EDIT"
+					:permission-delete="permissions.EQUIPMENTS_FILES_DELETE"
 					@add="onAdd"
 					@edit="onEdit"
 					@delete="onDelete"
@@ -65,6 +69,8 @@ import DeleteDialog from '@/components/equipments/dialogs/Delete'
 import EditDialog from '@/components/equipments/dialogs/Edit'
 import TemplateOne from '@/components/template/One'
 import EquipmentFile from '@/classes/EquipmentFile'
+import { includePermission } from '@/scripts/utils'
+import * as permissions from '@/enum/permissions'
 import FilesList from '@/components/files/List'
 import Equipment from '@/classes/Equipment'
 import { copyNode } from '@/scripts/dom'
@@ -81,6 +87,7 @@ export default {
 	],
 	data() {
 		return {
+			permissions,
 			loading: false,
 			loadingFiles: false
 		}
@@ -153,6 +160,10 @@ export default {
 				})
 		},
 		fetchRequestFiles() {
+			if (!includePermission(permissions.EQUIPMENTS_FILES_VIEW)) {
+				return
+			}
+
 			this.loadingFiles = true
 			this.updateFiles([])
 
