@@ -100,4 +100,19 @@ export default class Role {
 				return response
 			})
 	}
+
+	/**
+	 * Delete resource by id and working with leftSidebar.
+	 *
+	 * @param {number} id
+	 * @param {AxiosRequestConfig} config
+	 * @return {Promise<AxiosPromise<any>>}
+	 */
+	static fetchDelete(id, config = null) {
+		return axios.delete(`${API_POINT}/${id}`, config)
+			.then((response) => {
+				Role.sidebar().remove(id)
+				return response
+			})
+	}
 }

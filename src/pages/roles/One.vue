@@ -27,6 +27,7 @@
 </template>
 
 <script>
+import DeleteDialog from '@/components/roles/dialogs/Delete'
 import EditDialog from '@/components/roles/dialogs/Edit'
 import TemplateOne from '@/components/template/One'
 import * as permissions from '@/enum/permissions'
@@ -68,6 +69,13 @@ export default {
 					permissions: permissions.ROLES_MANAGE,
 					action: () => this.openDialog(EditDialog)
 				},
+				{
+					title: 'Видалити роль',
+					type: types.DANGER,
+					disabled: this.model.id === 1,
+					permissions: permissions.ROLES_MANAGE,
+					action: () => this.openDialog(DeleteDialog)
+				}
 			]
 		},
 		tableData() {
@@ -114,6 +122,11 @@ export default {
 				attrs: {
 					role: this.model,
 					...attrs
+				},
+				events: {
+					delete: () => {
+						this.$router.push({ name: sections.roles })
+					}
 				}
 			})
 		}
