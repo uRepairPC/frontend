@@ -85,7 +85,7 @@ export default {
 					return
 				}
 
-				this.$emit('submitasd', this.getValues())
+				this.$emit('submit', this.getValues())
 			})
 		},
 		getValues() {
@@ -108,5 +108,9 @@ export default {
 		max-width: 200px;
 		width: 100%;
 	}
+}
+
+/deep/ .el-form-item__content {
+	line-height: inherit;
 }
 </style>

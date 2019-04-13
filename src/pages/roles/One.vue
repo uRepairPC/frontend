@@ -27,7 +27,9 @@
 </template>
 
 <script>
+import EditDialog from '@/components/roles/dialogs/Edit'
 import TemplateOne from '@/components/template/One'
+import * as permissions from '@/enum/permissions'
 import sections from '@/data/sections'
 import onePage from '@/mixins/onePage'
 import * as types from '@/enum/types'
@@ -59,7 +61,13 @@ export default {
 					type: types.SUCCESS,
 					action: this.fetchRequest,
 					disabled: this.loading
-				}
+				},
+				{
+					title: 'Редагувати дані',
+					type: types.PRIMARY,
+					permissions: permissions.ROLES_MANAGE,
+					action: () => this.openDialog(EditDialog)
+				},
 			]
 		},
 		tableData() {

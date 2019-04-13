@@ -7,7 +7,7 @@
 			<generate-form
 				:form="form"
 				:loading="loading"
-				@submitasd="fetchRequest"
+				@submit="fetchRequest"
 			>
 				<template slot="button">Створити</template>
 			</generate-form>
@@ -60,6 +60,13 @@ export default {
 					component: 'el-color-picker',
 					value: '',
 					label: 'Колір'
+				},
+				default: {
+					component: 'el-checkbox',
+					value: false,
+					attrs: {
+						label: 'За замовчуванням'
+					}
 				}
 			}
 		}

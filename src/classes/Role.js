@@ -71,6 +71,22 @@ export default class Role {
 	}
 
 	/**
+	 * Edit resource data by id and working with leftSidebar.
+	 *
+	 * @param {number} id
+	 * @param {*} data
+	 * @param {AxiosRequestConfig} config
+	 * @return {Promise<AxiosPromise<any>>}
+	 */
+	static fetchEdit(id, data = null, config = null) {
+		return axios.put(`${API_POINT}/${id}`, data, config)
+			.then((response) => {
+				Role.sidebar().add(response.data.role)
+				return response
+			})
+	}
+
+	/**
 	 * Store resource.
 	 *
 	 * @param {*} data
