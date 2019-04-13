@@ -123,18 +123,17 @@ export default {
 				})
 		},
 		tableData() {
-			return [
-				{ name: 'Ролі', prop: 'roles', permissions: permissions.ROLES_VIEW },
-				{ name: 'E-mail', prop: 'email' },
-				{ name: 'Опис', prop: 'description' },
-				{ name: 'Телефон', prop: 'phone' },
-				{ name: 'Створений', prop: 'created_at', type: { key: 'timestamp', value: 'LL' } },
-				{ name: 'Останнє оновлення', prop: 'updated_at', type: { key: 'timestamp', value: 'LL' } }
-			]
-				.reduce((result, obj) => {
-					result.push({ ...obj, value: this.model[obj.prop] })
-					return result
-				}, [])
+			const props = ['roles', 'email', 'description', 'phone', 'created_at', 'updated_at']
+			const result = []
+
+			this.$store.getters['users/columns']
+				.forEach((obj) => {
+					if (props.includes(obj.prop)) {
+						result.push({ ...obj, value: this.model[obj.prop] })
+					}
+				})
+
+			return result
 		}
 	},
 	methods: {

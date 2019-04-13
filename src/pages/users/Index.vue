@@ -120,6 +120,7 @@ export default {
 		userColumns: {
 			handler(arr) {
 				this.columns = arr
+					.filter(obj => obj.prop !== 'description')
 			},
 			immediate: true
 		}

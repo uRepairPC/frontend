@@ -3,7 +3,10 @@
 import * as permissions from '@/enum/permissions'
 import StorageData from '@/classes/StorageData'
 
-/** @type {array} */
+/**
+ * @type {array}
+ * @deprecated
+ */
 export const COLUMNS_DATES = ['updated_at', 'created_at']
 
 /**
@@ -22,6 +25,7 @@ function userData() {
 		{ prop: 'roles', label: 'Ролі', 'min-width': 150, permissions: permissions.ROLES_VIEW, disableSearch: true },
 		{ prop: 'email', label: 'E-mail', 'min-width': 250, sortable: 'custom' },
 		{ prop: 'phone', label: 'Телефон', 'min-width': 150, sortable: 'custom' },
+		{ prop: 'description', label: 'Опис', 'min-width': 250, disableSearch: true },
 		{ prop: 'updated_at', label: 'Оновлено', 'min-width': 150, sortable: 'custom' },
 		{ prop: 'created_at', label: 'Створений', 'min-width': 150, sortable: 'custom' }
 	]

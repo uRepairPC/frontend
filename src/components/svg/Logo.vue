@@ -12,7 +12,7 @@
 			class="logo-background-square"
 		/>
 		<linearGradient
-			id="26eac158-4071-f92a-e7f6-4e7b3cc2244b"
+			id="logo"
 			gradientTransform="rotate(25)"
 			x1="0%"
 			y1="0%"
@@ -29,10 +29,9 @@
 			/>
 		</linearGradient>
 		<g
-			id="4ff6bd92-5c96-4d90-67d3-1a8b536edce9"
-			fill="url(#26eac158-4071-f92a-e7f6-4e7b3cc2244b)"
+			fill="url(#logo)"
 			stroke="none"
-			transform="matrix(0.6999999999999997,0,0,0.6999999999999997,45.00000000000004,44.999991321563755)"
+			transform="matrix(0.7,0,0,0.7,45,45)"
 		>
 			<svg
 				xmlns="http://www.w3.org/2000/svg"

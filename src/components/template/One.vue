@@ -22,7 +22,7 @@
 					style="width: 100%"
 				>
 					<el-table-column
-						prop="name"
+						prop="label"
 						label="Назва"
 						width="200"
 					/>
