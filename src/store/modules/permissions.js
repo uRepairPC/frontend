@@ -32,7 +32,11 @@ const actions = {
 				commit('SET_LOADING', false)
 			})
 	},
-	fetchListGrouped({ commit }) {
+	fetchListGrouped({ state, commit }) {
+		if (state.loading) {
+			return
+		}
+
 		commit('SET_LOADING', true)
 
 		Permission.fetchAll({

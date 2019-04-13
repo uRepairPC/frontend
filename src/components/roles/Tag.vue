@@ -12,11 +12,7 @@
 			slot="reference"
 			class="role-tag"
 			size="medium"
-			:style="{
-				'background-color': role.color + '10',
-				'border-color': role.color + '20',
-				color: role.color
-			}"
+			:style="styles"
 		>
 			{{ role.display_name }}
 		</el-tag>
@@ -72,6 +68,21 @@ export default {
 		},
 		hasRolePermissions() {
 			return !!this.roleStore && !!this.roleStore.permissions_grouped
+		},
+		styles() {
+			if (this.role.color) {
+				return {
+					'background-color': this.role.color + '10',
+					'border-color': this.role.color + '20',
+					color: this.role.color
+				}
+			}
+
+			return {
+				'background-color': 'transparent',
+				'border-color': '#e6e6e6',
+				color: 'inherit'
+			}
 		}
 	},
 	methods: {
