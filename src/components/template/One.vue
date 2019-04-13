@@ -8,14 +8,14 @@
 			/>
 			<div
 				v-if="!!$slots.header"
-				class="template-header max--width"
+				class="template-header page--width"
 			>
 				<slot name="header" />
 			</div>
 			<div
 				v-if="tableData"
 				v-loading="loading"
-				class="template-table max--width"
+				class="template-table page--width"
 			>
 				<el-table
 					:data="tableData"
@@ -96,11 +96,5 @@ export default {
 	margin-bottom: 30px;
 	background: #fff;
 	border: 1px solid #e6e6e6;
-}
-
-.max--width {
-	max-width: 900px;
-	margin-left: auto;
-	margin-right: auto;
 }
 </style>

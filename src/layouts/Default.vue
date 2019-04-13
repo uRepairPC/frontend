@@ -97,7 +97,8 @@ export default {
 
 .page {
 	height: calc(100% - 36px);
-	overflow: auto;
+	overflow-y: scroll;
+	overflow-x: auto;
 }
 
 .search--open {

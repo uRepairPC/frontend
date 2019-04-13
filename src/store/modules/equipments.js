@@ -1,7 +1,7 @@
 'use strict'
 
-import { equipments as equipmentColumns } from '@/data/columns'
 import { includePermission } from '@/scripts/utils'
+import StorageData from '@/classes/StorageData'
 import Equipment from '@/classes/Equipment'
 import Vue from 'vue'
 
@@ -47,11 +47,35 @@ const actions = {
 }
 
 const getters = {
-	/*
+	/**
 	 * Display on table.
+	 * Attributes:
+	 *  - disableSearch |Boolean| - disable send column on list of resources
+	 *  - value-type |String, Object { key, value }| - transform value depends on type (bool, timestamp)
+	 * @returns {(*|{model: boolean})[]}
 	 */
 	columns() {
-		return equipmentColumns.filter(column => includePermission(column.permissions))
+		const defaultActive = ['serial_number', 'inventory_number', 'type_name', 'manufacturer_name', 'model_name']
+
+		const columns = [
+			{ prop: 'id', label: 'ID', 'min-width': 70, sortable: 'custom' },
+			{ prop: 'serial_number', label: 'Серійний номер', 'min-width': 200, sortable: 'custom' },
+			{ prop: 'inventory_number', label: 'Інвертарний номер', 'min-width': 200, sortable: 'custom' },
+			{ prop: 'type_name', label: 'Тип', 'min-width': 150, sortable: 'custom' },
+			{ prop: 'manufacturer_name', label: 'Виробник', 'min-width': 150, sortable: 'custom' },
+			{ prop: 'model_name', label: 'Модель', 'min-width': 150, sortable: 'custom' },
+			{ prop: 'description', label: 'Опис', 'min-width': 250, disableSearch: true },
+			{ prop: 'updated_at', label: 'Оновлено', 'min-width': 150, sortable: 'custom', 'value-type': { key: 'date', value: 'LL' } },
+			{ prop: 'created_at', label: 'Створений', 'min-width': 150, sortable: 'custom', 'value-type': { key: 'date', value: 'LL' } }
+		]
+
+		const data = StorageData.columnEquipments.length ? StorageData.columnEquipments : defaultActive
+
+		return columns
+			.filter(column => includePermission(column.permissions))
+			.map((column) => {
+				return { ...column, model: data.includes(column.prop) }
+			})
 	},
 	// Type -> Manufacturer -> Model
 	cascaderOptions(state, getters, rootState) {

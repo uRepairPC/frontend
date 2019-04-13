@@ -12,32 +12,6 @@ export const COLUMNS_DATES = ['updated_at', 'created_at']
 
 /**
  * Get from store.
- * - Support permissions -
- * @return {array}
- */
-function equipmentData() {
-	const defaultActive = ['serial_number', 'inventory_number', 'type_name', 'manufacturer_name', 'model_name']
-
-	const columns = [
-		{ prop: 'id', label: 'ID', 'min-width': 70, sortable: 'custom' },
-		{ prop: 'serial_number', label: 'Серійний номер', 'min-width': 200, sortable: 'custom' },
-		{ prop: 'inventory_number', label: 'Інвертарний номер', 'min-width': 200, sortable: 'custom' },
-		{ prop: 'type_name', label: 'Тип', 'min-width': 150, sortable: 'custom' },
-		{ prop: 'manufacturer_name', label: 'Виробник', 'min-width': 150, sortable: 'custom' },
-		{ prop: 'model_name', label: 'Модель', 'min-width': 150, sortable: 'custom' },
-		{ prop: 'updated_at', label: 'Оновлено', 'min-width': 150, sortable: 'custom' },
-		{ prop: 'created_at', label: 'Створений', 'min-width': 150, sortable: 'custom' }
-	]
-
-	const data = StorageData.columnEquipments.length ? StorageData.columnEquipments : defaultActive
-
-	return columns.map((column) => {
-		return { ...column, model: data.includes(column.prop) }
-	})
-}
-
-/**
- * Get from store.
  * @return {array}
  */
 function roleData() {
@@ -62,9 +36,6 @@ function roleData() {
 /*
  * Export const
  */
-
-/** @return {array} */
-export const equipments = equipmentData()
 
 /** @return {array} */
 export const roles = roleData()
