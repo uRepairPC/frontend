@@ -23,7 +23,7 @@ export default {
 			required: true
 		},
 		value: {
-			type: [Array, Object, Number, String],
+			type: [Array, Object, Number, String, Boolean],
 			default: null
 		}
 	},
