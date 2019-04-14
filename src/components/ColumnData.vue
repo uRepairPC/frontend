@@ -6,7 +6,9 @@
 		{{ value ? 'Так' : 'Ні' }}
 	</div>
 	<div v-else>
-		<slot />
+		<slot>
+			{{ value }}
+		</slot>
 	</div>
 </template>
 
