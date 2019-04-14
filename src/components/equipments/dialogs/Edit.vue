@@ -5,62 +5,25 @@
 		v-bind="$attrs"
 		v-on="listeners"
 	>
-		<el-form
+		<generate-form
 			ref="form"
-			:model="form"
-			:rules="rules"
-			status-icon
-			class="form--full"
-			@submit.native.prevent="onSubmit"
-		>
-			<el-form-item
-				prop="equipment"
-				label="Тип, Виробник, Модель"
-			>
-				<equipment-cascader v-model="form.equipment" />
-			</el-form-item>
-			<el-form-item
-				prop="name"
-				label="Серійний номер"
-			>
-				<el-input
-					v-model="form.serial_number"
-					placeholder="Серійний номер"
-				/>
-			</el-form-item>
-			<el-form-item
-				prop="name"
-				label="Інвертарний номер"
-			>
-				<el-input
-					v-model="form.inventory_number"
-					placeholder="Інвертарний номер"
-				/>
-			</el-form-item>
-			<el-form-item
-				prop="description"
-				label="Опис"
-			>
-				<el-input
-					v-model="form.description"
-					type="textarea"
-					:autosize="{ minRows: 3 }"
-					placeholder="Опис"
-				/>
-			</el-form-item>
-		</el-form>
+			:form="form"
+			:loading="loading"
+			@submit="fetchRequest"
+		/>
 	</basic-edit>
 </template>
 
 <script>
 import EquipmentCascader from '@/components/equipments/Cascader'
 import BasicEdit from '@/components/dialogs/BasicEdit'
+import GenerateForm from '@/components/GenerateForm'
 import Equipment from '@/classes/Equipment'
 import { required } from '@/data/rules'
 
 export default {
 	components: {
-		EquipmentCascader, BasicEdit
+		EquipmentCascader, BasicEdit, GenerateForm
 	},
 	inheritAttrs: false,
 	props: {
@@ -73,13 +36,38 @@ export default {
 		return {
 			loading: false,
 			form: {
-				serial_number: this.equipment.serial_number,
-				inventory_number: this.equipment.inventory_number,
-				equipment: [this.equipment.type_id, this.equipment.manufacturer_id, this.equipment.model_id],
-				description: this.equipment.description
-			},
-			rules: {
-				equipment: required
+				equipment: {
+					component: EquipmentCascader,
+					value: [this.equipment.type_id, this.equipment.manufacturer_id, this.equipment.model_id],
+					label: 'Тип, Виробник, Модель',
+					rules: required
+				},
+				serial_number: {
+					component: 'el-input',
+					value: this.equipment.serial_number,
+					label: 'Серійний номер',
+					attrs: {
+						placeholder: 'Серійний номер'
+					}
+				},
+				inventory_number: {
+					component: 'el-input',
+					value: this.equipment.inventory_number,
+					label: 'Інвертарний номер',
+					attrs: {
+						placeholder: 'Інвертарний номер'
+					}
+				},
+				description: {
+					component: 'el-input',
+					value: this.equipment.description,
+					label: 'Опис',
+					attrs: {
+						type: 'textarea',
+						autosize: { minRows: 3 },
+						placeholder: 'Опис'
+					}
+				}
 			}
 		}
 	},
@@ -87,7 +75,9 @@ export default {
 		listeners() {
 			return {
 				...this.$listeners,
-				submit: this.onSubmit
+				submit: () => {
+					this.$refs.form.onSubmit()
+				}
 			}
 		},
 		equipmentObj() {
@@ -95,14 +85,14 @@ export default {
 		}
 	},
 	methods: {
-		fetchRequest() {
+		fetchRequest(form) {
 			this.loading = true
 
 			Equipment.fetchEdit(this.equipment.id, {
-				...this.form,
-				type_id: this.form.equipment[0] || null,
-				manufacturer_id: this.form.equipment[1] || null,
-				model_id: this.form.equipment[2] || null
+				...form,
+				type_id: form.equipment[0] || null,
+				manufacturer_id: form.equipment[1] || null,
+				model_id: form.equipment[2] || null
 			})
 				.then(() => {
 					this.$emit('edit')
@@ -111,15 +101,6 @@ export default {
 				.finally(() => {
 					this.loading = false
 				})
-		},
-		onSubmit() {
-			this.$refs.form.validate((valid) => {
-				if (!valid) {
-					return
-				}
-
-				this.fetchRequest()
-			})
 		}
 	}
 }
