@@ -1,7 +1,6 @@
 <template>
 	<el-tabs
 		:value="routeName"
-		type="border-card"
 		@tab-click="onTabClick"
 	>
 		<el-tab-pane
@@ -10,9 +9,15 @@
 			:label="tab.label"
 			:name="tab.name"
 		/>
-		<keep-alive>
-			<router-view />
-		</keep-alive>
+		<transition
+			name="anim"
+			mode="out-in"
+			appear
+		>
+			<keep-alive>
+				<router-view />
+			</keep-alive>
+		</transition>
 	</el-tabs>
 </template>
 
@@ -53,12 +58,46 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.el-tabs--border-card {
-	border: none;
-	box-shadow: none;
+.page {
+	background: #fff;
+	transition: .25s transform;
 }
 
-/deep/ .el-tabs__nav {
+/deep/ .el-tabs__content {
+	padding: 0 20px;
+}
+
+/deep/ .el-tabs__item {
 	user-select: none;
+}
+
+/deep/ .el-tabs__nav-wrap {
+	background-color: #f5f7fa;
+	padding: 0 20px;
+}
+
+/deep/ .el-tabs__nav-prev {
+	left: 5px;
+}
+
+/deep/ .el-tabs__nav-next {
+	right: 5px;
+}
+
+// <animation>
+.anim-enter-active {
+	transition: .25s transform;
+	opacity: 0;
+	transform: translateY(-10px);
+}
+
+.anim-enter-to {
+	opacity: 1;
+	transform: translateY(0);
+}
+
+.anim-leave-active,
+.anim-leave-to {
+	display: none;
 }
 </style>
