@@ -9,6 +9,7 @@
 			:key="key"
 			:name="key"
 			:items="item"
+			:only-view="onlyView"
 		/>
 	</div>
 </template>
@@ -23,6 +24,7 @@ export default {
 	},
 	inheritAttrs: false,
 	props: {
+		// active names of permissions
 		value: {
 			type: Array,
 			default: () => []
@@ -30,6 +32,10 @@ export default {
 		permissionsGrouped: {
 			type: Object,
 			required: true
+		},
+		onlyView: {
+			type: Boolean,
+			default: false
 		}
 	},
 	data() {

@@ -1,6 +1,6 @@
 <template>
 	<basic-edit
-		title="Редагування ролі"
+		:title="`Доступи: ${role.display_name}`"
 		:loading="loading"
 		v-bind="$attrs"
 		v-on="listeners"

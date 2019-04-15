@@ -1,18 +1,24 @@
 <template>
-	<div class="permission-group">
+	<div
+		:class="['permission-group', {
+			'only-view': onlyView
+		}]"
+	>
 		<el-checkbox
 			v-model="checkAll"
 			:indeterminate="isIndeterminate"
 			class="title"
+			:disabled="onlyView"
 			@change="handleCheckAllChange"
 		>
-			<strong>{{ name }}</strong> - Обрати всі
+			<strong>{{ name }}</strong>{{ onlyView ? '' : ' - Обрати всі' }}
 		</el-checkbox>
 		<el-checkbox-group :value="checked">
 			<el-checkbox
 				v-for="(item, index) in items"
 				:label="item.name"
 				:key="index"
+				:disabled="onlyView"
 				@change="onChange($event, item.name, index)"
 			>
 				{{ item.display_name }}
@@ -35,6 +41,10 @@ export default {
 		items: {
 			type: Array,
 			default: () => []
+		},
+		onlyView: {
+			type: Boolean,
+			default: false
 		}
 	},
 	data() {
@@ -60,10 +70,18 @@ export default {
 	},
 	methods: {
 		handleCheckAllChange(val) {
+			if (this.onlyView) {
+				return
+			}
+
 			this.$emit('input', val ? this.items : [])
 			this.isIndeterminate = false
 		},
 		onChange(val, name, index) {
+			if (this.onlyView) {
+				return
+			}
+
 			let items = [...this.value]
 
 			if (val) {
@@ -82,6 +100,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "~scss/_colors";
+
 .permission-group {
 	margin-bottom: 15px;
 	padding-bottom: 15px;
@@ -90,6 +110,29 @@ export default {
 		border-bottom: 0;
 		margin-bottom: 0;
 		padding-bottom: 0;
+	}
+	&.only-view {
+		.el-checkbox,
+		/deep/ .el-checkbox__input,
+		/deep/ .el-checkbox__label,
+		/deep/ .el-checkbox__inner {
+			color: inherit;
+			cursor: context-menu;
+		}
+		/deep/ .el-checkbox__input {
+			&.is-checked {
+				.el-checkbox__inner {
+					background-color: $primary;
+					border-color: $primary;
+				}
+			}
+			.el-checkbox__inner {
+				&:after {
+					border-color: #fff;
+					cursor: context-menu;
+				}
+			}
+		}
 	}
 }
 
