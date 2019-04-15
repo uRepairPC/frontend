@@ -21,30 +21,38 @@
 			<div class="divider">
 				<span>Доступи</span>
 			</div>
-			<div>
-			<!--TODO-->
-				{{ loadingPermissionsStore }}
-				{{ permissions }}
-			</div>
+			<list-checkboxes
+				:permissions-grouped="model.permissions_grouped || {}"
+				only-view
+			/>
 		</div>
-		<!--TODO Users-->
+		<div class="page--width">
+			<div class="divider">
+				<span>Користувачі</span>
+			</div>
+			<!--TODO-->
+			{{ users }}
+		</div>
 	</template-one>
 </template>
 
 <script>
 import EditPermissionsDialog from '@/components/roles/dialogs/EditPermissions'
+import ListCheckboxes from '@/components/permissions/ListCheckboxes'
 import DeleteDialog from '@/components/roles/dialogs/Delete'
 import EditDialog from '@/components/roles/dialogs/Edit'
+import { includePermission } from '@/scripts/utils'
 import TemplateOne from '@/components/template/One'
 import * as permissions from '@/enum/permissions'
 import sections from '@/data/sections'
 import onePage from '@/mixins/onePage'
 import * as types from '@/enum/types'
 import Role from '@/classes/Role'
+import User from '@/classes/User'
 
 export default {
 	components: {
-		TemplateOne
+		TemplateOne, ListCheckboxes
 	},
 	mixins: [
 		onePage(sections.roles)
@@ -52,7 +60,8 @@ export default {
 	data() {
 		return {
 			loading: false,
-			loadingPermissions: false
+			loadingPermissions: false,
+			users: []
 		}
 	},
 	computed: {
@@ -67,7 +76,7 @@ export default {
 				{
 					title: 'Оновити',
 					type: types.SUCCESS,
-					action: this.fetchRequest,
+					action: () => this.fetchRequest('loading'),
 					disabled: this.loading
 				},
 				{
@@ -121,6 +130,10 @@ export default {
 			if (!Object.keys(this.permissions).length) {
 				this.$store.dispatch('permissions/fetchListGrouped')
 			}
+
+			if (!this.model.users && includePermission(permissions.USERS_VIEW)) {
+				this.fetchRequestUsers()
+			}
 		},
 		fetchRequest(loadingAttr) {
 			this[loadingAttr] = true
@@ -131,6 +144,17 @@ export default {
 				})
 				.finally(() => {
 					this[loadingAttr] = false
+				})
+		},
+		fetchRequestUsers() {
+			User.fetchAll({
+				params: {
+					filterRoleById: +this.$route.params.id
+				}
+			})
+				.then(({ data }) => {
+					// TODO Set to role object?
+					this.users = data.data
 				})
 		},
 		openDialog(component, attrs = {}) {
@@ -162,5 +186,11 @@ export default {
 	height: 5px;
 	margin: 15px auto 0;
 	border-radius: 5px;
+}
+
+.permissions-list-checkboxes {
+	padding: 30px;
+	background: #fff;
+	border: 1px solid #e6e6e6;
 }
 </style>
