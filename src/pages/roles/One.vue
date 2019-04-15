@@ -14,19 +14,25 @@
 				:style="{ 'background-color': model.color }"
 			/>
 		</template>
-		<div class="page--width">
+		<div
+			v-loading="loadingPermissions || loadingPermissionsStore"
+			class="page--width"
+		>
 			<div class="divider">
 				<span>Доступи</span>
 			</div>
 			<div>
-				{{ permissionsLoading }}
+			<!--TODO-->
+				{{ loadingPermissionsStore }}
 				{{ permissions }}
 			</div>
 		</div>
+		<!--TODO Users-->
 	</template-one>
 </template>
 
 <script>
+import EditPermissionsDialog from '@/components/roles/dialogs/EditPermissions'
 import DeleteDialog from '@/components/roles/dialogs/Delete'
 import EditDialog from '@/components/roles/dialogs/Edit'
 import TemplateOne from '@/components/template/One'
@@ -45,14 +51,15 @@ export default {
 	],
 	data() {
 		return {
-			loading: false
+			loading: false,
+			loadingPermissions: false
 		}
 	},
 	computed: {
 		permissions() {
 			return this.$store.state.permissions.listGrouped
 		},
-		permissionsLoading() {
+		loadingPermissionsStore() {
 			return this.$store.state.permissions.loading
 		},
 		buttons() {
@@ -68,6 +75,13 @@ export default {
 					type: types.PRIMARY,
 					permissions: permissions.ROLES_MANAGE,
 					action: () => this.openDialog(EditDialog)
+				},
+				{
+					title: 'Редагувати доступи',
+					type: types.PRIMARY,
+					disabled: this.model.id === 1,
+					permissions: permissions.ROLES_MANAGE,
+					action: () => this.openDialog(EditPermissionsDialog)
 				},
 				{
 					title: 'Видалити роль',
@@ -99,21 +113,24 @@ export default {
 	methods: {
 		fetchData() {
 			if (!this.model.id) {
-				this.fetchRequest()
+				this.fetchRequest('loading')
+			} else if (!this.model.permissions) {
+				this.fetchRequest('loadingPermissions')
 			}
+
 			if (!Object.keys(this.permissions).length) {
 				this.$store.dispatch('permissions/fetchListGrouped')
 			}
 		},
-		fetchRequest() {
-			this.loading = true
+		fetchRequest(loadingAttr) {
+			this[loadingAttr] = true
 
 			Role.fetchOne(+this.$route.params.id)
 				.catch(() => {
 					this.$router.push({ name: sections.roles })
 				})
 				.finally(() => {
-					this.loading = false
+					this[loadingAttr] = false
 				})
 		},
 		openDialog(component, attrs = {}) {
