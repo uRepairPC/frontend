@@ -1,7 +1,7 @@
 {
   "name": "@urepairpc/frontend",
   "version": "1.0.0",
-  "main": "./src/main.js",
+  "main": "src/main.js",
   "scripts": {
     "dev": "webpack-dev-server --hot --host=0.0.0.0",
     "build": "webpack --mode production",
@@ -26,7 +26,7 @@
     "moment": "^2.24.0",
     "nprogress": "^0.2.0",
     "vue": "^2.6.10",
-    "vue-router": "^3.0.4",
+    "vue-router": "^3.0.5",
     "vuex": "^3.1.0"
   },
   "devDependencies": {
