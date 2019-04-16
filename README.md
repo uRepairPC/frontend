@@ -1,8 +1,8 @@
 # uRepairPC - Web
 
-<h1 align="center">
-	<img width="300" src="https://raw.githubusercontent.com/uRepairPC/frontend/master/src/images/icon.png" alt="Chalk">
-</h1>
+<p align="center">
+    <img width="250" src="https://raw.githubusercontent.com/uRepairPC/frontend/master/src/images/icon.png" alt="uRepairPC">
+</p>
 
 ## Docs
 [Website](https://urepairpc.github.io/docs/)
