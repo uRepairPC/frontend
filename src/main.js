@@ -9,9 +9,10 @@ import directives from '@/directives'
 import ElementUI from 'element-ui'
 import NProgress from 'nprogress'
 import router from '@/router'
-import App from '@/App.vue'
 import moment from 'moment'
 import store from '@/store'
+import i18n from '@/locale'
+import App from '@/App.vue'
 import Vue from 'vue'
 
 // Import styles
@@ -61,5 +62,6 @@ new Vue({
 	el: '#app',
 	store,
 	router,
+	i18n,
 	render: h => h(App)
 })
