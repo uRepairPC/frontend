@@ -30,6 +30,34 @@ export default class StorageData {
 	 * | -------------------------------------------------------------------------------------
 	 */
 
+	static get remove() {
+		const self = this
+
+		return {
+			columnUsers() {
+				return self._remove(COLUMN_USERS)
+			},
+			columnEquipments() {
+				return self._remove(COLUMN_EQUIPMENTS)
+			},
+			columnRoles() {
+				return self._remove(COLUMN_ROLES)
+			},
+			token() {
+				return self._remove(TOKEN)
+			},
+			profile() {
+				return self._remove(PROFILE)
+			},
+			permissions() {
+				return self._remove(PERMISSIONS)
+			},
+			settings() {
+				return self._remove(SETTINGS)
+			}
+		}
+	}
+
 	/* Column Users -------------------------------------------------------------------------- */
 
 	/** @return {Array} */
@@ -39,11 +67,6 @@ export default class StorageData {
 
 	static set columnUsers(value) {
 		this.setArray(COLUMN_USERS, value)
-	}
-
-	/** @return {boolean} */
-	static removeColumnUsers() {
-		return this.remove(COLUMN_USERS)
 	}
 
 	/* Column Equipments -------------------------------------------------------------------- */
@@ -57,11 +80,6 @@ export default class StorageData {
 		this.setArray(COLUMN_EQUIPMENTS, value)
 	}
 
-	/** @return {boolean} */
-	static removeColumnEquipments() {
-		return this.remove(COLUMN_EQUIPMENTS)
-	}
-
 	/* Column Roles ------------------------------------------------------------------------- */
 
 	/** @return {Array} */
@@ -71,11 +89,6 @@ export default class StorageData {
 
 	static set columnRoles(value) {
 		this.setArray(COLUMN_ROLES, value)
-	}
-
-	/** @return {boolean} */
-	static removeColumnRoles() {
-		return this.remove(COLUMN_ROLES)
 	}
 
 	/* Token -------------------------------------------------------------------------------- */
@@ -89,11 +102,6 @@ export default class StorageData {
 		this.setString(TOKEN, value)
 	}
 
-	/** @return {boolean} */
-	static removeToken() {
-		return this.remove(TOKEN)
-	}
-
 	/* Profile ------------------------------------------------------------------------------ */
 
 	/** @return {object} */
@@ -103,11 +111,6 @@ export default class StorageData {
 
 	static set profile(value) {
 		this.setObject(PROFILE, value)
-	}
-
-	/** @return {boolean} */
-	static removeProfile() {
-		return this.remove(PROFILE)
 	}
 
 	/* Permissions ---------------------------------------------------------------------------------- */
@@ -121,11 +124,6 @@ export default class StorageData {
 		this.setArray(PERMISSIONS, value)
 	}
 
-	/** @return {boolean} */
-	static removePermissions() {
-		return this.remove(PERMISSIONS)
-	}
-
 	/* SettingsFrontend ----------------------------------------------------------------------------- */
 
 	/** @return {object} */
@@ -135,11 +133,6 @@ export default class StorageData {
 
 	static set settings(value) {
 		this.setObject(SETTINGS, value)
-	}
-
-	/** @return {boolean} */
-	static removeSettings() {
-		return this.remove(SETTINGS)
 	}
 
 	/* | -------------------------------------------------------------------------------------
@@ -241,7 +234,7 @@ export default class StorageData {
 	 * @param key
 	 * @return {boolean}
 	 */
-	static remove(key) {
+	static _remove(key) {
 		if (localStorage.getItem(key) === null) {
 			return false
 		}

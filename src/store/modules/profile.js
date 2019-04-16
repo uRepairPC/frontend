@@ -3,7 +3,7 @@
 import router, { DEFAULT_ROUTE_NAME } from '@/router'
 import { runLoadingService } from '@/scripts/dom'
 import StorageData from '@/classes/StorageData'
-import sections from '@/data/sections'
+import logout from '@/scripts/logout'
 import axios from 'axios'
 
 const state = {
@@ -27,22 +27,6 @@ const mutations = {
 	},
 	SET_IS_LOGIN(state, toggle) {
 		state.isLogin = toggle
-	},
-	CLEAR_ALL(state) {
-		// Clear data from axios
-		axios.defaults.headers['Authorization'] = null
-
-		// Clear data from localStorage
-		StorageData.removeToken()
-		StorageData.removeProfile()
-		StorageData.removePermissions()
-
-		// FIXME Clear all data on exit? - list of users, roles, etc..
-
-		// Clear data from store
-		state.isLogin = false
-
-		router.push({ name: sections.auth })
 	}
 }
 
@@ -54,9 +38,10 @@ const actions = {
 		const profile = StorageData.profile
 		const token = StorageData.token
 
+		// Check if values is exists on localStorage
+		// permissions can be empty
 		if (!profile.id || !token) {
-			commit('CLEAR_ALL')
-			return router.push({ name: sections.auth })
+			return logout()
 		}
 
 		axios.defaults.headers['Authorization'] = `Bearer ${token}`
@@ -94,12 +79,12 @@ const actions = {
 				commit('SET_LOADING', false)
 			})
 	},
-	logout({ commit }) {
+	logout() {
 		const loadingService = runLoadingService('Виходимо з системи')
 
 		axios.post('auth/logout')
 			.then(() => {
-				commit('CLEAR_ALL')
+				logout()
 			})
 			.finally(() => {
 				loadingService.close()

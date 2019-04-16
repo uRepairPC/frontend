@@ -74,6 +74,9 @@ const mutations = {
 
 		Vue.delete(state.sidebar[section], id)
 	},
+	CLEAR_SIDEBAR(state) {
+		state.sidebar = {}
+	},
 	/**
 	 * @param state
 	 * @param {object} data

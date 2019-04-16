@@ -19,6 +19,11 @@ const mutations = {
 	},
 	APPEND_POPOVER(state, { id, permissions }) {
 		Vue.set(state.popover, id, permissions)
+	},
+	CLEAR_ALL(state) {
+		state.loading = false
+		state.popover = {}
+		state.list = {}
 	}
 }
 

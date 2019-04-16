@@ -17,6 +17,11 @@ const mutations = {
 	},
 	SET_LOADING(state, bool) {
 		state.loading = bool
+	},
+	CLEAR_ALL(state) {
+		state.loading = false
+		state.list = []
+		state.listGrouped = {}
 	}
 }
 
