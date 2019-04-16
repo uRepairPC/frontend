@@ -105,7 +105,7 @@ export default {
 .permission-group {
 	margin-bottom: 15px;
 	padding-bottom: 15px;
-	border-bottom: 1px solid #e6e6e6;
+	border-bottom: 1px solid $defaultBorder;
 	&:last-child {
 		border-bottom: 0;
 		margin-bottom: 0;

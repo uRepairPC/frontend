@@ -102,7 +102,7 @@ export default {
 .files-list {
 	.items {
 		background: #fff;
-		border: 1px solid #e6e6e6;
+		border: 1px solid $defaultBorder;
 	}
 }
 

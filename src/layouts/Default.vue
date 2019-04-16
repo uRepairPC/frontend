@@ -75,11 +75,12 @@ export default {
 
 <style lang="scss" scoped>
 @import "~scss/_variables";
+@import "~scss/_colors";
 
 .el-breadcrumb {
 	padding: 10px;
 	background: #fff;
-	border-bottom: 1px solid #e6e6e6;
+	border-bottom: 1px solid $defaultBorder;
 }
 
 .el-main {

@@ -248,7 +248,7 @@ export default {
 	align-items: center;
 	justify-content: center;
 	flex-wrap: wrap;
-	border: 1px solid #e6e6e6;
+	border: 1px solid $defaultBorder;
 	background: #fff;
 	padding: 10px 20px;
 	box-shadow: $lightShadow;
