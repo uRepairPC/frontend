@@ -5,56 +5,49 @@
 		v-bind="$attrs"
 		v-on="listeners"
 	>
-		<el-form
+		<generate-form
 			ref="form"
-			:model="form"
-			:rules="rules"
-			status-icon
-			@submit.native.prevent="onSubmit"
-		>
-			<el-form-item
-				prop="name"
-				label="Назва"
-			>
-				<el-input
-					v-model="form.name"
-					placeholder="Назва"
-				/>
-			</el-form-item>
-			<el-form-item
-				prop="description"
-				label="Опис"
-			>
-				<el-input
-					v-model="form.description"
-					type="textarea"
-					:autosize="{ minRows: 3 }"
-					placeholder="Опис"
-				/>
-			</el-form-item>
-		</el-form>
+			:form="form"
+			:loading="loading"
+			@submit="fetchRequest"
+		/>
 	</basic-create>
 </template>
 
 <script>
 import BasicCreate from '@/components/dialogs/BasicCreate'
+import GenerateForm from '@/components/GenerateForm'
 import EquipmentType from '@/classes/EquipmentType'
 import { required } from '@/data/rules'
 
 export default {
 	components: {
-		BasicCreate
+		GenerateForm, BasicCreate
 	},
 	inheritAttrs: false,
 	data() {
 		return {
 			loading: false,
 			form: {
-				name: '',
-				description: ''
-			},
-			rules: {
-				name: required
+				name: {
+					component: 'el-input',
+					value: '',
+					label: 'Назва',
+					rules: required,
+					attrs: {
+						placeholder: 'Назва'
+					}
+				},
+				description: {
+					component: 'el-input',
+					value: '',
+					label: 'Опис',
+					attrs: {
+						type: 'textarea',
+						autosize: { minRows: 3 },
+						placeholder: 'Опис'
+					}
+				}
 			}
 		}
 	},
@@ -62,15 +55,17 @@ export default {
 		listeners() {
 			return {
 				...this.$listeners,
-				submit: this.onSubmit
+				submit: () => {
+					this.$refs.form.onSubmit()
+				}
 			}
 		}
 	},
 	methods: {
-		fetchRequest() {
+		fetchRequest(form) {
 			this.loading = true
 
-			EquipmentType.fetchStore(this.form)
+			EquipmentType.fetchStore(form)
 				.then(() => {
 					this.$store.dispatch('equipmentTypes/fetchList')
 					this.$emit('create')
@@ -79,15 +74,6 @@ export default {
 				.finally(() => {
 					this.loading = false
 				})
-		},
-		onSubmit() {
-			this.$refs.form.validate((valid) => {
-				if (!valid) {
-					return
-				}
-
-				this.fetchRequest()
-			})
 		}
 	}
 }
