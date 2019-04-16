@@ -9,7 +9,9 @@
 				:loading="loading"
 				@submit="fetchRequest"
 			>
-				<template slot="button">Створити</template>
+				<template slot="button">
+					Створити
+				</template>
 			</generate-form>
 		</div>
 	</div>
@@ -30,7 +32,7 @@ export default {
 		{ title: menu[sections.equipments].children.add.title }
 	],
 	components: {
-		EquipmentCascader, GenerateForm
+		GenerateForm
 	},
 	mixins: [
 		breadcrumbs

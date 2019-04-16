@@ -23,7 +23,7 @@ import { required } from '@/data/rules'
 
 export default {
 	components: {
-		EquipmentCascader, BasicEdit, GenerateForm
+		BasicEdit, GenerateForm
 	},
 	inheritAttrs: false,
 	props: {

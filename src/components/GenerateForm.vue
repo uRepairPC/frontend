@@ -14,8 +14,8 @@
 			:label="item.label"
 		>
 			<component
-				v-model="item.value"
 				:is="item.component"
+				v-model="item.value"
 				v-bind="item.attrs"
 				v-on="item.events"
 			/>

@@ -14,25 +14,17 @@
 				:style="{ 'background-color': model.color }"
 			/>
 		</template>
-		<div
-			v-loading="loadingPermissions || loadingPermissionsStore"
-			class="page--width"
-		>
+		<div class="page--width">
 			<div class="divider">
 				<span>Доступи</span>
 			</div>
 			<list-checkboxes
+				v-loading="loadingPermissions || loadingPermissionsStore"
 				:permissions-grouped="model.permissions_grouped || {}"
 				only-view
 			/>
 		</div>
-		<div class="page--width">
-			<div class="divider">
-				<span>Користувачі</span>
-			</div>
-			<!--TODO-->
-			{{ users }}
-		</div>
+		<!--TODO Users section (Table, component)-->
 	</template-one>
 </template>
 
@@ -41,14 +33,12 @@ import EditPermissionsDialog from '@/components/roles/dialogs/EditPermissions'
 import ListCheckboxes from '@/components/permissions/ListCheckboxes'
 import DeleteDialog from '@/components/roles/dialogs/Delete'
 import EditDialog from '@/components/roles/dialogs/Edit'
-import { includePermission } from '@/scripts/utils'
 import TemplateOne from '@/components/template/One'
 import * as permissions from '@/enum/permissions'
 import sections from '@/data/sections'
 import onePage from '@/mixins/onePage'
 import * as types from '@/enum/types'
 import Role from '@/classes/Role'
-import User from '@/classes/User'
 
 export default {
 	components: {
@@ -60,8 +50,7 @@ export default {
 	data() {
 		return {
 			loading: false,
-			loadingPermissions: false,
-			users: []
+			loadingPermissions: false
 		}
 	},
 	computed: {
@@ -130,10 +119,6 @@ export default {
 			if (!Object.keys(this.permissions).length) {
 				this.$store.dispatch('permissions/fetchListGrouped')
 			}
-
-			if (!this.model.users && includePermission(permissions.USERS_VIEW)) {
-				this.fetchRequestUsers()
-			}
 		},
 		fetchRequest(loadingAttr) {
 			this[loadingAttr] = true
@@ -144,17 +129,6 @@ export default {
 				})
 				.finally(() => {
 					this[loadingAttr] = false
-				})
-		},
-		fetchRequestUsers() {
-			User.fetchAll({
-				params: {
-					filterRoleById: +this.$route.params.id
-				}
-			})
-				.then(({ data }) => {
-					// TODO Set to role object?
-					this.users = data.data
 				})
 		},
 		openDialog(component, attrs = {}) {

@@ -15,12 +15,11 @@
 <script>
 import ListCheckboxes from '@/components/permissions/ListCheckboxes'
 import BasicEdit from '@/components/dialogs/BasicEdit'
-import GenerateForm from '@/components/GenerateForm'
 import Role from '@/classes/Role'
 
 export default {
 	components: {
-		BasicEdit, GenerateForm, ListCheckboxes
+		BasicEdit, ListCheckboxes
 	},
 	inheritAttrs: false,
 	props: {

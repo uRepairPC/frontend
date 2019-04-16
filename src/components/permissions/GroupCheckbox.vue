@@ -16,8 +16,8 @@
 		<el-checkbox-group :value="checked">
 			<el-checkbox
 				v-for="(item, index) in items"
-				:label="item.name"
 				:key="index"
+				:label="item.name"
 				:disabled="onlyView"
 				@change="onChange($event, item.name, index)"
 			>

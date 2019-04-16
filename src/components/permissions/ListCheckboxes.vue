@@ -4,9 +4,9 @@
 		class="permissions-list-checkboxes"
 	>
 		<group-checkbox
-			v-model="permissions[key]"
 			v-for="(item, key) in list"
 			:key="key"
+			v-model="permissions[key]"
 			:name="key"
 			:items="item"
 			:only-view="onlyView"

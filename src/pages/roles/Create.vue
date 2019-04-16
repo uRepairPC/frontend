@@ -9,7 +9,9 @@
 				:loading="loading"
 				@submit="fetchRequest"
 			>
-				<template slot="button">Створити</template>
+				<template slot="button">
+					Створити
+				</template>
 			</generate-form>
 		</div>
 	</div>
@@ -28,12 +30,12 @@ export default {
 		{ title: menu[sections.roles].title, routeName: sections.roles },
 		{ title: menu[sections.roles].children.add.title }
 	],
-	mixins: [
-		breadcrumbs
-	],
 	components: {
 		GenerateForm
 	},
+	mixins: [
+		breadcrumbs
+	],
 	data() {
 		return {
 			loading: false,

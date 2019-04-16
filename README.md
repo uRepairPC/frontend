@@ -11,8 +11,7 @@
 </p>
 
 ## TODO
-- [ ] Role page
-- [ ] Requests + history
+- [ ] Requests
 - [ ] Docs (Vuepress)
 - [ ] Tests
 - [ ] i18n*
