@@ -4,67 +4,20 @@
 			<div class="title">
 				{{ titlePage }}
 			</div>
-			<el-form
-				ref="form"
-				:model="form"
-				:rules="rules"
-				status-icon
-				class="form--full"
-				@submit.native.prevent="onSubmit"
+			<generate-form
+				:form="form"
+				:loading="loading"
+				@submit="fetchRequest"
 			>
-				<el-form-item
-					prop="equipment"
-					label="Тип, Виробник, Модель"
-				>
-					<equipment-cascader v-model="form.equipment" />
-				</el-form-item>
-				<el-form-item
-					prop="serial_number"
-					label="Серійний номер"
-				>
-					<el-input
-						v-model="form.serial_number"
-						placeholder="Серійний номер"
-					/>
-				</el-form-item>
-				<el-form-item
-					prop="inventory_number"
-					label="Інвертарний номер"
-				>
-					<el-input
-						v-model="form.inventory_number"
-						placeholder="Інвертарний номер"
-					/>
-				</el-form-item>
-				<el-form-item
-					prop="description"
-					label="Опис"
-				>
-					<el-input
-						v-model="form.description"
-						type="textarea"
-						:autosize="{ minRows: 3 }"
-						placeholder="Опис"
-					/>
-				</el-form-item>
-				<div class="btn-wrap">
-					<el-button
-						type="primary"
-						:loading="loading"
-						:disabled="loading"
-						class="btn"
-						@click="onSubmit"
-					>
-						Створити
-					</el-button>
-				</div>
-			</el-form>
+				<template slot="button">Створити</template>
+			</generate-form>
 		</div>
 	</div>
 </template>
 
 <script>
 import EquipmentCascader from '@/components/equipments/Cascader'
+import GenerateForm from '@/components/GenerateForm'
 import breadcrumbs from '@/mixins/breadcrumbs'
 import Equipment from '@/classes/Equipment'
 import { required } from '@/data/rules'
@@ -77,7 +30,7 @@ export default {
 		{ title: menu[sections.equipments].children.add.title }
 	],
 	components: {
-		EquipmentCascader
+		EquipmentCascader, GenerateForm
 	},
 	mixins: [
 		breadcrumbs
@@ -85,29 +38,56 @@ export default {
 	data() {
 		return {
 			loading: false,
-			form: {},
-			rules: {
-				equipment: required
+			form: {
+				equipment: {
+					component: EquipmentCascader,
+					value: [],
+					label: 'Тип, Виробник, Модель',
+					rules: required
+				},
+				serial_number: {
+					component: 'el-input',
+					value: '',
+					label: 'Серійний номер',
+					attrs: {
+						placeholder: 'Серійний номер'
+					}
+				},
+				inventory_number: {
+					component: 'el-input',
+					value: '',
+					label: 'Інвертарний номер',
+					attrs: {
+						placeholder: 'Інвертарний номер'
+					}
+				},
+				description: {
+					component: 'el-input',
+					value: '',
+					label: 'Опис',
+					attrs: {
+						type: 'textarea',
+						autosize: { minRows: 3 },
+						placeholder: 'Опис'
+					}
+				}
 			}
 		}
 	},
 	computed: {
 		titlePage() {
 			return menu[sections.equipments].children.add.title
-		},
-		profile() {
-			return this.$store.state.profile.user
 		}
 	},
 	methods: {
-		fetchRequest() {
+		fetchRequest(form) {
 			this.loading = true
 
 			Equipment.fetchStore({
-				...this.form,
-				type_id: this.form.equipment[0],
-				manufacturer_id: this.form.equipment[1],
-				model_id: this.form.equipment[2]
+				...form,
+				type_id: form.equipment[0] || null,
+				manufacturer_id: form.equipment[1] || null,
+				model_id: form.equipment[2] || null
 			})
 				.then(({ data }) => {
 					this.$router.push({ name: `${sections.equipments}-id`, params: { id: data.equipment.id } })
@@ -115,15 +95,6 @@ export default {
 				.finally(() => {
 					this.loading = false
 				})
-		},
-		onSubmit() {
-			this.$refs.form.validate((valid) => {
-				if (!valid) {
-					return
-				}
-
-				this.fetchRequest()
-			})
 		}
 	}
 }

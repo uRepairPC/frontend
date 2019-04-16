@@ -5,34 +5,24 @@
 		v-bind="$attrs"
 		v-on="listeners"
 	>
-		<el-form
+		<generate-form
 			ref="form"
-			:model="form"
-			:rules="rules"
-			status-icon
-			@submit.native.prevent="onSubmit"
-		>
-			<el-form-item
-				prop="name"
-				label="Назва"
-			>
-				<el-input
-					v-model="form.name"
-					placeholder="Назва"
-				/>
-			</el-form-item>
-		</el-form>
+			:form="form"
+			:loading="loading"
+			@submit="fetchRequest"
+		/>
 	</basic-edit>
 </template>
 
 <script>
 import BasicEdit from '@/components/dialogs/BasicEdit'
+import GenerateForm from '@/components/GenerateForm'
 import EquipmentFile from '@/classes/EquipmentFile'
 import { required } from '@/data/rules'
 
 export default {
 	components: {
-		BasicEdit
+		BasicEdit, GenerateForm
 	},
 	inheritAttrs: false,
 	props: {
@@ -53,10 +43,15 @@ export default {
 		return {
 			loading: false,
 			form: {
-				name: this.file.name
-			},
-			rules: {
-				name: required
+				name: {
+					component: 'el-input',
+					value: this.file.name,
+					label: 'Назва',
+					rules: required,
+					attrs: {
+						placeholder: 'Назва'
+					}
+				}
 			}
 		}
 	},
@@ -64,15 +59,17 @@ export default {
 		listeners() {
 			return {
 				...this.$listeners,
-				submit: this.onSubmit
+				submit: () => {
+					this.$refs.form.onSubmit()
+				}
 			}
 		}
 	},
 	methods: {
-		fetchRequest() {
+		fetchRequest(form) {
 			this.loading = true
 
-			EquipmentFile.fetchEdit(this.equipment.id, this.file.id, this.form)
+			EquipmentFile.fetchEdit(this.equipment.id, this.file.id, form)
 				.then(({ data }) => {
 					this.$emit('update-file', data.file, this.index)
 					this.$emit('close')
@@ -80,15 +77,6 @@ export default {
 				.finally(() => {
 					this.loading = false
 				})
-		},
-		onSubmit() {
-			this.$refs.form.validate((valid) => {
-				if (!valid) {
-					return
-				}
-
-				this.fetchRequest()
-			})
 		}
 	}
 }
