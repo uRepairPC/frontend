@@ -1,5 +1,5 @@
 {
-  "name": "@urepairpc/frontend",
+  "name": "@urepairpc/web",
   "version": "1.0.0",
   "main": "src/main.js",
   "scripts": {
@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/uRepairPC/frontend.git"
+    "url": "git+https://github.com/uRepairPC/web.git"
   },
   "author": "Alexey Khrushch, alexeykhr@outlook.com",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/uRepairPC/frontend/issues"
+    "url": "https://github.com/uRepairPC/web/issues"
   },
-  "homepage": "https://github.com/uRepairPC/frontend#readme",
+  "homepage": "https://github.com/uRepairPC/web#readme",
   "dependencies": {
     "axios": "^0.18.0",
     "dotenv": "^7.0.0",

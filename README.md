@@ -1,7 +1,7 @@
 # uRepairPC - Web
 
 <p align="center">
-    <img width="250" src="https://raw.githubusercontent.com/uRepairPC/frontend/master/src/images/icon.png" alt="uRepairPC">
+    <img width="250" src="https://raw.githubusercontent.com/uRepairPC/web/master/src/images/icon.png" alt="uRepairPC">
 </p>
 
 ## Docs
@@ -9,12 +9,12 @@
 
 ## Preview (uk)
 <p align="center">
-    <img alt="Image 1" height="200" src="https://raw.githubusercontent.com/uRepairPC/frontend/master/demo/images/1.png" />
-    <img alt="Image 2" height="200" src="https://raw.githubusercontent.com/uRepairPC/frontend/master/demo/images/2.png" />
-    <img alt="Image 3" height="200" src="https://raw.githubusercontent.com/uRepairPC/frontend/master/demo/images/3.png" />
-    <img alt="Image 4" height="200" src="https://raw.githubusercontent.com/uRepairPC/frontend/master/demo/images/4.png" />
-    <img alt="Image 5" height="200" src="https://raw.githubusercontent.com/uRepairPC/frontend/master/demo/images/5.png" />
-    <img alt="Image 6" height="200" src="https://raw.githubusercontent.com/uRepairPC/frontend/master/demo/images/6.png" />
+    <img alt="Image 1" height="200" src="https://raw.githubusercontent.com/uRepairPC/web/master/demo/images/1.png" />
+    <img alt="Image 2" height="200" src="https://raw.githubusercontent.com/uRepairPC/web/master/demo/images/2.png" />
+    <img alt="Image 3" height="200" src="https://raw.githubusercontent.com/uRepairPC/web/master/demo/images/3.png" />
+    <img alt="Image 4" height="200" src="https://raw.githubusercontent.com/uRepairPC/web/master/demo/images/4.png" />
+    <img alt="Image 5" height="200" src="https://raw.githubusercontent.com/uRepairPC/web/master/demo/images/5.png" />
+    <img alt="Image 6" height="200" src="https://raw.githubusercontent.com/uRepairPC/web/master/demo/images/6.png" />
 </p>
 
 ## TODO
