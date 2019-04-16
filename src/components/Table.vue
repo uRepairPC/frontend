@@ -24,7 +24,7 @@
 						:column="column"
 						:row="row[column.prop]"
 					>
-						{{ row[column.prop] }}
+						{{ isEmpty(row[column.prop]) ? null : row[column.prop] }}
 					</slot>
 				</column-data>
 			</template>
@@ -34,6 +34,7 @@
 
 <script>
 import ColumnData from '@/components/ColumnData'
+import { isEmpty } from '@/scripts/helpers'
 
 export default {
 	components: {
@@ -74,6 +75,9 @@ export default {
 		loadingDirective() {
 			return this.loading && this.loadingType === 'directive'
 		}
+	},
+	methods: {
+		isEmpty
 	}
 }
 </script>
