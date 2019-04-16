@@ -29,6 +29,10 @@
   margin-right: auto;
 }
 
+.visible-scroll {
+  overflow-y: scroll !important;
+}
+
 .hide {
   display: none;
 }
