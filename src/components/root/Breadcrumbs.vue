@@ -26,10 +26,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "~scss/_variables";
+
 .el-breadcrumb {
 	display: flex;
 	align-items: center;
-	height: 36px;
+	height: $breadcrumbsHeight;
 	white-space: nowrap;
 }
 </style>

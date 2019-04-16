@@ -25,6 +25,10 @@ const mutations = {
 		})
 
 		state.list.data.push(...obj.data)
+	},
+	CLEAR_ALL(state) {
+		state.loading = false
+		state.list = {}
 	}
 }
 

@@ -13,6 +13,10 @@ const mutations = {
 	},
 	SET_LIST(state, arr) {
 		state.list = arr
+	},
+	CLEAR_ALL(state) {
+		state.loading = false
+		state.list = []
 	}
 }
 

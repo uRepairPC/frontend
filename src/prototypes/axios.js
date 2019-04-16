@@ -7,6 +7,7 @@ import { runLoadingService } from '@/scripts/dom'
 import StorageData from '@/classes/StorageData'
 import { serverProd, isProd } from '@/data/env'
 import * as types from '@/enum/types'
+import logout from '@/scripts/logout'
 import store from '@/store'
 import axios from 'axios'
 
@@ -75,7 +76,7 @@ axios.interceptors.response.use(
 							requestsToRefresh.forEach(callback => callback(data.token))
 						})
 						.catch(() => {
-							store.commit('profile/CLEAR_ALL')
+							logout()
 						})
 						.finally(() => {
 							loadingService.close()

@@ -3,14 +3,16 @@
 		v-loading="loading"
 		class="permissions-list-checkboxes"
 	>
-		<group-checkbox
-			v-for="(item, key) in list"
-			:key="key"
-			v-model="permissions[key]"
-			:name="key"
-			:items="item"
-			:only-view="onlyView"
-		/>
+		<div>
+			<group-checkbox
+				v-for="(item, key) in list"
+				:key="key"
+				v-model="permissions[key]"
+				:name="key"
+				:items="item"
+				:only-view="onlyView"
+			/>
+		</div>
 	</div>
 </template>
 

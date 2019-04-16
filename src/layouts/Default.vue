@@ -91,7 +91,7 @@ export default {
 }
 
 .page {
-	height: calc(100% - 36px);
+	height: calc(100vh - #{$headerHeight + $breadcrumbsHeight});
 	overflow: auto;
 }
 

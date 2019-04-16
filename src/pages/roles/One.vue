@@ -21,6 +21,7 @@
 			<list-checkboxes
 				v-loading="loadingPermissions || loadingPermissionsStore"
 				:permissions-grouped="model.permissions_grouped || {}"
+				class="list-checkboxes"
 				only-view
 			/>
 		</div>
@@ -162,7 +163,7 @@ export default {
 	border-radius: 5px;
 }
 
-.permissions-list-checkboxes {
+.list-checkboxes {
 	padding: 30px;
 	background: #fff;
 	border: 1px solid #e6e6e6;
