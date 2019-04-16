@@ -14,7 +14,7 @@
 			size="medium"
 			:style="styles"
 		>
-			{{ role.display_name }}
+			{{ role.name }}
 		</el-tag>
 		<!--Content-->
 		<div class="content">

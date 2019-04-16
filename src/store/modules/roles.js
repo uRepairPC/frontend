@@ -57,13 +57,12 @@ const getters = {
 	 * @returns {(*|{model: boolean})[]}
 	 */
 	columns() {
-		const defaultActive = ['name', 'display_name']
+		const defaultActive = ['color', 'name']
 
 		const columns = [
 			{ prop: 'id', label: 'ID', 'min-width': 70, sortable: 'custom' },
 			{ prop: 'color', label: 'Колір', 'min-width': 100, disableSearch: true },
 			{ prop: 'name', label: 'Ім\'я', 'min-width': 200, sortable: 'custom' },
-			{ prop: 'display_name', label: 'Відображуване ім\'я', 'min-width': 200, sortable: 'custom' },
 			{ prop: 'default', label: 'За замовчуванням', 'min-width': 100, sortable: 'custom', customType: 'bool' },
 			{ prop: 'updated_at', label: 'Оновлено', 'min-width': 150, sortable: 'custom', customType: 'timestamp' },
 			{ prop: 'created_at', label: 'Створений', 'min-width': 150, sortable: 'custom', customType: 'timestamp' }

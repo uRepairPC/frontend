@@ -6,7 +6,7 @@
 	>
 		<template slot="header">
 			<div class="title">
-				{{ model.display_name }}
+				{{ model.name }}
 			</div>
 			<div
 				v-if="model.color"
@@ -92,7 +92,7 @@ export default {
 			]
 		},
 		tableData() {
-			const props = ['name', 'color', 'default', 'created_at', 'updated_at']
+			const props = ['color', 'default', 'created_at', 'updated_at']
 			const result = []
 
 			this.$store.getters['roles/columns']

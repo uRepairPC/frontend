@@ -1,6 +1,6 @@
 <template>
 	<basic-delete
-		:title="role.display_name"
+		:title="role.name"
 		:confirm="role.id"
 		:loading="loading"
 		v-bind="$attrs"

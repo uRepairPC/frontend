@@ -44,15 +44,6 @@ export default {
 						placeholder: 'Ім\'я'
 					}
 				},
-				display_name: {
-					component: 'el-input',
-					value: this.role.display_name,
-					label: 'Відображуване ім\'я',
-					rules: required,
-					attrs: {
-						placeholder: 'Відображуване ім\'я'
-					}
-				},
 				color: {
 					component: 'el-color-picker',
 					value: this.role.color,
