@@ -5,51 +5,12 @@
 		v-bind="$attrs"
 		v-on="listeners"
 	>
-		<el-form
+		<generate-form
 			ref="form"
-			:model="form"
-			:rules="rules"
-			status-icon
-			class="form--full"
-			@submit.native.prevent="onSubmit"
-		>
-			<el-form-item
-				prop="name"
-				label="Назва"
-			>
-				<el-input
-					v-model="form.name"
-					placeholder="Назва"
-				/>
-			</el-form-item>
-			<el-form-item
-				prop="type_id"
-				label="Тип обладнання"
-			>
-				<type-select
-					v-model="form.type_id"
-				/>
-			</el-form-item>
-			<el-form-item
-				prop="manufacturer_id"
-				label="Виробник обладнання"
-			>
-				<manufacturer-select
-					v-model="form.manufacturer_id"
-				/>
-			</el-form-item>
-			<el-form-item
-				prop="description"
-				label="Опис"
-			>
-				<el-input
-					v-model="form.description"
-					type="textarea"
-					:autosize="{ minRows: 3 }"
-					placeholder="Опис"
-				/>
-			</el-form-item>
-		</el-form>
+			:form="form"
+			:loading="loading"
+			@submit="fetchRequest"
+		/>
 	</basic-edit>
 </template>
 
@@ -58,11 +19,12 @@ import ManufacturerSelect from '@/components/equipments/manufacturers/Select'
 import TypeSelect from '@/components/equipments/types/Select'
 import BasicEdit from '@/components/dialogs/BasicEdit'
 import EquipmentModel from '@/classes/EquipmentModel'
+import GenerateForm from '@/components/GenerateForm'
 import { required } from '@/data/rules'
 
 export default {
 	components: {
-		TypeSelect, ManufacturerSelect, BasicEdit
+		BasicEdit, GenerateForm
 	},
 	inheritAttrs: false,
 	props: {
@@ -72,19 +34,40 @@ export default {
 		}
 	},
 	data() {
-		const form = {}
-
-		Object.entries(this.item).forEach(([key, val]) => {
-			form[key] = val
-		})
-
 		return {
 			loading: false,
-			form,
-			rules: {
-				name: required,
-				type_id: required,
-				manufacturer_id: required
+			form: {
+				name: {
+					component: 'el-input',
+					value: this.item.name,
+					label: 'Назва',
+					rules: required,
+					attrs: {
+						placeholder: 'Назва'
+					}
+				},
+				type_id: {
+					component: TypeSelect,
+					value: this.item.type_id,
+					label: 'Тип обладнання',
+					rules: required
+				},
+				manufacturer_id: {
+					component: ManufacturerSelect,
+					value: this.item.manufacturer_id,
+					label: 'Виробник обладнання',
+					rules: required
+				},
+				description: {
+					component: 'el-input',
+					value: this.item.description,
+					label: 'Опис',
+					attrs: {
+						type: 'textarea',
+						autosize: { minRows: 3 },
+						placeholder: 'Опис'
+					}
+				}
 			}
 		}
 	},
@@ -92,15 +75,17 @@ export default {
 		listeners() {
 			return {
 				...this.$listeners,
-				submit: this.onSubmit
+				submit: () => {
+					this.$refs.form.onSubmit()
+				}
 			}
 		}
 	},
 	methods: {
-		fetchRequest() {
+		fetchRequest(form) {
 			this.loading = true
 
-			EquipmentModel.fetchEdit(this.item.id, this.form)
+			EquipmentModel.fetchEdit(this.item.id, form)
 				.then(() => {
 					this.$store.dispatch('equipmentModels/fetchList')
 					this.$emit('edit')
@@ -109,15 +94,6 @@ export default {
 				.finally(() => {
 					this.loading = false
 				})
-		},
-		onSubmit() {
-			this.$refs.form.validate((valid) => {
-				if (!valid) {
-					return
-				}
-
-				this.fetchRequest()
-			})
 		}
 	}
 }
