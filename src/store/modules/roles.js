@@ -1,7 +1,6 @@
 'use strict'
 
-import { roles as roleColumns } from '@/data/columns'
-import { includePermission } from '@/scripts/utils'
+import StorageData from '@/classes/StorageData'
 import Role from '@/classes/Role'
 import Vue from 'vue'
 
@@ -44,11 +43,33 @@ const actions = {
 }
 
 const getters = {
-	/*
+	/**
 	 * Display on table.
+	 * Attributes:
+	 *  - disableSearch |Boolean| - disable send column on list of resources
+	 *  - customType |String| - transform value depends on type (bool, timestamp)
+	 *  - hideList |Boolean| - display column on page (Index)
+	 * @returns {(*|{model: boolean})[]}
 	 */
 	columns() {
-		return roleColumns.filter(column => includePermission(column.permissions))
+		const defaultActive = ['name', 'display_name']
+
+		const columns = [
+			{ prop: 'id', label: 'ID', 'min-width': 70, sortable: 'custom' },
+			{ prop: 'color', label: 'Колір', 'min-width': 100, disableSearch: true },
+			{ prop: 'name', label: 'Ім\'я', 'min-width': 200, sortable: 'custom' },
+			{ prop: 'display_name', label: 'Відображуване ім\'я', 'min-width': 200, sortable: 'custom' },
+			{ prop: 'default', label: 'За замовчуванням', 'min-width': 100, sortable: 'custom', customType: 'bool' },
+			{ prop: 'updated_at', label: 'Оновлено', 'min-width': 150, sortable: 'custom', customType: 'timestamp' },
+			{ prop: 'created_at', label: 'Створений', 'min-width': 150, sortable: 'custom', customType: 'timestamp' }
+		]
+
+		const data = StorageData.columnRoles.length ? StorageData.columnRoles : defaultActive
+
+		return columns
+			.map((column) => {
+				return { ...column, model: data.includes(column.prop) }
+			})
 	}
 }
 

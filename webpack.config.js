@@ -25,7 +25,7 @@ module.exports = {
 		clientLogLevel: 'error',
 		disableHostCheck: true,
 		proxy: {
-			'/api/*': {
+			'**': {
 				target: process.env.SERVER_DEV || 'http://localhost/',
 				changeOrigin: true
 			}

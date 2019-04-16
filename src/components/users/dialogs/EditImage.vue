@@ -32,7 +32,7 @@
 
 <script>
 import BasicEdit from '@/components/dialogs/BasicEdit'
-import UserClass from '@/classes/User'
+import User from '@/classes/User'
 
 export default {
 	components: {
@@ -66,7 +66,7 @@ export default {
 			const fd = new FormData
 			fd.append('image', this.file.raw)
 
-			UserClass.fetchEditImage(this.user.id, fd)
+			User.fetchEditImage(this.user.id, fd)
 				.then(() => {
 					this.$emit('edit-image')
 					this.$emit('close')

@@ -5,34 +5,24 @@
 		v-bind="$attrs"
 		v-on="listeners"
 	>
-		<el-form
+		<generate-form
 			ref="form"
-			:model="form"
-			status-icon
-			class="form--full"
-			@submit.native.prevent="onSubmit"
-		>
-			<el-form-item
-				prop="name"
-				label="Оберіть ролі (введіть текст для отримання списку)"
-			>
-				<select-roles
-					v-model="form.roles"
-					:default-roles="defaultRoles"
-				/>
-			</el-form-item>
-		</el-form>
+			:form="form"
+			:loading="loading"
+			@submit="fetchRequest"
+		/>
 	</basic-edit>
 </template>
 
 <script>
 import BasicEdit from '@/components/dialogs/BasicEdit'
+import GenerateForm from '@/components/GenerateForm'
 import SelectRoles from '@/components/roles/Select'
 import User from '@/classes/User'
 
 export default {
 	components: {
-		BasicEdit, SelectRoles
+		BasicEdit, GenerateForm
 	},
 	inheritAttrs: false,
 	props: {
@@ -45,22 +35,30 @@ export default {
 		return {
 			loading: false,
 			defaultRoles: this.user.roles,
-			form: {}
+			form: {
+				roles: {
+					component: SelectRoles,
+					value: [],
+					label: 'Оберіть ролі (введіть текст для отримання списку)'
+				}
+			}
 		}
 	},
 	computed: {
 		listeners() {
 			return {
 				...this.$listeners,
-				submit: this.fetchRequest
+				submit: () => {
+					this.$refs.form.onSubmit()
+				}
 			}
 		}
 	},
 	methods: {
-		fetchRequest() {
+		fetchRequest(form) {
 			this.loading = true
 
-			User.fetchEditRoles(this.user.id, this.form)
+			User.fetchEditRoles(this.user.id, form)
 				.then(() => {
 					this.$emit('edit-roles')
 					this.$emit('close')

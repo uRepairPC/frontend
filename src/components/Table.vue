@@ -13,28 +13,32 @@
 			:key="index"
 			v-bind="column"
 		>
-			<template slot-scope="scope">
-				<template v-if="isColumnDate(column.prop)">
-					{{ getDate(scope.row[column.prop]) }}
-				</template>
-				<template v-else>
+			<template slot-scope="{ row }">
+				<template v-if="loadingRows && row.loading" />
+				<column-data
+					v-else
+					:column="column"
+					:value="row[column.prop]"
+				>
 					<slot
 						:column="column"
-						:row="scope.row[column.prop]"
+						:row="row[column.prop]"
 					>
-						{{ scope.row[column.prop] }}
+						{{ row[column.prop] }}
 					</slot>
-				</template>
+				</column-data>
 			</template>
 		</el-table-column>
 	</el-table>
 </template>
 
 <script>
-import { COLUMNS_DATES } from '@/data/columns'
-import moment from 'moment'
+import ColumnData from '@/components/ColumnData'
 
 export default {
+	components: {
+		ColumnData
+	},
 	props: {
 		list: {
 			type: Array,
@@ -59,7 +63,7 @@ export default {
 	computed: {
 		dataList() {
 			if (this.loading && this.loadingType === 'rows') {
-				return [...this.list, ...Array(10).fill({ disable: true })]
+				return [...this.list, ...Array(10).fill({ disable: true, loading: true })]
 			}
 
 			return this.list
@@ -69,18 +73,6 @@ export default {
 		},
 		loadingDirective() {
 			return this.loading && this.loadingType === 'directive'
-		}
-	},
-	methods: {
-		getDate(date) {
-			if (!date) {
-				return null
-			}
-
-			return moment(date).format('LL')
-		},
-		isColumnDate(prop) {
-			return COLUMNS_DATES.includes(prop)
 		}
 	}
 }

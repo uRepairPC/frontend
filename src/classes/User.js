@@ -2,6 +2,7 @@
 
 import StorageData from '@/classes/StorageData'
 import sections from '@/data/sections'
+import { server } from '@/data/env'
 import store from '@/store'
 import axios from 'axios'
 
@@ -77,6 +78,11 @@ export default class User {
 	static fetchOne(id, config = null) {
 		return axios.get(`${API_POINT}/${id}`, config)
 			.then((response) => {
+				// Update for current user new permissions
+				if (store.state.profile.user.id === id && response.data.permissions) {
+					store.commit('profile/SET_PERMISSIONS', response.data.permissions)
+				}
+
 				User.sidebar().add(response.data.user)
 				return response
 			})
@@ -252,7 +258,7 @@ export default class User {
 		if (this.user.image) {
 			const token = StorageData.token
 
-			return `background-image: url(/api/users/${this.user.id}/image?token=${token})`
+			return `background-image: url(${server}/users/${this.user.id}/image?token=${token})`
 		}
 
 		return null

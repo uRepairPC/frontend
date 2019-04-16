@@ -10,7 +10,7 @@
 
 <script>
 import BasicDelete from '@/components/dialogs/BasicDelete'
-import EquipmentTypeClass from '@/classes/EquipmentType'
+import EquipmentType from '@/classes/EquipmentType'
 
 export default {
 	components: {
@@ -40,7 +40,7 @@ export default {
 		fetchRequest() {
 			this.loading = true
 
-			EquipmentTypeClass.fetchDelete(this.item.id)
+			EquipmentType.fetchDelete(this.item.id)
 				.then(() => {
 					this.$store.dispatch('equipmentTypes/fetchList')
 					this.$emit('delete')

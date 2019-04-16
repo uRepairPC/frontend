@@ -1,45 +1,30 @@
 <template>
-	<div class="user">
-		<div class="user__wrap">
-			<top-buttons
-				:buttons="buttons"
-				:disabled="loading"
-			/>
-			<div class="header max--width">
-				<user-image :user="user" />
-			</div>
-			<div
-				v-loading="loading"
-				class="content max--width"
-			>
-				<el-table
-					:data="tableData"
-					style="width: 100%"
-				>
-					<el-table-column
-						prop="name"
-						label="Назва"
-						width="200"
-					/>
-					<el-table-column
-						prop="value"
-						label="Значення"
-					>
-						<template slot-scope="scope">
-							<span v-if="scope.row.key === 'roles'">
-								<role-tag
-									v-for="(role, index) in scope.row.value"
-									:key="index"
-									:role="role"
-								/>
-							</span>
-							<span v-else>{{ scope.row.value }}</span>
-						</template>
-					</el-table-column>
-				</el-table>
-			</div>
+	<template-one
+		:buttons="buttons"
+		:table-data="tableData"
+		:loading="loading"
+	>
+		<user-image
+			slot="header"
+			:user="model"
+		/>
+		<div
+			slot="table"
+			slot-scope="{ row }"
+		>
+			<span v-if="row.prop === 'roles'">
+				<role-tag
+					v-for="(role, index) in row.value"
+					:key="index"
+					:role="role"
+				/>
+			</span>
+			<span v-else-if="row.prop === 'email'">
+				<a :href="`mailto:${row.value}`">{{ row.value }}</a>
+			</span>
+			<span v-else>{{ row.value }}</span>
 		</div>
-	</div>
+	</template-one>
 </template>
 
 <script>
@@ -50,29 +35,21 @@ import EditPhotoDialog from '@/components/users/dialogs/EditImage'
 import EditEmailDialog from '@/components/users/dialogs/EditEmail'
 import DeleteDialog from '@/components/users/dialogs/Delete'
 import EditDialog from '@/components/users/dialogs/Edit'
-import { includePermission } from '@/scripts/utils'
+import TemplateOne from '@/components/template/One'
 import * as permissions from '@/enum/permissions'
-import TopButtons from '@/components/TopButtons'
 import UserImage from '@/components/users/Image'
-import breadcrumbs from '@/mixins/breadcrumbs'
-import { COLUMNS_DATES } from '@/data/columns'
 import RoleTag from '@/components/roles/Tag'
-import UserClass from '@/classes/User'
 import sections from '@/data/sections'
+import onePage from '@/mixins/onePage'
 import * as types from '@/enum/types'
-import menu from '@/data/menu'
-import moment from 'moment'
+import User from '@/classes/User'
 
 export default {
-	breadcrumbs: [
-		{ title: menu[sections.users].title, routeName: sections.users },
-		{ title: route => `ID: ${route.params.id || -1}` }
-	],
 	components: {
-		UserImage, TopButtons, RoleTag
+		UserImage, RoleTag, TemplateOne
 	},
 	mixins: [
-		breadcrumbs
+		onePage(sections.users)
 	],
 	data() {
 		return {
@@ -83,17 +60,9 @@ export default {
 		profile() {
 			return this.$store.state.profile.user
 		},
-		user() {
-			const users = this.$store.state.template.sidebar[sections.users]
-			const id = this.$route.params.id
-
-			if (users && users[id]) {
-				return users[id]
-			}
-
-			return {}
-		},
 		buttons() {
+			const ownProfile = this.profile.id === this.model.id
+
 			return [
 				{
 					title: 'Оновити',
@@ -128,26 +97,27 @@ export default {
 				{
 					title: 'Редагування ролей',
 					type: types.PRIMARY,
+					disabled: ownProfile,
 					permissions: permissions.ROLES_MANAGE,
 					action: () => this.openDialog(EditRolesDialog)
 				},
 				{
 					title: 'Видалити зображення',
 					type: types.WARNING,
-					disabled: !this.user.image,
+					disabled: !this.model.image,
 					permissions: permissions.USERS_EDIT,
 					action: () => this.openDialog(DeletePhotoDialog)
 				},
 				{
 					title: 'Видалити користувача',
 					type: types.DANGER,
-					disabled: this.profile.id === this.user.id,
+					disabled: ownProfile || this.model.id === 1,
 					permissions: permissions.USERS_DELETE,
 					action: () => this.openDialog(DeleteDialog)
 				}
 			]
 				.map((obj) => {
-					if (this.profile.id === this.user.id && obj.permissions === permissions.USERS_EDIT) {
+					if (ownProfile && obj.permissions === permissions.USERS_EDIT) {
 						return { ...obj, permissions: [obj.permissions, permissions.PROFILE_EDIT] }
 					}
 
@@ -155,43 +125,33 @@ export default {
 				})
 		},
 		tableData() {
-			return [
-				{ name: 'Ролі', key: 'roles', permissions: permissions.ROLES_VIEW },
-				{ name: 'E-mail', key: 'email' },
-				{ name: 'Опис', key: 'description' },
-				{ name: 'Телефон', key: 'phone' },
-				{ name: 'Створений', key: 'created_at' },
-				{ name: 'Останнє оновлення', key: 'updated_at' }
-			]
-				.filter(obj => includePermission(obj.permissions))
-				.reduce((result, obj) => {
-					const value = COLUMNS_DATES.includes(obj.key)
-						? moment(this.user[obj.key]).format('LLL')
-						: this.user[obj.key]
+			const props = ['roles', 'email', 'description', 'phone', 'created_at', 'updated_at']
+			const result = []
 
-					result.push({ ...obj, value })
-					return result
+			this.$store.getters['users/columns']
+				.forEach((obj) => {
+					if (props.includes(obj.prop)) {
+						const customType = obj.customType === 'timestamp'
+							? { key: 'timestamp', value: 'LLL' }
+							: obj.customType
 
-				}, [])
-		}
-	},
-	watch: {
-		'$route'() {
-			if (!this.user.id) {
-				this.fetchRequest()
-			}
-		}
-	},
-	created() {
-		if (!this.user.id) {
-			this.fetchRequest()
+						result.push({ ...obj, customType, value: this.model[obj.prop] })
+					}
+				})
+
+			return result
 		}
 	},
 	methods: {
+		fetchData() {
+			if (!this.model.id) {
+				this.fetchRequest()
+			}
+		},
 		fetchRequest() {
 			this.loading = true
 
-			UserClass.fetchOne(+this.$route.params.id)
+			User.fetchOne(+this.$route.params.id)
 				.catch(() => {
 					this.$router.push({ name: sections.users })
 				})
@@ -203,7 +163,7 @@ export default {
 			this.$store.commit('template/OPEN_DIALOG', {
 				component,
 				attrs: {
-					user: this.user
+					user: this.model
 				},
 				events: {
 					delete: () => {
@@ -215,28 +175,3 @@ export default {
 	}
 }
 </script>
-
-<style lang="scss" scoped>
-.header,
-.content {
-	margin-top: 20px;
-	padding: 20px;
-}
-
-.header {
-	padding: 30px;
-	text-align: center;
-}
-
-.content {
-	margin-bottom: 30px;
-	background: #fff;
-	border: 1px solid #e6e6e6;
-}
-
-.max--width {
-	max-width: 900px;
-	margin-left: auto;
-	margin-right: auto;
-}
-</style>

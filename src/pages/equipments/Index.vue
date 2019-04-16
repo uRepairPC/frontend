@@ -1,5 +1,5 @@
 <template>
-	<template-page>
+	<template-list>
 		<template slot="left-column">
 			<table-component
 				slot="left-column"
@@ -13,6 +13,10 @@
 			/>
 		</template>
 		<filter-core slot="right-column">
+			<filter-table-buttons
+				ref="buttons"
+				@update="fetchList"
+			/>
 			<filter-action
 				:section="sectionName"
 			/>
@@ -31,22 +35,17 @@
 				v-model="fixed"
 				:columns="columns"
 			/>
-			<filter-table-buttons
-				ref="buttons"
-				slot="bottom"
-				@update="fetchList"
-			/>
 		</filter-core>
-	</template-page>
+	</template-list>
 </template>
 
 <script>
-import TemplatePage from '@/components/template/Page'
+import TemplateList from '@/components/template/List'
 import scrollTableMixin from '@/mixins/scrollTable'
-import EquipmentClass from '@/classes/Equipment'
 import StorageData from '@/classes/StorageData'
 import TableComponent from '@/components/Table'
 import breadcrumbs from '@/mixins/breadcrumbs'
+import Equipment from '@/classes/Equipment'
 import sections from '@/data/sections'
 import { mapGetters } from 'vuex'
 import menu from '@/data/menu'
@@ -57,7 +56,7 @@ export default {
 		{ title: menu[sections.equipments].title }
 	],
 	components: {
-		TableComponent, TemplatePage
+		TableComponent, TemplateList
 	},
 	mixins: [
 		scrollTableMixin, breadcrumbs
@@ -106,6 +105,7 @@ export default {
 		userColumns: {
 			handler(arr) {
 				this.columns = arr
+					.filter(obj => !obj.hideList)
 			},
 			immediate: true
 		}
@@ -142,7 +142,7 @@ export default {
 				return
 			}
 
-			EquipmentClass.sidebar().add(equipment)
+			Equipment.sidebar().add(equipment)
 			this.$router.push({ name: `${sections.equipments}-id`, params: { id: equipment.id } })
 		},
 		onSortChange({ prop: column, order }) {

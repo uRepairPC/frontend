@@ -1,6 +1,6 @@
 <template>
 	<basic-delete
-		:title="equipmentClass.title"
+		:title="equipmentObj.title"
 		:confirm="equipment.id"
 		:loading="loading"
 		v-bind="$attrs"
@@ -17,7 +17,7 @@
 
 <script>
 import BasicDelete from '@/components/dialogs/BasicDelete'
-import EquipmentClass from '@/classes/Equipment'
+import Equipment from '@/classes/Equipment'
 
 export default {
 	components: {
@@ -43,15 +43,15 @@ export default {
 				submit: this.fetchRequest
 			}
 		},
-		equipmentClass() {
-			return new EquipmentClass(this.equipment)
+		equipmentObj() {
+			return new Equipment(this.equipment)
 		}
 	},
 	methods: {
 		fetchRequest() {
 			this.loading = true
 
-			EquipmentClass.fetchDelete(this.equipment.id, {
+			Equipment.fetchDelete(this.equipment.id, {
 				data: {
 					files_delete: this.filesDelete
 				}

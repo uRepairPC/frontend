@@ -15,8 +15,8 @@
 </template>
 
 <script>
-import SectionMenuActionList from '@/components/SectionMenuActionList'
-import SectionMenuHeader from '@/components/SectionMenuHeader'
+import SectionMenuActionList from '@/components/sections/SectionMenuActionList'
+import SectionMenuHeader from '@/components/sections/SectionMenuHeader'
 
 export default {
 	components: {

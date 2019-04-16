@@ -14,6 +14,7 @@
 					Оновити
 				</el-button>
 				<el-button
+					v-if="includePermission(permissionCreate)"
 					size="small"
 					type="primary"
 					@click="openDialog('create')"
@@ -33,18 +34,19 @@
 				:key="index"
 				v-bind="column"
 			>
-				<template slot-scope="scope">
-					<template v-if="isColumnDate(column.prop)">
-						{{ getDate(scope.row[column.prop]) }}
-					</template>
-					<template v-else>
-						{{ scope.row[column.prop] }}
-					</template>
-				</template>
+				<column-data
+					slot-scope="{ row }"
+					:column="column"
+					:value="row[column.prop]"
+				/>
 			</el-table-column>
-			<el-table-column width="200">
+			<el-table-column
+				v-if="includePermission([permissionEdit, permissionDelete])"
+				width="200"
+			>
 				<template slot-scope="scope">
 					<el-button
+						v-if="includePermission(permissionEdit)"
 						type="text"
 						size="small"
 						@click="openDialog('edit', scope.row)"
@@ -52,6 +54,7 @@
 						Редагувати
 					</el-button>
 					<el-button
+						v-if="includePermission(permissionDelete)"
 						type="text"
 						size="small"
 						class="danger"
@@ -66,12 +69,15 @@
 </template>
 
 <script>
-import { COLUMNS_DATES } from '@/data/columns'
+import { includePermission } from '@/scripts/utils'
+import ColumnData from '@/components/ColumnData'
 import sections from '@/data/sections'
 import { mapGetters } from 'vuex'
-import moment from 'moment'
 
 export default {
+	components: {
+		ColumnData
+	},
 	props: {
 		loading: {
 			type: Boolean,
@@ -88,6 +94,18 @@ export default {
 		dialogs: {
 			type: Object,
 			required: true
+		},
+		permissionCreate: {
+			type: String,
+			default: null
+		},
+		permissionEdit: {
+			type: String,
+			default: null
+		},
+		permissionDelete: {
+			type: String,
+			default: null
 		}
 	},
 	computed: {
@@ -100,16 +118,7 @@ export default {
 		}
 	},
 	methods: {
-		getDate(date) {
-			if (!date) {
-				return null
-			}
-
-			return moment(date).format('LL')
-		},
-		isColumnDate(prop) {
-			return COLUMNS_DATES.includes(prop)
-		},
+		includePermission,
 		openDialog(dialogProperty, item = null) {
 			this.$store.commit('template/OPEN_DIALOG', {
 				component: this.dialogs[dialogProperty],

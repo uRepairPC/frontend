@@ -1,7 +1,7 @@
 <template>
 	<component
-		:visible.sync="visible"
 		:is="dialog.component"
+		:visible.sync="visible"
 		v-bind="attrs"
 		v-on="listeners"
 	/>
@@ -31,11 +31,6 @@ export default {
 			}
 		}
 	},
-	methods: {
-		closeDialog() {
-			this.$store.commit('template/CLOSE_DIALOG')
-		}
-	},
 	watch: {
 		/**
 		 * FIXME Temporary fix problem on assign component (object)
@@ -48,6 +43,11 @@ export default {
 			} else {
 				this.$store._committing = false
 			}
+		}
+	},
+	methods: {
+		closeDialog() {
+			this.$store.commit('template/CLOSE_DIALOG')
 		}
 	}
 }

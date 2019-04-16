@@ -1,5 +1,5 @@
 <template>
-	<div class="user">
+	<div class="user visible-scroll">
 		<div class="wrap">
 			<div class="title">
 				{{ titlePage }}
@@ -8,90 +8,25 @@
 				Фотографію, роль або ж інші дані можно будет змінити після створення.<br>
 				Роль за умовчанням буде присвоєно в залежності від налаштувань.
 			</el-alert>
-			<el-form
-				ref="form"
-				:model="form"
-				:rules="rules"
-				status-icon
-				@submit.native.prevent="onSubmit"
+			<generate-form
+				:form="form"
+				:loading="loading"
+				@submit="fetchRequest"
 			>
-				<el-form-item
-					prop="email"
-					label="E-mail"
-				>
-					<el-input
-						v-model="form.email"
-						placeholder="E-mail"
-					/>
-				</el-form-item>
-				<el-form-item
-					prop="first_name"
-					label="Ім'я"
-				>
-					<el-input
-						v-model="form.first_name"
-						placeholder="Ім'я"
-					/>
-				</el-form-item>
-				<el-form-item
-					prop="middle_name"
-					label="По-батькові"
-				>
-					<el-input
-						v-model="form.middle_name"
-						placeholder="По-батькові"
-					/>
-				</el-form-item>
-				<el-form-item
-					prop="last_name"
-					label="Прізвище"
-				>
-					<el-input
-						v-model="form.last_name"
-						placeholder="Прізвище"
-					/>
-				</el-form-item>
-				<el-form-item
-					prop="phone"
-					label="Телефон"
-				>
-					<el-input
-						v-model="form.phone"
-						placeholder="Телефон"
-					/>
-				</el-form-item>
-				<el-form-item
-					prop="description"
-					label="Опис"
-				>
-					<el-input
-						v-model="form.description"
-						type="textarea"
-						:autosize="{ minRows: 3 }"
-						placeholder="Опис"
-					/>
-				</el-form-item>
-				<div class="btn-wrap">
-					<el-button
-						type="primary"
-						:loading="loading"
-						:disabled="loading"
-						class="btn"
-						@click="onSubmit"
-					>
-						Створити
-					</el-button>
-				</div>
-			</el-form>
+				<template slot="button">
+					Створити
+				</template>
+			</generate-form>
 		</div>
 	</div>
 </template>
 
 <script>
+import GenerateForm from '@/components/GenerateForm'
 import breadcrumbs from '@/mixins/breadcrumbs'
-import * as dataRules from '@/data/rules'
-import UserClass from '@/classes/User'
+import * as rules from '@/data/rules'
 import sections from '@/data/sections'
+import User from '@/classes/User'
 import menu from '@/data/menu'
 
 export default {
@@ -99,48 +34,88 @@ export default {
 		{ title: menu[sections.users].title, routeName: sections.users },
 		{ title: menu[sections.users].children.add.title }
 	],
+	components: {
+		GenerateForm
+	},
 	mixins: [
 		breadcrumbs
 	],
 	data() {
 		return {
 			loading: false,
-			form: {},
-			rules: {
-				email: dataRules.email,
-				first_name: dataRules.required,
-				last_name: dataRules.required
+			form: {
+				email: {
+					component: 'el-input',
+					value: '',
+					label: 'E-mail',
+					rules: rules.email,
+					attrs: {
+						placeholder: 'E-mail'
+					}
+				},
+				first_name: {
+					component: 'el-input',
+					value: '',
+					label: 'Ім\'я',
+					rules: rules.required,
+					attrs: {
+						placeholder: 'Ім\'я'
+					}
+				},
+				middle_name: {
+					component: 'el-input',
+					value: '',
+					label: 'По-батькові',
+					attrs: {
+						placeholder: 'По-батькові'
+					}
+				},
+				last_name: {
+					component: 'el-input',
+					value: '',
+					label: 'Прізвище',
+					rules: rules.required,
+					attrs: {
+						placeholder: 'Прізвище'
+					}
+				},
+				phone: {
+					component: 'el-input',
+					value: '',
+					label: 'Телефон',
+					attrs: {
+						placeholder: 'Телефон'
+					}
+				},
+				description: {
+					component: 'el-input',
+					value: '',
+					label: 'Опис',
+					attrs: {
+						type: 'textarea',
+						autosize: { minRows: 3 },
+						placeholder: 'Опис'
+					}
+				}
 			}
 		}
 	},
 	computed: {
 		titlePage() {
 			return menu[sections.users].children.add.title
-		},
-		profile() {
-			return this.$store.state.profile.user
 		}
 	},
 	methods: {
-		fetchRequest() {
+		fetchRequest(form) {
 			this.loading = true
 
-			UserClass.fetchStore(this.form)
+			User.fetchStore(form)
 				.then(({ data }) => {
 					this.$router.push({ name: `${sections.users}-id`, params: { id: data.user.id } })
 				})
 				.finally(() => {
 					this.loading = false
 				})
-		},
-		onSubmit() {
-			this.$refs.form.validate((valid) => {
-				if (!valid) {
-					return
-				}
-
-				this.fetchRequest()
-			})
 		}
 	}
 }

@@ -9,8 +9,9 @@
 		placeholder="Введіть текст для отримання списку"
 		:remote-method="fetchRequest"
 		:loading="loading"
-		v-on="$listeners"
 		v-bind="$attrs"
+		@focus="onFocus"
+		v-on="$listeners"
 	>
 		<el-option
 			v-for="item in list"
@@ -69,6 +70,11 @@ export default {
 				.finally(() => {
 					this.loading = false
 				})
+		},
+		onFocus() {
+			if (!this.list.length) {
+				this.fetchRequest()
+			}
 		}
 	}
 }

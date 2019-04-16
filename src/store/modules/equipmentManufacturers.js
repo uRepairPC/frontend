@@ -1,6 +1,6 @@
 'use strict'
 
-import EquipmentManufacturerClass from '@/classes/EquipmentManufacturer'
+import EquipmentManufacturer from '@/classes/EquipmentManufacturer'
 
 const state = {
 	loading: false,
@@ -20,7 +20,7 @@ const actions = {
 	fetchList({ commit }) {
 		commit('SET_LOADING', true)
 
-		EquipmentManufacturerClass.fetchAll()
+		EquipmentManufacturer.fetchAll()
 			.then(({ data }) => {
 				commit('SET_LIST', data)
 			})

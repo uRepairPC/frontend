@@ -9,8 +9,8 @@
 </template>
 
 <script>
-import EquipmentModelClass from '@/classes/EquipmentModel'
 import BasicDelete from '@/components/dialogs/BasicDelete'
+import EquipmentModel from '@/classes/EquipmentModel'
 
 export default {
 	components: {
@@ -40,7 +40,7 @@ export default {
 		fetchRequest() {
 			this.loading = true
 
-			EquipmentModelClass.fetchDelete(this.item.id)
+			EquipmentModel.fetchDelete(this.item.id)
 				.then(() => {
 					this.$store.dispatch('equipmentModels/fetchList')
 					this.$emit('delete')
