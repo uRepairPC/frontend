@@ -42,6 +42,10 @@
 					</i>
 				</el-input>
 			</el-form-item>
+			<button
+				class="hide"
+				type="submit"
+			/>
 		</el-form>
 		<template v-else>
 			Ви дійсно хочете згенерувати новий пароль і відправити його на пошту користувача?

@@ -10,7 +10,7 @@
 			:model="form"
 			status-icon
 			class="form--full"
-			@submit.native.prevent="onSubmit"
+			@submit.native.prevent="fetchRequest"
 		>
 			<el-form-item
 				v-for="(row, index) in rows"
@@ -57,6 +57,10 @@
 					:placeholder="row.title"
 				/>
 			</el-form-item>
+			<button
+				class="hide"
+				type="submit"
+			/>
 		</el-form>
 	</basic-edit>
 </template>
