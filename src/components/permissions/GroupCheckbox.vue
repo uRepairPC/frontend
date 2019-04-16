@@ -112,12 +112,15 @@ export default {
 		padding-bottom: 0;
 	}
 	&.only-view {
+		.el-checkbox {
+			user-select: auto;
+		}
 		.el-checkbox,
 		/deep/ .el-checkbox__input,
 		/deep/ .el-checkbox__label,
 		/deep/ .el-checkbox__inner {
 			color: inherit;
-			cursor: context-menu;
+			cursor: auto;
 		}
 		/deep/ .el-checkbox__input {
 			&.is-checked {
