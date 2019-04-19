@@ -6,18 +6,13 @@
 				<sidebar-box />
 				<el-main>
 					<breadcrumbs-box />
-					<transition
-						name="root-anim"
-						mode="out-in"
-					>
-						<keep-alive :include="keepAliveRoutesName">
-							<router-view
-								ref="content"
-								:key="$route.params.id"
-								class="page"
-							/>
-						</keep-alive>
-					</transition>
+					<keep-alive :include="keepAliveRoutesName">
+						<router-view
+							ref="content"
+							:key="$route.params.id"
+							class="page"
+						/>
+					</keep-alive>
 				</el-main>
 			</el-container>
 		</el-container>
@@ -80,11 +75,12 @@ export default {
 
 <style lang="scss" scoped>
 @import "~scss/_variables";
+@import "~scss/_colors";
 
 .el-breadcrumb {
 	padding: 10px;
 	background: #fff;
-	border-bottom: 1px solid #e6e6e6;
+	border-bottom: 1px solid $defaultBorder;
 }
 
 .el-main {
@@ -96,31 +92,12 @@ export default {
 }
 
 .page {
-	height: calc(100% - 36px);
+	height: calc(100vh - #{$headerHeight + $breadcrumbsHeight});
 	overflow: auto;
 }
 
 .search--open {
 	transition: $searchTransition;
 	filter: blur(5px);
-}
-
-// <animation>
-.root-anim-enter-active {
-	transition: .15s;
-	opacity: 0;
-}
-
-.root-anim-enter-to {
-	opacity: 1;
-}
-
-.root-anim-leave-active {
-	transition: .05s;
-	opacity: 1;
-}
-
-.root-anim-leave-to {
-	opacity: 0;
 }
 </style>

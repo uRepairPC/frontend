@@ -1,77 +1,64 @@
 <template>
-	<div class="equipment">
-		<div class="equipment__wrap">
-			<top-buttons
-				:buttons="buttons"
-				:disabled="loading"
-			/>
-			<div class="header max--width">
-				<div class="header__wrap">
-					<div class="header-item">
-						<div class="header-item__title">
-							Серійний номер
-						</div>
-						<div
-							:class="['header-item__value', {
-								'has_value': !!equipment.serial_number
-							}]"
-							@click="copy($event, equipment.serial_number)"
-						>
-							<span>{{ equipment.serial_number }}</span>
-						</div>
-					</div>
-					<div class="header-item">
-						<div class="header-item__title">
-							Інвертарний номер
-						</div>
-						<div
-							:class="['header-item__value', {
-								'has_value': !!equipment.inventory_number
-							}]"
-							@click="copy($event, equipment.inventory_number)"
-						>
-							<span>{{ equipment.inventory_number }}</span>
-						</div>
-					</div>
+	<template-one
+		:buttons="buttons"
+		:table-data="tableData"
+		:loading="loading"
+	>
+		<div
+			slot="header"
+			class="header__wrap"
+		>
+			<div class="header-item">
+				<div class="header-item__title">
+					Серійний номер
 				</div>
-			</div>
-			<div
-				v-loading="loading"
-				class="content max--width"
-			>
-				<el-table
-					:data="tableData"
-					style="width: 100%"
+				<div
+					:class="['header-item__value', {
+						'has_value': !!model.serial_number
+					}]"
+					@click="copy($event, model.serial_number)"
 				>
-					<el-table-column
-						prop="name"
-						label="Назва"
-						width="200"
-					/>
-					<el-table-column
-						prop="value"
-						label="Значення"
-					/>
-				</el-table>
+					<span>{{ model.serial_number }}</span>
+				</div>
 			</div>
-			<template v-if="equipment.files && (equipment.files.length || loadingFiles)">
-				<div class="max--width divider">
-					<span>Файли</span>
+			<div class="header-item">
+				<div class="header-item__title">
+					Інвертарний номер
 				</div>
-				<div class="max--width">
-					<files-list
-						:files="equipment.files"
-						:loading="loadingFiles"
-						:url-download="(file) => `equipments/${$route.params.id}/files/${file.id}`"
-						@add="onAdd"
-						@edit="onEdit"
-						@delete="onDelete"
-						@refresh="fetchRequestFiles"
-					/>
+				<div
+					:class="['header-item__value', {
+						'has_value': !!model.inventory_number
+					}]"
+					@click="copy($event, model.inventory_number)"
+				>
+					<span>{{ model.inventory_number }}</span>
 				</div>
-			</template>
+			</div>
 		</div>
-	</div>
+		<div
+			v-if="model.files && (model.files.length || loadingFiles)"
+			class="page--width"
+		>
+			<div class="divider">
+				<span>Файли</span>
+			</div>
+			<div>
+				<files-list
+					:files="model.files"
+					:loading="loadingFiles"
+					:url-download="(file) => `equipments/${model.id}/files/${file.id}`"
+					:permission-create="permissions.EQUIPMENTS_FILES_CREATE"
+					:permission-download="permissions.EQUIPMENTS_FILES_DOWNLOAD"
+					:permission-edit="permissions.EQUIPMENTS_FILES_EDIT"
+					:permission-delete="permissions.EQUIPMENTS_FILES_DELETE"
+					@add="onAdd"
+					@edit="onEdit"
+					@delete="onDelete"
+					@refresh="fetchRequestFiles"
+				/>
+			</div>
+		</div>
+	</template-one>
 </template>
 
 <script>
@@ -80,46 +67,32 @@ import FileDeleteDialog from '@/components/equipments/dialogs/FileDelete'
 import FileEditDialog from '@/components/equipments/dialogs/FileEdit'
 import DeleteDialog from '@/components/equipments/dialogs/Delete'
 import EditDialog from '@/components/equipments/dialogs/Edit'
-import EquipmentFileClass from '@/classes/EquipmentFile'
-import EquipmentClass from '@/classes/Equipment'
-import TopButtons from '@/components/TopButtons'
+import TemplateOne from '@/components/template/One'
+import EquipmentFile from '@/classes/EquipmentFile'
+import { includePermission } from '@/scripts/utils'
+import * as permissions from '@/enum/permissions'
 import FilesList from '@/components/files/List'
-import breadcrumbs from '@/mixins/breadcrumbs'
-import { COLUMNS_DATES } from '@/data/columns'
+import Equipment from '@/classes/Equipment'
 import { copyNode } from '@/scripts/dom'
 import sections from '@/data/sections'
+import onePage from '@/mixins/onePage'
 import * as types from '@/enum/types'
-import menu from '@/data/menu'
-import moment from 'moment'
 
 export default {
-	breadcrumbs: [
-		{ title: menu[sections.equipments].title, routeName: sections.equipments },
-		{ title: route => `ID: ${route.params.id || -1}` }
-	],
 	components: {
-		TopButtons, FilesList
+		TemplateOne, FilesList
 	},
 	mixins: [
-		breadcrumbs
+		onePage(sections.equipments)
 	],
 	data() {
 		return {
+			permissions,
 			loading: false,
 			loadingFiles: false
 		}
 	},
 	computed: {
-		equipment() {
-			const equipments = this.$store.state.template.sidebar[sections.equipments]
-			const id = this.$route.params.id
-
-			if (equipments && equipments[id]) {
-				return equipments[id]
-			}
-
-			return {}
-		},
 		buttons() {
 			return [
 				{
@@ -149,48 +122,36 @@ export default {
 			]
 		},
 		tableData() {
-			const displayProps = [
-				{ name: 'Тип', key: 'type_name' },
-				{ name: 'Виробник', key: 'manufacturer_name' },
-				{ name: 'Модель', key: 'model_name' },
-				{ name: 'Опис', key: 'description' },
-				{ name: 'Створений', key: 'created_at' },
-				{ name: 'Останнє оновлення', key: 'updated_at' }
-			]
+			const props = ['type_name', 'manufacturer_name', 'model_name', 'description', 'created_at', 'updated_at']
+			const result = []
 
-			return displayProps
-				.reduce((result, obj) => {
-					const value = COLUMNS_DATES.includes(obj.key)
-						? moment(this.equipment[obj.key]).format('LLL')
-						: this.equipment[obj.key]
+			this.$store.getters['equipments/columns']
+				.forEach((obj) => {
+					if (props.includes(obj.prop)) {
+						const customType = obj.customType === 'timestamp'
+							? { key: 'timestamp', value: 'LLL' }
+							: obj.customType
 
-					result.push({ ...obj, value })
-					return result
+						result.push({ ...obj, customType, value: this.model[obj.prop] })
+					}
+				})
 
-				}, [])
+			return result
 		}
-	},
-	watch: {
-		'$route'() {
-			this.fetchData()
-		}
-	},
-	created() {
-		this.fetchData()
 	},
 	methods: {
 		fetchData() {
-			if (!this.equipment.id) {
+			if (!this.model.id) {
 				this.fetchRequest()
 			}
-			if (!this.equipment.files) {
+			if (!this.model.files) {
 				this.fetchRequestFiles()
 			}
 		},
 		fetchRequest() {
 			this.loading = true
 
-			EquipmentClass.fetchOne(+this.$route.params.id)
+			Equipment.fetchOne(+this.$route.params.id)
 				.catch(() => {
 					this.$router.push({ name: sections.equipments })
 				})
@@ -199,10 +160,14 @@ export default {
 				})
 		},
 		fetchRequestFiles() {
+			if (!includePermission(permissions.EQUIPMENTS_FILES_VIEW)) {
+				return
+			}
+
 			this.loadingFiles = true
 			this.updateFiles([])
 
-			EquipmentFileClass.fetchAll(+this.$route.params.id)
+			EquipmentFile.fetchAll(+this.$route.params.id)
 				.then(({ data }) => {
 					this.updateFiles(data.files)
 				})
@@ -221,7 +186,7 @@ export default {
 			this.$store.commit('template/OPEN_DIALOG', {
 				component,
 				attrs: {
-					equipment: this.equipment,
+					equipment: this.model,
 					...attrs
 				},
 				events: {
@@ -230,12 +195,12 @@ export default {
 					},
 					'fetch-files': this.fetchRequestFiles,
 					'update-file': (file, index) => {
-						const files = this.equipment.files
+						const files = this.model.files
 						files[index] = file
 						this.updateFiles(files)
 					},
 					'delete-file': (index) => {
-						const files = [...this.equipment.files]
+						const files = [...this.model.files]
 						files.splice(index, 1)
 						this.updateFiles(files)
 					}
@@ -243,7 +208,7 @@ export default {
 			})
 		},
 		updateFiles(files) {
-			EquipmentClass.sidebar().add({ id: +this.$route.params.id, files })
+			Equipment.sidebar().add({ id: +this.$route.params.id, files })
 		},
 		onAdd() {
 			this.openDialog(FilesUploadDialog)
@@ -260,32 +225,6 @@ export default {
 
 <style lang="scss" scoped>
 @import "~scss/_colors";
-
-.equipment__wrap {
-	padding-bottom: 50px;
-}
-
-.header,
-.content {
-	margin-top: 20px;
-	padding: 20px;
-}
-
-.header {
-	padding: 30px;
-	text-align: center;
-}
-
-.content {
-	background: #fff;
-	border: 1px solid #e6e6e6;
-}
-
-.max--width {
-	max-width: 900px;
-	margin-left: auto;
-	margin-right: auto;
-}
 
 .header__wrap {
 	display: flex;
@@ -309,7 +248,7 @@ export default {
 	align-items: center;
 	justify-content: center;
 	flex-wrap: wrap;
-	border: 1px solid #e6e6e6;
+	border: 1px solid $defaultBorder;
 	background: #fff;
 	padding: 10px 20px;
 	box-shadow: $lightShadow;

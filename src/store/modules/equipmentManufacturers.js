@@ -1,6 +1,6 @@
 'use strict'
 
-import EquipmentManufacturerClass from '@/classes/EquipmentManufacturer'
+import EquipmentManufacturer from '@/classes/EquipmentManufacturer'
 
 const state = {
 	loading: false,
@@ -13,6 +13,10 @@ const mutations = {
 	},
 	SET_LIST(state, arr) {
 		state.list = arr
+	},
+	CLEAR_ALL(state) {
+		state.loading = false
+		state.list = []
 	}
 }
 
@@ -20,7 +24,7 @@ const actions = {
 	fetchList({ commit }) {
 		commit('SET_LOADING', true)
 
-		EquipmentManufacturerClass.fetchAll()
+		EquipmentManufacturer.fetchAll()
 			.then(({ data }) => {
 				commit('SET_LIST', data)
 			})

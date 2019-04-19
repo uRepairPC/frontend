@@ -1,22 +1,36 @@
-# frontend
+# uRepairPC - Web
 
-## Preview (укр.)
 <p align="center">
-    <img alt="Image 1" height="400" src="https://raw.githubusercontent.com/uRepairPC/frontend/master/demo/images/1.png" />
-    <img alt="Image 2" height="400" src="https://raw.githubusercontent.com/uRepairPC/frontend/master/demo/images/2.png" />
-    <img alt="Image 3" height="400" src="https://raw.githubusercontent.com/uRepairPC/frontend/master/demo/images/3.png" />
-    <img alt="Image 4" height="400" src="https://raw.githubusercontent.com/uRepairPC/frontend/master/demo/images/4.png" />
-    <img alt="Image 5" height="400" src="https://raw.githubusercontent.com/uRepairPC/frontend/master/demo/images/5.png" />
-    <img alt="Image 6" height="400" src="https://raw.githubusercontent.com/uRepairPC/frontend/master/demo/images/6.png" />
+    <img width="250" src="https://raw.githubusercontent.com/uRepairPC/web/master/src/images/icon.png" alt="uRepairPC">
+</p>
+
+<p align="center">
+    <a href="https://circleci.com/gh/uRepairPC/web/tree/dev"><img src="https://circleci.com/gh/uRepairPC/web/tree/dev.svg?style=shield" alt="Build Status"></a>
+    <a href="https://www.npmjs.com/package/@urepairpc/web"><img src="https://img.shields.io/npm/v/@urepairpc/web.svg?style=flat-square" alt="NPM Version"></a>
+    <a href="https://www.npmjs.com/package/@urepairpc/web"><img src="https://img.shields.io/npm/l/@urepairpc/web.svg" alt="License"></a>
+</p>
+
+## Docs
+See [here](https://urepairpc.github.io/docs/)
+
+## Preview (ukr)
+<p align="center">
+    <img alt="Image 1" height="200" src="https://raw.githubusercontent.com/uRepairPC/web/master/demo/images/1.png" />
+    <img alt="Image 2" height="200" src="https://raw.githubusercontent.com/uRepairPC/web/master/demo/images/2.png" />
+    <img alt="Image 3" height="200" src="https://raw.githubusercontent.com/uRepairPC/web/master/demo/images/3.png" />
+    <img alt="Image 4" height="200" src="https://raw.githubusercontent.com/uRepairPC/web/master/demo/images/4.png" />
+    <img alt="Image 5" height="200" src="https://raw.githubusercontent.com/uRepairPC/web/master/demo/images/5.png" />
+    <img alt="Image 6" height="200" src="https://raw.githubusercontent.com/uRepairPC/web/master/demo/images/6.png" />
 </p>
 
 ## TODO
-- [ ] Role page
-- [ ] Requests + history
-- [ ] Docs (Vuepress)
+- [ ] Requests
 - [ ] Tests
-- [ ] i18n*
+- [ ] i18n (branch i18n)
 - [ ] PWA
 - [ ] Mobile design
 - [ ] Report
 - [ ] Global search
+
+## License
+[MIT license](https://opensource.org/licenses/MIT)

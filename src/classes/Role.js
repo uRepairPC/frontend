@@ -71,6 +71,38 @@ export default class Role {
 	}
 
 	/**
+	 * Edit resource data by id and working with leftSidebar.
+	 *
+	 * @param {number} id
+	 * @param {*} data
+	 * @param {AxiosRequestConfig} config
+	 * @return {Promise<AxiosPromise<any>>}
+	 */
+	static fetchEdit(id, data = null, config = null) {
+		return axios.put(`${API_POINT}/${id}`, data, config)
+			.then((response) => {
+				Role.sidebar().add(response.data.role)
+				return response
+			})
+	}
+
+	/**
+	 * Edit resource permissions by id and working with leftSidebar.
+	 *
+	 * @param {number} id
+	 * @param {*} data
+	 * @param {AxiosRequestConfig} config
+	 * @return {Promise<AxiosPromise<any>>}
+	 */
+	static fetchEditPermissions(id, data = null, config = null) {
+		return axios.put(`${API_POINT}/${id}/permissions`, data, config)
+			.then((response) => {
+				Role.sidebar().add(response.data.role)
+				return response
+			})
+	}
+
+	/**
 	 * Store resource.
 	 *
 	 * @param {*} data
@@ -79,5 +111,24 @@ export default class Role {
 	 */
 	static fetchStore(data = null, config = null) {
 		return axios.post(API_POINT, data, config)
+			.then((response) => {
+				Role.sidebar().add(response.data.role)
+				return response
+			})
+	}
+
+	/**
+	 * Delete resource by id and working with leftSidebar.
+	 *
+	 * @param {number} id
+	 * @param {AxiosRequestConfig} config
+	 * @return {Promise<AxiosPromise<any>>}
+	 */
+	static fetchDelete(id, config = null) {
+		return axios.delete(`${API_POINT}/${id}`, config)
+			.then((response) => {
+				Role.sidebar().remove(id)
+				return response
+			})
 	}
 }

@@ -40,10 +40,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "~scss/_colors";
+
 .top-buttons {
 	padding: 5px;
 	background: #fff;
-	border-bottom: 1px solid #e6e6e6;
+	border-bottom: 1px solid $defaultBorder;
 	> button {
 		margin: 5px;
 	}

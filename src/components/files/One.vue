@@ -1,8 +1,10 @@
 <template>
 	<div class="file">
 		<div
-			class="file__left"
-			title="Завантажити"
+			:class="['file__left', {
+				'can_download': canDownload
+			}]"
+			:title="canDownload ? 'Завантажити' : null"
 			@click="onClickDownload"
 		>
 			<i class="material-icons file-icon-download">
@@ -17,8 +19,12 @@
 				</div>
 			</div>
 		</div>
-		<div class="file__right">
+		<div
+			v-if="includePermission([permissionEdit, permissionDelete])"
+			class="file__right"
+		>
 			<i
+				v-if="includePermission(permissionEdit)"
 				class="material-icons edit"
 				title="Редагувати"
 				@click="onClickEdit"
@@ -26,6 +32,7 @@
 				edit
 			</i>
 			<i
+				v-if="includePermission(permissionDelete)"
 				class="material-icons delete"
 				title="Видалити"
 				@click="onClickDelete"
@@ -38,6 +45,7 @@
 
 <script>
 import { formatBytes, getSeverUrlAuth } from '@/scripts/utils'
+import { includePermission } from '@/scripts/utils'
 import moment from 'moment'
 
 export default {
@@ -48,6 +56,18 @@ export default {
 		},
 		urlDownload: {
 			type: Function,
+			default: null
+		},
+		permissionDownload: {
+			type: String,
+			default: null
+		},
+		permissionEdit: {
+			type: String,
+			default: null
+		},
+		permissionDelete: {
+			type: String,
 			default: null
 		}
 	},
@@ -62,11 +82,15 @@ export default {
 		},
 		createdAt() {
 			return moment(this.file.created_at).calendar().toLowerCase()
+		},
+		canDownload() {
+			return this.urlDownload && this.includePermission(this.permissionDownload)
 		}
 	},
 	methods: {
+		includePermission,
 		onClickDownload() {
-			if (this.urlDownload) {
+			if (this.canDownload) {
 				window.open(getSeverUrlAuth(this.urlDownload(this.file)), '_blank')
 			}
 		},
@@ -95,8 +119,7 @@ $transition: .15s;
 
 .file {
 	display: flex;
-	border-bottom: 1px solid #e6e6e6;
-	user-select: none;
+	border-bottom: 1px solid $defaultBorder;
 	transition: $transition;
 	&:hover {
 		box-shadow: 0 0 10px 2px rgba(0, 0, 0, .12);
@@ -115,12 +138,18 @@ $transition: .15s;
 	flex: 1 1 auto;
 	padding: 10px 0;
 	transition: color $transition;
-	cursor: pointer;
+	&.can_download {
+		cursor: pointer;
+		user-select: none;
+	}
 	&:hover {
 		&,
 		.file-center__top {
 			color: $primary;
 		}
+	}
+	i {
+		user-select: none;
 	}
 }
 

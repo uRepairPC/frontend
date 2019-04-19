@@ -7,16 +7,15 @@ import { runLoadingService } from '@/scripts/dom'
 import StorageData from '@/classes/StorageData'
 import { serverProd, isProd } from '@/data/env'
 import * as types from '@/enum/types'
+import logout from '@/scripts/logout'
 import store from '@/store'
 import axios from 'axios'
 
 /*
- * The server API should be accessible at the following address:
- *  http(s)://example.com/api
  * In dev mode, all requests are sent to the server via
  * PROXY_PATH (webpack), to bypass CORS.
  */
-axios.defaults.baseURL = isProd ? serverProd + '/api' : 'api'
+axios.defaults.baseURL = isProd ? serverProd : ''
 
 /** @type {Array} */
 let requestsToRefresh = []
@@ -77,7 +76,7 @@ axios.interceptors.response.use(
 							requestsToRefresh.forEach(callback => callback(data.token))
 						})
 						.catch(() => {
-							store.commit('profile/CLEAR_ALL')
+							logout()
 						})
 						.finally(() => {
 							loadingService.close()

@@ -42,6 +42,10 @@
 					</i>
 				</el-input>
 			</el-form-item>
+			<button
+				class="hide"
+				type="submit"
+			/>
 		</el-form>
 		<template v-else>
 			Ви дійсно хочете згенерувати новий пароль і відправити його на пошту користувача?
@@ -51,8 +55,8 @@
 
 <script>
 import BasicEdit from '@/components/dialogs/BasicEdit'
-import UserClass from '@/classes/User'
 import * as rules from '@/data/rules'
+import User from '@/classes/User'
 
 export default {
 	components: {
@@ -74,7 +78,18 @@ export default {
 			},
 			rules: {
 				password: rules.password,
-				repeat_password: rules.password
+				repeat_password: [
+					...rules.password,
+					{
+						validator: (rule, value, callback) => {
+							if (this.passwordEqual) {
+								callback()
+							} else {
+								callback(new Error('Паролі не співпадають'))
+							}
+						}
+					}
+				]
 			}
 		}
 	},
@@ -96,7 +111,7 @@ export default {
 		fetchRequest() {
 			this.loading = true
 
-			UserClass.fetchEditPassword(this.user.id, this.form)
+			User.fetchEditPassword(this.user.id, this.form)
 				.then(() => {
 					this.$emit('edit-password')
 					this.$emit('close')
@@ -107,10 +122,6 @@ export default {
 		},
 		onSubmit() {
 			if (this.profile.id === this.user.id) {
-				if (!this.passwordEqual) {
-					return
-				}
-
 				this.$refs.form.validate((valid) => {
 					if (!valid) {
 						return

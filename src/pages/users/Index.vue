@@ -1,5 +1,5 @@
 <template>
-	<template-page>
+	<template-list>
 		<template slot="left-column">
 			<table-component
 				slot="left-column"
@@ -26,6 +26,10 @@
 			</table-component>
 		</template>
 		<filter-core slot="right-column">
+			<filter-table-buttons
+				ref="buttons"
+				@update="fetchList"
+			/>
 			<filter-action
 				:section="sectionName"
 			/>
@@ -44,24 +48,19 @@
 				v-model="fixed"
 				:columns="columns"
 			/>
-			<filter-table-buttons
-				ref="buttons"
-				slot="bottom"
-				@update="fetchList"
-			/>
 		</filter-core>
-	</template-page>
+	</template-list>
 </template>
 
 <script>
-import TemplatePage from '@/components/template/Page'
+import TemplateList from '@/components/template/List'
 import scrollTableMixin from '@/mixins/scrollTable'
 import StorageData from '@/classes/StorageData'
 import TableComponent from '@/components/Table'
 import breadcrumbs from '@/mixins/breadcrumbs'
 import RoleTag from '@/components/roles/Tag'
-import UserClass from '@/classes/User'
 import sections from '@/data/sections'
+import User from '@/classes/User'
 import { mapGetters } from 'vuex'
 import menu from '@/data/menu'
 
@@ -71,7 +70,7 @@ export default {
 		{ title: menu[sections.users].title }
 	],
 	components: {
-		TableComponent, TemplatePage, RoleTag
+		TableComponent, TemplateList, RoleTag
 	},
 	mixins: [
 		scrollTableMixin, breadcrumbs
@@ -120,6 +119,7 @@ export default {
 		userColumns: {
 			handler(arr) {
 				this.columns = arr
+					.filter(obj => !obj.hideList)
 			},
 			immediate: true
 		}
@@ -156,7 +156,7 @@ export default {
 				return
 			}
 
-			UserClass.sidebar().add(user)
+			User.sidebar().add(user)
 			this.$router.push({ name: `${sections.users}-id`, params: { id: user.id } })
 		},
 		onSortChange({ prop: column, order }) {

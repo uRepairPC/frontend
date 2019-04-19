@@ -4,6 +4,9 @@
 		:loading="loading"
 		:columns="columns"
 		:dialogs="dialogs"
+		:permission-create="permissions.EQUIPMENTS_FILES_CREATE"
+		:permission-edit="permissions.EQUIPMENTS_EDIT"
+		:permission-delete="permissions.EQUIPMENTS_DELETE"
 		@update="fetchRequest"
 	/>
 </template>
@@ -14,6 +17,7 @@ import DeleteDialog from '@/components/equipments/types/dialogs/Delete'
 import EditDialog from '@/components/equipments/types/dialogs/Edit'
 import { equipmentTypes as columns } from '@/data/columns'
 import BasicTable from '@/components/settings/BasicTable'
+import * as permissions from '@/enum/permissions'
 import breadcrumbs from '@/mixins/breadcrumbs'
 import sections from '@/data/sections'
 import { mapState } from 'vuex'
@@ -34,6 +38,7 @@ export default {
 	data() {
 		return {
 			columns,
+			permissions,
 			dialogs: {
 				create: CreateDialog,
 				edit: EditDialog,

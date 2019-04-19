@@ -51,8 +51,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "~scss/_colors";
+
 .el-aside {
-	border-right: solid 1px #e6e6e6;
+	border-right: solid 1px $defaultBorder;
 	background: #fff;
 	height: 100%;
 	user-select: none;

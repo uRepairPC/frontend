@@ -1,6 +1,8 @@
 <template>
 	<div class="global-settings">
-		<div class="title">{{ title }}</div>
+		<div class="title">
+			{{ title }}
+		</div>
 		<el-timeline>
 			<el-timeline-item
 				v-for="(row, index) in rows"
@@ -29,8 +31,8 @@
 </template>
 
 <script>
-import FrontendItem from '@/components/settings/FrontendItem'
 import StoreDialog from '@/components/settings/dialogs/Store'
+import FrontendItem from '@/components/settings/FrontendItem'
 import SettingsFrontend from '@/classes/SettingsFrontend'
 import breadcrumbs from '@/mixins/breadcrumbs'
 import sections from '@/data/sections'
@@ -43,7 +45,7 @@ export default {
 		{ title: menu[sections.settings].children[sections.settingsGlobal].title }
 	],
 	components: {
-		FrontendItem, StoreDialog
+		FrontendItem
 	},
 	mixins: [
 		breadcrumbs

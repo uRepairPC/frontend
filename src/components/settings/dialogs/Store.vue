@@ -10,7 +10,7 @@
 			:model="form"
 			status-icon
 			class="form--full"
-			@submit.native.prevent="onSubmit"
+			@submit.native.prevent="fetchRequest"
 		>
 			<el-form-item
 				v-for="(row, index) in rows"
@@ -52,11 +52,15 @@
 					{{ row.title }}
 				</el-checkbox>
 				<el-input
-					v-else="row.type === 'text'"
+					v-else
 					v-model="form[row.attr]"
 					:placeholder="row.title"
 				/>
 			</el-form-item>
+			<button
+				class="hide"
+				type="submit"
+			/>
 		</el-form>
 	</basic-edit>
 </template>
@@ -79,18 +83,6 @@ export default {
 			form: {}
 		}
 	},
-	created() {
-		this.rows.forEach((row) => {
-			switch (row.type) {
-				case 'bool':
-					this.$set(this.form, row.attr, !!this.settings[row.attr])
-					break
-				case 'text':
-					this.$set(this.form, row.attr, this.settings[row.attr])
-					break
-			}
-		})
-	},
 	computed: {
 		listeners() {
 			return {
@@ -105,6 +97,18 @@ export default {
 			return this.$store.state.template.settings
 		}
 	},
+	created() {
+		this.rows.forEach((row) => {
+			switch (row.type) {
+			case 'bool':
+				this.$set(this.form, row.attr, !!this.settings[row.attr])
+				break
+			case 'text':
+				this.$set(this.form, row.attr, this.settings[row.attr])
+				break
+			}
+		})
+	},
 	methods: {
 		fetchRequest() {
 			const fd = new FormData
@@ -114,7 +118,7 @@ export default {
 				if (typeof val === 'boolean') {
 					fd.append(key, +val)
 				} else {
-					fd.append(key, val)
+					fd.append(key, val || '')
 				}
 			})
 

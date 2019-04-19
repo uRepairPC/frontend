@@ -1,19 +1,7 @@
 <template>
 	<el-header>
 		<div class="header--left">
-			<div
-				class="logo"
-				@click="onClickLogo"
-			>
-				<img
-					v-if="settings.logo_header"
-					:src="logo"
-					alt="logo"
-				>
-				<div v-if="!settings.logo_header || (settings.logo_header && settings.name_and_logo)">
-					{{ settings.app_name }}
-				</div>
-			</div>
+			<header-logo />
 			<el-button
 				v-if="sectionRequestMenuActions.add"
 				:type="sectionRequestMenuActions.add.type"
@@ -60,16 +48,15 @@
 </template>
 
 <script>
-import { DEFAULT_ROUTE_NAME } from '@/router'
+import HeaderLogo from '@/components/root/HeaderLogo'
 import Tips from '@/components/root/Tips'
-import UserClass from '@/classes/User'
 import sections from '@/data/sections'
-import { server } from '@/data/env'
+import User from '@/classes/User'
 import { mapGetters } from 'vuex'
 
 export default {
 	components: {
-		Tips
+		Tips, HeaderLogo
 	},
 	computed: {
 		...mapGetters({
@@ -81,12 +68,6 @@ export default {
 		openSearch() {
 			return this.$store.state.template.openSearch
 		},
-		settings() {
-			return this.$store.state.template.settings
-		},
-		logo() {
-			return server + this.settings.logo_header
-		},
 		sectionRequestMenuActions() {
 			const section = this.menu[sections.requests] || {}
 
@@ -96,9 +77,6 @@ export default {
 	methods: {
 		onClickLogout() {
 			this.$store.dispatch('profile/logout')
-		},
-		onClickLogo() {
-			this.$router.push({ name: DEFAULT_ROUTE_NAME })
 		},
 		onClickCreateRequest() {
 			this.$router.push({ name: `${sections.requests}-create` })
@@ -111,7 +89,7 @@ export default {
 			}
 		},
 		onClickEmail() {
-			UserClass.sidebar().add(this.user)
+			User.sidebar().add(this.user)
 			this.$router.push({ name: `${sections.users}-id`, params: { id: this.user.id } })
 		}
 	}
@@ -119,12 +97,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "~scss/_colors";
+
 .el-header {
 	display: flex;
 	align-items: center;
 	background: #fff;
-	border-bottom: 1px solid #e6e6e6;
+	border-bottom: 1px solid $defaultBorder;
 	user-select: none;
+	overflow: hidden;
 }
 
 .header--left {
@@ -141,37 +122,6 @@ export default {
 				margin-right: 5px;
 			}
 		}
-	}
-}
-
-.logo {
-	display: flex;
-	align-items: center;
-	cursor: pointer;
-	width: 210px;
-	overflow: hidden;
-	&:hover {
-		> div {
-			opacity: 1;
-		}
-	}
-	> img {
-		height: 45px;
-		width: auto;
-		+ div {
-			margin-left: 15px;
-		}
-	}
-	> div {
-		width: 100%;
-		font-weight: bold;
-		font-size: 1.2em;
-		color: #333;
-		opacity: .7;
-		white-space: nowrap;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		transition: opacity .2s;
 	}
 }
 

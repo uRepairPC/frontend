@@ -63,8 +63,8 @@ export default {
 
 .root {
 	position: absolute;
-	top: 60px;
-	height: calc(100% - 60px);
+	top: $headerHeight;
+	height: calc(100% - #{$headerHeight});
 	width: 100%;
 	background: rgba(255, 255, 255, .8);
 	overflow: auto;

@@ -14,8 +14,8 @@
 
 <script>
 import UserImage from '@/components/users/Image'
-import UserClass from '@/classes/User'
 import sections from '@/data/sections'
+import User from '@/classes/User'
 
 export default {
 	components: {
@@ -29,7 +29,7 @@ export default {
 	},
 	methods: {
 		onClick() {
-			UserClass.sidebar().add(this.user)
+			User.sidebar().add(this.user)
 			this.$router.push({ name: `${sections.users}-id`, params: { id: this.user.id } })
 		}
 	}

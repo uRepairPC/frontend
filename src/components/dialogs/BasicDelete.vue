@@ -15,13 +15,17 @@
 				/>
 			</slot>
 			<slot name="content-after-alert" />
-			<el-input-number
+			<el-form
 				v-if="confirm"
-				ref="input"
-				v-model="input"
-				:controls="false"
-				:min="0"
-			/>
+				@submit.native.prevent="onSubmit"
+			>
+				<el-input-number
+					ref="input"
+					v-model="input"
+					:controls="false"
+					:min="0"
+				/>
+			</el-form>
 			<slot name="content-bottom" />
 		</div>
 		<span slot="footer">
@@ -71,7 +75,9 @@ export default {
 	},
 	methods: {
 		onSubmit() {
-			this.$emit('submit')
+			if (!this.btnDisabled) {
+				this.$emit('submit')
+			}
 		},
 		close() {
 			this.$emit('close')

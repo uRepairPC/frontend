@@ -1,18 +1,6 @@
 <template>
 	<div id="auth">
-		<div class="logo">
-			<img
-				v-if="settings.logo_auth"
-				:src="logo"
-				alt="logo"
-			/>
-			<span
-				v-else
-				class="title"
-			>
-				{{ settings.app_name }}
-			</span>
-		</div>
+		<big-logo />
 		<el-form
 			ref="form"
 			:model="form"
@@ -48,7 +36,7 @@
 					</i>
 				</el-input>
 			</el-form-item>
-			<el-form-item>
+			<el-form-item class="mb-0">
 				<el-button
 					native-type="submit"
 					type="primary"
@@ -62,10 +50,14 @@
 </template>
 
 <script>
-import { isProd, server } from '@/data/env'
+import BigLogo from '@/components/root/BigLogo'
 import * as rules from '@/data/rules'
+import { isProd } from '@/data/env'
 
 export default {
+	components: {
+		BigLogo
+	},
 	data() {
 		return {
 			form: {
@@ -79,12 +71,6 @@ export default {
 		}
 	},
 	computed: {
-		settings() {
-			return this.$store.state.template.settings
-		},
-		logo() {
-			return server + this.settings.logo_auth
-		},
 		loading() {
 			return this.$store.state.profile.loading
 		}
@@ -111,24 +97,9 @@ export default {
 	width: 100%;
 	max-width: 450px;
 	margin: 50px auto;
-	padding: 40px;
+	padding: 35px;
 	background: #fff;
 	box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .2), 0 1px 1px 0 rgba(0, 0, 0, .14), 0 2px 1px -1px rgba(0, 0, 0, .12);
-}
-
-.logo {
-	text-align: center;
-	margin-bottom: 40px;
-	> img {
-		max-width: 250px;
-		max-height: 200px;
-	}
-	.title {
-		display: block;
-		font-weight: bold;
-		font-size: 1.5rem;
-		margin: 30px 0 70px;
-	}
 }
 
 .el-button {

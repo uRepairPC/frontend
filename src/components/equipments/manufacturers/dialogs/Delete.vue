@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import EquipmentManufacturerClass from '@/classes/EquipmentManufacturer'
+import EquipmentManufacturer from '@/classes/EquipmentManufacturer'
 import BasicDelete from '@/components/dialogs/BasicDelete'
 
 export default {
@@ -40,7 +40,7 @@ export default {
 		fetchRequest() {
 			this.loading = true
 
-			EquipmentManufacturerClass.fetchDelete(this.item.id)
+			EquipmentManufacturer.fetchDelete(this.item.id)
 				.then(() => {
 					this.$store.dispatch('equipmentManufacturers/fetchList')
 					this.$emit('delete')

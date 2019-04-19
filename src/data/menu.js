@@ -3,6 +3,7 @@
 import EquipmentManufacturerDialog from '@/components/equipments/manufacturers/dialogs/Create'
 import EquipmentModelDialog from '@/components/equipments/models/dialogs/Create'
 import EquipmentTypeDialog from '@/components/equipments/types/dialogs/Create'
+import SettingsStoreDialog from '@/components/settings/dialogs/Store'
 import * as permissions from '@/enum/permissions'
 import sections from '@/data/sections'
 import * as types from '@/enum/types'
@@ -64,8 +65,7 @@ export default {
 		route: { name: sections.roles },
 		permissions: permissions.ROLES_VIEW,
 		history: {
-			show: true,
-			callback: (obj) => `[${obj.id}] ${obj.display_name}`
+			show: true
 		},
 		children: {
 			add: {
@@ -110,7 +110,20 @@ export default {
 				icon: 'dashboard',
 				tag: 'page',
 				permissions: permissions.OTHER_GLOBAL_SETTINGS,
-				route: { name: sections.settingsGlobal }
+				route: { name: sections.settingsGlobal },
+				children: {
+					edit: {
+						title: 'Редагувати',
+						icon: 'edit',
+						type: types.PRIMARY,
+						permissions: permissions.OTHER_GLOBAL_SETTINGS,
+						action: () => {
+							store.commit('template/OPEN_DIALOG', {
+								component: SettingsStoreDialog
+							})
+						}
+					}
+				}
 			},
 			[sections.settingsTypes]: {
 				title: 'Типи обладнання',

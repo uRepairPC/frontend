@@ -1,5 +1,5 @@
 <template>
-	<template-page>
+	<template-list>
 		<template slot="left-column">
 			<table-component
 				slot="left-column"
@@ -8,13 +8,15 @@
 				:list="roles"
 				:loading="loading"
 				:loading-type="loadingType"
-				:row-style="onRowStyle"
 				@row-click="onRowClick"
 				@sort-change="onSortChange"
 			>
 				<template slot-scope="{ column, row }">
-					<template v-if="column.prop === 'default'">
-						{{ row ? 'Так' : 'Ні' }}
+					<template v-if="column.prop === 'color'">
+						<div
+							class="color"
+							:style="{ 'background-color': row }"
+						/>
 					</template>
 					<template v-else>
 						{{ row }}
@@ -23,6 +25,10 @@
 			</table-component>
 		</template>
 		<filter-core slot="right-column">
+			<filter-table-buttons
+				ref="buttons"
+				@update="fetchList"
+			/>
 			<filter-action
 				:section="sectionName"
 			/>
@@ -41,17 +47,12 @@
 				v-model="fixed"
 				:columns="columns"
 			/>
-			<filter-table-buttons
-				ref="buttons"
-				slot="bottom"
-				@update="fetchList"
-			/>
 		</filter-core>
-	</template-page>
+	</template-list>
 </template>
 
 <script>
-import TemplatePage from '@/components/template/Page'
+import TemplateList from '@/components/template/List'
 import scrollTableMixin from '@/mixins/scrollTable'
 import StorageData from '@/classes/StorageData'
 import TableComponent from '@/components/Table'
@@ -67,7 +68,7 @@ export default {
 		{ title: menu[sections.roles].title }
 	],
 	components: {
-		TableComponent, TemplatePage
+		TableComponent, TemplateList
 	},
 	mixins: [
 		scrollTableMixin, breadcrumbs
@@ -116,6 +117,7 @@ export default {
 		roleColumns: {
 			handler(arr) {
 				this.columns = arr
+					.filter(obj => !obj.hideList)
 			},
 			immediate: true
 		}
@@ -158,10 +160,16 @@ export default {
 		onSortChange({ prop: column, order }) {
 			this.sort = { column, order }
 			this.fetchList()
-		},
-		onRowStyle({ row }) {
-			return { 'background-color': row.color + '10' }
 		}
 	}
 }
 </script>
+
+<style lang="scss" scoped>
+.color {
+	width: 50%;
+	max-width: 40px;
+	height: 10px;
+	border-radius: 5px;
+}
+</style>

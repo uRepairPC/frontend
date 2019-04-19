@@ -9,13 +9,14 @@
 		placeholder="Введіть текст для отримання списку"
 		:remote-method="fetchRequest"
 		:loading="loading"
-		v-on="$listeners"
 		v-bind="$attrs"
+		@focus="onFocus"
+		v-on="$listeners"
 	>
 		<el-option
 			v-for="item in list"
 			:key="item.name"
-			:label="item.display_name"
+			:label="item.name"
 			:value="item.name"
 			:style="{
 				'background-color': item.color + '10',
@@ -59,7 +60,7 @@ export default {
 
 			if (query && query.trim()) {
 				params.search = query
-				params.columns = ['display_name']
+				params.columns = ['name']
 			}
 
 			Role.fetchAll({ params })
@@ -69,6 +70,11 @@ export default {
 				.finally(() => {
 					this.loading = false
 				})
+		},
+		onFocus() {
+			if (!this.list.length) {
+				this.fetchRequest()
+			}
 		}
 	}
 }

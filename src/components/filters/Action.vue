@@ -39,7 +39,7 @@ export default {
 			return this.menu[this.section]
 		},
 		hasActions() {
-			return !!Object.keys(this.menuSection.children).length
+			return this.menuSection.children && !!Object.keys(this.menuSection.children).length
 		},
 		actions() {
 			if (!this.hasActions) {

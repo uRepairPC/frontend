@@ -1,6 +1,6 @@
 <template>
 	<basic-delete
-		:title="userClass.fullName"
+		:title="userObj.fullName"
 		:confirm="user.id"
 		:loading="loading"
 		v-bind="$attrs"
@@ -17,7 +17,7 @@
 
 <script>
 import BasicDelete from '@/components/dialogs/BasicDelete'
-import UserClass from '@/classes/User'
+import User from '@/classes/User'
 
 export default {
 	components: {
@@ -43,15 +43,15 @@ export default {
 				submit: this.fetchRequest
 			}
 		},
-		userClass() {
-			return new UserClass(this.user)
+		userObj() {
+			return new User(this.user)
 		}
 	},
 	methods: {
 		fetchRequest() {
 			this.loading = true
 
-			UserClass.fetchDelete(this.user.id, {
+			User.fetchDelete(this.user.id, {
 				data: {
 					image_delete: this.imageDelete
 				}

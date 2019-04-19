@@ -9,6 +9,7 @@
 				Оновити
 			</div>
 			<div
+				v-if="includePermission(permissionCreate)"
 				class="file-add"
 				@click="onAdd"
 			>
@@ -27,6 +28,9 @@
 					:key="index"
 					:file="file"
 					:url-download="urlDownload"
+					:permission-download="permissionDownload"
+					:permission-edit="permissionEdit"
+					:permission-delete="permissionDelete"
 					@edit="onEdit($event, index)"
 					@delete="onDelete($event, index)"
 				/>
@@ -37,6 +41,7 @@
 
 <script>
 import LoadingFiles from '@/components/files/Loading'
+import { includePermission } from '@/scripts/utils'
 import OneFile from '@/components/files/One'
 
 export default {
@@ -55,14 +60,26 @@ export default {
 		urlDownload: {
 			type: Function,
 			default: null
-		}
-	},
-	computed: {
-		hasFiles() {
-			return !!this.files.length
+		},
+		permissionCreate: {
+			type: String,
+			default: null
+		},
+		permissionDownload: {
+			type: String,
+			default: null
+		},
+		permissionEdit: {
+			type: String,
+			default: null
+		},
+		permissionDelete: {
+			type: String,
+			default: null
 		}
 	},
 	methods: {
+		includePermission,
 		onAdd() {
 			this.$emit('add')
 		},
@@ -85,7 +102,7 @@ export default {
 .files-list {
 	.items {
 		background: #fff;
-		border: 1px solid #e6e6e6;
+		border: 1px solid $defaultBorder;
 	}
 }
 
