@@ -4,8 +4,12 @@
     <img width="250" src="https://raw.githubusercontent.com/uRepairPC/web/master/src/images/icon.png" alt="uRepairPC">
 </p>
 
+<p align="center">
+    <a href="https://circleci.com/gh/uRepairPC/web/tree/dev"><img src="https://circleci.com/gh/uRepairPC/web/tree/dev.svg?style=shield" alt="Build Status"></a>
+</p>
+
 ## Docs
-[Website](https://urepairpc.github.io/docs/)
+See [here](https://urepairpc.github.io/docs/)
 
 ## Preview (uk)
 <p align="center">
@@ -20,7 +24,7 @@
 ## TODO
 - [ ] Requests
 - [ ] Tests
-- [ ] i18n*
+- [ ] i18n (branch i18n)
 - [ ] PWA
 - [ ] Mobile design
 - [ ] Report
