@@ -37,6 +37,7 @@ import DeleteDialog from '@/components/users/dialogs/Delete'
 import EditDialog from '@/components/users/dialogs/Edit'
 import TemplateOne from '@/components/template/One'
 import * as permissions from '@/enum/permissions'
+import broadcastOne from '@/mixins/broadcastOne'
 import UserImage from '@/components/users/Image'
 import RoleTag from '@/components/roles/Tag'
 import sections from '@/data/sections'
@@ -49,7 +50,7 @@ export default {
 		UserImage, RoleTag, TemplateOne
 	},
 	mixins: [
-		onePage(sections.users)
+		onePage(sections.users), broadcastOne(sections.users)
 	],
 	data() {
 		return {
