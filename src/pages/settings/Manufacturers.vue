@@ -4,9 +4,9 @@
 		:loading="loading"
 		:columns="columns"
 		:dialogs="dialogs"
-		:permission-create="permissions.EQUIPMENTS_FILES_CREATE"
-		:permission-edit="permissions.EQUIPMENTS_EDIT"
-		:permission-delete="permissions.EQUIPMENTS_DELETE"
+		:permission-create="permissions.EQUIPMENTS_CONFIG_CREATE"
+		:permission-edit="permissions.EQUIPMENTS_CONFIG_EDIT"
+		:permission-delete="permissions.EQUIPMENTS_CONFIG_DELETE"
 		@update="fetchRequest"
 	/>
 </template>

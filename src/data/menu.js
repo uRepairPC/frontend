@@ -101,7 +101,7 @@ export default {
 		title: 'Конфігурація',
 		route: { name: sections.settings },
 		permissions: [
-			permissions.EQUIPMENTS_VIEW,
+			permissions.EQUIPMENTS_CONFIG_VIEW,
 			permissions.OTHER_GLOBAL_SETTINGS
 		],
 		children: {
@@ -129,14 +129,14 @@ export default {
 				title: 'Типи обладнання',
 				icon: 'dashboard',
 				tag: 'page',
-				permissions: permissions.EQUIPMENTS_VIEW,
+				permissions: permissions.EQUIPMENTS_CONFIG_VIEW,
 				route: { name: sections.settingsTypes },
 				children: {
 					add: {
 						title: 'Створити тип',
 						icon: 'add',
 						type: types.PRIMARY,
-						permissions: permissions.EQUIPMENTS_CREATE,
+						permissions: permissions.EQUIPMENTS_CONFIG_CREATE,
 						action: () => {
 							store.commit('template/OPEN_DIALOG', {
 								component: EquipmentTypeDialog
@@ -149,14 +149,14 @@ export default {
 				title: 'Виробники обладнання',
 				icon: 'dashboard',
 				tag: 'page',
-				permissions: permissions.EQUIPMENTS_VIEW,
+				permissions: permissions.EQUIPMENTS_CONFIG_VIEW,
 				route: { name: sections.settingsManufacturers },
 				children: {
 					add: {
 						title: 'Створити виробника',
 						icon: 'add',
 						type: types.PRIMARY,
-						permissions: permissions.EQUIPMENTS_CREATE,
+						permissions: permissions.EQUIPMENTS_CONFIG_CREATE,
 						action: () => {
 							store.commit('template/OPEN_DIALOG', {
 								component: EquipmentManufacturerDialog
@@ -169,14 +169,14 @@ export default {
 				title: 'Моделі обладнання',
 				icon: 'dashboard',
 				tag: 'page',
-				permissions: permissions.EQUIPMENTS_VIEW,
+				permissions: permissions.EQUIPMENTS_CONFIG_VIEW,
 				route: { name: sections.settingsModels },
 				children: {
 					add: {
 						title: 'Створити модель',
 						icon: 'add',
 						type: types.PRIMARY,
-						permissions: permissions.EQUIPMENTS_CREATE,
+						permissions: permissions.EQUIPMENTS_CONFIG_CREATE,
 						action: () => {
 							store.commit('template/OPEN_DIALOG', {
 								component: EquipmentModelDialog
