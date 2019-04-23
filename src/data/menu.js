@@ -22,20 +22,23 @@ export default {
 		title: 'Головна сторінка',
 		route: { name: sections.home }
 	},
-	// TODO Permissions
 	[sections.requests]: {
 		icon: 'description',
 		title: 'Заявки',
 		route: { name: sections.requests },
+		permissions: [
+			permissions.REQUESTS_VIEW,
+			permissions.REQUESTS_CREATE
+		],
 		history: {
 			show: true
 		},
 		children: {
-			// TODO Permissions
 			add: {
 				title: 'Створити заявку',
 				icon: 'add',
 				type: types.PRIMARY,
+				permissions: permissions.REQUESTS_CREATE,
 				action: () => router.push({ name: `${sections.requests}-create` })
 			}
 		}
@@ -101,8 +104,9 @@ export default {
 		title: 'Конфігурація',
 		route: { name: sections.settings },
 		permissions: [
-			permissions.EQUIPMENTS_CONFIG_VIEW,
-			permissions.OTHER_GLOBAL_SETTINGS
+			permissions.OTHER_GLOBAL_SETTINGS,
+			permissions.REQUESTS_CONFIG_VIEW,
+			permissions.EQUIPMENTS_CONFIG_VIEW
 		],
 		children: {
 			[sections.settingsGlobal]: {
@@ -122,6 +126,22 @@ export default {
 								component: SettingsStoreDialog
 							})
 						}
+					}
+				}
+			},
+			[sections.requestsStatuses]: {
+				title: 'Статуси заявок',
+				icon: 'dashboard',
+				tag: 'page',
+				permissions: permissions.REQUESTS_CONFIG_VIEW,
+				route: { name: sections.requestsStatuses },
+				children: {
+					add: {
+						title: 'Створити статус',
+						icon: 'add',
+						type: types.PRIMARY,
+						permissions: permissions.REQUESTS_CONFIG_CREATE
+						// TODO Action
 					}
 				}
 			},

@@ -38,3 +38,14 @@ export const equipmentModels = [
 	{ prop: 'updated_at', label: 'Оновлено', 'min-width': 200, sortable: true, customType: { key: 'timestamp', value: 'LLL' } },
 	{ prop: 'created_at', label: 'Створений', 'min-width': 200, sortable: true, customType: { key: 'timestamp', value: 'LLL' } }
 ]
+
+/** @return {array} */
+export const requestStatuses = [
+	{ prop: 'id', label: 'ID', 'min-width': 70, sortable: true },
+	{ prop: 'name', label: 'Назва', 'min-width': 150, sortable: true },
+	{ prop: 'color', label: 'Колір', 'min-width': 100 },
+	{ prop: 'description', label: 'Опис', 'min-width': 200 },
+	{ prop: 'default', label: 'За замовчуванням', 'min-width': 100, sortable: true, customType: 'bool' },
+	{ prop: 'updated_at', label: 'Оновлено', 'min-width': 200, sortable: true, customType: { key: 'timestamp', value: 'LLL' } },
+	{ prop: 'created_at', label: 'Створений', 'min-width': 200, sortable: true, customType: { key: 'timestamp', value: 'LLL' } }
+]

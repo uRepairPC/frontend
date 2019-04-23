@@ -95,6 +95,13 @@ const authorizedRoutes = {
 					name: `${sections.settingsGlobal}`,
 					component: loadPage('settings/Global')
 				},
+				// ------------------------------------------------ Settings
+				{
+					path: `/${sections.requestsStatuses}/statuses`,
+					name: `${sections.requestsStatuses}`,
+					component: loadPage('settings/requests/Statuses')
+				},
+				// ------------------------------------------------ Settings - Equipments
 				{
 					path: `/${sections.settings}/manufacturers`,
 					name: `${sections.equipmentsManufacturers}`,

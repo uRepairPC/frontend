@@ -6,6 +6,7 @@ export default {
 	auth: 'auth',
 	home: 'home',
 	requests: 'requests',
+	requestsStatuses: 'request-statuses',
 	users: 'users',
 	equipments: 'equipments',
 	equipmentsManufacturers: 'equipments-manufacturers',
