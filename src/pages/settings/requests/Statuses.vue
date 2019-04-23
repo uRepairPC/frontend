@@ -13,6 +13,8 @@
 
 <script>
 import CreateDialog from '@/components/requests/statuses/dialogs/Create'
+import DeleteDialog from '@/components/requests/statuses/dialogs/Delete'
+import EditDialog from '@/components/requests/statuses/dialogs/Edit'
 import { requestStatuses as columns } from '@/data/columns'
 import BasicTable from '@/components/settings/BasicTable'
 import * as permissions from '@/enum/permissions'
@@ -22,7 +24,7 @@ import { mapState } from 'vuex'
 import menu from '@/data/menu'
 
 export default {
-	name: 'Models',
+	name: 'Statuses',
 	breadcrumbs: [
 		{ title: menu[sections.settings].title, routeName: sections.settings },
 		{ title: menu[sections.settings].children[sections.equipmentsModels].title }
@@ -39,8 +41,8 @@ export default {
 			permissions,
 			dialogs: {
 				create: CreateDialog,
-				// edit: EditDialog,
-				// delete: DeleteDialog
+				edit: EditDialog,
+				delete: DeleteDialog
 			}
 		}
 	},
