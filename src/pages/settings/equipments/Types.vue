@@ -24,7 +24,7 @@ import { mapState } from 'vuex'
 import menu from '@/data/menu'
 
 export default {
-	name: 'Types',
+	name: 'Equipment-Types',
 	breadcrumbs: [
 		{ title: menu[sections.settings].title, routeName: sections.settings },
 		{ title: menu[sections.settings].children[sections.equipmentsTypes].title }
