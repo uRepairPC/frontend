@@ -12,10 +12,10 @@
 </template>
 
 <script>
-import CreateDialog from '@/components/equipments/types/dialogs/Create'
-import DeleteDialog from '@/components/equipments/types/dialogs/Delete'
-import EditDialog from '@/components/equipments/types/dialogs/Edit'
-import { equipmentTypes as columns } from '@/data/columns'
+import CreateDialog from '@/components/equipments/models/dialogs/Create'
+import DeleteDialog from '@/components/equipments/models/dialogs/Delete'
+import EditDialog from '@/components/equipments/models/dialogs/Edit'
+import { equipmentModels as columns } from '@/data/columns'
 import BasicTable from '@/components/settings/BasicTable'
 import * as permissions from '@/enum/permissions'
 import breadcrumbs from '@/mixins/breadcrumbs'
@@ -24,10 +24,10 @@ import { mapState } from 'vuex'
 import menu from '@/data/menu'
 
 export default {
-	name: 'Types',
+	name: 'Models',
 	breadcrumbs: [
 		{ title: menu[sections.settings].title, routeName: sections.settings },
-		{ title: menu[sections.settings].children[sections.settingsTypes].title }
+		{ title: menu[sections.settings].children[sections.equipmentsModels].title }
 	],
 	components: {
 		BasicTable
@@ -48,8 +48,8 @@ export default {
 	},
 	computed: {
 		...mapState({
-			loading: state => state.equipmentTypes.loading,
-			list: state => state.equipmentTypes.list
+			loading: state => state.equipmentModels.loading,
+			list: state => state.equipmentModels.list
 		})
 	},
 	mounted() {
@@ -59,7 +59,7 @@ export default {
 	},
 	methods: {
 		fetchRequest() {
-			this.$store.dispatch('equipmentTypes/fetchList')
+			this.$store.dispatch('equipmentModels/fetchList')
 		}
 	}
 }

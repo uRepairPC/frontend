@@ -8,10 +8,10 @@ export default {
 	requests: 'requests',
 	users: 'users',
 	equipments: 'equipments',
+	equipmentsManufacturers: 'equipments-manufacturers',
+	equipmentsModels: 'equipments-models',
+	equipmentsTypes: 'equipments-types',
 	roles: 'roles',
 	settings: 'settings',
-	settingsManufacturers: 'settings-manufacturers',
-	settingsModels: 'settings-models',
-	settingsTypes: 'settings-types',
 	settingsGlobal: 'settings-global'
 }

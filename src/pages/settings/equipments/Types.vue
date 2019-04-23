@@ -12,10 +12,10 @@
 </template>
 
 <script>
-import CreateDialog from '@/components/equipments/manufacturers/dialogs/Create'
-import DeleteDialog from '@/components/equipments/manufacturers/dialogs/Delete'
-import EditDialog from '@/components/equipments/manufacturers/dialogs/Edit'
-import { equipmentManufacturers as columns } from '@/data/columns'
+import CreateDialog from '@/components/equipments/types/dialogs/Create'
+import DeleteDialog from '@/components/equipments/types/dialogs/Delete'
+import EditDialog from '@/components/equipments/types/dialogs/Edit'
+import { equipmentTypes as columns } from '@/data/columns'
 import BasicTable from '@/components/settings/BasicTable'
 import * as permissions from '@/enum/permissions'
 import breadcrumbs from '@/mixins/breadcrumbs'
@@ -24,10 +24,10 @@ import { mapState } from 'vuex'
 import menu from '@/data/menu'
 
 export default {
-	name: 'Manufacturers',
+	name: 'Types',
 	breadcrumbs: [
 		{ title: menu[sections.settings].title, routeName: sections.settings },
-		{ title: menu[sections.settings].children[sections.settingsManufacturers].title }
+		{ title: menu[sections.settings].children[sections.equipmentsTypes].title }
 	],
 	components: {
 		BasicTable
@@ -48,8 +48,8 @@ export default {
 	},
 	computed: {
 		...mapState({
-			loading: state => state.equipmentManufacturers.loading,
-			list: state => state.equipmentManufacturers.list
+			loading: state => state.equipmentTypes.loading,
+			list: state => state.equipmentTypes.list
 		})
 	},
 	mounted() {
@@ -59,7 +59,7 @@ export default {
 	},
 	methods: {
 		fetchRequest() {
-			this.$store.dispatch('equipmentManufacturers/fetchList')
+			this.$store.dispatch('equipmentTypes/fetchList')
 		}
 	}
 }

@@ -125,12 +125,12 @@ export default {
 					}
 				}
 			},
-			[sections.settingsTypes]: {
+			[sections.equipmentsTypes]: {
 				title: 'Типи обладнання',
 				icon: 'dashboard',
 				tag: 'page',
 				permissions: permissions.EQUIPMENTS_CONFIG_VIEW,
-				route: { name: sections.settingsTypes },
+				route: { name: sections.equipmentsTypes },
 				children: {
 					add: {
 						title: 'Створити тип',
@@ -145,12 +145,12 @@ export default {
 					}
 				}
 			},
-			[sections.settingsManufacturers]: {
+			[sections.equipmentsManufacturers]: {
 				title: 'Виробники обладнання',
 				icon: 'dashboard',
 				tag: 'page',
 				permissions: permissions.EQUIPMENTS_CONFIG_VIEW,
-				route: { name: sections.settingsManufacturers },
+				route: { name: sections.equipmentsManufacturers },
 				children: {
 					add: {
 						title: 'Створити виробника',
@@ -165,12 +165,12 @@ export default {
 					}
 				}
 			},
-			[sections.settingsModels]: {
+			[sections.equipmentsModels]: {
 				title: 'Моделі обладнання',
 				icon: 'dashboard',
 				tag: 'page',
 				permissions: permissions.EQUIPMENTS_CONFIG_VIEW,
-				route: { name: sections.settingsModels },
+				route: { name: sections.equipmentsModels },
 				children: {
 					add: {
 						title: 'Створити модель',

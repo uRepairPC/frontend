@@ -97,18 +97,18 @@ const authorizedRoutes = {
 				},
 				{
 					path: `/${sections.settings}/manufacturers`,
-					name: `${sections.settingsManufacturers}`,
-					component: loadPage('settings/Manufacturers')
+					name: `${sections.equipmentsManufacturers}`,
+					component: loadPage('settings/equipments/Manufacturers')
 				},
 				{
 					path: `/${sections.settings}/types`,
-					name: `${sections.settingsTypes}`,
-					component: loadPage('settings/Types')
+					name: `${sections.equipmentsTypes}`,
+					component: loadPage('settings/equipments/Types')
 				},
 				{
 					path: `/${sections.settings}/models`,
-					name: `${sections.settingsModels}`,
-					component: loadPage('settings/Models')
+					name: `${sections.equipmentsModels}`,
+					component: loadPage('settings/equipments/Models')
 				}
 			]
 		}
