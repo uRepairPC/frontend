@@ -34,12 +34,14 @@ export default {
 	data() {
 		return {
 			loading: false,
-			defaultRoles: this.user.roles,
 			form: {
 				roles: {
 					component: SelectRoles,
 					value: [],
-					label: 'Оберіть ролі (введіть текст для отримання списку)'
+					label: 'Оберіть ролі (введіть текст для отримання списку)',
+					attrs: {
+						defaultRoles: this.user.roles
+					}
 				}
 			}
 		}

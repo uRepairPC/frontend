@@ -14,7 +14,7 @@
 export const equipmentTypes = [
 	{ prop: 'id', label: 'ID', 'min-width': 70, sortable: true },
 	{ prop: 'name', label: 'Назва', 'min-width': 150, sortable: true },
-	{ prop: 'description', label: 'Опис', 'min-width': 200 },
+	{ prop: 'description', label: 'Опис', 'min-width': 150 },
 	{ prop: 'updated_at', label: 'Оновлено', 'min-width': 200, sortable: true, customType: { key: 'timestamp', value: 'LLL' } },
 	{ prop: 'created_at', label: 'Створений', 'min-width': 200, sortable: true, customType: { key: 'timestamp', value: 'LLL' } }
 ]
@@ -23,7 +23,7 @@ export const equipmentTypes = [
 export const equipmentManufacturers = [
 	{ prop: 'id', label: 'ID', 'min-width': 70, sortable: true },
 	{ prop: 'name', label: 'Назва', 'min-width': 150, sortable: true },
-	{ prop: 'description', label: 'Опис', 'min-width': 200 },
+	{ prop: 'description', label: 'Опис', 'min-width': 150 },
 	{ prop: 'updated_at', label: 'Оновлено', 'min-width': 200, sortable: true, customType: { key: 'timestamp', value: 'LLL' } },
 	{ prop: 'created_at', label: 'Створений', 'min-width': 200, sortable: true, customType: { key: 'timestamp', value: 'LLL' } }
 ]
@@ -34,7 +34,7 @@ export const equipmentModels = [
 	{ prop: 'name', label: 'Назва', 'min-width': 150, sortable: true },
 	{ prop: 'manufacturer_name', label: 'Виробник', 'min-width': 150, sortable: true },
 	{ prop: 'type_name', label: 'Тип', 'min-width': 150, sortable: true },
-	{ prop: 'description', label: 'Опис', 'min-width': 200 },
+	{ prop: 'description', label: 'Опис', 'min-width': 150 },
 	{ prop: 'updated_at', label: 'Оновлено', 'min-width': 200, sortable: true, customType: { key: 'timestamp', value: 'LLL' } },
 	{ prop: 'created_at', label: 'Створений', 'min-width': 200, sortable: true, customType: { key: 'timestamp', value: 'LLL' } }
 ]
@@ -44,8 +44,8 @@ export const requestStatuses = [
 	{ prop: 'id', label: 'ID', 'min-width': 70, sortable: true },
 	{ prop: 'name', label: 'Назва', 'min-width': 150, sortable: true },
 	{ prop: 'color', label: 'Колір', 'min-width': 100, customType: 'color' },
-	{ prop: 'description', label: 'Опис', 'min-width': 200 },
-	{ prop: 'default', label: 'За замовчуванням', 'min-width': 100, sortable: true, customType: 'bool' },
+	{ prop: 'description', label: 'Опис', 'min-width': 150 },
+	{ prop: 'default', label: 'За замовчуванням', 'min-width': 150, sortable: true, customType: 'bool' },
 	{ prop: 'updated_at', label: 'Оновлено', 'min-width': 200, sortable: true, customType: { key: 'timestamp', value: 'LLL' } },
 	{ prop: 'created_at', label: 'Створений', 'min-width': 200, sortable: true, customType: { key: 'timestamp', value: 'LLL' } }
 ]
