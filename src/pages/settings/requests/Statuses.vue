@@ -12,6 +12,7 @@
 </template>
 
 <script>
+import CreateDialog from '@/components/requests/statuses/dialogs/Create'
 import { requestStatuses as columns } from '@/data/columns'
 import BasicTable from '@/components/settings/BasicTable'
 import * as permissions from '@/enum/permissions'
@@ -37,7 +38,7 @@ export default {
 			columns,
 			permissions,
 			dialogs: {
-				// create: CreateDialog,
+				create: CreateDialog,
 				// edit: EditDialog,
 				// delete: DeleteDialog
 			}
