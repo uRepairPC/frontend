@@ -8,13 +8,6 @@ import languages from '@/locale/languages'
 import VueI18n from 'vue-i18n'
 import Vue from 'vue'
 
-/*
- * TODO Translate
- * - [ ] element-ui
- * - [ ] moment
- * - [ ] init locale (browser)
- */
-
 Vue.use(VueI18n)
 
 export default new VueI18n({

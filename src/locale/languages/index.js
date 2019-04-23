@@ -1,10 +1,19 @@
 'use strict'
 
+// Import locale from element-ui framework
+import ruRU from 'element-ui/lib/locale/lang/ru-RU'
+import enUS from 'element-ui/lib/locale/lang/en'
+import ukUA from 'element-ui/lib/locale/lang/ua'
+
 /**
  * All translations.
- * @type {Array}
+ * @type {Object}
  */
-const languages = []
+const languages = {
+	'en-US': enUS,
+	'ru-RU': ruRU,
+	'uk-UA': ukUA
+}
 
 // eslint-disable-next-line
 const files = require.context('.', true, /\.js$/)
@@ -14,7 +23,7 @@ files.keys().forEach(key => {
 		return
 	}
 
-	// Ex. ['en-US', 'folder', 'fileName]
+	// Ex. ['en-US', 'folder', 'fileName']
 	const split = key.substring(2)
 		.replace(/.js/g, '')
 		.split('/')

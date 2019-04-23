@@ -3,13 +3,12 @@
 import '@babel/polyfill'
 import SettingsFrontend from '@/classes/SettingsFrontend'
 import filterComponents from '@/components/filters/index'
-import locale from 'element-ui/lib/locale/lang/ua'
 import prototypes from '@/prototypes'
 import directives from '@/directives'
 import ElementUI from 'element-ui'
 import NProgress from 'nprogress'
+import Lang from '@/classes/Lang'
 import router from '@/router'
-import moment from 'moment'
 import store from '@/store'
 import i18n from '@/locale'
 import App from '@/App.vue'
@@ -19,13 +18,14 @@ import Vue from 'vue'
 import '@/styles/index'
 
 // Connect libraries to Vue
-Vue.use(ElementUI, { locale })
+Vue.use(ElementUI, {
+	i18n: (key, value) => i18n.t(key, value)
+})
 
 // Prevent the production tip on Vue startup
 Vue.config.productionTip = false
 
 // Other libraries
-moment.locale('uk')
 NProgress.configure({ showSpinner: false })
 
 /**
@@ -55,6 +55,7 @@ filterComponents.forEach((component) => {
 })
 
 // Set init config
+Lang.init()
 SettingsFrontend.init()
 store.dispatch('profile/init')
 
