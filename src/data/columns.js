@@ -61,3 +61,13 @@ export const requestPriorities = [
 	{ prop: 'updated_at', label: 'Оновлено', 'min-width': 200, sortable: true, customType: { key: 'timestamp', value: 'LLL' } },
 	{ prop: 'created_at', label: 'Створений', 'min-width': 200, sortable: true, customType: { key: 'timestamp', value: 'LLL' } }
 ]
+
+/** @return {array} */
+export const requestTypes = [
+	{ prop: 'id', label: 'ID', 'min-width': 70, sortable: true },
+	{ prop: 'name', label: 'Назва', 'min-width': 150, sortable: true },
+	{ prop: 'description', label: 'Опис', 'min-width': 150 },
+	{ prop: 'default', label: 'За замовчуванням', 'min-width': 150, sortable: true, customType: 'bool' },
+	{ prop: 'updated_at', label: 'Оновлено', 'min-width': 200, sortable: true, customType: { key: 'timestamp', value: 'LLL' } },
+	{ prop: 'created_at', label: 'Створений', 'min-width': 200, sortable: true, customType: { key: 'timestamp', value: 'LLL' } }
+]

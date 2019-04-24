@@ -97,28 +97,33 @@ const authorizedRoutes = {
 				},
 				// ------------------------------------------------ Settings
 				{
-					path: `/${sections.settings}/statuses`,
+					path: `/${sections.settings}/${sections.requestsStatuses}`,
 					name: `${sections.requestsStatuses}`,
 					component: loadPage('settings/requests/Statuses')
 				},
 				{
-					path: `/${sections.settings}/priorities`,
+					path: `/${sections.settings}/${sections.requestsPriorities}`,
 					name: `${sections.requestsPriorities}`,
 					component: loadPage('settings/requests/Priorities')
 				},
+				{
+					path: `/${sections.settings}/${sections.requestsTypes}`,
+					name: `${sections.requestsTypes}`,
+					component: loadPage('settings/requests/Types')
+				},
 				// ------------------------------------------------ Settings - Equipments
 				{
-					path: `/${sections.settings}/manufacturers`,
+					path: `/${sections.settings}/${sections.equipmentsManufacturers}`,
 					name: `${sections.equipmentsManufacturers}`,
 					component: loadPage('settings/equipments/Manufacturers')
 				},
 				{
-					path: `/${sections.settings}/types`,
+					path: `/${sections.settings}/${sections.equipmentsTypes}`,
 					name: `${sections.equipmentsTypes}`,
 					component: loadPage('settings/equipments/Types')
 				},
 				{
-					path: `/${sections.settings}/models`,
+					path: `/${sections.settings}/${sections.equipmentsModels}`,
 					name: `${sections.equipmentsModels}`,
 					component: loadPage('settings/equipments/Models')
 				}

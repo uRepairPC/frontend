@@ -1,10 +1,11 @@
 'use strict'
 
 import EquipmentManufacturerDialog from '@/components/equipments/manufacturers/dialogs/Create'
-import RequestPrioritiesDialog from '@/components/requests/priorities/dialogs/Create'
-import RequestStatusesDialog from '@/components/requests/statuses/dialogs/Create'
+import RequestPriorityDialog from '@/components/requests/priorities/dialogs/Create'
 import EquipmentModelDialog from '@/components/equipments/models/dialogs/Create'
+import RequestStatusDialog from '@/components/requests/statuses/dialogs/Create'
 import EquipmentTypeDialog from '@/components/equipments/types/dialogs/Create'
+import RequestTypeDialog from '@/components/requests/types/dialogs/Create'
 import SettingsStoreDialog from '@/components/settings/dialogs/Store'
 import * as permissions from '@/enum/permissions'
 import sections from '@/data/sections'
@@ -145,7 +146,7 @@ export default {
 						permissions: permissions.REQUESTS_CONFIG_CREATE,
 						action: () => {
 							store.commit('template/OPEN_DIALOG', {
-								component: RequestStatusesDialog
+								component: RequestStatusDialog
 							})
 						}
 					}
@@ -165,7 +166,27 @@ export default {
 						permissions: permissions.REQUESTS_CONFIG_CREATE,
 						action: () => {
 							store.commit('template/OPEN_DIALOG', {
-								component: RequestPrioritiesDialog
+								component: RequestPriorityDialog
+							})
+						}
+					}
+				}
+			},
+			[sections.requestsTypes]: {
+				title: 'Типи заявок',
+				icon: 'dashboard',
+				tag: 'page',
+				permissions: permissions.REQUESTS_CONFIG_VIEW,
+				route: { name: sections.requestsTypes },
+				children: {
+					add: {
+						title: 'Створити тип',
+						icon: 'add',
+						type: types.PRIMARY,
+						permissions: permissions.REQUESTS_CONFIG_CREATE,
+						action: () => {
+							store.commit('template/OPEN_DIALOG', {
+								component: RequestTypeDialog
 							})
 						}
 					}

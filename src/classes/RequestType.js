@@ -3,9 +3,9 @@
 import axios from 'axios'
 
 /** @type {string} */
-export const API_POINT = 'requests/priorities'
+export const API_POINT = 'requests/types'
 
-export default class RequestPriority {
+export default class RequestType {
 
 	/* | ------------------------------------------------------------------------------------------------
 	 * | - Requests -
