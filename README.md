@@ -5,10 +5,10 @@
 </h1>
 
 <p align="center">
-    <a href="https://circleci.com/gh/uRepairPC/web/tree/dev"><img src="https://circleci.com/gh/uRepairPC/web/tree/dev.svg?style=shield" alt="Build Status"></a>
+    <a href="https://circleci.com/gh/uRepairPC/web/tree/dev"><img src="https://circleci.com/gh/uRepairPC/web.svg?style=shield" alt="Build Status"></a>
     <a href="https://www.npmjs.com/package/@urepairpc/web"><img src="https://img.shields.io/npm/v/@urepairpc/web.svg?style=flat-square" alt="NPM Version"></a>
     <a href="https://codecov.io/gh/uRepairPC/web"><img src="https://codecov.io/gh/uRepairPC/web/branch/master/graph/badge.svg" /></a>
-    <a href="https://codeclimate.com/github/uRepairPC/web/maintainability"><img src="https://api.codeclimate.com/v1/badges/d287ab4dc2a098ca2988/maintainability"></a>
+    <a href="https://codeclimate.com/github/uRepairPC/web/maintainability"><img src="https://api.codeclimate.com/v1/badges/d287ab4dc2a098ca2988/maintainability" alt="Maintainability"></a>
     <a href="https://david-dm.org/uRepairPC/web" rel="nofollow"><img src="https://david-dm.org/uRepairPC/web.svg" alt="Dependency Status"></a>
     <a href="https://david-dm.org/uRepairPC/web?type=dev" rel="nofollow"><img src="https://david-dm.org/uRepairPC/web/dev-status.svg" alt="devDependency Status"></a>
     <a href="https://www.npmjs.com/package/@urepairpc/web"><img src="https://img.shields.io/npm/l/@urepairpc/web.svg" alt="License"></a>
