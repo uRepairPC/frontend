@@ -51,8 +51,8 @@
 import HeaderLogo from '@/components/root/HeaderLogo'
 import Tips from '@/components/root/Tips'
 import sections from '@/data/sections'
-import User from '@/classes/User'
 import { mapGetters } from 'vuex'
+import User from '@/classes/User'
 
 export default {
 	components: {
