@@ -27,7 +27,7 @@ export default {
 	name: 'Request-Statuses',
 	breadcrumbs: [
 		{ title: menu[sections.settings].title, routeName: sections.settings },
-		{ title: menu[sections.settings].children[sections.equipmentsModels].title }
+		{ title: menu[sections.settings].children[sections.requestsStatuses].title }
 	],
 	components: {
 		BasicTable
