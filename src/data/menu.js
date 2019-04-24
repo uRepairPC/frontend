@@ -1,6 +1,7 @@
 'use strict'
 
 import EquipmentManufacturerDialog from '@/components/equipments/manufacturers/dialogs/Create'
+import RequestPrioritiesDialog from '@/components/requests/priorities/dialogs/Create'
 import RequestStatusesDialog from '@/components/requests/statuses/dialogs/Create'
 import EquipmentModelDialog from '@/components/equipments/models/dialogs/Create'
 import EquipmentTypeDialog from '@/components/equipments/types/dialogs/Create'
@@ -161,8 +162,12 @@ export default {
 						title: 'Створити пріорітет',
 						icon: 'add',
 						type: types.PRIMARY,
-						permissions: permissions.REQUESTS_CONFIG_CREATE
-						// TODO Action
+						permissions: permissions.REQUESTS_CONFIG_CREATE,
+						action: () => {
+							store.commit('template/OPEN_DIALOG', {
+								component: RequestPrioritiesDialog
+							})
+						}
 					}
 				}
 			},

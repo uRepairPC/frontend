@@ -12,9 +12,9 @@
 </template>
 
 <script>
-// import CreateDialog from '@/components/requests/priorities/dialogs/Create'
-// import DeleteDialog from '@/components/requests/priorities/dialogs/Delete'
-// import EditDialog from '@/components/requests/priorities/dialogs/Edit'
+import CreateDialog from '@/components/requests/priorities/dialogs/Create'
+import DeleteDialog from '@/components/requests/priorities/dialogs/Delete'
+import EditDialog from '@/components/requests/priorities/dialogs/Edit'
 import { requestPriorities as columns } from '@/data/columns'
 import BasicTable from '@/components/settings/BasicTable'
 import * as permissions from '@/enum/permissions'
@@ -40,9 +40,9 @@ export default {
 			columns,
 			permissions,
 			dialogs: {
-				// create: CreateDialog,
-				// edit: EditDialog,
-				// delete: DeleteDialog
+				create: CreateDialog,
+				edit: EditDialog,
+				delete: DeleteDialog
 			}
 		}
 	},
