@@ -11,7 +11,7 @@
 				<i class="material-icons">
 					{{ sectionRequestMenuActions.add.icon }}
 				</i>
-				{{ sectionRequestMenuActions.add.title }}
+				<span>{{ sectionRequestMenuActions.add.title }}</span>
 			</el-button>
 		</div>
 		<div class="header--center">
@@ -21,9 +21,9 @@
 			<el-button
 				size="mini"
 				:type="openSearch ? 'danger' : 'default'"
-				:icon="`el-icon-${openSearch ? 'close' : 'search'}`"
 				@click="onClickSearch"
 			>
+				<i class="material-icons">{{ openSearch ? 'close' : 'search' }}</i>
 				<span>Глобальний пошук</span>
 			</el-button>
 			<div
@@ -33,7 +33,7 @@
 				<i class="material-icons">
 					person
 				</i>
-				{{ user.email }}
+				<span>{{ user.email }}</span>
 			</div>
 			<div
 				class="quit"
@@ -97,6 +97,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "~scss/mobile/_sizes";
 @import "~scss/_colors";
 
 .el-header {
@@ -108,20 +109,23 @@ export default {
 	overflow: hidden;
 }
 
+.el-button {
+	> /deep/ span {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		i {
+			margin-right: 5px;
+		}
+	}
+}
+
 .header--left {
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	.el-button {
 		margin-left: 25px;
-		> /deep/ span {
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			> i {
-				margin-right: 5px;
-			}
-		}
 	}
 }
 
@@ -140,6 +144,11 @@ export default {
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	.el-button {
+		i {
+			font-size: .9rem;
+		}
+	}
 }
 
 .user, .quit {
@@ -160,5 +169,59 @@ export default {
 
 .quit {
 	color: #555;
+}
+
+@media only screen and (max-width: $laptop) {
+	.el-button {
+		/deep/ span {
+			i {
+				margin-right: 0;
+			}
+			span {
+				display: none;
+			}
+		}
+	}
+	.user {
+		height: auto;
+		padding: 7px 15px;
+		margin-left: 10px;
+		> i {
+			margin-right: 0;
+		}
+		span {
+			display: none;
+		}
+	}
+}
+
+@media only screen and (max-width: $tablet) {
+	.header--left {
+		.el-button {
+			display: none;
+		}
+	}
+	.header--center {
+		display: none;
+	}
+	.header--right {
+		flex: 1 1 auto;
+		justify-content: flex-end;
+		margin-left: 20px;
+	}
+}
+
+@media only screen and (max-width: $mobileL) {
+	.logo {
+		width: 100px;
+		/deep/ img + div {
+			display: none;
+		}
+		/deep/ .custom {
+			g.logo {
+				display: none;
+			}
+		}
+	}
 }
 </style>
