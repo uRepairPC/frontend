@@ -4,19 +4,19 @@
 		:loading="loading"
 		:columns="columns"
 		:dialogs="dialogs"
-		:permission-create="permissions.EQUIPMENTS_FILES_CREATE"
-		:permission-edit="permissions.EQUIPMENTS_EDIT"
-		:permission-delete="permissions.EQUIPMENTS_DELETE"
+		:permission-create="permissions.REQUESTS_CONFIG_CREATE"
+		:permission-edit="permissions.REQUESTS_CONFIG_EDIT"
+		:permission-delete="permissions.REQUESTS_CONFIG_DELETE"
 		@update="fetchRequest"
 	/>
 </template>
 
 <script>
-import CreateDialog from '@/components/equipments/models/dialogs/Create'
-import DeleteDialog from '@/components/equipments/models/dialogs/Delete'
-import EditDialog from '@/components/equipments/models/dialogs/Edit'
-import { equipmentModels as columns } from '@/data/columns'
+import CreateDialog from '@/components/requests/types/dialogs/Create'
+import DeleteDialog from '@/components/requests/types/dialogs/Delete'
+import EditDialog from '@/components/requests/types/dialogs/Edit'
 import BasicTable from '@/components/settings/BasicTable'
+import { requestTypes as columns } from '@/data/columns'
 import * as permissions from '@/enum/permissions'
 import breadcrumbs from '@/mixins/breadcrumbs'
 import sections from '@/data/sections'
@@ -24,10 +24,10 @@ import { mapState } from 'vuex'
 import menu from '@/data/menu'
 
 export default {
-	name: 'Models',
+	name: 'Request-Types',
 	breadcrumbs: [
 		{ title: menu[sections.settings].title, routeName: sections.settings },
-		{ title: menu[sections.settings].children[sections.settingsModels].title }
+		{ title: menu[sections.settings].children[sections.requestsTypes].title }
 	],
 	components: {
 		BasicTable
@@ -48,8 +48,8 @@ export default {
 	},
 	computed: {
 		...mapState({
-			loading: state => state.equipmentModels.loading,
-			list: state => state.equipmentModels.list
+			loading: state => state.requestTypes.loading,
+			list: state => state.requestTypes.list
 		})
 	},
 	mounted() {
@@ -59,7 +59,7 @@ export default {
 	},
 	methods: {
 		fetchRequest() {
-			this.$store.dispatch('equipmentModels/fetchList')
+			this.$store.dispatch('requestTypes/fetchList')
 		}
 	}
 }

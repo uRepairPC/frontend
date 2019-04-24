@@ -119,7 +119,7 @@ $transition: .15s;
 
 .file {
 	display: flex;
-	border-bottom: 1px solid #e6e6e6;
+	border-bottom: 1px solid $defaultBorder;
 	transition: $transition;
 	&:hover {
 		box-shadow: 0 0 10px 2px rgba(0, 0, 0, .12);

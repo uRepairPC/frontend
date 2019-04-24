@@ -23,6 +23,13 @@
   }
 }
 
+.cell--color {
+  width: 50%;
+  max-width: 40px;
+  height: 10px;
+  border-radius: 5px;
+}
+
 .page--width {
   max-width: 900px;
   margin-left: auto;

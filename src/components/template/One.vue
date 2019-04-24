@@ -90,6 +90,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "~scss/_colors";
+
 .template-one {
 	overflow-y: scroll !important;
 }
@@ -111,7 +113,7 @@ export default {
 
 .template-table {
 	background: #fff;
-	border: 1px solid #e6e6e6;
+	border: 1px solid $defaultBorder;
 }
 
 // <animation>

@@ -6,7 +6,7 @@
 	>
 		<template slot="header">
 			<div class="title">
-				{{ model.display_name }}
+				{{ model.name }}
 			</div>
 			<div
 				v-if="model.color"
@@ -92,7 +92,7 @@ export default {
 			]
 		},
 		tableData() {
-			const props = ['name', 'color', 'default', 'created_at', 'updated_at']
+			const props = ['color', 'default', 'created_at', 'updated_at']
 			const result = []
 
 			this.$store.getters['roles/columns']
@@ -151,6 +151,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "~scss/_colors";
+
 .title {
 	font-size: 1.5rem;
 	font-weight: bold;
@@ -166,6 +168,6 @@ export default {
 .list-checkboxes {
 	padding: 30px;
 	background: #fff;
-	border: 1px solid #e6e6e6;
+	border: 1px solid $defaultBorder;
 }
 </style>

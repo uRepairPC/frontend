@@ -16,7 +16,7 @@
 		<el-option
 			v-for="item in list"
 			:key="item.name"
-			:label="item.display_name"
+			:label="item.name"
 			:value="item.name"
 			:style="{
 				'background-color': item.color + '10',
@@ -60,7 +60,7 @@ export default {
 
 			if (query && query.trim()) {
 				params.search = query
-				params.columns = ['display_name']
+				params.columns = ['name']
 			}
 
 			Role.fetchAll({ params })

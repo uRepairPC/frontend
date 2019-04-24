@@ -98,25 +98,28 @@ export default {
 				{
 					title: 'Оновити',
 					type: types.SUCCESS,
+					disabled: this.loading,
 					action: () => {
 						this.fetchRequest()
 						this.fetchRequestFiles()
-					},
-					disabled: this.loading
+					}
 				},
 				{
 					title: 'Редагувати',
 					type: types.PRIMARY,
+					permissions: permissions.EQUIPMENTS_EDIT,
 					action: () => this.openDialog(EditDialog)
 				},
 				{
 					title: 'Завантажити файл',
 					type: types.PRIMARY,
+					permissions: permissions.EQUIPMENTS_FILES_CREATE,
 					action: () => this.openDialog(FilesUploadDialog)
 				},
 				{
 					title: 'Видалили',
 					type: types.DANGER,
+					permissions: permissions.EQUIPMENTS_DELETE,
 					action: () => this.openDialog(DeleteDialog)
 				}
 			]
@@ -248,7 +251,7 @@ export default {
 	align-items: center;
 	justify-content: center;
 	flex-wrap: wrap;
-	border: 1px solid #e6e6e6;
+	border: 1px solid $defaultBorder;
 	background: #fff;
 	padding: 10px 20px;
 	box-shadow: $lightShadow;

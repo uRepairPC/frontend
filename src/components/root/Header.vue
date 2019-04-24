@@ -97,12 +97,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "~scss/_colors";
+
 .el-header {
 	display: flex;
 	align-items: center;
 	background: #fff;
-	border-bottom: 1px solid #e6e6e6;
+	border-bottom: 1px solid $defaultBorder;
 	user-select: none;
+	overflow: hidden;
 }
 
 .header--left {

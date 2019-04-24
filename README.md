@@ -4,10 +4,16 @@
     <img width="250" src="https://raw.githubusercontent.com/uRepairPC/web/master/src/images/icon.png" alt="uRepairPC">
 </p>
 
-## Docs
-[Website](https://urepairpc.github.io/docs/)
+<p align="center">
+    <a href="https://circleci.com/gh/uRepairPC/web/tree/dev"><img src="https://circleci.com/gh/uRepairPC/web/tree/dev.svg?style=shield" alt="Build Status"></a>
+    <a href="https://www.npmjs.com/package/@urepairpc/web"><img src="https://img.shields.io/npm/v/@urepairpc/web.svg?style=flat-square" alt="NPM Version"></a>
+    <a href="https://www.npmjs.com/package/@urepairpc/web"><img src="https://img.shields.io/npm/l/@urepairpc/web.svg" alt="License"></a>
+</p>
 
-## Preview (uk)
+## Docs
+See [here](https://urepairpc.github.io/docs/)
+
+## Preview (ukr)
 <p align="center">
     <img alt="Image 1" height="200" src="https://raw.githubusercontent.com/uRepairPC/web/master/demo/images/1.png" />
     <img alt="Image 2" height="200" src="https://raw.githubusercontent.com/uRepairPC/web/master/demo/images/2.png" />
@@ -20,7 +26,7 @@
 ## TODO
 - [ ] Requests
 - [ ] Tests
-- [ ] i18n*
+- [ ] i18n (branch i18n)
 - [ ] PWA
 - [ ] Mobile design
 - [ ] Report

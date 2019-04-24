@@ -12,8 +12,24 @@ export function isObject(input) {
  * @param {*} input
  * @return {boolean}
  */
-export const isArray = (input) => {
+export function isArray(input) {
 	return isObject(input) && Array.isArray(input)
+}
+
+/**
+ * @param {*} input
+ * @return {boolean}
+ */
+export function isEmpty(input) {
+	if (isArray(input)) {
+		return !input.length
+	}
+
+	if (isObject(input)) {
+		return !Object.keys(input).length
+	}
+
+	return !input
 }
 
 /**

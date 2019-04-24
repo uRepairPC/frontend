@@ -4,18 +4,18 @@
 		:loading="loading"
 		:columns="columns"
 		:dialogs="dialogs"
-		:permission-create="permissions.EQUIPMENTS_FILES_CREATE"
-		:permission-edit="permissions.EQUIPMENTS_EDIT"
-		:permission-delete="permissions.EQUIPMENTS_DELETE"
+		:permission-create="permissions.REQUESTS_CONFIG_CREATE"
+		:permission-edit="permissions.REQUESTS_CONFIG_EDIT"
+		:permission-delete="permissions.REQUESTS_CONFIG_DELETE"
 		@update="fetchRequest"
 	/>
 </template>
 
 <script>
-import CreateDialog from '@/components/equipments/types/dialogs/Create'
-import DeleteDialog from '@/components/equipments/types/dialogs/Delete'
-import EditDialog from '@/components/equipments/types/dialogs/Edit'
-import { equipmentTypes as columns } from '@/data/columns'
+import CreateDialog from '@/components/requests/priorities/dialogs/Create'
+import DeleteDialog from '@/components/requests/priorities/dialogs/Delete'
+import EditDialog from '@/components/requests/priorities/dialogs/Edit'
+import { requestPriorities as columns } from '@/data/columns'
 import BasicTable from '@/components/settings/BasicTable'
 import * as permissions from '@/enum/permissions'
 import breadcrumbs from '@/mixins/breadcrumbs'
@@ -24,10 +24,10 @@ import { mapState } from 'vuex'
 import menu from '@/data/menu'
 
 export default {
-	name: 'Types',
+	name: 'Request-Priorities',
 	breadcrumbs: [
 		{ title: menu[sections.settings].title, routeName: sections.settings },
-		{ title: menu[sections.settings].children[sections.settingsTypes].title }
+		{ title: menu[sections.settings].children[sections.requestsPriorities].title }
 	],
 	components: {
 		BasicTable
@@ -48,8 +48,8 @@ export default {
 	},
 	computed: {
 		...mapState({
-			loading: state => state.equipmentTypes.loading,
-			list: state => state.equipmentTypes.list
+			loading: state => state.requestPriorities.loading,
+			list: state => state.requestPriorities.list
 		})
 	},
 	mounted() {
@@ -59,7 +59,7 @@ export default {
 	},
 	methods: {
 		fetchRequest() {
-			this.$store.dispatch('equipmentTypes/fetchList')
+			this.$store.dispatch('requestPriorities/fetchList')
 		}
 	}
 }

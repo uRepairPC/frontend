@@ -2,11 +2,9 @@
 
 import StorageData from '@/classes/StorageData'
 import Role from '@/classes/Role'
-import Vue from 'vue'
 
 const state = {
 	loading: false,
-	popover: {},
 	list: {}
 }
 
@@ -16,9 +14,6 @@ const mutations = {
 	},
 	SET_LIST(state, arr) {
 		state.list = arr
-	},
-	APPEND_POPOVER(state, { id, permissions }) {
-		Vue.set(state.popover, id, permissions)
 	},
 	CLEAR_ALL(state) {
 		state.loading = false
@@ -38,12 +33,6 @@ const actions = {
 			.finally(() => {
 				commit('SET_LOADING', false)
 			})
-	},
-	fetchPopover({ commit }, id) {
-		return Role.fetchOne(id)
-			.then(({ data }) => {
-				commit('APPEND_POPOVER', { id, permissions: data.permissions })
-			})
 	}
 }
 
@@ -57,14 +46,13 @@ const getters = {
 	 * @returns {(*|{model: boolean})[]}
 	 */
 	columns() {
-		const defaultActive = ['name', 'display_name']
+		const defaultActive = ['color', 'name']
 
 		const columns = [
 			{ prop: 'id', label: 'ID', 'min-width': 70, sortable: 'custom' },
-			{ prop: 'color', label: 'Колір', 'min-width': 100, disableSearch: true },
+			{ prop: 'color', label: 'Колір', 'min-width': 100, disableSearch: true, customType: 'color' },
 			{ prop: 'name', label: 'Ім\'я', 'min-width': 200, sortable: 'custom' },
-			{ prop: 'display_name', label: 'Відображуване ім\'я', 'min-width': 200, sortable: 'custom' },
-			{ prop: 'default', label: 'За замовчуванням', 'min-width': 100, sortable: 'custom', customType: 'bool' },
+			{ prop: 'default', label: 'За замовчуванням', 'min-width': 150, sortable: 'custom', customType: 'bool' },
 			{ prop: 'updated_at', label: 'Оновлено', 'min-width': 150, sortable: 'custom', customType: 'timestamp' },
 			{ prop: 'created_at', label: 'Створений', 'min-width': 150, sortable: 'custom', customType: 'timestamp' }
 		]

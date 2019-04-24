@@ -95,7 +95,7 @@ export default {
 
 .history-title {
 	text-align: center;
-	border: 1px solid #e6e6e6;
+	border: 1px solid $defaultBorder;
 	background: #f7f7f7;
 	border-left: 0;
 	border-right: 0;

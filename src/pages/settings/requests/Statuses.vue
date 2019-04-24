@@ -4,18 +4,18 @@
 		:loading="loading"
 		:columns="columns"
 		:dialogs="dialogs"
-		:permission-create="permissions.EQUIPMENTS_FILES_CREATE"
-		:permission-edit="permissions.EQUIPMENTS_EDIT"
-		:permission-delete="permissions.EQUIPMENTS_DELETE"
+		:permission-create="permissions.REQUESTS_CONFIG_CREATE"
+		:permission-edit="permissions.REQUESTS_CONFIG_EDIT"
+		:permission-delete="permissions.REQUESTS_CONFIG_DELETE"
 		@update="fetchRequest"
 	/>
 </template>
 
 <script>
-import CreateDialog from '@/components/equipments/manufacturers/dialogs/Create'
-import DeleteDialog from '@/components/equipments/manufacturers/dialogs/Delete'
-import EditDialog from '@/components/equipments/manufacturers/dialogs/Edit'
-import { equipmentManufacturers as columns } from '@/data/columns'
+import CreateDialog from '@/components/requests/statuses/dialogs/Create'
+import DeleteDialog from '@/components/requests/statuses/dialogs/Delete'
+import EditDialog from '@/components/requests/statuses/dialogs/Edit'
+import { requestStatuses as columns } from '@/data/columns'
 import BasicTable from '@/components/settings/BasicTable'
 import * as permissions from '@/enum/permissions'
 import breadcrumbs from '@/mixins/breadcrumbs'
@@ -24,10 +24,10 @@ import { mapState } from 'vuex'
 import menu from '@/data/menu'
 
 export default {
-	name: 'Manufacturers',
+	name: 'Request-Statuses',
 	breadcrumbs: [
 		{ title: menu[sections.settings].title, routeName: sections.settings },
-		{ title: menu[sections.settings].children[sections.settingsManufacturers].title }
+		{ title: menu[sections.settings].children[sections.requestsStatuses].title }
 	],
 	components: {
 		BasicTable
@@ -48,8 +48,8 @@ export default {
 	},
 	computed: {
 		...mapState({
-			loading: state => state.equipmentManufacturers.loading,
-			list: state => state.equipmentManufacturers.list
+			loading: state => state.requestStatuses.loading,
+			list: state => state.requestStatuses.list
 		})
 	},
 	mounted() {
@@ -59,7 +59,7 @@ export default {
 	},
 	methods: {
 		fetchRequest() {
-			this.$store.dispatch('equipmentManufacturers/fetchList')
+			this.$store.dispatch('requestStatuses/fetchList')
 		}
 	}
 }
