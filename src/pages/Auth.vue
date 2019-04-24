@@ -93,6 +93,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "~scss/mobile/_sizes";
+
 #auth {
 	width: 100%;
 	max-width: 450px;
@@ -106,10 +108,10 @@ export default {
 	width: 100%;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: $mobileL) {
 	#auth {
-		max-width: none;
-		padding: 20px;
+		background: none;
+		box-shadow: none;
 	}
 }
 </style>

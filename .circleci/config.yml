@@ -1,8 +1,10 @@
-version: 2
+version: 2.1
+orbs:
+  codecov: codecov/codecov@1.0.4
 jobs:
   build:
     docker:
-      - image: circleci/node:8.10
+      - image: circleci/node:10.0
 
     working_directory: ~/repo
 
@@ -12,16 +14,19 @@ jobs:
       # Download and cache dependencies
       - restore_cache:
           keys:
-            - node-8-dependencies-{{ checksum "package.json" }}
+            - node-10-dependencies-{{ checksum "package.json" }}
             # Fallback to using the latest cache if no exact match is found
-            - node-8-dependencies-
+            - node-10-dependencies-
 
       - run: npm i
 
       - save_cache:
           paths:
             - node_modules
-          key: node-8-dependencies-{{ checksum "package.json" }}
+          key: node-10-dependencies-{{ checksum "package.json" }}
 
       # Run Tests
-      - run: npm run test
+      - run: npm run test:coverage
+
+      - codecov/upload:
+          file: coverage/*.json

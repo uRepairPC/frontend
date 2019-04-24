@@ -36,7 +36,7 @@ export default {
 			menu: 'template/menu'
 		}),
 		menuSection() {
-			return this.menu[this.section]
+			return this.menu[this.section] || {}
 		},
 		hasActions() {
 			return this.menuSection.children && !!Object.keys(this.menuSection.children).length
