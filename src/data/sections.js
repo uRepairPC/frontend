@@ -7,6 +7,7 @@ export default {
 	home: 'home',
 	requests: 'requests',
 	requestsStatuses: 'request-statuses',
+	requestsPriorities: 'request-priorities',
 	users: 'users',
 	equipments: 'equipments',
 	equipmentsManufacturers: 'equipments-manufacturers',

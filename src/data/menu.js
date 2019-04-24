@@ -150,6 +150,22 @@ export default {
 					}
 				}
 			},
+			[sections.requestsPriorities]: {
+				title: 'Пріорітети заявок',
+				icon: 'dashboard',
+				tag: 'page',
+				permissions: permissions.REQUESTS_CONFIG_VIEW,
+				route: { name: sections.requestsPriorities },
+				children: {
+					add: {
+						title: 'Створити пріорітет',
+						icon: 'add',
+						type: types.PRIMARY,
+						permissions: permissions.REQUESTS_CONFIG_CREATE
+						// TODO Action
+					}
+				}
+			},
 			[sections.equipmentsTypes]: {
 				title: 'Типи обладнання',
 				icon: 'dashboard',

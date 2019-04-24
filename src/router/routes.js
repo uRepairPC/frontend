@@ -101,6 +101,11 @@ const authorizedRoutes = {
 					name: `${sections.requestsStatuses}`,
 					component: loadPage('settings/requests/Statuses')
 				},
+				{
+					path: `/${sections.requestsPriorities}/priorities`,
+					name: `${sections.requestsPriorities}`,
+					component: loadPage('settings/requests/Priorities')
+				},
 				// ------------------------------------------------ Settings - Equipments
 				{
 					path: `/${sections.settings}/manufacturers`,
