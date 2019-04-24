@@ -97,12 +97,12 @@ const authorizedRoutes = {
 				},
 				// ------------------------------------------------ Settings
 				{
-					path: `/${sections.requestsStatuses}/statuses`,
+					path: `/${sections.settings}/statuses`,
 					name: `${sections.requestsStatuses}`,
 					component: loadPage('settings/requests/Statuses')
 				},
 				{
-					path: `/${sections.requestsPriorities}/priorities`,
+					path: `/${sections.settings}/priorities`,
 					name: `${sections.requestsPriorities}`,
 					component: loadPage('settings/requests/Priorities')
 				},

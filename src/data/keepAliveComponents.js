@@ -15,6 +15,7 @@ export const settings = [
 	'Equipment-Models',
 	'Equipment-Types',
 	'Request-Statuses',
+	'Request-Priorities',
 	'Global'
 ]
 
