@@ -23,10 +23,10 @@ jobs:
       - save_cache:
           paths:
             - node_modules
-          key: node-8-dependencies-{{ checksum "package.json" }}
+          key: node-10-dependencies-{{ checksum "package.json" }}
 
       # Run Tests
-      - run: npm run test
+      - run: npm run test:coverage
 
       - codecov/upload:
           file: coverage/*.json
