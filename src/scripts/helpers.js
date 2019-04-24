@@ -5,7 +5,7 @@
  * @return {boolean}
  */
 export function isObject(input) {
-	return !!input && typeof input === 'object'
+	return input && typeof input === 'object' && input.constructor === Object
 }
 
 /**
@@ -13,7 +13,7 @@ export function isObject(input) {
  * @return {boolean}
  */
 export function isArray(input) {
-	return isObject(input) && Array.isArray(input)
+	return Array.isArray(input)
 }
 
 /**

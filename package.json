@@ -4,7 +4,7 @@
   "main": "src/main.js",
   "scripts": {
     "dev": "webpack-dev-server --hot --host=0.0.0.0",
-    "build": "webpack --mode production",
+    "build": "npm run test && webpack --mode production",
     "lint": "eslint --ext .js,.vue src --fix",
     "test": "npm run test:unit",
     "test:unit": "vue-cli-service test:unit"
