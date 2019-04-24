@@ -2,6 +2,7 @@
 
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const WorkboxPlugin = require('workbox-webpack-plugin')
 const { VueLoaderPlugin } = require('vue-loader')
 const Dotenv = require('dotenv-webpack')
 const path = require('path')
@@ -78,6 +79,10 @@ module.exports = {
 			template: './index.html',
 			inject: true,
 			chunksSortMode: 'none'
+		}),
+		new WorkboxPlugin.GenerateSW({
+			clientsClaim: true,
+			skipWaiting: true
 		})
 	],
 	resolve: {
