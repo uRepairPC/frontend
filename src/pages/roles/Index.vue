@@ -10,19 +10,7 @@
 				:loading-type="loadingType"
 				@row-click="onRowClick"
 				@sort-change="onSortChange"
-			>
-				<template slot-scope="{ column, row }">
-					<template v-if="column.prop === 'color'">
-						<div
-							class="color"
-							:style="{ 'background-color': row }"
-						/>
-					</template>
-					<template v-else>
-						{{ row }}
-					</template>
-				</template>
-			</table-component>
+			/>
 		</template>
 		<filter-core slot="right-column">
 			<filter-table-buttons
@@ -164,12 +152,3 @@ export default {
 	}
 }
 </script>
-
-<style lang="scss" scoped>
-.color {
-	width: 50%;
-	max-width: 40px;
-	height: 10px;
-	border-radius: 5px;
-}
-</style>

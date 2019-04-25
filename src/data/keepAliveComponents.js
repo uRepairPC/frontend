@@ -11,9 +11,12 @@ export const root = [
 
 /** @type {array} */
 export const settings = [
-	'Manufacturers',
-	'Models',
-	'Types',
+	'EquipmentManufacturers',
+	'EquipmentModels',
+	'EquipmentTypes',
+	'RequestStatuses',
+	'RequestPriorities',
+	'RequestTypes',
 	'Global'
 ]
 

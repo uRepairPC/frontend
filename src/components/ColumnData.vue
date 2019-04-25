@@ -5,6 +5,11 @@
 	<div v-else-if="isBool">
 		{{ value ? 'Так' : 'Ні' }}
 	</div>
+	<div
+		v-else-if="isColor"
+		class="cell--color"
+		:style="{ 'background-color': value }"
+	/>
 	<div v-else>
 		<slot>
 			{{ value }}
@@ -43,6 +48,9 @@ export default {
 		},
 		isDate() {
 			return this.type === 'timestamp'
+		},
+		isColor() {
+			return this.type === 'color'
 		},
 		dateValue() {
 			let format = 'LL'

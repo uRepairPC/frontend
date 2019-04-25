@@ -1,6 +1,6 @@
 <template>
 	<basic-edit
-		title="Редагування ролей"
+		:title="item.name"
 		:loading="loading"
 		v-bind="$attrs"
 		v-on="listeners"
@@ -17,8 +17,8 @@
 <script>
 import BasicEdit from '@/components/dialogs/BasicEdit'
 import GenerateForm from '@/components/GenerateForm'
-import SelectRoles from '@/components/roles/Select'
-import User from '@/classes/User'
+import RequestType from '@/classes/RequestType'
+import { required } from '@/data/rules'
 
 export default {
 	components: {
@@ -26,7 +26,7 @@ export default {
 	},
 	inheritAttrs: false,
 	props: {
-		user: {
+		item: {
 			type: Object,
 			required: true
 		}
@@ -35,12 +35,30 @@ export default {
 		return {
 			loading: false,
 			form: {
-				roles: {
-					component: SelectRoles,
-					value: [],
-					label: 'Оберіть ролі (введіть текст для отримання списку)',
+				name: {
+					component: 'el-input',
+					value: this.item.name,
+					label: 'Назва',
+					rules: required,
 					attrs: {
-						defaultRoles: this.user.roles
+						placeholder: 'Назва'
+					}
+				},
+				description: {
+					component: 'el-input',
+					value: this.item.description,
+					label: 'Опис',
+					attrs: {
+						type: 'textarea',
+						autosize: { minRows: 3 },
+						placeholder: 'Опис'
+					}
+				},
+				default: {
+					component: 'el-checkbox',
+					value: this.item.default,
+					attrs: {
+						label: 'За замовчуванням'
 					}
 				}
 			}
@@ -60,9 +78,10 @@ export default {
 		fetchRequest(form) {
 			this.loading = true
 
-			User.fetchEditRoles(this.user.id, form)
+			RequestType.fetchEdit(this.item.id, form)
 				.then(() => {
-					this.$emit('edit-roles')
+					this.$store.dispatch('requestTypes/fetchList')
+					this.$emit('edit')
 					this.$emit('close')
 				})
 				.finally(() => {
