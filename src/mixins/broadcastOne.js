@@ -17,11 +17,11 @@ export default (section) => {
 			this._subscribe()
 		},
 		beforeDestroy() {
-			this.sockets.unsubscribe(`${section}-${this.id}`)
+			delete this.$options.sockets[`${section}-${this.id}`]
 		},
 		methods: {
 			_subscribe() {
-				this.sockets.subscribe(`${section}-${this.id}`, (data) => {
+				this.$options.sockets[`${section}-${this.id}`] = (data) => {
 					if (!isObject(data)) {
 						return
 					}
@@ -36,7 +36,7 @@ export default (section) => {
 						this.$router.push({ name: section })
 						break
 					}
-				})
+				}
 			}
 		}
 	}

@@ -4,12 +4,14 @@ import '@babel/polyfill'
 import SettingsFrontend from '@/classes/SettingsFrontend'
 import filterComponents from '@/components/filters/index'
 import locale from 'element-ui/lib/locale/lang/ua'
-import { serverSocket, isProd } from '@/data/env'
-import VueSocketIO from 'vue-socket.io'
+import VueSocketIO from 'vue-socket.io-extended'
+import StorageData from '@/classes/StorageData'
+import { serverSocket } from '@/data/env'
 import prototypes from '@/prototypes'
 import directives from '@/directives'
 import ElementUI from 'element-ui'
 import NProgress from 'nprogress'
+import io from 'socket.io-client'
 import router from '@/router'
 import App from '@/App.vue'
 import moment from 'moment'
@@ -21,13 +23,9 @@ import '@/styles/index'
 
 // Connect libraries to Vue
 Vue.use(ElementUI, { locale })
-Vue.use(new VueSocketIO({
-	debug: !isProd,
-	connection: serverSocket,
-	vuex: {
-		store,
-		actionPrefix: 'SOCKET_',
-		mutationPrefix: 'SOCKET_'
+Vue.use(VueSocketIO, io(serverSocket, {
+	query: {
+		token: StorageData.token
 	}
 }))
 
