@@ -4,6 +4,7 @@ import router, { DEFAULT_ROUTE_NAME } from '@/router'
 import { runLoadingService } from '@/scripts/dom'
 import StorageData from '@/classes/StorageData'
 import logout from '@/scripts/logout'
+import socket from '@/scripts/socket'
 import axios from 'axios'
 
 const state = {
@@ -54,11 +55,19 @@ const actions = {
 
 		return axios.post('auth/login', data)
 			.then(({ data }) => {
+				// Update axios and localStorage
 				axios.defaults.headers['Authorization'] = `Bearer ${data.token}`
 				StorageData.token = data.token
+
+				// Auth in socket server
+				socket.query.token = data.token
+				socket.$emit('auth')
+
+				// Update store
 				commit('SET_USER', data.user)
 				commit('SET_PERMISSIONS', data.permissions)
 				commit('SET_IS_LOGIN', true)
+
 				router.push({ name: DEFAULT_ROUTE_NAME })
 			})
 			.finally(() => {

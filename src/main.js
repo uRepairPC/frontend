@@ -5,13 +5,11 @@ import SettingsFrontend from '@/classes/SettingsFrontend'
 import filterComponents from '@/components/filters/index'
 import locale from 'element-ui/lib/locale/lang/ua'
 import VueSocketIO from 'vue-socket.io-extended'
-import StorageData from '@/classes/StorageData'
-import { serverSocket } from '@/data/env'
 import prototypes from '@/prototypes'
 import directives from '@/directives'
+import socket from '@/scripts/socket'
 import ElementUI from 'element-ui'
 import NProgress from 'nprogress'
-import io from 'socket.io-client'
 import router from '@/router'
 import App from '@/App.vue'
 import moment from 'moment'
@@ -23,11 +21,7 @@ import '@/styles/index'
 
 // Connect libraries to Vue
 Vue.use(ElementUI, { locale })
-Vue.use(VueSocketIO, io(serverSocket, {
-	query: {
-		token: StorageData.token
-	}
-}))
+Vue.use(VueSocketIO, socket)
 
 // Prevent the production tip on Vue startup
 Vue.config.productionTip = false

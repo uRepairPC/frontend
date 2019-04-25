@@ -24,13 +24,8 @@ module.exports = {
 		host: process.env.WEBPACK_HOST || 'localhost',
 		hot: true,
 		clientLogLevel: 'error',
-		disableHostCheck: true,
-		proxy: {
-			'**': {
-				target: process.env.SERVER_DEV || 'http://localhost/',
-				changeOrigin: true
-			}
-		}
+		disableHostCheck: true
+		// Do not add proxy - conflicts arise (sockets + pwa)
 	},
 	module: {
 		rules: [
