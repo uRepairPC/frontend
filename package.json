@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "src/main.js",
   "scripts": {
-    "dev": "webpack-dev-server --hot --host=0.0.0.0",
+    "dev": "webpack-dev-server --hot",
     "build": "npm run test && webpack --mode production",
     "lint": "eslint --ext .js,.vue src --fix",
     "test": "npm run test:unit",
