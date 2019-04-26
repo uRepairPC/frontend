@@ -112,7 +112,11 @@ module.exports = {
 			importWorkboxFrom: isDev ? 'cdn' : 'local',
 			importsDirectory: 'assets',
 			clientsClaim: true,
-			skipWaiting: true
+			skipWaiting: true,
+			runtimeCaching: [{
+				urlPattern: new RegExp('api'),
+				handler: 'StaleWhileRevalidate'
+			}]
 		})
 	],
 	resolve: {
