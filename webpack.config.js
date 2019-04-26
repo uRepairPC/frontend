@@ -8,27 +8,43 @@ const Dotenv = require('dotenv-webpack')
 const path = require('path')
 require('dotenv').config()
 
+/** @type {boolean} */
+const isDev = ['dev', 'development'].includes(process.env.NODE_ENV)
+
 module.exports = {
-	mode: ['dev', 'development'].includes(process.env.NODE_ENV) ? 'development' : 'production',
+	mode: isDev ? 'development' : 'production',
 	entry: [
 		'./src/main.js'
 	],
 	output: {
-		filename: 'main.js',
-		publicPath: '/',
+		filename: '[name].js',
+		chunkFilename: '[name].js',
+		publicPath: isDev ? '/' : '/dist/',
 		path: path.resolve(__dirname, 'dist')
 	},
-	devtool: 'inline-source-map',
+	devtool: isDev ? 'inline-source-map' : false,
 	devServer: {
-		publicPath: '/',
+		publicPath: isDev ? '/' : '/dist/',
 		contentBase: './dist',
+		host: process.env.WEBPACK_HOST || 'localhost',
 		hot: true,
 		clientLogLevel: 'error',
 		disableHostCheck: true,
 		proxy: {
-			'**': {
+			'/api/*': {
 				target: process.env.SERVER_DEV || 'http://localhost/',
 				changeOrigin: true
+			}
+		}
+	},
+	optimization: {
+		splitChunks: {
+			cacheGroups: {
+				vendor: {
+					test: /[\\/]node_modules[\\/]/,
+					name: 'vendors',
+					chunks: 'all'
+				}
 			}
 		}
 	},

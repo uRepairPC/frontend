@@ -258,7 +258,7 @@ export default class User {
 		if (this.user.image) {
 			const token = StorageData.token
 
-			return `background-image: url(${server}/users/${this.user.id}/image?token=${token})`
+			return `background-image: url(${server}/api/users/${this.user.id}/image?token=${token})`
 		}
 
 		return null

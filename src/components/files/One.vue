@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import { formatBytes, getSeverUrlAuth } from '@/scripts/utils'
+import { formatBytes, getApiAuth } from '@/scripts/utils'
 import { includePermission } from '@/scripts/utils'
 import moment from 'moment'
 
@@ -91,7 +91,7 @@ export default {
 		includePermission,
 		onClickDownload() {
 			if (this.canDownload) {
-				window.open(getSeverUrlAuth(this.urlDownload(this.file)), '_blank')
+				window.open(getApiAuth(this.urlDownload(this.file)), '_blank')
 			}
 		},
 		onClickEdit() {
