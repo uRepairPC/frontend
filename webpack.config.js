@@ -16,21 +16,21 @@ module.exports = {
 		'./src/main.js'
 	],
 	output: {
-		filename: '[name].[hash].js',
-		chunkFilename: '[name].[hash].js',
-		publicPath: '/',
+		filename: '[name].js',
+		chunkFilename: '[name].js',
+		publicPath: isDev ? '/' : '/dist/',
 		path: path.resolve(__dirname, 'dist')
 	},
 	devtool: isDev ? 'inline-source-map' : false,
 	devServer: {
-		publicPath: '/',
+		publicPath: isDev ? '/' : '/dist/',
 		contentBase: './dist',
 		host: process.env.WEBPACK_HOST || 'localhost',
 		hot: true,
 		clientLogLevel: 'error',
 		disableHostCheck: true,
 		proxy: {
-			'**': {
+			'/api/*': {
 				target: process.env.SERVER_DEV || 'http://localhost/',
 				changeOrigin: true
 			}

@@ -5,7 +5,6 @@ import { isArray, isObject } from '@/scripts/helpers'
 import { Message, Notification } from 'element-ui'
 import { runLoadingService } from '@/scripts/dom'
 import StorageData from '@/classes/StorageData'
-import { serverProd, isProd } from '@/data/env'
 import * as types from '@/enum/types'
 import logout from '@/scripts/logout'
 import store from '@/store'
@@ -13,9 +12,9 @@ import axios from 'axios'
 
 /*
  * In dev mode, all requests are sent to the server via
- * PROXY_PATH (webpack), to bypass CORS.
+ * proxy target in webpack (env.SERVER_DEV), to bypass CORS.
  */
-axios.defaults.baseURL = isProd ? serverProd : ''
+axios.defaults.baseURL = '/api'
 
 /** @type {Array} */
 let requestsToRefresh = []

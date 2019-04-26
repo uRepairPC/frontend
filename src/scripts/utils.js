@@ -2,15 +2,15 @@
 
 import { isArray, isObject } from '@/scripts/helpers'
 import StorageData from '@/classes/StorageData'
+import { server } from '@/data/env'
 import store from '@/store'
-import axios from 'axios'
 
 /**
  * @param {string} path
  * @returns {string}
  */
-export function getSeverUrlAuth(path) {
-	return axios.defaults.baseURL + '/' + path + '?token=' + StorageData.token
+export function getApiAuth(path) {
+	return server + '/api/' + path + '?token=' + StorageData.token
 }
 
 /**
