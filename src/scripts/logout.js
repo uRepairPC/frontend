@@ -11,6 +11,9 @@ export default function () {
 	// Clear data from axios
 	axios.defaults.headers['Authorization'] = null
 
+	// Service Workers - delete API data
+	caches.delete(`workbox-runtime-${window.location.origin}/`)
+
 	// Clear data from localStorage
 	StorageData.remove.token()
 	StorageData.remove.profile()

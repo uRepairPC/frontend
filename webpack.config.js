@@ -2,6 +2,7 @@
 
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const WorkboxPlugin = require('workbox-webpack-plugin')
 const { VueLoaderPlugin } = require('vue-loader')
 const Dotenv = require('dotenv-webpack')
 const path = require('path')
@@ -16,22 +17,23 @@ module.exports = {
 		'./src/main.js'
 	],
 	output: {
-		filename: '[name].js',
-		chunkFilename: '[name].js',
-		publicPath: isDev ? '/' : '/dist/',
+		filename: 'assets/[name].[hash].js',
+		chunkFilename: 'assets/chunks/[name].[hash].js',
+		publicPath: '/',
 		path: path.resolve(__dirname, 'dist')
 	},
 	devtool: isDev ? 'inline-source-map' : false,
 	devServer: {
-		publicPath: isDev ? '/' : '/dist/',
+		publicPath: '/',
 		contentBase: './dist',
-		host: process.env.WEBPACK_HOST || 'localhost',
+		host: process.env.WEBPACK_HOST_DEV || 'localhost',
 		hot: true,
+		writeToDisk: true,
 		clientLogLevel: 'error',
 		disableHostCheck: true,
 		proxy: {
 			'/api/*': {
-				target: process.env.SERVER_DEV || 'http://localhost/',
+				target: process.env.PROXY_TARGET || 'http://localhost/',
 				changeOrigin: true
 			}
 		}
@@ -60,13 +62,23 @@ module.exports = {
 			{
 				test: /\.(png|svg|jpg|gif)$/,
 				use: [
-					'file-loader'
+					{
+						loader: 'file-loader',
+						options: {
+							outputPath: 'assets/images',
+						}
+					}
 				]
 			},
 			{
 				test: /\.(eot|svg|ttf|woff|woff2)$/,
 				use: [
-					'file-loader'
+					{
+						loader: 'file-loader',
+						options: {
+							outputPath: 'assets/files',
+						}
+					}
 				]
 			},
 			{
@@ -94,6 +106,17 @@ module.exports = {
 			template: './index.html',
 			inject: true,
 			chunksSortMode: 'none'
+		}),
+		new WorkboxPlugin.GenerateSW({
+			swDest: 'sw.js',
+			importWorkboxFrom: isDev ? 'cdn' : 'local',
+			importsDirectory: 'assets',
+			clientsClaim: true,
+			skipWaiting: true,
+			runtimeCaching: [{
+				urlPattern: new RegExp('api'),
+				handler: 'StaleWhileRevalidate'
+			}]
 		})
 	],
 	resolve: {
