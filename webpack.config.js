@@ -17,17 +17,18 @@ module.exports = {
 		'./src/main.js'
 	],
 	output: {
-		filename: '[name].js',
-		chunkFilename: '[name].js',
-		publicPath: isDev ? '/' : '/dist/',
+		filename: 'assets/[name].[hash].js',
+		chunkFilename: 'assets/chunks/[name].[hash].js',
+		publicPath: '/',
 		path: path.resolve(__dirname, 'dist')
 	},
 	devtool: isDev ? 'inline-source-map' : false,
 	devServer: {
-		publicPath: isDev ? '/' : '/dist/',
+		publicPath: '/',
 		contentBase: './dist',
 		host: process.env.WEBPACK_HOST || 'localhost',
 		hot: true,
+		writeToDisk: true,
 		clientLogLevel: 'error',
 		disableHostCheck: true,
 		proxy: {
@@ -61,13 +62,23 @@ module.exports = {
 			{
 				test: /\.(png|svg|jpg|gif)$/,
 				use: [
-					'file-loader'
+					{
+						loader: 'file-loader',
+						options: {
+							outputPath: 'assets/images',
+						}
+					}
 				]
 			},
 			{
 				test: /\.(eot|svg|ttf|woff|woff2)$/,
 				use: [
-					'file-loader'
+					{
+						loader: 'file-loader',
+						options: {
+							outputPath: 'assets/files',
+						}
+					}
 				]
 			},
 			{
@@ -97,6 +108,9 @@ module.exports = {
 			chunksSortMode: 'none'
 		}),
 		new WorkboxPlugin.GenerateSW({
+			swDest: 'sw.js',
+			importWorkboxFrom: isDev ? 'cdn' : 'local',
+			importsDirectory: 'assets',
 			clientsClaim: true,
 			skipWaiting: true
 		})

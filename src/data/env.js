@@ -1,16 +1,16 @@
 /* eslint-disable */
 'use strict'
 
-import { withoutLastSlash } from '@/scripts/utils'
+// FIXME Only one server
 
 /** @return {boolean} */
-export const isProd = !['dev', 'development'].includes(process.env.NODE_ENV)
+export const isDev = ['dev', 'development'].includes(process.env.NODE_ENV)
 
 /** @return {string} */
-export const serverProd = withoutLastSlash(process.env.SERVER_PROD) || 'http://localhost'
+export const serverProd = process.env.SERVER_PROD || 'http://localhost'
 
 /** @return {string} */
-export const serverDev = withoutLastSlash(process.env.SERVER_DEV) || 'http://localhost'
+export const serverDev = process.env.SERVER_DEV || 'http://localhost'
 
 /** @return {string} */
-export const server = isProd ? serverProd : serverDev
+export const server = isDev ? serverDev : serverProd
