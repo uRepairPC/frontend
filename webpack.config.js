@@ -11,7 +11,8 @@ require('dotenv').config()
 /** @type {boolean} */
 const isDev = ['dev', 'development'].includes(process.env.NODE_ENV)
 
-module.exports = {
+/** @type {object} */
+const settings = {
 	mode: isDev ? 'development' : 'production',
 	entry: [
 		'./src/main.js'
@@ -106,18 +107,6 @@ module.exports = {
 			template: './index.html',
 			inject: true,
 			chunksSortMode: 'none'
-		}),
-		new WorkboxPlugin.GenerateSW({
-			swDest: 'sw.js',
-			importWorkboxFrom: isDev ? 'cdn' : 'local',
-			importsDirectory: 'assets',
-			clientsClaim: true,
-			skipWaiting: true,
-			navigateFallback: '/index.html',
-			runtimeCaching: [{
-				urlPattern: new RegExp('api'),
-				handler: 'NetworkFirst'
-			}]
 		})
 	],
 	resolve: {
@@ -128,3 +117,21 @@ module.exports = {
 		}
 	}
 }
+
+// Add PWA
+if (!isDev) {
+	settings.plugins.push(new WorkboxPlugin.GenerateSW({
+		swDest: 'sw.js',
+		importWorkboxFrom: isDev ? 'cdn' : 'local',
+		importsDirectory: 'assets',
+		clientsClaim: true,
+		skipWaiting: true,
+		navigateFallback: '/index.html',
+		runtimeCaching: [{
+			urlPattern: new RegExp('api'),
+			handler: 'NetworkFirst'
+		}]
+	}))
+}
+
+module.exports = settings
