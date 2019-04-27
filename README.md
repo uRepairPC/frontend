@@ -31,7 +31,6 @@ See [here](https://urepairpc.github.io/docs/)
 - [ ] Requests
 - [ ] Fix Jest require.context
 - [ ] i18n (branch i18n)
-- [ ] PWA (branch pwa)
 - [ ] Mobile design
 - [ ] Global search
 

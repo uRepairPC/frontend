@@ -18,6 +18,9 @@ import moment from 'moment'
 import store from '@/store'
 import Vue from 'vue'
 
+// Import Service Worker
+import '@/scripts/sw'
+
 // Import styles
 import '@/styles/index'
 
