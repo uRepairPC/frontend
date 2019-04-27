@@ -113,9 +113,10 @@ module.exports = {
 			importsDirectory: 'assets',
 			clientsClaim: true,
 			skipWaiting: true,
+			navigateFallback: '/index.html',
 			runtimeCaching: [{
 				urlPattern: new RegExp('api'),
-				handler: 'StaleWhileRevalidate'
+				handler: 'NetworkFirst'
 			}]
 		})
 	],
