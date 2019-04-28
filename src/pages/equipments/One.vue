@@ -237,6 +237,9 @@ export default {
 
 .header-item {
 	width: 250px;
+	&:last-child {
+		margin-left: 20px;
+	}
 }
 
 .header-item__title {

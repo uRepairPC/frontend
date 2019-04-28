@@ -39,7 +39,7 @@ export default {
 }
 
 .section-menu-item {
-	width: 350px;
+	width: 340px;
 	padding: 10px;
 	margin: 10px;
 }

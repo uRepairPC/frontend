@@ -1,5 +1,8 @@
 <template>
-	<div class="filter filter-table-buttons">
+	<filter-basic
+		title="Основні дії"
+		class="filter-table-buttons"
+	>
 		<el-button
 			size="small"
 			icon="el-icon-refresh"
@@ -14,7 +17,7 @@
 			circle
 			@click="scrollTop"
 		/>
-	</div>
+	</filter-basic>
 </template>
 
 <script>

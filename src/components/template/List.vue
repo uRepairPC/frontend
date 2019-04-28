@@ -15,6 +15,8 @@
 </template>
 
 <style lang="scss" scoped>
+@import "~scss/mobile/_sizes";
+
 .anim-enter-active {
 	transition: .25s opacity;
 	opacity: 0;
@@ -27,5 +29,16 @@
 .anim-leave-active,
 .anim-leave-to {
 	display: none;
+}
+
+@media only screen and (max-width: $laptop) {
+	.template-page {
+		flex-direction: column-reverse;
+		> .right-column {
+			width: 100%;
+			min-width: auto;
+			border-left: 0;
+		}
+	}
 }
 </style>
