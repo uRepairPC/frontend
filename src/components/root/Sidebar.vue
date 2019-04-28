@@ -83,11 +83,12 @@ export default {
 		height: 100vh;
 		width: 64px !important;
 	}
-	.el-menu-item > {
-		.material-icons {
+	.el-menu-item {
+		justify-content: center;
+		> .material-icons {
 			margin-right: 0;
 		}
-		span {
+		> span {
 			display: none;
 		}
 	}

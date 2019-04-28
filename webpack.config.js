@@ -19,6 +19,9 @@ const settings = {
 	entry: [
 		'./src/main.js'
 	],
+	stats: {
+		children: false
+	},
 	output: {
 		filename: 'assets/[name].[hash].js',
 		chunkFilename: 'assets/chunks/[name].[hash].js',
@@ -57,13 +60,9 @@ const settings = {
 			{
 				test: /\.scss$/,
 				use: [
-					'style-loader',
-					{
-						loader: MiniCssExtractPlugin.loader,
-						options: {
-							hmr: !isDev
-						}
-					},
+					isDev
+						? 'vue-style-loader'
+						: MiniCssExtractPlugin.loader,
 					'css-loader',
 					'sass-loader'
 				]
@@ -108,7 +107,7 @@ const settings = {
 		new Dotenv,
 		new VueLoaderPlugin,
 		new CleanWebpackPlugin({
-			verbose: true
+			verbose: false
 		}),
 		new HtmlWebpackPlugin({
 			filename: 'index.html',
@@ -146,7 +145,7 @@ if (!isDev) {
 			}]
 		}),
 		// Check bundle
-		new BundleAnalyzerPlugin
+		// new BundleAnalyzerPlugin
 	)
 }
 
