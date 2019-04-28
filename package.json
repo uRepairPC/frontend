@@ -23,9 +23,9 @@
   "homepage": "https://github.com/uRepairPC/web#readme",
   "dependencies": {
     "axios": "^0.18.0",
+    "dayjs": "^1.8.13",
     "element-ui": "^2.8.2",
     "material-design-icons": "^3.0.1",
-    "moment": "^2.24.0",
     "nprogress": "^0.2.0",
     "vue": "^2.6.10",
     "vue-router": "^3.0.6",

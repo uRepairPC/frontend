@@ -19,7 +19,7 @@
 
 <script>
 import { isObject } from '@/scripts/helpers'
-import moment from 'moment'
+import dayjs from 'dayjs'
 
 export default {
 	props: {
@@ -59,7 +59,7 @@ export default {
 				format = this.column.customType.value
 			}
 
-			return moment(this.value).format(format)
+			return dayjs(this.value).format(format)
 		}
 	}
 }
