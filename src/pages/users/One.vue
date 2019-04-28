@@ -36,9 +36,9 @@ import User from '@/classes/User'
 
 export default {
 	components: {
+		TemplateOne: () => import('@/components/template/One'),
 		UserImage: () => import('@/components/users/Image'),
-		RoleTag: () => import('@/components/roles/Tag'),
-		TemplateOne: () => import('@/components/template/One')
+		RoleTag: () => import('@/components/roles/Tag')
 	},
 	mixins: [
 		onePage(sections.users)

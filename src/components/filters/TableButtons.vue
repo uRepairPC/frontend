@@ -35,6 +35,9 @@ import menu from '@/data/menu'
 
 export default {
 	name: 'FilterTableButtons',
+	components: {
+		FilterBasic: () => import('@/components/filters/Basic')
+	},
 	props: {
 		section: {
 			type: String,

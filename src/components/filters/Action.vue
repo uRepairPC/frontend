@@ -25,6 +25,9 @@ import { mapGetters } from 'vuex'
 
 export default {
 	name: 'FilterAction',
+	components: {
+		FilterBasic: () => import('@/components/filters/Basic')
+	},
 	inheritAttrs: false,
 	props: {
 		section: {

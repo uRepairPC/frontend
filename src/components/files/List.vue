@@ -44,8 +44,8 @@ import { includePermission } from '@/scripts/utils'
 
 export default {
 	components: {
-		OneFile: () => import('@/components/files/One'),
-		LoadingFiles: () => import('@/components/files/Loading')
+		LoadingFiles: () => import('@/components/files/Loading'),
+		OneFile: () => import('@/components/files/One')
 	},
 	props: {
 		files: {

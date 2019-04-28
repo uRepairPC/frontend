@@ -38,8 +38,8 @@ import Role from '@/classes/Role'
 
 export default {
 	components: {
-		TemplateOne: () => import('@/components/template/One'),
-		ListCheckboxes: () => import('@/components/permissions/ListCheckboxes')
+		ListCheckboxes: () => import('@/components/permissions/ListCheckboxes'),
+		TemplateOne: () => import('@/components/template/One')
 	},
 	mixins: [
 		onePage(sections.roles)

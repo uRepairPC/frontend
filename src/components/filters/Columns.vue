@@ -21,12 +21,10 @@
 </template>
 
 <script>
-import FilterBasic from './Basic'
-
 export default {
 	name: 'FilterColumns',
 	components: {
-		FilterBasic
+		FilterBasic: () => import('@/components/filters/Basic')
 	},
 	props: {
 		columns: {

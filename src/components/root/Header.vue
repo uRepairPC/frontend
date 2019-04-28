@@ -54,8 +54,8 @@ import User from '@/classes/User'
 
 export default {
 	components: {
-		Tips: () => import('@/components/root/Tips'),
-		HeaderLogo: () => import('@/components/root/HeaderLogo')
+		HeaderLogo: () => import('@/components/root/HeaderLogo'),
+		Tips: () => import('@/components/root/Tips')
 	},
 	computed: {
 		...mapGetters({

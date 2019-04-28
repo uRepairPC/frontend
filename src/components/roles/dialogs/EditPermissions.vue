@@ -17,8 +17,8 @@ import Role from '@/classes/Role'
 
 export default {
 	components: {
-		BasicEdit: () => import('@/components/dialogs/BasicEdit'),
-		ListCheckboxes: () => import('@/components/permissions/ListCheckboxes')
+		ListCheckboxes: () => import('@/components/permissions/ListCheckboxes'),
+		BasicEdit: () => import('@/components/dialogs/BasicEdit')
 	},
 	inheritAttrs: false,
 	props: {

@@ -29,7 +29,8 @@
 export default {
 	name: 'FilterPagination',
 	components: {
-		CircleProgress: () => import('@/components/CircleProgress')
+		CircleProgress: () => import('@/components/CircleProgress'),
+		FilterBasic: () => import('@/components/filters/Basic')
 	},
 	props: {
 		pagination: {

@@ -2,7 +2,6 @@
 
 import '@babel/polyfill'
 import SettingsFrontend from '@/classes/SettingsFrontend'
-import filterComponents from '@/components/filters/index'
 import locale from 'element-ui/lib/locale/lang/ua'
 import prototypes from '@/prototypes'
 import directives from '@/directives'
@@ -45,15 +44,6 @@ prototypes.forEach((prototype) => {
  */
 directives.forEach((directive) => {
 	Vue.use(directive)
-})
-
-/**
- * Install global Filter Components
- * @example <filter-core />
- * @see @/components/filters
- */
-filterComponents.forEach((component) => {
-	Vue.use(component)
 })
 
 // Set init config

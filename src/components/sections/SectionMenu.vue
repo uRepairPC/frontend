@@ -17,8 +17,8 @@
 <script>
 export default {
 	components: {
-		SectionMenuHeader: () => import('@/components/sections/SectionMenuHeader'),
-		SectionMenuActionList: () => import('@/components/sections/SectionMenuActionList')
+		SectionMenuActionList: () => import('@/components/sections/SectionMenuActionList'),
+		SectionMenuHeader: () => import('@/components/sections/SectionMenuHeader')
 	},
 	props: {
 		menu: {

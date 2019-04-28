@@ -55,8 +55,15 @@ export default {
 		{ title: menu[sections.roles].title }
 	],
 	components: {
-		TableComponent: () => import('@/components/Table'),
-		TemplateList: () => import('@/components/template/List')
+		FilterTableButtons: () => import('@/components/filters/TableButtons'),
+		FilterPagination: () => import('@/components/filters/Pagination'),
+		FilterColumns: () => import('@/components/filters/Columns'),
+		FilterAction: () => import('@/components/filters/Action'),
+		FilterSearch: () => import('@/components/filters/Search'),
+		TemplateList: () => import('@/components/template/List'),
+		FilterFixed: () => import('@/components/filters/Fixed'),
+		FilterCore: () => import('@/components/filters/Core'),
+		TableComponent: () => import('@/components/Table')
 	},
 	mixins: [
 		scrollTableMixin, breadcrumbs
