@@ -1,5 +1,7 @@
 'use strict'
 
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const WorkboxPlugin = require('workbox-webpack-plugin')
@@ -56,6 +58,12 @@ const settings = {
 				test: /\.scss$/,
 				use: [
 					'style-loader',
+					{
+						loader: MiniCssExtractPlugin.loader,
+						options: {
+							hmr: !isDev
+						}
+					},
 					'css-loader',
 					'sass-loader'
 				]
@@ -107,6 +115,10 @@ const settings = {
 			template: './index.html',
 			inject: true,
 			chunksSortMode: 'none'
+		}),
+		new MiniCssExtractPlugin({
+			filename: 'assets/[name].[hash].css',
+			chunkFilename: 'assets/css/[name].[hash].css'
 		})
 	],
 	resolve: {
@@ -118,20 +130,24 @@ const settings = {
 	}
 }
 
-// Add PWA
 if (!isDev) {
-	settings.plugins.push(new WorkboxPlugin.GenerateSW({
-		swDest: 'sw.js',
-		importWorkboxFrom: 'local',
-		importsDirectory: 'assets',
-		clientsClaim: true,
-		skipWaiting: true,
-		navigateFallback: '/index.html',
-		runtimeCaching: [{
-			urlPattern: new RegExp('api'),
-			handler: 'NetworkFirst'
-		}]
-	}))
+	settings.plugins.push(
+		// Add PWA
+		new WorkboxPlugin.GenerateSW({
+			swDest: 'sw.js',
+			importWorkboxFrom: 'local',
+			importsDirectory: 'assets',
+			clientsClaim: true,
+			skipWaiting: true,
+			navigateFallback: '/index.html',
+			runtimeCaching: [{
+				urlPattern: new RegExp('api'),
+				handler: 'NetworkFirst'
+			}]
+		}),
+		// Check bundle
+		new BundleAnalyzerPlugin
+	)
 }
 
 module.exports = settings
