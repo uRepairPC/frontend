@@ -74,6 +74,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "~scss/mobile/_sizes";
 @import "~scss/_variables";
 @import "~scss/_colors";
 
@@ -99,5 +100,12 @@ export default {
 .search--open {
 	transition: $searchTransition;
 	filter: blur(5px);
+}
+
+@media only screen and (max-width: $laptopL) {
+	.el-main {
+		border-left: 1px solid $defaultBorder;
+		background: #fbfbfb;
+	}
 }
 </style>

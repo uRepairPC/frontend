@@ -16,6 +16,7 @@
 
 <style lang="scss" scoped>
 @import "~scss/mobile/_sizes";
+@import "~scss/_colors";
 
 .anim-enter-active {
 	transition: .25s opacity;
@@ -35,9 +36,12 @@
 	.template-page {
 		flex-direction: column-reverse;
 		> .right-column {
+			background: #fbfbfb;
 			width: 100%;
 			min-width: auto;
 			border-left: 0;
+			border-bottom: 1px solid $defaultBorder;
+			padding: 15px;
 		}
 	}
 }

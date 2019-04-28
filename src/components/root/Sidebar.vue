@@ -51,12 +51,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "~scss/mobile/_sizes";
+@import "~scss/_variables";
 @import "~scss/_colors";
 
 .el-aside {
 	border-right: solid 1px $defaultBorder;
 	background: #fff;
-	height: 100%;
+	height: calc(100vh - #{$headerHeight});
 	user-select: none;
 }
 
@@ -71,6 +73,24 @@ export default {
 	> .material-icons {
 		margin-right: 10px;
 		font-size: 1.2em;
+	}
+}
+
+@media only screen and (max-width: $laptop) {
+	.el-aside {
+		position: sticky;
+		top: 0;
+		border-right: 0;
+		height: 100vh;
+		width: 64px !important;
+	}
+	.el-menu-item > {
+		.material-icons {
+			margin-right: 0;
+		}
+		span {
+			display: none;
+		}
 	}
 }
 </style>

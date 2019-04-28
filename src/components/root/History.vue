@@ -1,7 +1,8 @@
 <template>
 	<div class="history">
 		<div class="history-title">
-			Збережені сторінки
+			<span>Збережені сторінки</span>
+			<i class="material-icons">turned_in</i>
 		</div>
 		<el-collapse v-model="activeNames">
 			<el-collapse-item
@@ -11,7 +12,7 @@
 			>
 				<template slot="title">
 					<i class="material-icons">{{ obj.icon }}</i>
-					{{ obj.title }}
+					<span class="history-header-title">{{ obj.title }}</span>
 				</template>
 				<div
 					v-for="(historyItem, j) in sidebar[obj.route.name]"
@@ -91,6 +92,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "~scss/mobile/_sizes";
 @import "~scss/_colors";
 
 .history-title {
@@ -103,6 +105,9 @@ export default {
 	margin-bottom: -1px;
 	font-weight: bold;
 	font-size: .9em;
+	> i {
+		display: none;
+	}
 }
 
 .history-item {
@@ -151,5 +156,19 @@ export default {
 
 /deep/ .el-collapse-item__content {
 	padding: 0 15px;
+}
+
+@media only screen and (max-width: $laptop) {
+	.history-title {
+		> span {
+			display: none;
+		}
+		> i {
+			display: block;
+		}
+	}
+	.history-header-title {
+		display: none;
+	}
 }
 </style>

@@ -15,6 +15,7 @@
 		<filter-core slot="right-column">
 			<filter-table-buttons
 				ref="buttons"
+				:section="sections.roles"
 				@update="fetchList"
 			/>
 			<filter-action
@@ -63,6 +64,7 @@ export default {
 	],
 	data() {
 		return {
+			sections,
 			sectionName: sections.roles,
 			columns: [],
 			loadingType: 'rows',

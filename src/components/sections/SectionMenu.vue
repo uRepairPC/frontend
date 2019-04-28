@@ -32,6 +32,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "~scss/mobile/_sizes";
+
 .section-menu {
 	display: flex;
 	flex-wrap: wrap;
@@ -42,5 +44,13 @@ export default {
 	width: 340px;
 	padding: 10px;
 	margin: 10px;
+}
+
+@media only screen and (max-width: $mobileL) {
+	.section-menu-item {
+		width: 100%;
+		margin: 10px 0;
+		padding: 0;
+	}
 }
 </style>

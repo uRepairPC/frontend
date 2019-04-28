@@ -122,7 +122,7 @@ const settings = {
 if (!isDev) {
 	settings.plugins.push(new WorkboxPlugin.GenerateSW({
 		swDest: 'sw.js',
-		importWorkboxFrom: isDev ? 'cdn' : 'local',
+		importWorkboxFrom: 'local',
 		importsDirectory: 'assets',
 		clientsClaim: true,
 		skipWaiting: true,
