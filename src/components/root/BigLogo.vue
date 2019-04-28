@@ -19,12 +19,11 @@
 </template>
 
 <script>
-import LogoSvg from '@/components/svg/Logo'
 import { server } from '@/data/env'
 
 export default {
 	components: {
-		LogoSvg
+		LogoSvg: () => import('@/components/svg/Logo')
 	},
 	computed: {
 		settings() {

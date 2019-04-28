@@ -7,7 +7,6 @@
 </template>
 
 <script>
-import SectionMenu from '@/components/sections/SectionMenu'
 import breadcrumbs from '@/mixins/breadcrumbs'
 import sections from '@/data/sections'
 import { mapGetters } from 'vuex'
@@ -19,7 +18,7 @@ export default {
 		{ title: menu[sections.settings].title }
 	],
 	components: {
-		SectionMenu
+		SectionMenu: () => import('@/components/sections/SectionMenu')
 	},
 	mixins: [
 		breadcrumbs

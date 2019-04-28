@@ -12,12 +12,11 @@
 </template>
 
 <script>
-import BasicDelete from '@/components/dialogs/BasicDelete'
 import User from '@/classes/User'
 
 export default {
 	components: {
-		BasicDelete
+		BasicDelete: () => import('@/components/dialogs/BasicDelete')
 	},
 	inheritAttrs: false,
 	props: {

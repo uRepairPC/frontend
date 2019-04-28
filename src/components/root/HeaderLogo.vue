@@ -21,13 +21,12 @@
 </template>
 
 <script>
-import LogoLeftFontSvg from '@/components/svg/LogoLeftFont'
 import { DEFAULT_ROUTE_NAME } from '@/router'
 import { server } from '@/data/env'
 
 export default {
 	components: {
-		LogoLeftFontSvg
+		LogoLeftFontSvg: () => import('@/components/svg/LogoLeftFont')
 	},
 	computed: {
 		settings() {

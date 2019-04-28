@@ -54,12 +54,9 @@
 </template>
 
 <script>
-import TemplateList from '@/components/template/List'
 import scrollTableMixin from '@/mixins/scrollTable'
 import StorageData from '@/classes/StorageData'
-import TableComponent from '@/components/Table'
 import breadcrumbs from '@/mixins/breadcrumbs'
-import RoleTag from '@/components/roles/Tag'
 import sections from '@/data/sections'
 import User from '@/classes/User'
 import { mapGetters } from 'vuex'
@@ -71,7 +68,9 @@ export default {
 		{ title: menu[sections.users].title }
 	],
 	components: {
-		TableComponent, TemplateList, RoleTag
+		TableComponent: () => import('@/components/Table'),
+		TemplateList: () => import('@/components/template/List'),
+		RoleTag: () => import('@/components/roles/Tag')
 	},
 	mixins: [
 		scrollTableMixin, breadcrumbs

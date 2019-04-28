@@ -30,11 +30,6 @@
 </template>
 
 <script>
-import EditPermissionsDialog from '@/components/roles/dialogs/EditPermissions'
-import ListCheckboxes from '@/components/permissions/ListCheckboxes'
-import DeleteDialog from '@/components/roles/dialogs/Delete'
-import EditDialog from '@/components/roles/dialogs/Edit'
-import TemplateOne from '@/components/template/One'
 import * as permissions from '@/enum/permissions'
 import sections from '@/data/sections'
 import onePage from '@/mixins/onePage'
@@ -43,7 +38,8 @@ import Role from '@/classes/Role'
 
 export default {
 	components: {
-		TemplateOne, ListCheckboxes
+		TemplateOne: () => import('@/components/template/One'),
+		ListCheckboxes: () => import('@/components/permissions/ListCheckboxes')
 	},
 	mixins: [
 		onePage(sections.roles)
@@ -73,21 +69,21 @@ export default {
 					title: 'Редагувати дані',
 					type: types.PRIMARY,
 					permissions: permissions.ROLES_MANAGE,
-					action: () => this.openDialog(EditDialog)
+					action: () => this.openDialog(import('@/components/roles/dialogs/Edit'))
 				},
 				{
 					title: 'Редагувати доступи',
 					type: types.PRIMARY,
 					disabled: this.model.id === 1,
 					permissions: permissions.ROLES_MANAGE,
-					action: () => this.openDialog(EditPermissionsDialog)
+					action: () => this.openDialog(import('@/components/roles/dialogs/EditPermissions'))
 				},
 				{
 					title: 'Видалити роль',
 					type: types.DANGER,
 					disabled: this.model.id === 1,
 					permissions: permissions.ROLES_MANAGE,
-					action: () => this.openDialog(DeleteDialog)
+					action: () => this.openDialog(import('@/components/roles/dialogs/Delete'))
 				}
 			]
 		},
@@ -134,7 +130,7 @@ export default {
 		},
 		openDialog(component, attrs = {}) {
 			this.$store.commit('template/OPEN_DIALOG', {
-				component,
+				component: () => component,
 				attrs: {
 					role: this.model,
 					...attrs

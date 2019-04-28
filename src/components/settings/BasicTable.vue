@@ -70,13 +70,12 @@
 
 <script>
 import { includePermission } from '@/scripts/utils'
-import ColumnData from '@/components/ColumnData'
 import sections from '@/data/sections'
 import { mapGetters } from 'vuex'
 
 export default {
 	components: {
-		ColumnData
+		ColumnData: () => import('@/components/ColumnData')
 	},
 	props: {
 		loading: {

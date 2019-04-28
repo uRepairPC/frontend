@@ -15,16 +15,13 @@
 </template>
 
 <script>
-import ManufacturerSelect from '@/components/equipments/manufacturers/Select'
-import TypeSelect from '@/components/equipments/types/Select'
-import BasicCreate from '@/components/dialogs/BasicCreate'
 import EquipmentModel from '@/classes/EquipmentModel'
-import GenerateForm from '@/components/GenerateForm'
 import { required } from '@/data/rules'
 
 export default {
 	components: {
-		BasicCreate, GenerateForm
+		BasicCreate: () => import('@/components/dialogs/BasicCreate'),
+		GenerateForm: () => import('@/components/GenerateForm')
 	},
 	inheritAttrs: false,
 	data() {
@@ -41,13 +38,13 @@ export default {
 					}
 				},
 				type_id: {
-					component: TypeSelect,
+					component: () => import('@/components/equipments/types/Select'),
 					value: null,
 					label: 'Тип обладнання',
 					rules: required
 				},
 				manufacturer_id: {
-					component: ManufacturerSelect,
+					component: () => import('@/components/equipments/manufacturers/Select'),
 					value: null,
 					label: 'Виробник обладнання',
 					rules: required

@@ -10,11 +10,10 @@
 
 <script>
 import EquipmentManufacturer from '@/classes/EquipmentManufacturer'
-import BasicDelete from '@/components/dialogs/BasicDelete'
 
 export default {
 	components: {
-		BasicDelete
+		BasicDelete: () => import('@/components/dialogs/BasicDelete')
 	},
 	inheritAttrs: false,
 	props: {

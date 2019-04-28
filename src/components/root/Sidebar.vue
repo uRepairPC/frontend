@@ -22,12 +22,11 @@
 </template>
 
 <script>
-import History from '@/components/root/History'
 import { mapGetters } from 'vuex'
 
 export default {
 	components: {
-		History
+		History: () => import('@/components/root/History')
 	},
 	computed: {
 		...mapGetters({

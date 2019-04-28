@@ -22,14 +22,13 @@
 
 <script>
 import { root as keepAliveRoutesName } from '@/data/keepAliveComponents'
-import BreadcrumbsBox from '@/components/root/Breadcrumbs'
-import SidebarBox from '@/components/root/Sidebar'
-import HeaderBox from '@/components/root/Header'
-import SearchBox from '@/components/root/Search'
 
 export default {
 	components: {
-		BreadcrumbsBox, SidebarBox, HeaderBox, SearchBox
+		BreadcrumbsBox: () => import('@/components/root/Breadcrumbs'),
+		SidebarBox: () => import('@/components/root/Sidebar'),
+		HeaderBox: () => import('@/components/root/Header'),
+		SearchBox: () => import('@/components/root/Search')
 	},
 	data() {
 		return {

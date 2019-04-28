@@ -15,12 +15,10 @@
 </template>
 
 <script>
-import SectionMenuActionList from '@/components/sections/SectionMenuActionList'
-import SectionMenuHeader from '@/components/sections/SectionMenuHeader'
-
 export default {
 	components: {
-		SectionMenuHeader, SectionMenuActionList
+		SectionMenuHeader: () => import('@/components/sections/SectionMenuHeader'),
+		SectionMenuActionList: () => import('@/components/sections/SectionMenuActionList')
 	},
 	props: {
 		menu: {

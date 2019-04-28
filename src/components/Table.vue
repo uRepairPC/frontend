@@ -33,12 +33,11 @@
 </template>
 
 <script>
-import ColumnData from '@/components/ColumnData'
 import { isEmpty } from '@/scripts/helpers'
 
 export default {
 	components: {
-		ColumnData
+		ColumnData: () => import('@/components/ColumnData')
 	},
 	props: {
 		list: {

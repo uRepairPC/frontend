@@ -41,10 +41,8 @@
 </template>
 
 <script>
-import TemplateList from '@/components/template/List'
 import scrollTableMixin from '@/mixins/scrollTable'
 import StorageData from '@/classes/StorageData'
-import TableComponent from '@/components/Table'
 import breadcrumbs from '@/mixins/breadcrumbs'
 import sections from '@/data/sections'
 import Role from '@/classes/Role'
@@ -57,7 +55,8 @@ export default {
 		{ title: menu[sections.roles].title }
 	],
 	components: {
-		TableComponent, TemplateList
+		TableComponent: () => import('@/components/Table'),
+		TemplateList: () => import('@/components/template/List')
 	},
 	mixins: [
 		scrollTableMixin, breadcrumbs

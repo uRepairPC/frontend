@@ -13,13 +13,12 @@
 </template>
 
 <script>
-import ListCheckboxes from '@/components/permissions/ListCheckboxes'
-import BasicEdit from '@/components/dialogs/BasicEdit'
 import Role from '@/classes/Role'
 
 export default {
 	components: {
-		BasicEdit, ListCheckboxes
+		BasicEdit: () => import('@/components/dialogs/BasicEdit'),
+		ListCheckboxes: () => import('@/components/permissions/ListCheckboxes')
 	},
 	inheritAttrs: false,
 	props: {

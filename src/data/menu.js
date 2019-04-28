@@ -1,12 +1,5 @@
 'use strict'
 
-import EquipmentManufacturerDialog from '@/components/equipments/manufacturers/dialogs/Create'
-import RequestPriorityDialog from '@/components/requests/priorities/dialogs/Create'
-import EquipmentModelDialog from '@/components/equipments/models/dialogs/Create'
-import RequestStatusDialog from '@/components/requests/statuses/dialogs/Create'
-import EquipmentTypeDialog from '@/components/equipments/types/dialogs/Create'
-import RequestTypeDialog from '@/components/requests/types/dialogs/Create'
-import SettingsStoreDialog from '@/components/settings/dialogs/Store'
 import * as permissions from '@/enum/permissions'
 import sections from '@/data/sections'
 import * as types from '@/enum/types'
@@ -126,7 +119,7 @@ export default {
 						permissions: permissions.OTHER_GLOBAL_SETTINGS,
 						action: () => {
 							store.commit('template/OPEN_DIALOG', {
-								component: SettingsStoreDialog
+								component: () => import('@/components/settings/dialogs/Store')
 							})
 						}
 					}
@@ -146,7 +139,7 @@ export default {
 						permissions: permissions.REQUESTS_CONFIG_CREATE,
 						action: () => {
 							store.commit('template/OPEN_DIALOG', {
-								component: RequestStatusDialog
+								component: () => import('@/components/requests/statuses/dialogs/Create')
 							})
 						}
 					}
@@ -166,7 +159,7 @@ export default {
 						permissions: permissions.REQUESTS_CONFIG_CREATE,
 						action: () => {
 							store.commit('template/OPEN_DIALOG', {
-								component: RequestPriorityDialog
+								component: () => import('@/components/requests/priorities/dialogs/Create')
 							})
 						}
 					}
@@ -186,7 +179,7 @@ export default {
 						permissions: permissions.REQUESTS_CONFIG_CREATE,
 						action: () => {
 							store.commit('template/OPEN_DIALOG', {
-								component: RequestTypeDialog
+								component: () => import('@/components/requests/types/dialogs/Create')
 							})
 						}
 					}
@@ -206,7 +199,7 @@ export default {
 						permissions: permissions.EQUIPMENTS_CONFIG_CREATE,
 						action: () => {
 							store.commit('template/OPEN_DIALOG', {
-								component: EquipmentTypeDialog
+								component: () => import('@/components/equipments/types/dialogs/Create')
 							})
 						}
 					}
@@ -226,7 +219,7 @@ export default {
 						permissions: permissions.EQUIPMENTS_CONFIG_CREATE,
 						action: () => {
 							store.commit('template/OPEN_DIALOG', {
-								component: EquipmentManufacturerDialog
+								component: () => import('@/components/equipments/manufacturers/dialogs/Create')
 							})
 						}
 					}
@@ -246,7 +239,7 @@ export default {
 						permissions: permissions.EQUIPMENTS_CONFIG_CREATE,
 						action: () => {
 							store.commit('template/OPEN_DIALOG', {
-								component: EquipmentModelDialog
+								component: () => import('@/components/equipments/models/dialogs/Create')
 							})
 						}
 					}

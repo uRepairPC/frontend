@@ -59,12 +59,11 @@
 
 <script>
 import { includePermission } from '@/scripts/utils'
-import ColumnData from '@/components/ColumnData'
-import TopButtons from '@/components/TopButtons'
 
 export default {
 	components: {
-		TopButtons, ColumnData
+		TopButtons: () => import('@/components/TopButtons'),
+		ColumnData: () => import('@/components/ColumnData')
 	},
 	props: {
 		buttons: {

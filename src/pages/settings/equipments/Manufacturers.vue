@@ -12,11 +12,7 @@
 </template>
 
 <script>
-import CreateDialog from '@/components/equipments/manufacturers/dialogs/Create'
-import DeleteDialog from '@/components/equipments/manufacturers/dialogs/Delete'
-import EditDialog from '@/components/equipments/manufacturers/dialogs/Edit'
 import { equipmentManufacturers as columns } from '@/data/columns'
-import BasicTable from '@/components/settings/BasicTable'
 import * as permissions from '@/enum/permissions'
 import breadcrumbs from '@/mixins/breadcrumbs'
 import sections from '@/data/sections'
@@ -30,7 +26,7 @@ export default {
 		{ title: menu[sections.settings].children[sections.equipmentsManufacturers].title }
 	],
 	components: {
-		BasicTable
+		BasicTable: () => import('@/components/settings/BasicTable')
 	},
 	mixins: [
 		breadcrumbs
@@ -40,9 +36,9 @@ export default {
 			columns,
 			permissions,
 			dialogs: {
-				create: CreateDialog,
-				edit: EditDialog,
-				delete: DeleteDialog
+				create: () => import('@/components/equipments/manufacturers/dialogs/Create'),
+				edit: () => import('@/components/equipments/manufacturers/dialogs/Edit'),
+				delete: () => import('@/components/equipments/manufacturers/dialogs/Delete')
 			}
 		}
 	},

@@ -13,13 +13,12 @@
 </template>
 
 <script>
-import UserImage from '@/components/users/Image'
 import sections from '@/data/sections'
 import User from '@/classes/User'
 
 export default {
 	components: {
-		UserImage
+		UserImage: () => import('@/components/users/Image')
 	},
 	props: {
 		user: {

@@ -48,15 +48,14 @@
 </template>
 
 <script>
-import HeaderLogo from '@/components/root/HeaderLogo'
-import Tips from '@/components/root/Tips'
 import sections from '@/data/sections'
 import { mapGetters } from 'vuex'
 import User from '@/classes/User'
 
 export default {
 	components: {
-		Tips, HeaderLogo
+		Tips: () => import('@/components/root/Tips'),
+		HeaderLogo: () => import('@/components/root/HeaderLogo')
 	},
 	computed: {
 		...mapGetters({
