@@ -34,13 +34,10 @@ export default {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	border: 1px solid $defaultBorder;
+	border-top: 1px solid $defaultBorder;
 	color: rgba(0, 0, 0, .5);
 	background: #f7f7f7;
-	border-left: 0;
-	border-right: 0;
 	padding: 10px 0;
-	margin-bottom: -1px;
 	font-weight: bold;
 	font-size: .9em;
 	transition: .25s;

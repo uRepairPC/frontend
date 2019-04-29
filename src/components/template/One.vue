@@ -34,6 +34,7 @@
 						<el-table-column
 							prop="value"
 							label="Значення"
+							min-width="200"
 						>
 							<template slot-scope="{ row }">
 								<column-data

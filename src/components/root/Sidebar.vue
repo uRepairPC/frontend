@@ -1,23 +1,25 @@
 <template>
 	<el-aside width="250px">
-		<el-menu
-			ref="menu"
-			router
-			:default-active="defaultRoute"
-		>
-			<el-menu-item
-				v-for="(item, index) in menu"
-				:key="index"
-				:index="item.route.name"
-				:route="item.route"
+		<div class="aside-wrap">
+			<el-menu
+				ref="menu"
+				router
+				:default-active="defaultRoute"
 			>
-				<i class="material-icons">
-					{{ item.icon }}
-				</i>
-				<span>{{ item.title }}</span>
-			</el-menu-item>
-		</el-menu>
-		<history />
+				<el-menu-item
+					v-for="(item, index) in menu"
+					:key="index"
+					:index="item.route.name"
+					:route="item.route"
+				>
+					<i class="material-icons">
+						{{ item.icon }}
+					</i>
+					<span>{{ item.title }}</span>
+				</el-menu-item>
+			</el-menu>
+			<history />
+		</div>
 	</el-aside>
 </template>
 
@@ -57,7 +59,6 @@ export default {
 .el-aside {
 	border-right: solid 1px $defaultBorder;
 	background: #fff;
-	height: calc(100vh - #{$headerHeight});
 	user-select: none;
 }
 
@@ -77,11 +78,15 @@ export default {
 
 @media only screen and (max-width: $laptop) {
 	.el-aside {
+		overflow: unset;
+		border-right: 0;
+		width: 64px !important;
+	}
+	.aside-wrap {
 		position: sticky;
 		top: 0;
-		border-right: 0;
-		height: 100vh;
-		width: 64px !important;
+		max-height: 100vh;
+		overflow: auto;
 	}
 	.el-menu-item {
 		justify-content: center;

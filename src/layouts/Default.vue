@@ -2,7 +2,9 @@
 	<div class="layout layout_default">
 		<el-container direction="vertical">
 			<header-box />
-			<el-container :class="{ 'search--open': openSearch }">
+			<el-container :class="['container-content',
+				{ 'search--open': openSearch }
+			]">
 				<sidebar-box />
 				<el-main>
 					<breadcrumbs-box />
@@ -87,12 +89,13 @@ export default {
 	padding: 0;
 }
 
-.el-container {
+.container-content {
 	will-change: filter;
+	height: calc(100% - #{$headerHeight});
 }
 
 .page {
-	height: calc(100vh - #{$headerHeight + $breadcrumbsHeight});
+	height: calc(100% - #{$breadcrumbsHeight});
 	overflow: auto;
 }
 
