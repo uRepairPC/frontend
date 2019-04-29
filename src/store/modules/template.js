@@ -1,6 +1,7 @@
 'use strict'
 
 import { filterByPermission } from '@/scripts/utils'
+import { isObject } from '@/scripts/helpers'
 import menu from '@/data/menu'
 import Vue from 'vue'
 
@@ -107,6 +108,17 @@ const getters = {
 	 */
 	menu() {
 		return filterByPermission(menu)
+	},
+	historyMenu(state, getters) {
+		const list = {}
+
+		Object.entries(getters.menu).forEach(([key, obj]) => {
+			if (isObject(obj.history)) {
+				list[key] = obj
+			}
+		})
+
+		return list
 	}
 }
 
