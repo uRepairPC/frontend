@@ -108,7 +108,7 @@ export default {
 			clearTimeout(this._timeoutElementScroll)
 
 			this._timeoutElementScroll = setTimeout(() => {
-				if (this.wrapperElDisplayed()) {
+				if (this.wrapperElDisplayed() || this.wrapperEl.scrollTop <= 0) {
 					return
 				}
 
