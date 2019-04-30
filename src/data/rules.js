@@ -1,18 +1,56 @@
 'use strict'
 
-/** @type {array} */
+import { email as emailRegex } from '@/scripts/regex'
+import i18n from '@/locale'
+
+/** @type {{validator: validator, trigger: string}[]} */
 export const email = [
-	{ required: true, message: 'Будь ласка, введіть E-mail' },
-	{ type: 'email', message: 'Введіть правильну адресу електронної пошти' }
+	{
+		validator: (rule, value, callback) => {
+			const valTrim = value.trim()
+
+			if (!valTrim.trim()) {
+				callback(i18n.t('form.rules.email.required'))
+			} else if (!valTrim.match(emailRegex)) {
+				callback(i18n.t('form.rules.email.type'))
+			} else {
+				callback()
+			}
+		},
+		trigger: 'blur'
+	}
 ]
 
-/** @type {array} */
+/** @type {{validator: validator, trigger: string}[]} */
 export const password = [
-	{ required: true, message: 'Будь ласка, введіть пароль' },
-	{ min: 6, message: 'Пароль повинен бути більше, ніж 5 символів' }
+	{
+		validator: (rule, value, callback) => {
+			const valTrim = value.trim()
+
+			if (!valTrim) {
+				callback(i18n.t('form.rules.password.required'))
+			} else if (valTrim.length < 6) {
+				callback(i18n.t('form.rules.password.len'))
+			} else {
+				callback()
+			}
+		},
+		trigger: 'blur'
+	}
 ]
 
-/** @type {array} */
+/** @type {{validator: validator, trigger: string}[]} */
 export const required = [
-	{ required: true, message: 'Будь ласка, введіть дані' }
+	{
+		validator: (rule, value, callback) => {
+			const valTrim = value.trim()
+
+			if (!valTrim) {
+				callback(i18n.t('form.rules.required'))
+			} else {
+				callback()
+			}
+		},
+		trigger: 'blur'
+	}
 ]
