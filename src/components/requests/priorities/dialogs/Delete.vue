@@ -9,12 +9,11 @@
 </template>
 
 <script>
-import BasicDelete from '@/components/dialogs/BasicDelete'
 import RequestPriority from '@/classes/RequestPriority'
 
 export default {
 	components: {
-		BasicDelete
+		BasicDelete: () => import('@/components/dialogs/BasicDelete')
 	},
 	inheritAttrs: false,
 	props: {

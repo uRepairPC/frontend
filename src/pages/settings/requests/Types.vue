@@ -12,10 +12,6 @@
 </template>
 
 <script>
-import CreateDialog from '@/components/requests/types/dialogs/Create'
-import DeleteDialog from '@/components/requests/types/dialogs/Delete'
-import EditDialog from '@/components/requests/types/dialogs/Edit'
-import BasicTable from '@/components/settings/BasicTable'
 import { requestTypes as columns } from '@/data/columns'
 import * as permissions from '@/enum/permissions'
 import breadcrumbs from '@/mixins/breadcrumbs'
@@ -24,13 +20,13 @@ import { mapState } from 'vuex'
 import menu from '@/data/menu'
 
 export default {
-	name: 'Request-Types',
+	name: 'RequestTypes',
 	breadcrumbs: [
 		{ title: menu[sections.settings].title, routeName: sections.settings },
 		{ title: menu[sections.settings].children[sections.requestsTypes].title }
 	],
 	components: {
-		BasicTable
+		BasicTable: () => import('@/components/settings/BasicTable')
 	},
 	mixins: [
 		breadcrumbs
@@ -40,9 +36,9 @@ export default {
 			columns,
 			permissions,
 			dialogs: {
-				create: CreateDialog,
-				edit: EditDialog,
-				delete: DeleteDialog
+				create: () => import('@/components/requests/types/dialogs/Create'),
+				edit: () => import('@/components/requests/types/dialogs/Edit'),
+				delete: () => import('@/components/requests/types/dialogs/Delete')
 			}
 		}
 	},

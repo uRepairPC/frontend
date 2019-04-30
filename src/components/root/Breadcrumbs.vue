@@ -33,5 +33,6 @@ export default {
 	align-items: center;
 	height: $breadcrumbsHeight;
 	white-space: nowrap;
+	overflow: hidden;
 }
 </style>

@@ -2,7 +2,11 @@
 	<div class="layout layout_default">
 		<el-container direction="vertical">
 			<header-box />
-			<el-container :class="{ 'search--open': openSearch }">
+			<el-container
+				:class="['container-content',
+					{ 'search--open': openSearch }
+				]"
+			>
 				<sidebar-box />
 				<el-main>
 					<breadcrumbs-box />
@@ -22,14 +26,13 @@
 
 <script>
 import { root as keepAliveRoutesName } from '@/data/keepAliveComponents'
-import BreadcrumbsBox from '@/components/root/Breadcrumbs'
-import SidebarBox from '@/components/root/Sidebar'
-import HeaderBox from '@/components/root/Header'
-import SearchBox from '@/components/root/Search'
 
 export default {
 	components: {
-		BreadcrumbsBox, SidebarBox, HeaderBox, SearchBox
+		BreadcrumbsBox: () => import('@/components/root/Breadcrumbs'),
+		SidebarBox: () => import('@/components/root/Sidebar'),
+		HeaderBox: () => import('@/components/root/Header'),
+		SearchBox: () => import('@/components/root/Search')
 	},
 	data() {
 		return {
@@ -74,6 +77,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "~scss/mobile/_sizes";
 @import "~scss/_variables";
 @import "~scss/_colors";
 
@@ -87,17 +91,31 @@ export default {
 	padding: 0;
 }
 
-.el-container {
+.container-content {
 	will-change: filter;
+	height: calc(100% - #{$headerHeight});
 }
 
 .page {
-	height: calc(100vh - #{$headerHeight + $breadcrumbsHeight});
+	height: calc(100% - #{$breadcrumbsHeight});
 	overflow: auto;
 }
 
 .search--open {
 	transition: $searchTransition;
 	filter: blur(5px);
+}
+
+@media only screen and (max-width: $laptopL) {
+	.el-main {
+		border-left: 1px solid $defaultBorder;
+		background: #fbfbfb;
+	}
+}
+
+@media only screen and (max-width: $laptop) {
+	.el-main {
+		min-height: calc(100vh - #{$headerHeight});
+	}
 }
 </style>

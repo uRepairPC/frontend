@@ -12,11 +12,7 @@
 </template>
 
 <script>
-import CreateDialog from '@/components/equipments/types/dialogs/Create'
-import DeleteDialog from '@/components/equipments/types/dialogs/Delete'
-import EditDialog from '@/components/equipments/types/dialogs/Edit'
 import { equipmentTypes as columns } from '@/data/columns'
-import BasicTable from '@/components/settings/BasicTable'
 import * as permissions from '@/enum/permissions'
 import breadcrumbs from '@/mixins/breadcrumbs'
 import sections from '@/data/sections'
@@ -24,13 +20,13 @@ import { mapState } from 'vuex'
 import menu from '@/data/menu'
 
 export default {
-	name: 'Equipment-Types',
+	name: 'EquipmentTypes',
 	breadcrumbs: [
 		{ title: menu[sections.settings].title, routeName: sections.settings },
 		{ title: menu[sections.settings].children[sections.equipmentsTypes].title }
 	],
 	components: {
-		BasicTable
+		BasicTable: () => import('@/components/settings/BasicTable')
 	},
 	mixins: [
 		breadcrumbs
@@ -40,9 +36,9 @@ export default {
 			columns,
 			permissions,
 			dialogs: {
-				create: CreateDialog,
-				edit: EditDialog,
-				delete: DeleteDialog
+				create: () => import('@/components/equipments/types/dialogs/Create'),
+				edit: () => import('@/components/equipments/types/dialogs/Edit'),
+				delete: () => import('@/components/equipments/types/dialogs/Delete')
 			}
 		}
 	},

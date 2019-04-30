@@ -16,31 +16,47 @@ export default {
 	},
 	methods: {
 		updateScrollTablePosition() {
-			const scroll = this.$store.state.template.pagesScroll[this.$route.name]
+			const pageScroll = this.$store.state.template.pagesScroll[this.$route.name]
 
-			if (!scroll) {
+			if (!pageScroll || !pageScroll.scroll) {
 				return
 			}
 
 			// Wait x milliseconds, because child
-			// component may not be initialized
+			// elements may not be display
 			setTimeout(() => {
-				const el = document.querySelector(TABLE_SELECTOR)
-				if (el) {
-					el.scrollTop = scroll
+				if (pageScroll.mob) {
+					document.documentElement.scrollTop = pageScroll.scroll
+				}
+				else {
+					const el = document.querySelector(TABLE_SELECTOR)
+					if (el) {
+						el.scrollTop = pageScroll.scroll
+					}
 				}
 			}, WAIT_UPDATE_SCROLL)
 		},
 		saveScrollTablePosition() {
-			const el = document.querySelector(TABLE_SELECTOR)
+			let mob = false
+			let scroll = 0
 
-			if (!el) {
-				return
+			// Desktop
+			const el = document.querySelector(TABLE_SELECTOR)
+			if (el) {
+				scroll = el.scrollTop
+			}
+
+			// Mobile
+			const documentScrollTop = document.documentElement.scrollTop || document.body.scrollTop
+			if (documentScrollTop) {
+				mob = true
+				scroll = documentScrollTop
 			}
 
 			this.$store.commit('template/SET_PAGE_SCROLL', {
 				pageName: this.$route.name,
-				scroll: el.scrollTop
+				scroll,
+				mob
 			})
 		}
 	}

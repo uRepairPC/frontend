@@ -15,14 +15,13 @@
 </template>
 
 <script>
-import BasicEdit from '@/components/dialogs/BasicEdit'
-import GenerateForm from '@/components/GenerateForm'
 import EquipmentFile from '@/classes/EquipmentFile'
 import { required } from '@/data/rules'
 
 export default {
 	components: {
-		BasicEdit, GenerateForm
+		BasicEdit: () => import('@/components/dialogs/BasicEdit'),
+		GenerateForm: () => import('@/components/GenerateForm')
 	},
 	inheritAttrs: false,
 	props: {

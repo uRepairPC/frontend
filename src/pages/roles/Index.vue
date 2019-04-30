@@ -3,11 +3,11 @@
 		<template slot="left-column">
 			<table-component
 				slot="left-column"
-				v-scroll="onScroll"
 				:columns="filterColumns"
-				:list="roles"
+				:list="list"
 				:loading="loading"
 				:loading-type="loadingType"
+				@fetch="fetchList"
 				@row-click="onRowClick"
 				@sort-change="onSortChange"
 			/>
@@ -15,6 +15,7 @@
 		<filter-core slot="right-column">
 			<filter-table-buttons
 				ref="buttons"
+				:section="sections.roles"
 				@update="fetchList"
 			/>
 			<filter-action
@@ -40,10 +41,8 @@
 </template>
 
 <script>
-import TemplateList from '@/components/template/List'
 import scrollTableMixin from '@/mixins/scrollTable'
 import StorageData from '@/classes/StorageData'
-import TableComponent from '@/components/Table'
 import breadcrumbs from '@/mixins/breadcrumbs'
 import sections from '@/data/sections'
 import Role from '@/classes/Role'
@@ -56,13 +55,22 @@ export default {
 		{ title: menu[sections.roles].title }
 	],
 	components: {
-		TableComponent, TemplateList
+		FilterTableButtons: () => import('@/components/filters/TableButtons'),
+		FilterPagination: () => import('@/components/filters/Pagination'),
+		FilterColumns: () => import('@/components/filters/Columns'),
+		FilterAction: () => import('@/components/filters/Action'),
+		FilterSearch: () => import('@/components/filters/Search'),
+		TemplateList: () => import('@/components/template/List'),
+		FilterFixed: () => import('@/components/filters/Fixed'),
+		FilterCore: () => import('@/components/filters/Core'),
+		TableComponent: () => import('@/components/Table')
 	},
 	mixins: [
 		scrollTableMixin, breadcrumbs
 	],
 	data() {
 		return {
+			sections,
 			sectionName: sections.roles,
 			columns: [],
 			loadingType: 'rows',
@@ -131,11 +139,6 @@ export default {
 		},
 		onChangeColumn() {
 			StorageData.columnRoles = this.filterColumns.map(i => i.prop)
-		},
-		onScroll() {
-			if (!this.loading && this.list.current_page < this.list.last_page) {
-				this.fetchList(this.list.current_page + 1)
-			}
 		},
 		onRowClick(role) {
 			if (role.disable) {

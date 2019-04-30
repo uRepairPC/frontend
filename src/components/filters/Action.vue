@@ -1,6 +1,6 @@
 <template>
 	<filter-basic
-		v-if="hasActions"
+		v-if="actions"
 		title="Дії"
 		class="filter-action"
 	>
@@ -20,15 +20,23 @@
 </template>
 
 <script>
+import { isEmpty } from '@/scripts/helpers'
 import { mapGetters } from 'vuex'
 
 export default {
 	name: 'FilterAction',
+	components: {
+		FilterBasic: () => import('@/components/filters/Basic')
+	},
 	inheritAttrs: false,
 	props: {
 		section: {
 			type: String,
 			required: true
+		},
+		enableActionAdd: {
+			type: Boolean,
+			default: false
 		}
 	},
 	computed: {
@@ -38,15 +46,21 @@ export default {
 		menuSection() {
 			return this.menu[this.section] || {}
 		},
-		hasActions() {
-			return this.menuSection.children && !!Object.keys(this.menuSection.children).length
-		},
+		/**
+		 * @returns {object|null}
+		 */
 		actions() {
-			if (!this.hasActions) {
-				return []
+			const actions = { ...this.menuSection.children }
+
+			if (!this.enableActionAdd) {
+				delete actions.add
 			}
 
-			return this.menuSection.children
+			if (isEmpty(actions)) {
+				return null
+			}
+
+			return actions
 		}
 	}
 }

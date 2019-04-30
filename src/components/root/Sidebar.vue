@@ -1,33 +1,34 @@
 <template>
 	<el-aside width="250px">
-		<el-menu
-			ref="menu"
-			router
-			:default-active="defaultRoute"
-		>
-			<el-menu-item
-				v-for="(item, index) in menu"
-				:key="index"
-				:index="item.route.name"
-				:route="item.route"
+		<div class="aside-wrap">
+			<el-menu
+				ref="menu"
+				router
+				:default-active="defaultRoute"
 			>
-				<i class="material-icons">
-					{{ item.icon }}
-				</i>
-				<span>{{ item.title }}</span>
-			</el-menu-item>
-		</el-menu>
-		<history />
+				<el-menu-item
+					v-for="(item, index) in menu"
+					:key="index"
+					:index="item.route.name"
+					:route="item.route"
+				>
+					<i class="material-icons">
+						{{ item.icon }}
+					</i>
+					<span>{{ item.title }}</span>
+				</el-menu-item>
+			</el-menu>
+			<history />
+		</div>
 	</el-aside>
 </template>
 
 <script>
-import History from '@/components/root/History'
 import { mapGetters } from 'vuex'
 
 export default {
 	components: {
-		History
+		History: () => import('@/components/root/History')
 	},
 	computed: {
 		...mapGetters({
@@ -51,12 +52,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "~scss/mobile/_sizes";
+@import "~scss/_variables";
 @import "~scss/_colors";
 
 .el-aside {
 	border-right: solid 1px $defaultBorder;
 	background: #fff;
-	height: 100%;
 	user-select: none;
 }
 
@@ -71,6 +73,29 @@ export default {
 	> .material-icons {
 		margin-right: 10px;
 		font-size: 1.2em;
+	}
+}
+
+@media only screen and (max-width: $laptop) {
+	.el-aside {
+		overflow: unset;
+		border-right: 0;
+		width: 64px !important;
+	}
+	.aside-wrap {
+		position: sticky;
+		top: 0;
+		max-height: 100vh;
+		overflow: auto;
+	}
+	.el-menu-item {
+		justify-content: center;
+		> .material-icons {
+			margin-right: 0;
+		}
+		> span {
+			display: none;
+		}
 	}
 }
 </style>

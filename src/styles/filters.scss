@@ -1,3 +1,4 @@
+@import "~scss/mobile/_sizes";
 @import "~scss/_colors";
 
 /*
@@ -58,11 +59,15 @@
  */
 
 .filter-table-buttons {
-  display: flex;
-  align-items: center;
   background: #fff;
   border-bottom: 1px solid $defaultBorder;
   margin-bottom: 10px;
+  .filter__content {
+    display: flex;
+  }
+  .filter-title {
+    display: none;
+  }
 }
 
 /*
@@ -105,5 +110,61 @@
     + .el-button {
       margin-left: 0;
     }
+  }
+}
+
+/*
+ * Responsive design
+ */
+
+@media only screen and (min-width: $laptop + 1px) {
+  .filters-core {
+    .el-collapse {
+      border: 0;
+    }
+    div[role="tab"] {
+      display: none !important;
+    }
+    .el-collapse-item__wrap {
+      display: block !important;
+    }
+  }
+}
+
+@media only screen and (max-width: $laptop) {
+  .el-collapse {
+    border: 1px solid $lightBorder;
+  }
+  .el-collapse-item__header {
+    padding: 0 10px 0 15px;
+  }
+  .el-collapse-item__wrap {
+    padding: 5px 10px;
+  }
+  .filters-core__content {
+    display: flex;
+    flex-wrap: wrap;
+    padding-bottom: 0;
+  }
+  .filter {
+    width: 250px;
+    padding: 15px;
+  }
+  .filter-table-buttons {
+    background: none;
+    border-bottom: 0;
+    margin-bottom: 0;
+    .filter-title {
+      display: block;
+    }
+    .top {
+      display: none;
+    }
+  }
+}
+
+@media only screen and (max-width: $mobileL) {
+  .filter {
+    width: 100%;
   }
 }

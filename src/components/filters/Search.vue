@@ -25,6 +25,9 @@ const TIMEOUT = 500
 
 export default {
 	name: 'FilterSearch',
+	components: {
+		FilterBasic: () => import('@/components/filters/Basic')
+	},
 	inheritAttrs: false,
 	props: {
 		value: {

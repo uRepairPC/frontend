@@ -1,6 +1,6 @@
 'use strict'
 
-// NOTE: Value uses as route name
+// NOTE: Values uses as route name
 
 export default {
 	auth: 'auth',

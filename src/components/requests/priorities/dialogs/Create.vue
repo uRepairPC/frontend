@@ -15,14 +15,13 @@
 </template>
 
 <script>
-import BasicCreate from '@/components/dialogs/BasicCreate'
 import RequestPriority from '@/classes/RequestPriority'
-import GenerateForm from '@/components/GenerateForm'
 import { required } from '@/data/rules'
 
 export default {
 	components: {
-		BasicCreate, GenerateForm
+		BasicCreate: () => import('@/components/dialogs/BasicCreate'),
+		GenerateForm: () => import('@/components/GenerateForm')
 	},
 	inheritAttrs: false,
 	data() {

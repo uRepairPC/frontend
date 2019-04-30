@@ -29,9 +29,8 @@ See [here](https://urepairpc.github.io/docs/)
 
 ## TODO
 - [ ] Requests
-- [ ] Tests
+- [ ] Fix Jest require.context
 - [ ] i18n (branch i18n)
-- [ ] PWA
 - [ ] Mobile design
 - [ ] Global search
 
