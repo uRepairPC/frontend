@@ -2,15 +2,15 @@
 
 import { isArray, isObject } from '@/scripts/helpers'
 import StorageData from '@/classes/StorageData'
+import { server } from '@/data/env'
 import store from '@/store'
-import axios from 'axios'
 
 /**
  * @param {string} path
  * @returns {string}
  */
-export function getSeverUrlAuth(path) {
-	return axios.defaults.baseURL + '/' + path + '?token=' + StorageData.token
+export function getApiAuth(path) {
+	return server + '/api/' + path + '?token=' + StorageData.token
 }
 
 /**
@@ -31,22 +31,6 @@ export function formatBytes(bytes, decimals = 2) {
 	const i = Math.floor(Math.log(bytes) / Math.log(k))
 
 	return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i]
-}
-
-/**
- * @param {string|null} input
- * @return {string|null}
- */
-export function withoutLastSlash(input) {
-	if (!input) {
-		return input
-	}
-
-	if (input.slice(-1) === '/') {
-		return input.slice(0, input.length - 1)
-	}
-
-	return input
 }
 
 /**

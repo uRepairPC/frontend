@@ -16,13 +16,12 @@
 
 <script>
 import EquipmentManufacturer from '@/classes/EquipmentManufacturer'
-import BasicCreate from '@/components/dialogs/BasicCreate'
-import GenerateForm from '@/components/GenerateForm'
 import { required } from '@/data/rules'
 
 export default {
 	components: {
-		BasicCreate, GenerateForm
+		BasicCreate: () => import('@/components/dialogs/BasicCreate'),
+		GenerateForm: () => import('@/components/GenerateForm')
 	},
 	inheritAttrs: false,
 	data() {

@@ -62,16 +62,9 @@
 </template>
 
 <script>
-import FilesUploadDialog from '@/components/equipments/dialogs/FilesUpload'
-import FileDeleteDialog from '@/components/equipments/dialogs/FileDelete'
-import FileEditDialog from '@/components/equipments/dialogs/FileEdit'
-import DeleteDialog from '@/components/equipments/dialogs/Delete'
-import EditDialog from '@/components/equipments/dialogs/Edit'
-import TemplateOne from '@/components/template/One'
 import EquipmentFile from '@/classes/EquipmentFile'
 import { includePermission } from '@/scripts/utils'
 import * as permissions from '@/enum/permissions'
-import FilesList from '@/components/files/List'
 import Equipment from '@/classes/Equipment'
 import { copyNode } from '@/scripts/dom'
 import sections from '@/data/sections'
@@ -80,7 +73,8 @@ import * as types from '@/enum/types'
 
 export default {
 	components: {
-		TemplateOne, FilesList
+		TemplateOne: () => import('@/components/template/One'),
+		FilesList: () => import('@/components/files/List')
 	},
 	mixins: [
 		onePage(sections.equipments)
@@ -98,26 +92,29 @@ export default {
 				{
 					title: 'Оновити',
 					type: types.SUCCESS,
+					disabled: this.loading,
 					action: () => {
 						this.fetchRequest()
 						this.fetchRequestFiles()
-					},
-					disabled: this.loading
+					}
 				},
 				{
 					title: 'Редагувати',
 					type: types.PRIMARY,
-					action: () => this.openDialog(EditDialog)
+					permissions: permissions.EQUIPMENTS_EDIT,
+					action: () => this.openDialog(import('@/components/equipments/dialogs/Edit'))
 				},
 				{
 					title: 'Завантажити файл',
 					type: types.PRIMARY,
-					action: () => this.openDialog(FilesUploadDialog)
+					permissions: permissions.EQUIPMENTS_FILES_CREATE,
+					action: () => this.openDialog(import('@/components/equipments/dialogs/FilesUpload'))
 				},
 				{
 					title: 'Видалили',
 					type: types.DANGER,
-					action: () => this.openDialog(DeleteDialog)
+					permissions: permissions.EQUIPMENTS_DELETE,
+					action: () => this.openDialog(import('@/components/equipments/dialogs/Delete'))
 				}
 			]
 		},
@@ -184,7 +181,7 @@ export default {
 		},
 		openDialog(component, attrs = {}) {
 			this.$store.commit('template/OPEN_DIALOG', {
-				component,
+				component: () => component,
 				attrs: {
 					equipment: this.model,
 					...attrs
@@ -211,13 +208,13 @@ export default {
 			Equipment.sidebar().add({ id: +this.$route.params.id, files })
 		},
 		onAdd() {
-			this.openDialog(FilesUploadDialog)
+			this.openDialog(import('@/components/equipments/dialogs/FilesUpload'))
 		},
 		onEdit(file, index) {
-			this.openDialog(FileEditDialog, { file, index })
+			this.openDialog(import('@/components/equipments/dialogs/FileEdit'), { file, index })
 		},
 		onDelete(file, index) {
-			this.openDialog(FileDeleteDialog, { file, index })
+			this.openDialog(import('@/components/equipments/dialogs/FileDelete'), { file, index })
 		}
 	}
 }
@@ -234,6 +231,9 @@ export default {
 
 .header-item {
 	width: 250px;
+	&:last-child {
+		margin-left: 20px;
+	}
 }
 
 .header-item__title {
@@ -248,7 +248,7 @@ export default {
 	align-items: center;
 	justify-content: center;
 	flex-wrap: wrap;
-	border: 1px solid #e6e6e6;
+	border: 1px solid $defaultBorder;
 	background: #fff;
 	padding: 10px 20px;
 	box-shadow: $lightShadow;

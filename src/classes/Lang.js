@@ -2,7 +2,6 @@
 
 import StorageData from '@/classes/StorageData'
 import { isObject } from '@/scripts/helpers'
-import moment from 'moment'
 import i18n from '@/locale'
 
 // Get all languages on the site
@@ -59,7 +58,7 @@ export default class Lang {
 		// Set html lang
 		document.querySelector('html').setAttribute('lang', langShort)
 
-		// Change language in moment.js plugin
-		moment.locale(langShort)
+		// Change language in dayjs plugin
+		// TODO
 	}
 }

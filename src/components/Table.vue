@@ -1,8 +1,8 @@
 <template>
 	<el-table
-		v-loading="loadingDirective"
-		:data="dataList"
-		:class="{ loading: loadingRows }"
+		ref="table"
+		v-loading="loading"
+		:data="list.data || []"
 		stripe
 		height="100%"
 		v-bind="$attrs"
@@ -14,9 +14,7 @@
 			v-bind="column"
 		>
 			<template slot-scope="{ row }">
-				<template v-if="loadingRows && row.loading" />
 				<column-data
-					v-else
 					:column="column"
 					:value="row[column.prop]"
 				>
@@ -33,16 +31,21 @@
 </template>
 
 <script>
-import ColumnData from '@/components/ColumnData'
 import { isEmpty } from '@/scripts/helpers'
+
+/** @var {number} - px */
+const OFFSET_BOTTOM = 300
+
+/** @var {number} - milliseconds */
+const WAIT_TIMEOUT = 150
 
 export default {
 	components: {
-		ColumnData
+		ColumnData: () => import('@/components/ColumnData')
 	},
 	props: {
 		list: {
-			type: Array,
+			type: Object,
 			required: true
 		},
 		columns: {
@@ -52,37 +55,74 @@ export default {
 		loading: {
 			type: Boolean,
 			default: false
-		},
-		loadingType: {
-			type: String,
-			default: 'rows',
-			validator: (val) => {
-				return ~['rows', 'directive'].indexOf(val)
-			}
 		}
 	},
-	computed: {
-		dataList() {
-			if (this.loading && this.loadingType === 'rows') {
-				return [...this.list, ...Array(10).fill({ disable: true, loading: true })]
-			}
-
-			return this.list
-		},
-		loadingRows() {
-			return this.loading && this.loadingType === 'rows'
-		},
-		loadingDirective() {
-			return this.loading && this.loadingType === 'directive'
+	data() {
+		return {
+			wrapperEl: null
 		}
+	},
+	mounted() {
+		/*
+		 * Desktop - scroll on element
+		 * Mobile - scroll on window
+		 */
+		this.wrapperEl = this.$refs.table.$el.querySelector('.el-table__body-wrapper')
+
+		this.wrapperEl.addEventListener('scroll', this.onElementScroll)
+		window.addEventListener('scroll', this.onWindowScroll)
+	},
+	activated() {
+		window.addEventListener('scroll', this.onWindowScroll)
+	},
+	deactivated() {
+		window.removeEventListener('scroll', this.onWindowScroll)
+	},
+	beforeDestroy() {
+		window.removeEventListener('scroll', this.onWindowScroll)
 	},
 	methods: {
-		isEmpty
+		isEmpty,
+		emitFetch() {
+			if (!this.loading && this.list.current_page < this.list.last_page) {
+				this.$emit('fetch', this.list.current_page + 1)
+			}
+		},
+		wrapperElDisplayed() {
+			return this.wrapperEl.scrollHeight === 0
+		},
+		onWindowScroll() {
+			clearTimeout(this._timeoutWindowScroll)
+
+			this._timeoutWindowScroll = setTimeout(() => {
+				if (this.wrapperElDisplayed()) {
+					return
+				}
+
+				if (window.innerHeight + window.pageYOffset >= document.body.offsetHeight - OFFSET_BOTTOM) {
+					this.emitFetch()
+				}
+			}, WAIT_TIMEOUT)
+		},
+		onElementScroll() {
+			clearTimeout(this._timeoutElementScroll)
+
+			this._timeoutElementScroll = setTimeout(() => {
+				if (this.wrapperElDisplayed()) {
+					return
+				}
+
+				if (this.wrapperEl.scrollTop + this.wrapperEl.offsetHeight >= this.wrapperEl.scrollHeight - OFFSET_BOTTOM) {
+					this.emitFetch()
+				}
+			}, WAIT_TIMEOUT)
+		}
 	}
 }
 </script>
 
 <style lang="scss" scoped>
+@import "~scss/mobile/_sizes";
 @import "~scss/keyframes";
 
 .loading {
@@ -103,5 +143,11 @@ export default {
 
 /deep/ th .cell {
 	white-space: nowrap;
+}
+
+@media only screen and (max-width: $laptop) {
+	/deep/ .el-table__body-wrapper {
+		height: auto !important;
+	}
 }
 </style>

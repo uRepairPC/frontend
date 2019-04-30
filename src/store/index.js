@@ -1,6 +1,6 @@
 'use strict'
 
-import { isProd } from '@/data/env'
+import { isDev } from '@/data/env'
 import modules from './modules'
 import Vuex from 'vuex'
 import Vue from 'vue'
@@ -9,5 +9,5 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
 	modules,
-	strict: !isProd
+	strict: isDev
 })

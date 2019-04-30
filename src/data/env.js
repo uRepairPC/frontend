@@ -1,16 +1,28 @@
 /* eslint-disable */
 'use strict'
 
-import { withoutLastSlash } from '@/scripts/utils'
+/**
+ * Remove last slash if exists
+ * @param input
+ * @return {string}
+ */
+const withoutLastSlash = (input) => {
+	if (!input) {
+		return ''
+	}
+
+	if (input.slice(-1) === '/') {
+		return input.slice(0, input.length - 1)
+	}
+
+	return input
+}
 
 /** @return {boolean} */
-export const isProd = !['dev', 'development'].includes(process.env.NODE_ENV)
+export const isDev = ['dev', 'development'].includes(process.env.NODE_ENV)
 
 /** @return {string} */
-export const serverProd = withoutLastSlash(process.env.SERVER_PROD) || 'http://localhost'
+export const proxyTarget = withoutLastSlash(process.env.PROXY_TARGET) || 'http://localhost'
 
 /** @return {string} */
-export const serverDev = withoutLastSlash(process.env.SERVER_DEV) || 'http://localhost'
-
-/** @return {string} */
-export const server = isProd ? serverProd : serverDev
+export const server = isDev ? proxyTarget : location.origin

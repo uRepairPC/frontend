@@ -1,6 +1,7 @@
 'use strict'
 
 import { filterByPermission } from '@/scripts/utils'
+import { isObject } from '@/scripts/helpers'
 import menu from '@/data/menu'
 import Vue from 'vue'
 
@@ -33,9 +34,10 @@ const mutations = {
 	 * @param state
 	 * @param {string} pageName
 	 * @param {number} scroll
+	 * @param {boolean} mob
 	 */
-	SET_PAGE_SCROLL(state, { pageName, scroll }) {
-		state.pagesScroll[pageName] = scroll
+	SET_PAGE_SCROLL(state, { pageName, scroll, mob }) {
+		state.pagesScroll[pageName] = { scroll, mob }
 	},
 	/**
 	 * @param state
@@ -107,6 +109,17 @@ const getters = {
 	 */
 	menu() {
 		return filterByPermission(menu)
+	},
+	historyMenu(state, getters) {
+		const list = {}
+
+		Object.entries(getters.menu).forEach(([key, obj]) => {
+			if (isObject(obj.history)) {
+				list[key] = obj
+			}
+		})
+
+		return list
 	}
 }
 

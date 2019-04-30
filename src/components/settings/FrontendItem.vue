@@ -1,9 +1,9 @@
 <template>
 	<div>
-		<template v-if="type === 'img'">
+		<template v-if="imgApi">
 			<img
 				v-if="value"
-				:src="server + value"
+				:src="imgApi"
 				:alt="attr"
 			>
 			<span v-else>-</span>
@@ -38,9 +38,13 @@ export default {
 			required: true
 		}
 	},
-	data() {
-		return {
-			server
+	computed: {
+		imgApi() {
+			if (this.type !== 'img') {
+				return null
+			}
+
+			return server + this.value
 		}
 	}
 }

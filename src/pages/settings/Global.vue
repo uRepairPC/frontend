@@ -31,8 +31,6 @@
 </template>
 
 <script>
-import StoreDialog from '@/components/settings/dialogs/Store'
-import FrontendItem from '@/components/settings/FrontendItem'
 import SettingsFrontend from '@/classes/SettingsFrontend'
 import breadcrumbs from '@/mixins/breadcrumbs'
 import sections from '@/data/sections'
@@ -45,7 +43,7 @@ export default {
 		{ title: menu[sections.settings].children[sections.settingsGlobal].title }
 	],
 	components: {
-		FrontendItem
+		FrontendItem: () => import('@/components/settings/FrontendItem')
 	},
 	mixins: [
 		breadcrumbs
@@ -66,7 +64,7 @@ export default {
 	methods: {
 		onClickEdit() {
 			this.$store.commit('template/OPEN_DIALOG', {
-				component: StoreDialog
+				component: () => import('@/components/settings/dialogs/Store')
 			})
 		}
 	}

@@ -1,13 +1,25 @@
 <template>
 	<div class="filters-core">
-		<div class="filters-core__content">
-			<slot />
-		</div>
+		<el-collapse v-model="collapse">
+			<el-collapse-item
+				title="Налаштування"
+				name="content"
+			>
+				<div class="filters-core__content">
+					<slot />
+				</div>
+			</el-collapse-item>
+		</el-collapse>
 	</div>
 </template>
 
 <script>
 export default {
-	name: 'FilterCore'
+	name: 'FilterCore',
+	data() {
+		return {
+			collapse: []
+		}
+	}
 }
 </script>

@@ -11,6 +11,9 @@ export default function () {
 	// Clear data from axios
 	axios.defaults.headers['Authorization'] = null
 
+	// Service Workers - delete API data
+	caches.delete(`workbox-runtime-${window.location.origin}/`)
+
 	// Clear data from localStorage
 	StorageData.remove.token()
 	StorageData.remove.profile()
@@ -27,7 +30,8 @@ export default function () {
 
 		// Clear data from store (vuex)
 		const names = [
-			'roles', 'users', 'permissions', 'equipments', 'equipmentTypes', 'equipmentManufacturers', 'equipmentModels'
+			'roles', 'users', 'permissions', 'equipments', 'equipmentTypes', 'equipmentManufacturers', 'equipmentModels',
+			'requestPriorities', 'requestStatuses', 'requestTypes'
 		]
 
 		names.forEach(name => store.commit(`${name}/CLEAR_ALL`))

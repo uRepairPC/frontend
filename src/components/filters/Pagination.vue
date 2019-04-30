@@ -26,12 +26,11 @@
 </template>
 
 <script>
-import CircleProgress from '@/components/CircleProgress'
-
 export default {
 	name: 'FilterPagination',
 	components: {
-		CircleProgress
+		CircleProgress: () => import('@/components/CircleProgress'),
+		FilterBasic: () => import('@/components/filters/Basic')
 	},
 	props: {
 		pagination: {

@@ -3,11 +3,10 @@
 		<template slot="left-column">
 			<table-component
 				slot="left-column"
-				v-scroll="onScroll"
 				:columns="filterColumns"
-				:list="users"
+				:list="list"
 				:loading="loading"
-				:loading-type="loadingType"
+				@fetch="fetchList"
 				@row-click="onRowClick"
 				@sort-change="onSortChange"
 			>
@@ -28,14 +27,15 @@
 		<filter-core slot="right-column">
 			<filter-table-buttons
 				ref="buttons"
-				@update="fetchList"
+				:section="sections.users"
+				@update="onFetchFilter"
 			/>
 			<filter-action
 				:section="sectionName"
 			/>
 			<filter-search
 				v-model="search"
-				@submit="fetchList"
+				@submit="onFetchFilter"
 			/>
 			<filter-pagination
 				:pagination="list"
@@ -53,12 +53,9 @@
 </template>
 
 <script>
-import TemplateList from '@/components/template/List'
 import scrollTableMixin from '@/mixins/scrollTable'
 import StorageData from '@/classes/StorageData'
-import TableComponent from '@/components/Table'
 import breadcrumbs from '@/mixins/breadcrumbs'
-import RoleTag from '@/components/roles/Tag'
 import sections from '@/data/sections'
 import User from '@/classes/User'
 import { mapGetters } from 'vuex'
@@ -70,16 +67,25 @@ export default {
 		{ title: menu[sections.users].title }
 	],
 	components: {
-		TableComponent, TemplateList, RoleTag
+		FilterTableButtons: () => import('@/components/filters/TableButtons'),
+		FilterPagination: () => import('@/components/filters/Pagination'),
+		FilterColumns: () => import('@/components/filters/Columns'),
+		FilterAction: () => import('@/components/filters/Action'),
+		FilterSearch: () => import('@/components/filters/Search'),
+		TemplateList: () => import('@/components/template/List'),
+		FilterFixed: () => import('@/components/filters/Fixed'),
+		FilterCore: () => import('@/components/filters/Core'),
+		TableComponent: () => import('@/components/Table'),
+		RoleTag: () => import('@/components/roles/Tag')
 	},
 	mixins: [
 		scrollTableMixin, breadcrumbs
 	],
 	data() {
 		return {
+			sections,
 			sectionName: sections.users,
 			columns: [],
-			loadingType: 'rows',
 			fixed: null,
 			search: '',
 			sort: {}
@@ -129,12 +135,6 @@ export default {
 	},
 	methods: {
 		fetchList(page = 1) {
-			this.loadingType = page === 1 && this.users.length ? 'directive' : 'rows'
-
-			if (this.loadingType === 'directive') {
-				this.$refs.buttons.scrollTop()
-			}
-
 			this.$store.dispatch('users/fetchList', {
 				page,
 				sortColumn: this.sort.column,
@@ -143,13 +143,12 @@ export default {
 				search: this.search || null
 			})
 		},
+		onFetchFilter() {
+			this.$refs.buttons.scrollTop()
+			this.fetchList()
+		},
 		onChangeColumn() {
 			StorageData.columnUsers = this.filterColumns.map(i => i.prop)
-		},
-		onScroll() {
-			if (!this.loading && this.list.current_page < this.list.last_page) {
-				this.fetchList(this.list.current_page + 1)
-			}
 		},
 		onRowClick(user) {
 			if (user.disable) {

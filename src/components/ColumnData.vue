@@ -5,6 +5,11 @@
 	<div v-else-if="isBool">
 		{{ value ? 'Так' : 'Ні' }}
 	</div>
+	<div
+		v-else-if="isColor"
+		class="cell--color"
+		:style="{ 'background-color': value }"
+	/>
 	<div v-else>
 		<slot>
 			{{ value }}
@@ -14,7 +19,7 @@
 
 <script>
 import { isObject } from '@/scripts/helpers'
-import moment from 'moment'
+import dayjs from 'dayjs'
 
 export default {
 	props: {
@@ -44,6 +49,9 @@ export default {
 		isDate() {
 			return this.type === 'timestamp'
 		},
+		isColor() {
+			return this.type === 'color'
+		},
 		dateValue() {
 			let format = 'LL'
 
@@ -51,7 +59,7 @@ export default {
 				format = this.column.customType.value
 			}
 
-			return moment(this.value).format(format)
+			return dayjs(this.value).format(format)
 		}
 	}
 }

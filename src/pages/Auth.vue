@@ -50,19 +50,18 @@
 </template>
 
 <script>
-import BigLogo from '@/components/root/BigLogo'
 import * as rules from '@/data/rules'
-import { isProd } from '@/data/env'
+import { isDev } from '@/data/env'
 
 export default {
 	components: {
-		BigLogo
+		BigLogo: () => import('@/components/root/BigLogo')
 	},
 	data() {
 		return {
 			form: {
-				email: isProd ? '' : 'admin@example.com',
-				password: isProd ? '' : 'admin123'
+				email: isDev ? 'admin@example.com' : '',
+				password: isDev ? 'admin123' : ''
 			},
 			rules: {
 				email: rules.email,
@@ -93,6 +92,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "~scss/mobile/_sizes";
+
 #auth {
 	width: 100%;
 	max-width: 450px;
@@ -106,10 +107,10 @@ export default {
 	width: 100%;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: $mobileL) {
 	#auth {
-		max-width: none;
-		padding: 20px;
+		background: none;
+		box-shadow: none;
 	}
 }
 </style>

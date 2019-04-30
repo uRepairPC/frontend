@@ -44,9 +44,9 @@
 </template>
 
 <script>
-import { formatBytes, getSeverUrlAuth } from '@/scripts/utils'
+import { formatBytes, getApiAuth } from '@/scripts/utils'
 import { includePermission } from '@/scripts/utils'
-import moment from 'moment'
+import dayjs from 'dayjs'
 
 export default {
 	props: {
@@ -81,7 +81,7 @@ export default {
 			return `${this.file.last_name} ${this.file.first_name}, ${this.createdAt}, ${size}`
 		},
 		createdAt() {
-			return moment(this.file.created_at).calendar().toLowerCase()
+			return dayjs(this.file.created_at).format('lll')
 		},
 		canDownload() {
 			return this.urlDownload && this.includePermission(this.permissionDownload)
@@ -91,7 +91,7 @@ export default {
 		includePermission,
 		onClickDownload() {
 			if (this.canDownload) {
-				window.open(getSeverUrlAuth(this.urlDownload(this.file)), '_blank')
+				window.open(getApiAuth(this.urlDownload(this.file)), '_blank')
 			}
 		},
 		onClickEdit() {
@@ -103,7 +103,6 @@ export default {
 	}
 }
 </script>
-
 
 <style lang="scss" scoped>
 @import "~scss/_colors";
@@ -119,7 +118,7 @@ $transition: .15s;
 
 .file {
 	display: flex;
-	border-bottom: 1px solid #e6e6e6;
+	border-bottom: 1px solid $defaultBorder;
 	transition: $transition;
 	&:hover {
 		box-shadow: 0 0 10px 2px rgba(0, 0, 0, .12);

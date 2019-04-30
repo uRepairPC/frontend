@@ -67,13 +67,12 @@
 
 <script>
 import SettingsFrontend from '@/classes/SettingsFrontend'
-import BasicEdit from '@/components/dialogs/BasicEdit'
 import sections from '@/data/sections'
 import menu from '@/data/menu'
 
 export default {
 	components: {
-		BasicEdit
+		BasicEdit: () => import('@/components/dialogs/BasicEdit')
 	},
 	inheritAttrs: false,
 	data() {

@@ -81,7 +81,6 @@ export default {
 }
 </script>
 
-
 <style lang="scss" scoped>
 .circle-progress {
 	position: relative;

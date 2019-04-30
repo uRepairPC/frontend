@@ -4,19 +4,15 @@
 		:loading="loading"
 		:columns="columns"
 		:dialogs="dialogs"
-		:permission-create="permissions.EQUIPMENTS_FILES_CREATE"
-		:permission-edit="permissions.EQUIPMENTS_EDIT"
-		:permission-delete="permissions.EQUIPMENTS_DELETE"
+		:permission-create="permissions.EQUIPMENTS_CONFIG_CREATE"
+		:permission-edit="permissions.EQUIPMENTS_CONFIG_EDIT"
+		:permission-delete="permissions.EQUIPMENTS_CONFIG_DELETE"
 		@update="fetchRequest"
 	/>
 </template>
 
 <script>
-import CreateDialog from '@/components/equipments/manufacturers/dialogs/Create'
-import DeleteDialog from '@/components/equipments/manufacturers/dialogs/Delete'
-import EditDialog from '@/components/equipments/manufacturers/dialogs/Edit'
 import { equipmentManufacturers as columns } from '@/data/columns'
-import BasicTable from '@/components/settings/BasicTable'
 import * as permissions from '@/enum/permissions'
 import breadcrumbs from '@/mixins/breadcrumbs'
 import sections from '@/data/sections'
@@ -24,13 +20,13 @@ import { mapState } from 'vuex'
 import menu from '@/data/menu'
 
 export default {
-	name: 'Manufacturers',
+	name: 'EquipmentManufacturers',
 	breadcrumbs: [
 		{ title: menu[sections.settings].title, routeName: sections.settings },
-		{ title: menu[sections.settings].children[sections.settingsManufacturers].title }
+		{ title: menu[sections.settings].children[sections.equipmentsManufacturers].title }
 	],
 	components: {
-		BasicTable
+		BasicTable: () => import('@/components/settings/BasicTable')
 	},
 	mixins: [
 		breadcrumbs
@@ -40,9 +36,9 @@ export default {
 			columns,
 			permissions,
 			dialogs: {
-				create: CreateDialog,
-				edit: EditDialog,
-				delete: DeleteDialog
+				create: () => import('@/components/equipments/manufacturers/dialogs/Create'),
+				edit: () => import('@/components/equipments/manufacturers/dialogs/Edit'),
+				delete: () => import('@/components/equipments/manufacturers/dialogs/Delete')
 			}
 		}
 	},

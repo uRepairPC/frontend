@@ -1,18 +1,23 @@
 'use strict'
 
 import '@babel/polyfill'
+import LocalizedFormat from 'dayjs/plugin/localizedFormat'
 import SettingsFrontend from '@/classes/SettingsFrontend'
-import filterComponents from '@/components/filters/index'
 import prototypes from '@/prototypes'
 import directives from '@/directives'
 import ElementUI from 'element-ui'
 import NProgress from 'nprogress'
 import Lang from '@/classes/Lang'
 import router from '@/router'
-import store from '@/store'
 import i18n from '@/locale'
+import store from '@/store'
 import App from '@/App.vue'
+import dayjs from 'dayjs'
+import 'dayjs/locale/uk'
 import Vue from 'vue'
+
+// Import Service Worker
+import '@/scripts/sw'
 
 // Import styles
 import '@/styles/index'
@@ -26,6 +31,9 @@ Vue.use(ElementUI, {
 Vue.config.productionTip = false
 
 // Other libraries
+dayjs.extend(LocalizedFormat)
+// TODO Lang.js
+// dayjs.locale('uk')
 NProgress.configure({ showSpinner: false })
 
 /**
@@ -43,15 +51,6 @@ prototypes.forEach((prototype) => {
  */
 directives.forEach((directive) => {
 	Vue.use(directive)
-})
-
-/**
- * Install global Filter Components
- * @example <filter-core />
- * @see @/components/filters
- */
-filterComponents.forEach((component) => {
-	Vue.use(component)
 })
 
 // Set init config

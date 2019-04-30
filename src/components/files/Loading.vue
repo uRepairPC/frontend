@@ -34,9 +34,10 @@ export default {
 
 <style lang="scss" scoped>
 @import "~scss/keyframes";
+@import "~scss/_colors";
 
 .files-loading {
-	border: 1px solid #e6e6e6;
+	border: 1px solid $defaultBorder;
 	background: #fff;
 }
 
@@ -45,7 +46,7 @@ export default {
 	align-items: center;
 	height: 58px;
 	padding: 10px 15px;
-	border-bottom: 1px solid #e6e6e6;
+	border-bottom: 1px solid $defaultBorder;
 	&:last-child {
 		border-bottom: 0;
 	}
