@@ -2,7 +2,6 @@
 
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const WebpackPwaManifest = require('webpack-pwa-manifest')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { GenerateSW } = require('workbox-webpack-plugin')
@@ -131,22 +130,6 @@ const settings = {
 
 if (!isDev) {
 	settings.plugins.push(
-		// Add manifest.json
-		new WebpackPwaManifest({
-			filename: 'manifest.json',
-			name: 'uRepairPC',
-			short_name: 'uRepairPC',
-			start_url: '/',
-			background_color: '#fff',
-			theme_color: '#409eff',
-			icons: [
-				{
-					src: path.resolve('src/images/icon.png'),
-					sizes: [96, 128, 192, 256, 384, 512],
-					destination: 'assets/pwa'
-				}
-			]
-		}),
 		// Add PWA
 		new GenerateSW({
 			swDest: 'sw.js',
