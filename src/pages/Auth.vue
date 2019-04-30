@@ -1,51 +1,59 @@
 <template>
 	<div id="auth">
-		<big-logo />
-		<el-form
-			ref="form"
-			:model="form"
-			:rules="rules"
-			status-icon
-			@submit.native.prevent="onSubmit"
-		>
-			<el-form-item prop="email">
-				<el-input
-					ref="email"
-					v-model="form.email"
-					:placeholder="$t('pages.auth.form.email')"
-				>
-					<i
-						slot="prepend"
-						class="material-icons"
+		<div class="auth-wrap">
+			<big-logo />
+			<el-form
+				ref="form"
+				:model="form"
+				:rules="rules"
+				status-icon
+				@submit.native.prevent="onSubmit"
+			>
+				<el-form-item prop="email">
+					<el-input
+						ref="email"
+						v-model="form.email"
+						:placeholder="$t('pages.auth.form.email')"
 					>
-						email
-					</i>
-				</el-input>
-			</el-form-item>
-			<el-form-item prop="password">
-				<el-input
-					v-model="form.password"
-					type="password"
-					:placeholder="$t('pages.auth.form.password')"
-				>
-					<i
-						slot="prepend"
-						class="material-icons"
+						<i
+							slot="prepend"
+							class="material-icons"
+						>
+							email
+						</i>
+					</el-input>
+				</el-form-item>
+				<el-form-item prop="password">
+					<el-input
+						v-model="form.password"
+						type="password"
+						:placeholder="$t('pages.auth.form.password')"
 					>
-						lock
-					</i>
-				</el-input>
-			</el-form-item>
-			<el-form-item class="mb-0">
-				<el-button
-					native-type="submit"
-					type="primary"
-					:loading="loading"
-				>
-					{{ $t('pages.auth.form.button') }}
-				</el-button>
-			</el-form-item>
-		</el-form>
+						<i
+							slot="prepend"
+							class="material-icons"
+						>
+							lock
+						</i>
+					</el-input>
+				</el-form-item>
+				<el-form-item class="mb-0">
+					<el-button
+						native-type="submit"
+						type="primary"
+						:loading="loading"
+					>
+						{{ $t('pages.auth.form.button') }}
+					</el-button>
+				</el-form-item>
+			</el-form>
+		</div>
+		<el-divider>
+			<i class="material-icons">public</i>
+		</el-divider>
+		<div class="text--center">
+			<change-locale />
+		</div>
 	</div>
 </template>
 
@@ -55,6 +63,7 @@ import { isDev } from '@/data/env'
 
 export default {
 	components: {
+		ChangeLocale: () => import('@/components/ChangeLocale'),
 		BigLogo: () => import('@/components/root/BigLogo')
 	},
 	data() {
@@ -98,6 +107,10 @@ export default {
 	width: 100%;
 	max-width: 450px;
 	margin: 50px auto;
+}
+
+.auth-wrap {
+	margin: 0 auto;
 	padding: 35px;
 	background: #fff;
 	box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .2), 0 1px 1px 0 rgba(0, 0, 0, .14), 0 2px 1px -1px rgba(0, 0, 0, .12);
@@ -107,8 +120,16 @@ export default {
 	width: 100%;
 }
 
+.el-divider {
+	margin: 50px 0;
+}
+
+.el-divider__text {
+	background: #fbfbfb;
+}
+
 @media only screen and (max-width: $mobileL) {
-	#auth {
+	.auth-wrap {
 		background: none;
 		box-shadow: none;
 	}

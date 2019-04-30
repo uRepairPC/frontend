@@ -41,6 +41,11 @@
   padding: 0;
 }
 
+.el-divider__text {
+  display: flex;
+  user-select: none;
+}
+
 // NProgress
 
 #nprogress {
