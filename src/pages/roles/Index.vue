@@ -3,11 +3,11 @@
 		<template slot="left-column">
 			<table-component
 				slot="left-column"
-				v-scroll="onScroll"
 				:columns="filterColumns"
-				:list="roles"
+				:list="list"
 				:loading="loading"
 				:loading-type="loadingType"
+				@fetch="fetchList"
 				@row-click="onRowClick"
 				@sort-change="onSortChange"
 			/>
@@ -139,11 +139,6 @@ export default {
 		},
 		onChangeColumn() {
 			StorageData.columnRoles = this.filterColumns.map(i => i.prop)
-		},
-		onScroll() {
-			if (!this.loading && this.list.current_page < this.list.last_page) {
-				this.fetchList(this.list.current_page + 1)
-			}
 		},
 		onRowClick(role) {
 			if (role.disable) {

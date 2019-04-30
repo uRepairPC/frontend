@@ -2,9 +2,11 @@
 	<div class="layout layout_default">
 		<el-container direction="vertical">
 			<header-box />
-			<el-container :class="['container-content',
-				{ 'search--open': openSearch }
-			]">
+			<el-container
+				:class="['container-content',
+					{ 'search--open': openSearch }
+				]"
+			>
 				<sidebar-box />
 				<el-main>
 					<breadcrumbs-box />
@@ -108,6 +110,12 @@ export default {
 	.el-main {
 		border-left: 1px solid $defaultBorder;
 		background: #fbfbfb;
+	}
+}
+
+@media only screen and (max-width: $laptop) {
+	.el-main {
+		min-height: calc(100vh - #{$headerHeight});
 	}
 }
 </style>

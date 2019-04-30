@@ -19,10 +19,10 @@
 
 <script>
 export default {
-	inheritAttrs: false,
 	components: {
 		HistoryCollapse: () => import('@/components/history/Collapse')
 	},
+	inheritAttrs: false,
 	methods: {
 		onSubmit() {
 			this.$emit('submit')

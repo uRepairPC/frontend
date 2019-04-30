@@ -34,9 +34,10 @@ const mutations = {
 	 * @param state
 	 * @param {string} pageName
 	 * @param {number} scroll
+	 * @param {boolean} mob
 	 */
-	SET_PAGE_SCROLL(state, { pageName, scroll }) {
-		state.pagesScroll[pageName] = scroll
+	SET_PAGE_SCROLL(state, { pageName, scroll, mob }) {
+		state.pagesScroll[pageName] = { scroll, mob }
 	},
 	/**
 	 * @param state

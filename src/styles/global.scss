@@ -47,6 +47,9 @@ a {
 }
 
 @media only screen and (max-width: $laptop) {
+  html, body {
+    height: auto;
+  }
   body {
     background: #fff;
   }
