@@ -1,7 +1,7 @@
 <template>
 	<el-table
-		v-loading="loading"
 		ref="table"
+		v-loading="loading"
 		:data="list.data || []"
 		stripe
 		height="100%"
