@@ -133,6 +133,7 @@ if (!isDev) {
 	settings.plugins.push(
 		// Add manifest.json
 		new WebpackPwaManifest({
+			filename: 'manifest.json',
 			name: 'uRepairPC',
 			short_name: 'uRepairPC',
 			start_url: '/',
