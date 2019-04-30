@@ -139,10 +139,16 @@ if (!isDev) {
 			clientsClaim: true,
 			skipWaiting: true,
 			navigateFallback: '/index.html',
-			navigateFallbackBlacklist: [/api/],
+			navigateFallbackBlacklist: [/api/, /manifest\.json$/, /phpmyadmin/i],
 			runtimeCaching: [{
 				urlPattern: /api/,
 				handler: 'NetworkFirst'
+			}, {
+				urlPattern: /manifest\.json$/,
+				handler: 'NetworkFirst',
+				options: {
+					cacheName: 'manifest'
+				}
 			}]
 		}),
 		// Check bundle
