@@ -112,7 +112,8 @@ const settings = {
 			filename: 'index.html',
 			template: './index.html',
 			inject: true,
-			chunksSortMode: 'none'
+			chunksSortMode: 'none',
+			isDev: isDev
 		}),
 		new MiniCssExtractPlugin({
 			filename: 'assets/[name].[hash].css',
