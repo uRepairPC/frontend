@@ -36,7 +36,7 @@ files.keys().forEach(key => {
 		}
 		current = current[split[i]]
 	}
-	current[split[len - 1]] = files(key)
+	current[split[len - 1]] = { ...current[split[len - 1]], ...files(key) }
 })
 
 export default languages
