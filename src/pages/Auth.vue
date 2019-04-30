@@ -12,7 +12,7 @@
 				<el-input
 					ref="email"
 					v-model="form.email"
-					placeholder="E-mail"
+					:placeholder="$t('pages.auth.form.email')"
 				>
 					<i
 						slot="prepend"
@@ -26,7 +26,7 @@
 				<el-input
 					v-model="form.password"
 					type="password"
-					placeholder="Пароль"
+					:placeholder="$t('pages.auth.form.password')"
 				>
 					<i
 						slot="prepend"
@@ -42,7 +42,7 @@
 					type="primary"
 					:loading="loading"
 				>
-					Увійти
+					{{ $t('pages.auth.form.button') }}
 				</el-button>
 			</el-form-item>
 		</el-form>
