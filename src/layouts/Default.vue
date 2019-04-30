@@ -106,15 +106,9 @@ export default {
 	filter: blur(5px);
 }
 
-@media only screen and (max-width: $laptopL) {
-	.el-main {
-		border-left: 1px solid $defaultBorder;
-		background: #fbfbfb;
-	}
-}
-
 @media only screen and (max-width: $laptop) {
 	.el-main {
+		border-left: 1px solid $defaultBorder;
 		min-height: calc(100vh - #{$headerHeight});
 	}
 }
