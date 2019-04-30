@@ -154,10 +154,10 @@ if (!isDev) {
 			importsDirectory: 'assets',
 			clientsClaim: true,
 			skipWaiting: true,
-			navigateFallback: '/',
+			navigateFallback: '/index.html',
 			navigateFallbackBlacklist: [/api/],
 			runtimeCaching: [{
-				urlPattern: new RegExp('api'),
+				urlPattern: /api/,
 				handler: 'NetworkFirst'
 			}]
 		}),
