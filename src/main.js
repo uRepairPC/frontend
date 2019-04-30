@@ -13,7 +13,6 @@ import i18n from '@/locale'
 import store from '@/store'
 import App from '@/App.vue'
 import dayjs from 'dayjs'
-import 'dayjs/locale/uk'
 import Vue from 'vue'
 
 // Import Service Worker
@@ -32,8 +31,6 @@ Vue.config.productionTip = false
 
 // Other libraries
 dayjs.extend(LocalizedFormat)
-// TODO Lang.js
-// dayjs.locale('uk')
 NProgress.configure({ showSpinner: false })
 
 /**

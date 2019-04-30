@@ -1,31 +1,29 @@
 'use strict'
 
 // Import locale from element-ui framework
-import ruRU from 'element-ui/lib/locale/lang/ru-RU'
-import enUS from 'element-ui/lib/locale/lang/en'
-import ukUA from 'element-ui/lib/locale/lang/ua'
+import ru from 'element-ui/lib/locale/lang/ru-RU'
+import en from 'element-ui/lib/locale/lang/en'
+import uk from 'element-ui/lib/locale/lang/ua'
+
+// Import locale from dayjs library
+import 'dayjs/locale/uk'
+import 'dayjs/locale/ru'
 
 /**
  * All translations.
  * @type {Object}
  */
 const languages = {
-	'en-US': enUS,
-	'ru-RU': ruRU,
-	'uk-UA': ukUA
+	ru, en, uk
 }
 
 // eslint-disable-next-line
-const files = require.context('.', true, /\.js$/)
+const files = require.context('.', true, /\.json$/)
 
 files.keys().forEach(key => {
-	if (key === './index.js') {
-		return
-	}
-
-	// Ex. ['en-US', 'folder', 'fileName']
+	// Ex. ['en', 'folder', 'fileName']
 	const split = key.substring(2)
-		.replace(/.js/g, '')
+		.replace(/.json/g, '')
 		.split('/')
 
 	const len = split.length
@@ -38,7 +36,7 @@ files.keys().forEach(key => {
 		}
 		current = current[split[i]]
 	}
-	current[split[len - 1]] = files(key).default
+	current[split[len - 1]] = files(key)
 })
 
 export default languages

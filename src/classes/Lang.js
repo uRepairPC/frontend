@@ -3,6 +3,7 @@
 import StorageData from '@/classes/StorageData'
 import { isObject } from '@/scripts/helpers'
 import i18n from '@/locale'
+import dayjs from 'dayjs'
 
 // Get all languages on the site
 // global.name - key is required!
@@ -18,7 +19,7 @@ Object.keys(languages).forEach((key) => {
 export { LANGUAGES }
 
 /** @type {string} */
-export const DEFAULT_LANG = 'en-US'
+export const DEFAULT_LANG = 'en'
 
 export default class Lang {
 
@@ -38,16 +39,12 @@ export default class Lang {
 	 *  - libraries
 	 * @param {string} lang
 	 * @example
-	 *  en-US
-	 *  ru-RU
-	 *  uk-UA
+	 *  en, ru, uk
 	 */
 	static setLocale(lang) {
 		if (!LANGUAGES[lang]) {
 			lang = DEFAULT_LANG
 		}
-
-		const langShort = lang.split('-')[0]
 
 		// Update vue-i18n library
 		i18n.locale = lang
@@ -56,9 +53,9 @@ export default class Lang {
 		StorageData.lang = lang
 
 		// Set html lang
-		document.querySelector('html').setAttribute('lang', langShort)
+		document.querySelector('html').setAttribute('lang', lang)
 
 		// Change language in dayjs plugin
-		// TODO
+		dayjs.locale(lang)
 	}
 }
