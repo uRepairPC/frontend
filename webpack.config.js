@@ -23,10 +23,10 @@ const settings = {
 		children: false
 	},
 	output: {
-		filename: 'assets/[name].[hash].js',
-		chunkFilename: 'assets/chunks/[name].[hash].js',
+		filename: 'web/[name].[hash].js',
+		chunkFilename: 'web/chunks/[name].[hash].js',
 		publicPath: '/',
-		path: path.resolve(__dirname, 'dist')
+		path: path.resolve(__dirname, process.env.WEBPACK_OUTPUT_DIR || 'dist')
 	},
 	devtool: isDev ? 'inline-source-map' : false,
 	devServer: {
@@ -72,7 +72,7 @@ const settings = {
 					{
 						loader: 'file-loader',
 						options: {
-							outputPath: 'assets/images',
+							outputPath: 'web/images',
 						}
 					}
 				]
@@ -83,7 +83,7 @@ const settings = {
 					{
 						loader: 'file-loader',
 						options: {
-							outputPath: 'assets/files',
+							outputPath: 'web/files',
 						}
 					}
 				]
@@ -106,7 +106,9 @@ const settings = {
 		new Dotenv,
 		new VueLoaderPlugin,
 		new CleanWebpackPlugin({
-			verbose: false
+			dry: isDev,
+			verbose: false,
+			cleanOnceBeforeBuildPatterns: ['web/*', 'index.html', 'sw.js']
 		}),
 		new HtmlWebpackPlugin({
 			filename: 'index.html',
@@ -116,8 +118,8 @@ const settings = {
 			isDev: isDev
 		}),
 		new MiniCssExtractPlugin({
-			filename: 'assets/[name].[hash].css',
-			chunkFilename: 'assets/css/[name].[hash].css'
+			filename: 'web/[name].[hash].css',
+			chunkFilename: 'web/css/[name].[hash].css'
 		})
 	],
 	resolve: {
@@ -135,19 +137,24 @@ if (!isDev) {
 		new GenerateSW({
 			swDest: 'sw.js',
 			importWorkboxFrom: 'local',
-			importsDirectory: 'assets',
+			importsDirectory: 'web/pwa',
 			clientsClaim: true,
 			skipWaiting: true,
 			navigateFallback: '/index.html',
-			navigateFallbackBlacklist: [/api/, /manifest\.json$/, /phpmyadmin/i],
+			navigateFallbackWhitelist: [
+				// Output build
+				/^\/web/, /sw\.js$/, /index\.html/,
+				// Pages
+				/^\/auth/, /^\/requests/, /^\/users/, /^\/equipments/, /^\/roles/, /^\/settings/
+			],
 			runtimeCaching: [{
 				urlPattern: /api/,
 				handler: 'NetworkFirst'
 			}, {
-				urlPattern: /manifest\.json$/,
+				urlPattern: /\.json$/,
 				handler: 'NetworkFirst',
 				options: {
-					cacheName: 'manifest'
+					cacheName: 'json'
 				}
 			}]
 		}),
