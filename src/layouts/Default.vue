@@ -98,7 +98,8 @@ export default {
 
 .page {
 	height: calc(100% - #{$breadcrumbsHeight});
-	overflow: auto;
+	overflow-y: auto;
+	overflow-x: hidden;
 }
 
 .search--open {

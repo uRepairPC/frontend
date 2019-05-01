@@ -26,6 +26,7 @@ import sections from '@/data/sections'
 import { mapGetters } from 'vuex'
 
 export default {
+	name: 'SettingsCore',
 	computed: {
 		...mapGetters({
 			menu: 'template/menu'
@@ -74,15 +75,17 @@ export default {
 
 /deep/ .el-tabs__nav-wrap {
 	background-color: #f5f7fa;
-	padding: 0 20px;
+	padding: 0 30px;
 }
 
 /deep/ .el-tabs__nav-prev {
 	left: 5px;
+	padding: 3px 5px;
 }
 
 /deep/ .el-tabs__nav-next {
 	right: 5px;
+	padding: 3px 5px;
 }
 
 // <animation>

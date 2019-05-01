@@ -11,7 +11,7 @@
 				placement="top"
 			>
 				<el-card shadow="none">
-					<frontend-item
+					<item
 						:value="settings[row.attr]"
 						:type="row.type"
 						:attr="row.attr"
@@ -43,7 +43,7 @@ export default {
 		{ title: menu[sections.settings].children[sections.settingsGlobal].title }
 	],
 	components: {
-		FrontendItem: () => import('@/components/settings/FrontendItem')
+		Item: () => import('@/components/settings/Item')
 	},
 	mixins: [
 		breadcrumbs
@@ -55,7 +55,7 @@ export default {
 	},
 	computed: {
 		settings() {
-			return this.$store.state.template.settings
+			return this.$store.state.settings.global
 		},
 		title() {
 			return menu[sections.settings].children[sections.settingsGlobal].title

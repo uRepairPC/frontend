@@ -16,10 +16,10 @@ let hasRequest = false
 export default class SettingsFrontend {
 
 	static init() {
-		const settings = StorageData.settings
+		const settings = StorageData.settingsGlobal
 
 		if (settings.timestamp) {
-			store.commit('template/SET_SETTINGS', settings)
+			store.commit('settings/SET_GLOBAL', settings)
 			SettingsFrontend.updateDOM()
 		} else {
 			SettingsFrontend.checkUpdate(-1)
@@ -34,7 +34,7 @@ export default class SettingsFrontend {
 	 * @param {number|string} serverTimestamp
 	 */
 	static checkUpdate(serverTimestamp) {
-		const localTimestamp = StorageData.settings.timestamp || 0
+		const localTimestamp = StorageData.settingsGlobal.timestamp || 0
 
 		if (+localTimestamp !== +serverTimestamp && !hasRequest) {
 			hasRequest = true
@@ -55,12 +55,12 @@ export default class SettingsFrontend {
 	 * @param {number} timestamp
 	 */
 	static updateData(data, timestamp) {
-		StorageData.settings = { ...data, timestamp }
-		store.commit('template/SET_SETTINGS', { ...data, timestamp })
+		StorageData.settingsGlobal = { ...data, timestamp }
+		store.commit('settings/SET_GLOBAL', { ...data, timestamp })
 	}
 
 	static updateDOM() {
-		const data = StorageData.settings
+		const data = StorageData.settingsGlobal
 
 		// Favicon
 		if (data.favicon) {
@@ -92,7 +92,7 @@ export default class SettingsFrontend {
 	}
 
 	/**
-	 * Store resource and update global data.
+	 * Store resource.
 	 *
 	 * @param {*} data
 	 * @param {AxiosRequestConfig} config

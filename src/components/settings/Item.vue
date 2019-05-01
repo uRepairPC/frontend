@@ -1,19 +1,23 @@
 <template>
-	<div>
-		<template v-if="imgApi">
-			<img
-				v-if="value"
-				:src="imgApi"
-				:alt="attr"
-			>
-			<span v-else>-</span>
-		</template>
-		<template v-else-if="type === 'bool'">
-			{{ value ? 'Так' : 'Ні' }}
-		</template>
-		<template v-else>
-			{{ value }}
-		</template>
+	<div v-if="imgApi">
+		<img
+			v-if="value"
+			:src="imgApi"
+			:alt="attr"
+		>
+		<span v-else>-</span>
+	</div>
+	<div v-else-if="type === 'bool'">
+		{{ value ? 'Так' : 'Ні' }}
+	</div>
+	<div v-else-if="type === 'color'">
+		<div
+			class="cell--color"
+			:style="{ 'background-color': value }"
+		/>
+	</div>
+	<div v-else>
+		{{ value }}
 	</div>
 </template>
 
@@ -30,7 +34,7 @@ export default {
 			type: String,
 			required: true,
 			validator: (val) => {
-				return ~['text', 'img', 'bool'].indexOf(val)
+				return ~['text', 'img', 'bool', 'color'].indexOf(val)
 			}
 		},
 		attr: {

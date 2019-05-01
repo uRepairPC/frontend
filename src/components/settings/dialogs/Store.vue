@@ -93,7 +93,7 @@ export default {
 			return menu[sections.settings].children[sections.settingsGlobal].title
 		},
 		settings() {
-			return this.$store.state.template.settings
+			return this.$store.state.settings.global
 		}
 	},
 	created() {

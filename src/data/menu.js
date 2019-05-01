@@ -101,6 +101,7 @@ export default {
 		route: { name: sections.settings },
 		permissions: [
 			permissions.GLOBAL_SETTINGS,
+			permissions.GLOBAL_MANIFEST,
 			permissions.REQUESTS_CONFIG_VIEW,
 			permissions.EQUIPMENTS_CONFIG_VIEW
 		],
@@ -120,6 +121,26 @@ export default {
 						action: () => {
 							store.commit('template/OPEN_DIALOG', {
 								component: () => import('@/components/settings/dialogs/Store')
+							})
+						}
+					}
+				}
+			},
+			[sections.settingsManifest]: {
+				title: 'Маніфест',
+				icon: 'dashboard',
+				tag: 'page',
+				permissions: permissions.GLOBAL_MANIFEST,
+				route: { name: sections.settingsManifest },
+				children: {
+					edit: {
+						title: 'Редагувати',
+						icon: 'edit',
+						type: types.PRIMARY,
+						permission: permissions.GLOBAL_MANIFEST,
+						action: () => {
+							store.commit('template/OPEN_DIALOG', {
+								component: () => import('@/components/settings/dialogs/Manifest')
 							})
 						}
 					}

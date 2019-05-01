@@ -30,7 +30,7 @@ export default {
 	},
 	computed: {
 		settings() {
-			return this.$store.state.template.settings
+			return this.$store.state.settings.global
 		},
 		logo() {
 			return server + this.settings.logo_header
