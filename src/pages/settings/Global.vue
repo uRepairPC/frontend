@@ -70,39 +70,3 @@ export default {
 	}
 }
 </script>
-
-<style lang="scss" scoped>
-.global-settings {
-	max-width: 600px;
-	margin: 20px auto;
-}
-
-.title {
-	text-align: center;
-	font-size: 1.4rem;
-	font-weight: bold;
-	margin-bottom: 30px;
-}
-
-/deep/ .el-timeline-item__timestamp {
-	font-size: .9rem;
-}
-
-/deep/ .el-card__body {
-	background: #fafafa;
-	line-height: 1.5;
-	img {
-		max-width: 100px;
-		max-height: 100px;
-	}
-}
-
-.btn-block {
-	margin-top: 15px;
-	text-align: center;
-	button {
-		max-width: 300px;
-		width: 100%;
-	}
-}
-</style>

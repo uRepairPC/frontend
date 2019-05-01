@@ -50,6 +50,9 @@ a {
   html, body {
     height: auto;
   }
+  body {
+    overflow-y: scroll;
+  }
   #app, .layout {
     height: auto;
   }
