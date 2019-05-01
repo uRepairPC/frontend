@@ -100,7 +100,7 @@ export default {
 		title: 'Конфігурація',
 		route: { name: sections.settings },
 		permissions: [
-			permissions.OTHER_GLOBAL_SETTINGS,
+			permissions.GLOBAL_SETTINGS,
 			permissions.REQUESTS_CONFIG_VIEW,
 			permissions.EQUIPMENTS_CONFIG_VIEW
 		],
@@ -109,14 +109,14 @@ export default {
 				title: 'Глобальні налаштування',
 				icon: 'dashboard',
 				tag: 'page',
-				permissions: permissions.OTHER_GLOBAL_SETTINGS,
+				permissions: permissions.GLOBAL_SETTINGS,
 				route: { name: sections.settingsGlobal },
 				children: {
 					edit: {
 						title: 'Редагувати',
 						icon: 'edit',
 						type: types.PRIMARY,
-						permissions: permissions.OTHER_GLOBAL_SETTINGS,
+						permissions: permissions.GLOBAL_SETTINGS,
 						action: () => {
 							store.commit('template/OPEN_DIALOG', {
 								component: () => import('@/components/settings/dialogs/Store')
