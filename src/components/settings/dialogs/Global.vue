@@ -6,6 +6,7 @@
 		v-on="listeners"
 	>
 		<el-form
+			v-loading="loading"
 			ref="form"
 			:model="form"
 			status-icon
@@ -34,7 +35,7 @@
 						Оберіть файл
 					</el-button>
 					<el-button
-						v-if="settings[row.attr]"
+						v-if="form[row.attr]"
 						type="danger"
 						size="small"
 						:disabled="!form[row.attr]"
@@ -91,11 +92,19 @@ export default {
 			return menu[sections.settings].children[sections.settingsGlobal].title
 		},
 		settings() {
-			return this.$store.state.settings.global
+			return this.$store.state.settings.global.data
+		},
+		loading() {
+			return this.$store.state.settings.global.init || this.$store.state.settings.global.loading
 		}
 	},
-	created() {
-		this.form = { ...this.settings }
+	watch: {
+		settings: {
+			handler(data) {
+				this.form = { ...data }
+			},
+			immediate: true
+		}
 	},
 	methods: {
 		fetchRequest() {

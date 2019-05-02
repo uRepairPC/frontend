@@ -2,22 +2,28 @@
 
 import SettingsManifest from '@/classes/SettingsManifest'
 import SettingsGlobal from '@/classes/SettingsGlobal'
+import Vue from 'vue'
 
 const state = {
-	loadingGlobal: false,
-	loadingManifest: false,
 	// Global settings for the website (logo, title, etc)
-	global: {},
+	global: {
+		init: true,
+		loading: false,
+		data: {}
+	},
 	// PWA
-	manifest: {}
+	// TODO Like global
+	manifest: {},
+	loadingManifest: false
 }
 
 const mutations = {
 	SET_GLOBAL(state, obj) {
-		state.global = obj
+		Vue.set(state.global, 'init', false)
+		Vue.set(state.global, 'data', obj)
 	},
 	SET_LOADING_GLOBAL(state, bool) {
-		state.loadingGlobal = bool
+		Vue.set(state.global, 'loading', bool)
 	},
 	SET_MANIFEST(state, obj) {
 		state.manifest = obj

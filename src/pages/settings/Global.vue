@@ -56,10 +56,10 @@ export default {
 	},
 	computed: {
 		settings() {
-			return this.$store.state.settings.global
+			return this.$store.state.settings.global.data
 		},
 		loading() {
-			return this.$store.state.settings.loadingGlobal
+			return this.$store.state.settings.global.loading
 		},
 		title() {
 			return menu[sections.settings].children[sections.settingsGlobal].title

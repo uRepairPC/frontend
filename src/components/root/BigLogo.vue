@@ -25,7 +25,7 @@ export default {
 	},
 	computed: {
 		settings() {
-			return this.$store.state.settings.global
+			return this.$store.state.settings.global.data
 		},
 		logo() {
 			return this.settings.logo_auth

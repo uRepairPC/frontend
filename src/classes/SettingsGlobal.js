@@ -58,8 +58,8 @@ export default class SettingsGlobal {
 	static fetchStore(data = null, config = null) {
 		return axios.post(API_POINT, data, config)
 			.then((res) => {
-				store.commit('settings/SET_GLOBAL', res.data)
-				SettingsGlobal.updateDOM(res.data)
+				store.commit('settings/SET_GLOBAL', res.data.data)
+				SettingsGlobal.updateDOM(res.data.data)
 				return res
 			})
 	}
