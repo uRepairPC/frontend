@@ -3,7 +3,7 @@
 		<div class="title">
 			{{ title }}
 		</div>
-		<el-timeline>
+		<el-timeline v-loading="loading">
 			<el-timeline-item
 				v-for="(row, index) in rows"
 				:key="index"
@@ -22,6 +22,7 @@
 		<div class="btn-block">
 			<el-button
 				type="primary"
+				:disabled="loading"
 				@click="onClickEdit"
 			>
 				Редагувати
@@ -56,6 +57,9 @@ export default {
 	computed: {
 		settings() {
 			return this.$store.state.settings.global
+		},
+		loading() {
+			return this.$store.state.settings.loadingGlobal
 		},
 		title() {
 			return menu[sections.settings].children[sections.settingsGlobal].title

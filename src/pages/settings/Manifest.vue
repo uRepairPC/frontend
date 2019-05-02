@@ -44,8 +44,13 @@
 							:key="index"
 							class="icon"
 						>
-							<div class="size">{{ obj.sizes }} - {{ obj.type }}</div>
-							<img :src="obj.src" :alt="`${obj.sizes} - ${obj.type}`" />
+							<div class="size">
+								{{ obj.sizes }} - {{ obj.type }}
+							</div>
+							<img
+								:src="obj.src"
+								:alt="`${obj.sizes} - ${obj.type}`"
+							>
 						</div>
 					</div>
 				</el-card>
@@ -86,9 +91,6 @@ export default {
 			rows: SettingsManifest.rows
 		}
 	},
-	mounted() {
-		this.$store.dispatch('settings/fetchManifest')
-	},
 	computed: {
 		manifest() {
 			return this.$store.state.settings.manifest
@@ -99,6 +101,9 @@ export default {
 		title() {
 			return menu[sections.settings].children[sections.settingsManifest].title
 		}
+	},
+	mounted() {
+		this.$store.dispatch('settings/fetchManifest')
 	},
 	methods: {
 		onClickEdit() {
