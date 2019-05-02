@@ -120,7 +120,7 @@ export default {
 						permissions: permissions.GLOBAL_SETTINGS,
 						action: () => {
 							store.commit('template/OPEN_DIALOG', {
-								component: () => import('@/components/settings/dialogs/Store')
+								component: () => import('@/components/settings/dialogs/Global')
 							})
 						}
 					}

@@ -45,7 +45,7 @@
 							class="icon"
 						>
 							<div class="size">{{ obj.sizes }} - {{ obj.type }}</div>
-							<img :src="`${server}/${obj.src}`" :alt="`${obj.sizes} - ${obj.type}`" />
+							<img :src="obj.src" :alt="`${obj.sizes} - ${obj.type}`" />
 						</div>
 					</div>
 				</el-card>
@@ -67,7 +67,6 @@
 import SettingsManifest from '@/classes/SettingsManifest'
 import breadcrumbs from '@/mixins/breadcrumbs'
 import sections from '@/data/sections'
-import { server } from '@/data/env'
 import menu from '@/data/menu'
 
 export default {
@@ -84,7 +83,6 @@ export default {
 	],
 	data() {
 		return {
-			server,
 			rows: SettingsManifest.rows
 		}
 	},

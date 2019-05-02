@@ -22,7 +22,6 @@
 
 <script>
 import { DEFAULT_ROUTE_NAME } from '@/router'
-import { server } from '@/data/env'
 
 export default {
 	components: {
@@ -33,7 +32,7 @@ export default {
 			return this.$store.state.settings.global
 		},
 		logo() {
-			return server + this.settings.logo_header
+			return this.settings.logo_header
 		},
 		hasAppName() {
 			if (!this.settings.logo_header && this.settings.app_name) {

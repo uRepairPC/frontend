@@ -98,7 +98,7 @@ export default {
 
 .page {
 	height: calc(100% - #{$breadcrumbsHeight});
-	overflow-y: auto;
+	overflow-y: scroll;
 	overflow-x: hidden;
 }
 
@@ -111,6 +111,9 @@ export default {
 	.el-main {
 		border-left: 1px solid $defaultBorder;
 		min-height: calc(100vh - #{$headerHeight});
+	}
+	.page {
+		overflow-y: auto;
 	}
 }
 </style>

@@ -19,8 +19,6 @@
 </template>
 
 <script>
-import { server } from '@/data/env'
-
 export default {
 	components: {
 		LogoSvg: () => import('@/components/svg/Logo')
@@ -30,8 +28,8 @@ export default {
 			return this.$store.state.settings.global
 		},
 		logo() {
-			return server + this.settings.logo_auth
-		},
+			return this.settings.logo_auth
+		}
 	}
 }
 </script>

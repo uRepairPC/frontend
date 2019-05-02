@@ -2,7 +2,7 @@
 
 import '@babel/polyfill'
 import LocalizedFormat from 'dayjs/plugin/localizedFormat'
-import SettingsFrontend from '@/classes/SettingsFrontend'
+import SettingsGlobal from '@/classes/SettingsGlobal'
 import locale from 'element-ui/lib/locale/lang/ua'
 import prototypes from '@/prototypes'
 import directives from '@/directives'
@@ -50,7 +50,7 @@ directives.forEach((directive) => {
 })
 
 // Set init config
-SettingsFrontend.init()
+SettingsGlobal.init()
 store.dispatch('profile/init')
 
 new Vue({

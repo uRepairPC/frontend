@@ -1,6 +1,5 @@
 'use strict'
 
-import SettingsFrontend from '@/classes/SettingsFrontend'
 import { isArray, isObject } from '@/scripts/helpers'
 import { Message, Notification } from 'element-ui'
 import { runLoadingService } from '@/scripts/dom'
@@ -28,9 +27,6 @@ axios.interceptors.response.use(
 		if (resp.config.method !== 'get' && resp.data.message) {
 			Message({ message: resp.data.message, type: types.SUCCESS })
 		}
-
-		// Check for update frontend, global settings
-		SettingsFrontend.checkUpdate(resp.headers[SettingsFrontend.HEADER_NAME])
 
 		return resp
 	},

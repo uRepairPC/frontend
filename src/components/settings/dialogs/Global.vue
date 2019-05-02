@@ -25,13 +25,11 @@
 					:auto-upload="false"
 					:accept="row.mimes"
 					:name="row.attr"
-					:disabled="isDisabled(row.attr)"
 					action
 				>
 					<el-button
 						slot="trigger"
 						size="small"
-						:disabled="isDisabled(row.attr)"
 					>
 						Оберіть файл
 					</el-button>
@@ -39,7 +37,7 @@
 						v-if="settings[row.attr]"
 						type="danger"
 						size="small"
-						:disabled="isDisabled(row.attr)"
+						:disabled="!form[row.attr]"
 						@click="deleteFile(row.attr)"
 					>
 						Видалити
@@ -66,7 +64,7 @@
 </template>
 
 <script>
-import SettingsFrontend from '@/classes/SettingsFrontend'
+import SettingsGlobal from '@/classes/SettingsGlobal'
 import sections from '@/data/sections'
 import menu from '@/data/menu'
 
@@ -77,7 +75,7 @@ export default {
 	inheritAttrs: false,
 	data() {
 		return {
-			rows: SettingsFrontend.rows,
+			rows: SettingsGlobal.rows,
 			loading: false,
 			form: {}
 		}
@@ -97,16 +95,7 @@ export default {
 		}
 	},
 	created() {
-		this.rows.forEach((row) => {
-			switch (row.type) {
-			case 'bool':
-				this.$set(this.form, row.attr, !!this.settings[row.attr])
-				break
-			case 'text':
-				this.$set(this.form, row.attr, this.settings[row.attr])
-				break
-			}
-		})
+		this.form = { ...this.settings }
 	},
 	methods: {
 		fetchRequest() {
@@ -122,12 +111,16 @@ export default {
 			})
 
 			this.$refs.upload.forEach((component) => {
+				fd.delete(component.name)
+
 				if (!component.disabled && component.uploadFiles && component.uploadFiles.length) {
 					fd.append(component.name, component.uploadFiles[0].raw)
+				} else if (!this.form[component.name]) {
+					fd.append(component.name, '')
 				}
 			})
 
-			SettingsFrontend.fetchStore(fd)
+			SettingsGlobal.fetchStore(fd)
 				.then(() => {
 					this.$emit('store')
 					this.$emit('close')
@@ -136,10 +129,8 @@ export default {
 					this.loading = false
 				})
 		},
-		isDisabled(attr) {
-			return typeof this.form[attr] !== 'undefined'
-		},
 		deleteFile(attr) {
+			// Remove url from data
 			this.$set(this.form, attr, '')
 
 			// Clear active upload files before delete

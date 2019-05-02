@@ -1,70 +1,23 @@
 'use strict'
 
-import StorageData from '@/classes/StorageData'
 import defaultFavicon from '@/images/icon.png'
 import { setFavicon } from '@/scripts/dom'
-import { server } from '@/data/env'
 import store from '@/store'
 import axios from 'axios'
 
 /** @type {string} */
-export const API_POINT = 'settings/frontend'
+export const API_POINT = 'settings/global'
 
-/** @type {boolean} */
-let hasRequest = false
-
-export default class SettingsFrontend {
+export default class SettingsGlobal {
 
 	static init() {
-		const settings = StorageData.settingsGlobal
-
-		if (settings.timestamp) {
-			store.commit('settings/SET_GLOBAL', settings)
-			SettingsFrontend.updateDOM()
-		} else {
-			SettingsFrontend.checkUpdate(-1)
-			setFavicon(defaultFavicon)
-		}
+		store.dispatch('settings/fetchGlobal')
 	}
 
-	/**
-	 * Compare local timestamp and server.
-	 * If different - update.
-	 *
-	 * @param {number|string} serverTimestamp
-	 */
-	static checkUpdate(serverTimestamp) {
-		const localTimestamp = StorageData.settingsGlobal.timestamp || 0
-
-		if (+localTimestamp !== +serverTimestamp && !hasRequest) {
-			hasRequest = true
-
-			SettingsFrontend.fetchGet()
-				.then(({ data }) => {
-					SettingsFrontend.updateData(data, +serverTimestamp)
-					SettingsFrontend.updateDOM()
-				})
-				.finally(() => {
-					hasRequest = false
-				})
-		}
-	}
-
-	/**
-	 * @param {object} data
-	 * @param {number} timestamp
-	 */
-	static updateData(data, timestamp) {
-		StorageData.settingsGlobal = { ...data, timestamp }
-		store.commit('settings/SET_GLOBAL', { ...data, timestamp })
-	}
-
-	static updateDOM() {
-		const data = StorageData.settingsGlobal
-
+	static updateDOM(data) {
 		// Favicon
 		if (data.favicon) {
-			setFavicon(server + data.favicon)
+			setFavicon(data.favicon)
 		} else {
 			setFavicon(defaultFavicon)
 		}
@@ -89,6 +42,10 @@ export default class SettingsFrontend {
 	 */
 	static fetchGet(config = null) {
 		return axios.get(API_POINT, config)
+			.then((res) => {
+				SettingsGlobal.updateDOM(res.data)
+				return res
+			})
 	}
 
 	/**
@@ -99,16 +56,11 @@ export default class SettingsFrontend {
 	 * @return {Promise<AxiosPromise<any>>}
 	 */
 	static fetchStore(data = null, config = null) {
-		hasRequest = true
-
 		return axios.post(API_POINT, data, config)
 			.then((res) => {
-				SettingsFrontend.updateData(res.data.settings, res.data.modified)
-				SettingsFrontend.updateDOM()
+				store.commit('settings/SET_GLOBAL', res.data)
+				SettingsGlobal.updateDOM(res.data)
 				return res
-			})
-			.finally(() => {
-				hasRequest = false
 			})
 	}
 
@@ -116,10 +68,6 @@ export default class SettingsFrontend {
 	 * | - Getters -
 	 * | -------------------------------------------------------------------------------------
 	 */
-
-	static get HEADER_NAME() {
-		return 'app-settings-modified'
-	}
 
 	static get rows() {
 		return [

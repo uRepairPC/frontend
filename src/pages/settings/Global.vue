@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import SettingsFrontend from '@/classes/SettingsFrontend'
+import SettingsGlobal from '@/classes/SettingsGlobal'
 import breadcrumbs from '@/mixins/breadcrumbs'
 import sections from '@/data/sections'
 import menu from '@/data/menu'
@@ -50,7 +50,7 @@ export default {
 	],
 	data() {
 		return {
-			rows: SettingsFrontend.rows
+			rows: SettingsGlobal.rows
 		}
 	},
 	computed: {
@@ -64,7 +64,7 @@ export default {
 	methods: {
 		onClickEdit() {
 			this.$store.commit('template/OPEN_DIALOG', {
-				component: () => import('@/components/settings/dialogs/Store')
+				component: () => import('@/components/settings/dialogs/Global')
 			})
 		}
 	}

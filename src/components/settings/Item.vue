@@ -22,13 +22,11 @@
 </template>
 
 <script>
-import { server } from '@/data/env'
-
 export default {
 	props: {
 		value: {
-			type: [String, Number],
-			default: ''
+			type: [String, Number, Boolean],
+			default: null
 		},
 		type: {
 			type: String,
@@ -48,7 +46,7 @@ export default {
 				return null
 			}
 
-			return server + this.value
+			return this.value
 		}
 	}
 }

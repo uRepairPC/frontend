@@ -1,6 +1,7 @@
 'use strict'
 
 import SettingsManifest from '@/classes/SettingsManifest'
+import SettingsGlobal from '@/classes/SettingsGlobal'
 
 const state = {
 	loadingGlobal: false,
@@ -27,6 +28,17 @@ const mutations = {
 }
 
 const actions = {
+	fetchGlobal({ commit }, params) {
+		commit('SET_LOADING_GLOBAL', true)
+
+		SettingsGlobal.fetchGet({ params })
+			.then(({ data }) => {
+				commit('SET_GLOBAL', data)
+			})
+			.finally(() => {
+				commit('SET_LOADING_GLOBAL', false)
+			})
+	},
 	fetchManifest({ commit }, params) {
 		commit('SET_LOADING_MANIFEST', true)
 
