@@ -15,7 +15,7 @@
 			appear
 		>
 			<keep-alive>
-				<router-view />
+				<router-view :key="$route.name" />
 			</keep-alive>
 		</transition>
 	</el-tabs>
