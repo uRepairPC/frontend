@@ -114,6 +114,12 @@ export default {
 			menu: 'template/menu'
 		}),
 		title() {
+			const menu = this.menu[sections.settings]
+
+			if (!menu) {
+				return ''
+			}
+
 			const action = this.menu[sections.settings].children[this.$route.name]
 			return action ? action.title : ''
 		}

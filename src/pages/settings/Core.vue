@@ -32,7 +32,13 @@ export default {
 			menu: 'template/menu'
 		}),
 		sectionMenu() {
-			const actions = this.menu[sections.settings].children
+			const menu = this.menu[sections.settings]
+
+			if (!menu) {
+				return {}
+			}
+
+			const actions = menu.children
 
 			const arr = [
 				{ label: 'Головна', name: sections.settings }
