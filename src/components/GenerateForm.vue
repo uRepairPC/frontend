@@ -7,7 +7,7 @@
 		@submit.native.prevent="onSubmit"
 	>
 		<el-form-item
-			v-for="(item, key) in form"
+			v-for="(item, key) in formFilterHide"
 			:key="key"
 			:prop="`${key}.value`"
 			:rules="item.rules"
@@ -51,6 +51,7 @@ export default {
 		 *   name: {
 		 *     component: 'el-input',
 		 *     value: '', // v-model
+		 *     hide: false, // hide this properties from loop
 		 *     label: 'Label', // <el-form-item />
 		 *     rules: { ... }, // <el-form-item />
 		 *     attrs: { ... }, // v-bind to component
@@ -71,6 +72,17 @@ export default {
 	computed: {
 		hasBtn() {
 			return !!this.$slots.button
+		},
+		formFilterHide() {
+			const result = {}
+
+			Object.entries(this.form).forEach(([key, obj]) => {
+				if (!obj.hide) {
+					result[key] = obj
+				}
+			})
+
+			return result
 		}
 	},
 	methods: {
