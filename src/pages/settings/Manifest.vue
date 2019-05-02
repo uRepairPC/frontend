@@ -93,10 +93,10 @@ export default {
 	},
 	computed: {
 		manifest() {
-			return this.$store.state.settings.manifest
+			return this.$store.state.settings.manifest.data
 		},
 		loading() {
-			return this.$store.state.settings.loadingManifest
+			return this.$store.state.settings.manifest.loading
 		},
 		title() {
 			return menu[sections.settings].children[sections.settingsManifest].title

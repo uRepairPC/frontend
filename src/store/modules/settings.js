@@ -12,9 +12,11 @@ const state = {
 		data: {}
 	},
 	// PWA
-	// TODO Like global
-	manifest: {},
-	loadingManifest: false
+	manifest: {
+		init: true,
+		loading: false,
+		data: {}
+	}
 }
 
 const mutations = {
@@ -26,10 +28,11 @@ const mutations = {
 		Vue.set(state.global, 'loading', bool)
 	},
 	SET_MANIFEST(state, obj) {
-		state.manifest = obj
+		Vue.set(state.manifest, 'init', false)
+		Vue.set(state.manifest, 'data', obj)
 	},
 	SET_LOADING_MANIFEST(state, bool) {
-		state.loadingManifest = bool
+		Vue.set(state.manifest, 'loading', bool)
 	}
 }
 
