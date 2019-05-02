@@ -1,7 +1,7 @@
 <template>
 	<basic-edit
 		:title="title"
-		:loading="loading"
+		:loading="loadingFetch"
 		v-bind="$attrs"
 		v-on="listeners"
 	>
@@ -77,7 +77,7 @@ export default {
 	data() {
 		return {
 			rows: SettingsGlobal.rows,
-			loading: false,
+			loadingFetch: false,
 			form: {}
 		}
 	},
@@ -109,7 +109,7 @@ export default {
 	methods: {
 		fetchRequest() {
 			const fd = new FormData
-			this.loading = true
+			this.loadingFetch = true
 
 			Object.entries(this.form).forEach(([key, val]) => {
 				if (typeof val === 'boolean') {
@@ -135,7 +135,7 @@ export default {
 					this.$emit('close')
 				})
 				.finally(() => {
-					this.loading = false
+					this.loadingFetch = false
 				})
 		},
 		deleteFile(attr) {
