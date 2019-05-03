@@ -13,7 +13,7 @@ export default function () {
 
 	// Service Workers - delete API data
 	if ('caches' in window) {
-		caches.delete(`workbox-runtime-${window.location.origin}/`)
+		caches.delete('api')
 	}
 
 	// Clear data from localStorage

@@ -148,13 +148,22 @@ if (!isDev) {
 				/^\/auth/, /^\/requests/, /^\/users/, /^\/equipments/, /^\/roles/, /^\/settings/
 			],
 			runtimeCaching: [{
-				urlPattern: /api/,
-				handler: 'NetworkFirst'
+				urlPattern: /\.json$|api\/settings/,
+				handler: 'StaleWhileRevalidate',
+				options: {
+					cacheName: 'settings'
+				}
 			}, {
-				urlPattern: /\.json$/,
+				urlPattern: /storage/,
+				handler: 'StaleWhileRevalidate',
+				options: {
+					cacheName: 'storage'
+				}
+			}, {
+				urlPattern: /api/,
 				handler: 'NetworkFirst',
 				options: {
-					cacheName: 'json'
+					cacheName: 'api'
 				}
 			}]
 		}),
