@@ -1,5 +1,6 @@
 'use strict'
 
+import store from '@/store'
 import axios from 'axios'
 
 /** @type {string} */
@@ -31,6 +32,10 @@ export default class SettingsManifest {
 	 */
 	static fetchStore(data = null, config = null) {
 		return axios.post(API_POINT, data, config)
+			.then((res) => {
+				store.commit('settings/SET_MANIFEST', res.data.data)
+				return res
+			})
 	}
 
 	/* | -------------------------------------------------------------------------------------

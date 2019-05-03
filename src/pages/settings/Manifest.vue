@@ -72,6 +72,7 @@
 import SettingsManifest from '@/classes/SettingsManifest'
 import breadcrumbs from '@/mixins/breadcrumbs'
 import sections from '@/data/sections'
+import { mapState } from 'vuex'
 import menu from '@/data/menu'
 
 export default {
@@ -92,18 +93,19 @@ export default {
 		}
 	},
 	computed: {
-		manifest() {
-			return this.$store.state.settings.manifest.data
-		},
-		loading() {
-			return this.$store.state.settings.manifest.loading
-		},
+		...mapState({
+			manifest: state => state.settings.manifest.data,
+			loading: state => state.settings.manifest.loading,
+			init: state => state.settings.manifest.init
+		}),
 		title() {
 			return menu[sections.settings].children[sections.settingsManifest].title
 		}
 	},
 	mounted() {
-		this.$store.dispatch('settings/fetchManifest')
+		if (this.init) {
+			this.$store.dispatch('settings/fetchManifest')
+		}
 	},
 	methods: {
 		onClickEdit() {
@@ -128,6 +130,7 @@ export default {
 		background: #fff;
 		border: 1px solid $defaultBorder;
 		padding: 5px;
+		margin-bottom: 10px;
 	}
 }
 </style>
