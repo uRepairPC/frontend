@@ -16,5 +16,6 @@ export default {
 	equipmentsTypes: 'equipments-types',
 	roles: 'roles',
 	settings: 'settings',
-	settingsGlobal: 'settings-global'
+	settingsGlobal: 'settings-global',
+	settingsManifest: 'settings-manifest'
 }

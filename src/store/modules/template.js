@@ -15,9 +15,7 @@ const state = {
 	// Required id property
 	sidebar: {},
 	// Set dialog global on all pages (in layout)
-	dialog: {},
-	// Global settings for the website (logo, title, etc)
-	settings: {}
+	dialog: {}
 }
 
 const mutations = {
@@ -78,13 +76,6 @@ const mutations = {
 	},
 	CLEAR_SIDEBAR(state) {
 		state.sidebar = {}
-	},
-	/**
-	 * @param state
-	 * @param {object} data
-	 */
-	SET_SETTINGS(state, data) {
-		state.settings = data
 	},
 	/**
 	 * @param state

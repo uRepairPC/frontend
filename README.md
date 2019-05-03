@@ -35,6 +35,7 @@ See [here](https://urepairpc.github.io/docs/)
 - [ ] Fix Jest require.context
 - [ ] i18n (branch i18n)
 - [ ] Global search
+- [ ] Optimizing code, comments, refactoring
 
 ## Changelog
 Detailed changes for each release are documented in the [CHANGELOG.md](https://github.com/uRepairPC/web/blob/master/CHANGELOG.md).

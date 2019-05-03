@@ -1,8 +1,6 @@
 <template>
 	<div class="settings">
-		<section-menu
-			:menu="pages"
-		/>
+		<section-menu :menu="pages" />
 	</div>
 </template>
 
@@ -28,7 +26,9 @@ export default {
 			menu: 'template/menu'
 		}),
 		pages() {
-			return this.menu[sections.settings].children
+			const section = this.menu[sections.settings] || {}
+
+			return section.children || {}
 		}
 	}
 }
