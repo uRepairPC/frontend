@@ -15,7 +15,15 @@
 			<el-checkbox
 				:label="column.label"
 				@change="onChange(column, $event)"
-			/>
+			>
+				<span>{{ column.label }}</span>
+				<span
+					v-if="!column.disableSearch"
+					class="support-search"
+				>
+					пошук
+				</span>
+			</el-checkbox>
 		</el-checkbox-group>
 	</filter-basic>
 </template>

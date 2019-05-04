@@ -22,6 +22,7 @@
 }
 
 .filter-title {
+  font-size: 1rem;
   font-weight: 600;
   padding: 5px 5px 5px 15px;
   margin-bottom: 15px;
@@ -39,6 +40,12 @@
   .el-checkbox.is-bordered {
     display: flex;
     align-items: center;
+  }
+  .support-search {
+    color: $success;
+    text-transform: uppercase;
+    font-size: .5rem;
+    vertical-align: super;
   }
 }
 

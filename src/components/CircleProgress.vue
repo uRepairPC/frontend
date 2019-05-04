@@ -99,7 +99,7 @@ export default {
 		}
 	}
 	.bottom {
-		font-size: .8em;
+		font-size: 13px;
 	}
 }
 
