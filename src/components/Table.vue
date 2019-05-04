@@ -19,7 +19,8 @@
 				>
 					<slot
 						:column="column"
-						:row="row[column.prop]"
+						:row="row"
+						:data="row[column.prop]"
 					>
 						{{ isEmpty(row[column.prop]) ? null : row[column.prop] }}
 					</slot>

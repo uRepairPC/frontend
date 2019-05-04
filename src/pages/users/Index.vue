@@ -10,16 +10,16 @@
 				@row-click="onRowClick"
 				@sort-change="onSortChange"
 			>
-				<template slot-scope="{ column, row }">
+				<template slot-scope="{ column, data }">
 					<template v-if="column.prop === 'roles'">
 						<role-tag
-							v-for="(role, index) in row"
+							v-for="(role, index) in data"
 							:key="index"
 							:role="role"
 						/>
 					</template>
 					<template v-else>
-						{{ row }}
+						{{ data }}
 					</template>
 				</template>
 			</table-component>

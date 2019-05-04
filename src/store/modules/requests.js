@@ -67,7 +67,7 @@ const getters = {
 			{ prop: 'user_name', label: 'Створив', 'min-width': 150 },
 			{ prop: 'assign_name', label: 'Виконує', 'min-width': 150 },
 			{ prop: 'type_name', label: 'Тип', 'min-width': 120, disableSearch: true },
-			{ prop: 'priority_name', label: 'Пріорітет', 'min-width': 120, disableSearch: true },
+			{ prop: 'priority_name', label: 'Пріорітет', 'min-width': 120, disableSearch: true, sortable: 'custom' },
 			{ prop: 'status_name', label: 'Статус', 'min-width': 120, disableSearch: true },
 			{ prop: 'equipment_name', label: 'Обладнання', 'min-width': 150 },
 			{ prop: 'equipment_serial_number', label: 'Серійний номер', 'min-width': 120 },
