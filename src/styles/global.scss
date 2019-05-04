@@ -15,14 +15,11 @@
   }
 }
 
-html, body {
-  height: 100%;
-}
-
 body {
   background: #fbfbfb;
   margin: 0;
   padding: 0;
+  overflow-y: scroll;
 }
 
 img {
@@ -36,24 +33,5 @@ a {
   transition: color .2s;
   &:hover {
     color: $warning;
-  }
-}
-
-#app, .layout {
-  height: inherit;
-  > .el-container {
-    height: inherit;
-  }
-}
-
-@media only screen and (max-width: $laptop) {
-  html, body {
-    height: auto;
-  }
-  body {
-    overflow-y: scroll;
-  }
-  #app, .layout {
-    height: auto;
   }
 }

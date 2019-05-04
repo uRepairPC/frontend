@@ -57,14 +57,19 @@ export default {
 @import "~scss/_colors";
 
 .el-aside {
-	border-right: solid 1px $defaultBorder;
+	position: sticky;
+	top: 0;
+	max-height: 100vh;
 	background: #fff;
 	user-select: none;
 }
 
+.aside-wrap {
+	border-right: 1px solid $defaultBorder;
+}
+
 .el-menu {
-	border: 0;
-	background: none;
+	border-right: 0;
 }
 
 .el-menu-item {
@@ -79,14 +84,7 @@ export default {
 @media only screen and (max-width: $laptop) {
 	.el-aside {
 		overflow: unset;
-		border-right: 0;
 		width: 64px !important;
-	}
-	.aside-wrap {
-		position: sticky;
-		top: 0;
-		max-height: 100vh;
-		overflow: auto;
 	}
 	.el-menu-item {
 		justify-content: center;

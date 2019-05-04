@@ -93,10 +93,6 @@ export default {
 @import "~scss/mobile/_sizes";
 @import "~scss/_colors";
 
-.template-one {
-	overflow-y: scroll !important;
-}
-
 .template__wrap {
 	margin: 0 20px 50px;
 }
@@ -143,11 +139,5 @@ $transition: .25s;
 .anim-leave-active,
 .anim-leave-to {
 	display: none;
-}
-
-@media only screen and (max-width: $laptop) {
-	.template-one {
-		overflow-y: unset !important;
-	}
 }
 </style>

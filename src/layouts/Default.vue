@@ -88,32 +88,15 @@ export default {
 }
 
 .el-main {
-	padding: 0;
+	padding: 1px;
 }
 
 .container-content {
 	will-change: filter;
-	height: calc(100% - #{$headerHeight});
-}
-
-.page {
-	height: calc(100% - #{$breadcrumbsHeight});
-	overflow-y: scroll;
-	overflow-x: hidden;
 }
 
 .search--open {
 	transition: $searchTransition;
 	filter: blur(5px);
-}
-
-@media only screen and (max-width: $laptop) {
-	.el-main {
-		border-left: 1px solid $defaultBorder;
-		min-height: calc(100vh - #{$headerHeight});
-	}
-	.page {
-		overflow-y: auto;
-	}
 }
 </style>

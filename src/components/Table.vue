@@ -4,7 +4,6 @@
 		v-loading="loading"
 		:data="list.data || []"
 		stripe
-		height="100%"
 		v-bind="$attrs"
 		v-on="$listeners"
 	>
@@ -63,13 +62,7 @@ export default {
 		}
 	},
 	mounted() {
-		/*
-		 * Desktop - scroll on element
-		 * Mobile - scroll on window
-		 */
 		this.wrapperEl = this.$refs.table.$el.querySelector('.el-table__body-wrapper')
-
-		this.wrapperEl.addEventListener('scroll', this.onElementScroll)
 		window.addEventListener('scroll', this.onWindowScroll)
 	},
 	activated() {
@@ -103,19 +96,6 @@ export default {
 					this.emitFetch()
 				}
 			}, WAIT_TIMEOUT)
-		},
-		onElementScroll() {
-			clearTimeout(this._timeoutElementScroll)
-
-			this._timeoutElementScroll = setTimeout(() => {
-				if (this.wrapperElDisplayed() || this.wrapperEl.scrollTop <= 0) {
-					return
-				}
-
-				if (this.wrapperEl.scrollTop + this.wrapperEl.offsetHeight >= this.wrapperEl.scrollHeight - OFFSET_BOTTOM) {
-					this.emitFetch()
-				}
-			}, WAIT_TIMEOUT)
 		}
 	}
 }
@@ -143,11 +123,5 @@ export default {
 
 /deep/ th .cell {
 	white-space: nowrap;
-}
-
-@media only screen and (max-width: $laptop) {
-	/deep/ .el-table__body-wrapper {
-		height: auto !important;
-	}
 }
 </style>

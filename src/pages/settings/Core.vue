@@ -71,8 +71,7 @@ export default {
 }
 
 /deep/ .el-tabs__content {
-	padding: 0 20px;
-	margin-bottom: 50px;
+	padding: 0 20px 50px;
 }
 
 /deep/ .el-tabs__item {

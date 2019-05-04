@@ -18,6 +18,22 @@
 @import "~scss/mobile/_sizes";
 @import "~scss/_colors";
 
+$rightColumnWidth: 300px;
+
+.template-page {
+	display: flex;
+	flex-direction: row;
+	> .left-column {
+		flex: 1 1 auto;
+		width: calc(100% - #{$rightColumnWidth});
+	}
+	> .right-column {
+		min-width: $rightColumnWidth;
+		width: $rightColumnWidth;
+		border-left: 1px solid $defaultBorder;
+	}
+}
+
 .anim-enter-active {
 	transition: .25s opacity;
 	opacity: 0;
@@ -35,6 +51,9 @@
 @media only screen and (max-width: $laptop) {
 	.template-page {
 		flex-direction: column-reverse;
+		> .left-column {
+			width: 100%;
+		}
 		> .right-column {
 			background: #fbfbfb;
 			width: 100%;

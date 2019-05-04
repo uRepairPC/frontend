@@ -8,12 +8,6 @@
 .filters-core {
   display: flex;
   flex-direction: column;
-  height: 100%;
-}
-
-.filters-core__content {
-  flex: 1 1 auto;
-  padding-bottom: 20px;
 }
 
 /*
@@ -156,9 +150,6 @@
     margin-bottom: 0;
     .filter-title {
       display: block;
-    }
-    .top {
-      display: none;
     }
   }
 }
