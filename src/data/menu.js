@@ -27,7 +27,8 @@ export default {
 			permissions.REQUESTS_CREATE
 		],
 		history: {
-			show: true
+			show: true,
+			callback: (obj) => `[${obj.id}] ${obj.title}`
 		},
 		children: {
 			add: {
