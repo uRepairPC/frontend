@@ -56,10 +56,10 @@ export default {
 		}
 	},
 	mounted() {
-		document.addEventListener('keypress', this.hotKeys)
+		document.addEventListener('keydown', this.hotKeys)
 	},
 	beforeDestroy() {
-		document.removeEventListener('keypress', this.hotKeys)
+		document.removeEventListener('keydown', this.hotKeys)
 	},
 	methods: {
 		hotKeys(evt) {
