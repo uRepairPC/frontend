@@ -151,10 +151,6 @@ export default {
 			StorageData.columnUsers = this.filterColumns.map(i => i.prop)
 		},
 		onRowClick(user) {
-			if (user.disable) {
-				return
-			}
-
 			User.sidebar().add(user)
 			this.$router.push({ name: `${sections.users}-id`, params: { id: user.id } })
 		},

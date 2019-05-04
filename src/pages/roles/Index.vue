@@ -6,7 +6,6 @@
 				:columns="filterColumns"
 				:list="list"
 				:loading="loading"
-				:loading-type="loadingType"
 				@fetch="fetchList"
 				@row-click="onRowClick"
 				@sort-change="onSortChange"
@@ -73,7 +72,6 @@ export default {
 			sections,
 			sectionName: sections.roles,
 			columns: [],
-			loadingType: 'rows',
 			fixed: null,
 			search: '',
 			sort: {}
@@ -123,12 +121,6 @@ export default {
 	},
 	methods: {
 		fetchList(page = 1) {
-			this.loadingType = page === 1 && this.roles.length ? 'directive' : 'rows'
-
-			if (this.loadingType === 'directive') {
-				this.$refs.buttons.scrollTop()
-			}
-
 			this.$store.dispatch('roles/fetchList', {
 				page,
 				sortColumn: this.sort.column,
@@ -141,10 +133,6 @@ export default {
 			StorageData.columnRoles = this.filterColumns.map(i => i.prop)
 		},
 		onRowClick(role) {
-			if (role.disable) {
-				return
-			}
-
 			Role.sidebar().add(role)
 			this.$router.push({ name: `${sections.roles}-id`, params: { id: role.id } })
 		},

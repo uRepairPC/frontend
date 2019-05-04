@@ -6,7 +6,6 @@
 				:columns="filterColumns"
 				:list="list"
 				:loading="loading"
-				:loading-type="loadingType"
 				@fetch="fetchList"
 				@row-click="onRowClick"
 				@sort-change="onSortChange"
@@ -73,7 +72,6 @@ export default {
 			sections,
 			sectionName: sections.equipments,
 			columns: [],
-			loadingType: 'rows',
 			fixed: null,
 			search: '',
 			sort: {}
@@ -123,12 +121,6 @@ export default {
 	},
 	methods: {
 		fetchList(page = 1) {
-			this.loadingType = page === 1 && this.equipments.length ? 'directive' : 'rows'
-
-			if (this.loadingType === 'directive') {
-				this.$refs.buttons.scrollTop()
-			}
-
 			this.$store.dispatch('equipments/fetchList', {
 				page,
 				sortColumn: this.sort.column,
@@ -141,10 +133,6 @@ export default {
 			StorageData.columnEquipments = this.filterColumns.map(i => i.prop)
 		},
 		onRowClick(equipment) {
-			if (equipment.disable) {
-				return
-			}
-
 			Equipment.sidebar().add(equipment)
 			this.$router.push({ name: `${sections.equipments}-id`, params: { id: equipment.id } })
 		},
