@@ -3,6 +3,9 @@
 import { isArray, isObject } from '@/scripts/helpers'
 
 /** @type {string} */
+const COLUMN_REQUESTS = 'column_requests'
+
+/** @type {string} */
 const COLUMN_USERS = 'column_users'
 
 /** @type {string} */
@@ -34,6 +37,9 @@ export default class StorageData {
 		const self = this
 
 		return {
+			columnRequests() {
+				return self._remove(COLUMN_REQUESTS)
+			},
 			columnUsers() {
 				return self._remove(COLUMN_USERS)
 			},
@@ -56,6 +62,17 @@ export default class StorageData {
 				return self._remove(SETTINGS_GLOBAL)
 			}
 		}
+	}
+
+	/* Column Requests ----------------------------------------------------------------------- */
+
+	/** @return {Array} */
+	static get columnRequests() {
+		return this.getArray(COLUMN_REQUESTS)
+	}
+
+	static set columnRequests(value) {
+		this.setArray(COLUMN_REQUESTS, value)
 	}
 
 	/* Column Users -------------------------------------------------------------------------- */
