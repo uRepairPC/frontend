@@ -9,7 +9,25 @@
 				@fetch="fetchList"
 				@row-click="onRowClick"
 				@sort-change="onSortChange"
-			/>
+			>
+				<template slot-scope="{ column, row, data }">
+					<template v-if="column.prop === 'priority_name'">
+						<table-cell-color
+							:value="data"
+							:color="row.priority_color"
+						/>
+					</template>
+					<template v-else-if="column.prop === 'status_name'">
+						<table-cell-color
+							:value="data"
+							:color="row.status_color"
+						/>
+					</template>
+					<template v-else>
+						{{ data }}
+					</template>
+				</template>
+			</table-component>
 		</template>
 		<filter-core slot="right-column">
 			<filter-table-buttons
@@ -56,6 +74,7 @@ export default {
 	components: {
 		FilterTableButtons: () => import('@/components/filters/TableButtons'),
 		FilterPagination: () => import('@/components/filters/Pagination'),
+		TableCellColor: () => import('@/components/TableCellColor'),
 		FilterColumns: () => import('@/components/filters/Columns'),
 		FilterAction: () => import('@/components/filters/Action'),
 		FilterSearch: () => import('@/components/filters/Search'),
