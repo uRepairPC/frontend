@@ -28,14 +28,12 @@
 			<filter-table-buttons
 				ref="buttons"
 				:section="sections.users"
-				@update="onFetchFilter"
 			/>
 			<filter-action
 				:section="sectionName"
 			/>
 			<filter-search
 				v-model="search"
-				@submit="onFetchFilter"
 			/>
 			<filter-pagination
 				:pagination="list"
@@ -142,10 +140,6 @@ export default {
 				columns: this.activeColumnProps,
 				search: this.search || null
 			})
-		},
-		onFetchFilter() {
-			this.$refs.buttons.scrollTop()
-			this.fetchList()
 		},
 		onChangeColumn() {
 			StorageData.columnUsers = this.filterColumns.map(i => i.prop)
