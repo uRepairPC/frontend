@@ -55,7 +55,7 @@ export default {
 
 			Equipment.fetchAll({
 				params: {
-					search,
+					search: search || undefined,
 					columns: ['model_name', 'inventory_number', 'serial_number']
 				}
 			})
