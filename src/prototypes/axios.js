@@ -11,7 +11,10 @@ import { server } from '@/data/env'
 import store from '@/store'
 import axios from 'axios'
 
-// All requests go to here
+/*
+ * In dev mode, all requests are sent to the server via
+ * proxy target in webpack (env.PROXY_TARGET), to bypass CORS.
+ */
 axios.defaults.baseURL = server
 
 /** @type {Array} */

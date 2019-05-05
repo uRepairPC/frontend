@@ -2,30 +2,52 @@
 
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const WorkboxPlugin = require('workbox-webpack-plugin')
 const { VueLoaderPlugin } = require('vue-loader')
 const Dotenv = require('dotenv-webpack')
 const path = require('path')
 require('dotenv').config()
 
+/** @type {boolean} */
+const isDev = ['dev', 'development'].includes(process.env.NODE_ENV)
+
 module.exports = {
-	mode: ['dev', 'development'].includes(process.env.NODE_ENV) ? 'development' : 'production',
+	mode: isDev ? 'development' : 'production',
 	entry: [
 		'./src/main.js'
 	],
 	output: {
-		filename: 'main.js',
+		filename: 'assets/[name].[hash].js',
+		chunkFilename: 'assets/chunks/[name].[hash].js',
 		publicPath: '/',
 		path: path.resolve(__dirname, 'dist')
 	},
-	devtool: 'inline-source-map',
+	devtool: isDev ? 'inline-source-map' : false,
 	devServer: {
 		publicPath: '/',
 		contentBase: './dist',
-		host: process.env.WEBPACK_HOST || 'localhost',
+		host: process.env.WEBPACK_HOST_DEV || 'localhost',
 		hot: true,
+		writeToDisk: true,
 		clientLogLevel: 'error',
-		disableHostCheck: true
-		// Do not add proxy - conflicts arise (sockets + pwa)
+		disableHostCheck: true,
+		proxy: {
+			'/api/*': {
+				target: process.env.PROXY_TARGET || 'http://localhost/',
+				changeOrigin: true
+			}
+		}
+	},
+	optimization: {
+		splitChunks: {
+			cacheGroups: {
+				vendor: {
+					test: /[\\/]node_modules[\\/]/,
+					name: 'vendors',
+					chunks: 'all'
+				}
+			}
+		}
 	},
 	module: {
 		rules: [
@@ -40,13 +62,23 @@ module.exports = {
 			{
 				test: /\.(png|svg|jpg|gif)$/,
 				use: [
-					'file-loader'
+					{
+						loader: 'file-loader',
+						options: {
+							outputPath: 'assets/images',
+						}
+					}
 				]
 			},
 			{
 				test: /\.(eot|svg|ttf|woff|woff2)$/,
 				use: [
-					'file-loader'
+					{
+						loader: 'file-loader',
+						options: {
+							outputPath: 'assets/files',
+						}
+					}
 				]
 			},
 			{
@@ -74,6 +106,17 @@ module.exports = {
 			template: './index.html',
 			inject: true,
 			chunksSortMode: 'none'
+		}),
+		new WorkboxPlugin.GenerateSW({
+			swDest: 'sw.js',
+			importWorkboxFrom: isDev ? 'cdn' : 'local',
+			importsDirectory: 'assets',
+			clientsClaim: true,
+			skipWaiting: true,
+			runtimeCaching: [{
+				urlPattern: new RegExp('api'),
+				handler: 'StaleWhileRevalidate'
+			}]
 		})
 	],
 	resolve: {

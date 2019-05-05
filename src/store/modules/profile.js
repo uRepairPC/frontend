@@ -92,10 +92,8 @@ const actions = {
 		const loadingService = runLoadingService('Виходимо з системи')
 
 		axios.post('auth/logout')
-			.then(() => {
-				logout()
-			})
 			.finally(() => {
+				logout()
 				loadingService.close()
 			})
 	}
