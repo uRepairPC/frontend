@@ -3,7 +3,7 @@
 		:items="list"
 		label-attr="name"
 		value-attr="id"
-		placeholder="Пріорітет"
+		placeholder="Тип"
 		v-bind="$attrs"
 		v-on="listeners"
 	/>
@@ -17,17 +17,17 @@ export default {
 	},
 	computed: {
 		list() {
-			return this.$store.state.requestPriorities.list
+			return this.$store.state.requestTypes.list
 		},
 		init() {
-			return this.$store.state.requestPriorities.init
+			return this.$store.state.requestTypes.init
 		},
 		listeners() {
 			return {
 				...this.$listeners,
 				focus: () => {
 					if (this.init) {
-						this.$store.dispatch('requestPriorities/fetchList')
+						this.$store.dispatch('requestTypes/fetchList')
 					}
 				}
 			}

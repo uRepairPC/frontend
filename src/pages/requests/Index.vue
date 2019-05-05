@@ -38,8 +38,24 @@
 			<filter-action
 				:section="sectionName"
 			/>
-			<filter-basic title="Фільтр по пріорітету">
-				<request-priority-select v-model="filters.priority" />
+			<filter-basic title="Фільтри">
+				<request-priority-select
+					v-model="filters.priority_id"
+					size="small"
+					class="mb-10"
+					clearable
+				/>
+				<request-status-select
+					v-model="filters.status_id"
+					size="small"
+					class="mb-10"
+					clearable
+				/>
+				<request-type-select
+					v-model="filters.type_id"
+					size="small"
+					clearable
+				/>
 			</filter-basic>
 			<filter-search
 				v-model="search"
@@ -76,7 +92,9 @@ export default {
 	],
 	components: {
 		RequestPrioritySelect: () => import('@/components/requests/priorities/Select'),
+		RequestStatusSelect: () => import('@/components/requests/statuses/Select'),
 		FilterTableButtons: () => import('@/components/filters/TableButtons'),
+		RequestTypeSelect: () => import('@/components/requests/types/Select'),
 		FilterPagination: () => import('@/components/filters/Pagination'),
 		TableCellColor: () => import('@/components/TableCellColor'),
 		FilterColumns: () => import('@/components/filters/Columns'),
@@ -95,7 +113,11 @@ export default {
 		return {
 			sections,
 			sectionName: sections.requests,
-			filters: {},
+			filters: {
+				priority_id: null,
+				status_id: null,
+				type_id: null
+			},
 			columns: [],
 			fixed: null,
 			search: '',
@@ -139,6 +161,12 @@ export default {
 					.filter(obj => !obj.hideList)
 			},
 			immediate: true
+		},
+		filters: {
+			handler() {
+				this.fetchList()
+			},
+			deep: true
 		}
 	},
 	mounted() {
@@ -151,7 +179,8 @@ export default {
 				sortColumn: this.sort.column,
 				sortOrder: this.sort.order,
 				columns: this.activeColumnProps,
-				search: this.search || null
+				search: this.search || null,
+				...this.filters
 			})
 		},
 		onChangeColumn() {
