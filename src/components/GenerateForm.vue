@@ -1,13 +1,13 @@
 <template>
 	<el-form
 		ref="form"
-		:model="form"
+		:model="formFilterPermissions"
 		class="form--full"
 		status-icon
 		@submit.native.prevent="onSubmit"
 	>
 		<el-form-item
-			v-for="(item, key) in formFilterHide"
+			v-for="(item, key) in formFilterPermissionsAndHide"
 			:key="key"
 			:prop="`${key}.value`"
 			:rules="item.rules"
@@ -43,6 +43,8 @@
 </template>
 
 <script>
+import { includePermission } from '@/scripts/utils'
+
 export default {
 	inheritAttrs: false,
 	props: {
@@ -51,6 +53,7 @@ export default {
 		 *   name: {
 		 *     component: 'el-input',
 		 *     value: '', // v-model
+		 *     permissions: [], // permissions enum (String, Array)
 		 *     hide: false, // hide this properties from loop
 		 *     label: 'Label', // <el-form-item />
 		 *     rules: { ... }, // <el-form-item />
@@ -73,10 +76,21 @@ export default {
 		hasBtn() {
 			return !!this.$slots.button
 		},
-		formFilterHide() {
+		formFilterPermissions() {
 			const result = {}
 
 			Object.entries(this.form).forEach(([key, obj]) => {
+				if (includePermission(obj.permissions)) {
+					result[key] = obj
+				}
+			})
+
+			return result
+		},
+		formFilterPermissionsAndHide() {
+			const result = {}
+
+			Object.entries(this.formFilterPermissions).forEach(([key, obj]) => {
 				if (!obj.hide) {
 					result[key] = obj
 				}
@@ -103,7 +117,7 @@ export default {
 		getValues() {
 			const result = {}
 
-			Object.entries(this.form).forEach(([key, obj]) => {
+			Object.entries(this.formFilterPermissions).forEach(([key, obj]) => {
 				result[key] = obj.value
 			})
 
