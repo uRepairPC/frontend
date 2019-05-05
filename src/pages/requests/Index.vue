@@ -38,6 +38,9 @@
 			<filter-action
 				:section="sectionName"
 			/>
+			<filter-basic title="Фільтр по пріорітету">
+				<request-priority-select v-model="filters.priority" />
+			</filter-basic>
 			<filter-search
 				v-model="search"
 				@submit="fetchList"
@@ -72,6 +75,7 @@ export default {
 		{ title: menu[sections.requests].title }
 	],
 	components: {
+		RequestPrioritySelect: () => import('@/components/requests/priorities/Select'),
 		FilterTableButtons: () => import('@/components/filters/TableButtons'),
 		FilterPagination: () => import('@/components/filters/Pagination'),
 		TableCellColor: () => import('@/components/TableCellColor'),
@@ -79,6 +83,7 @@ export default {
 		FilterAction: () => import('@/components/filters/Action'),
 		FilterSearch: () => import('@/components/filters/Search'),
 		TemplateList: () => import('@/components/template/List'),
+		FilterBasic: () => import('@/components/filters/Basic'),
 		FilterFixed: () => import('@/components/filters/Fixed'),
 		FilterCore: () => import('@/components/filters/Core'),
 		TableComponent: () => import('@/components/Table')
@@ -90,6 +95,7 @@ export default {
 		return {
 			sections,
 			sectionName: sections.requests,
+			filters: {},
 			columns: [],
 			fixed: null,
 			search: '',

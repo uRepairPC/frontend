@@ -5,9 +5,9 @@
 	>
 		<el-option
 			v-for="item in items"
-			:key="item.value"
-			:label="item.label"
-			:value="item.value"
+			:key="item[valueAttr]"
+			:label="item[labelAttr]"
+			:value="item[valueAttr]"
 		/>
 	</el-select>
 </template>
@@ -18,6 +18,14 @@ export default {
 		items: {
 			type: Array,
 			default: () => []
+		},
+		valueAttr: {
+			type: String,
+			default: 'value'
+		},
+		labelAttr: {
+			type: String,
+			default: 'label'
 		}
 	}
 }
