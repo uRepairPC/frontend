@@ -1,5 +1,5 @@
 <template>
-	<div class="role visible-scroll">
+	<div class="role">
 		<div class="wrap">
 			<div class="title">
 				{{ titlePage }}
