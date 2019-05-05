@@ -32,6 +32,11 @@ const authorizedRoutes = {
 			name: sections.requests,
 			component: loadPage('requests/Index')
 		},
+		{
+			path: `/${sections.requests}/create`,
+			name: `${sections.requests}-create`,
+			component: loadPage('requests/Create')
+		},
 		// ------------------------------------------------ Users
 		{
 			path: `/${sections.users}`,

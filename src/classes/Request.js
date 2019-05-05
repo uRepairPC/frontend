@@ -61,7 +61,7 @@ export default class Request {
 	static fetchOne(id, config = null) {
 		return axios.get(`${API_POINT}/${id}`, config)
 			.then((response) => {
-				Request.sidebar().add(response.data.section)
+				Request.sidebar().add(response.data.request)
 				return response
 			})
 			.catch((err) => {
@@ -81,7 +81,7 @@ export default class Request {
 	static fetchEdit(id, data = null, config = null) {
 		return axios.put(`${API_POINT}/${id}`, data, config)
 			.then((response) => {
-				Request.sidebar().add(response.data.section)
+				Request.sidebar().add(response.data.request)
 				return response
 			})
 	}
@@ -96,7 +96,7 @@ export default class Request {
 	static fetchStore(data = null, config = null) {
 		return axios.post(API_POINT, data, config)
 			.then((response) => {
-				Request.sidebar().add(response.data.section)
+				Request.sidebar().add(response.data.request)
 				return response
 			})
 	}
