@@ -1,8 +1,5 @@
 'use strict'
 
-/** @type {number} - milliseconds */
-const WAIT_UPDATE_SCROLL = 400
-
 export default {
 	activated() {
 		this.updateScrollTablePosition()
@@ -19,11 +16,9 @@ export default {
 				return
 			}
 
-			// Wait x milliseconds, because child
-			// elements may not be display
 			setTimeout(() => {
 				document.documentElement.scrollTop = pageScroll
-			}, WAIT_UPDATE_SCROLL)
+			})
 		},
 		saveScrollTablePosition() {
 			let scroll = 0
