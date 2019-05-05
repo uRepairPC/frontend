@@ -35,6 +35,7 @@ export default {
 	align-items: center;
 	justify-content: center;
 	border-top: 1px solid $defaultBorder;
+	border-bottom: 1px solid $defaultBorder;
 	color: rgba(0, 0, 0, .5);
 	background: #f7f7f7;
 	padding: 10px 0;

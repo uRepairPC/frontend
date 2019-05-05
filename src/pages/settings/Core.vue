@@ -65,11 +65,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.page {
-	background: #fff;
-	transition: .25s transform;
-}
-
 /deep/ .el-tabs__content {
 	padding: 0 20px 50px;
 }
