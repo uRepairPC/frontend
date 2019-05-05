@@ -32,7 +32,7 @@ const mutations = {
 }
 
 const actions = {
-	fetchList({ commit }, params) {
+	fetchList({ commit }, params = {}) {
 		commit('SET_LOADING', true)
 
 		Request.fetchAll({ params })
