@@ -1,7 +1,7 @@
 'use strict'
 
-import scroll from './scroll'
+// import scroll from './scroll'
 
 export default [
-	(Vue) => Vue.directive('scroll', scroll)
+	// (Vue) => Vue.directive('scroll', scroll)
 ]

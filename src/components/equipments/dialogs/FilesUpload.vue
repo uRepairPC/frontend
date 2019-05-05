@@ -27,14 +27,13 @@
 </template>
 
 <script>
-import BasicEdit from '@/components/dialogs/BasicEdit'
 import { isArray, isObject } from '@/scripts/helpers'
 import EquipmentFile from '@/classes/EquipmentFile'
 import Equipment from '@/classes/Equipment'
 
 export default {
 	components: {
-		BasicEdit
+		BasicEdit: () => import('@/components/dialogs/BasicEdit')
 	},
 	inheritAttrs: false,
 	props: {

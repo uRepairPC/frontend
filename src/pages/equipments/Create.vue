@@ -1,5 +1,5 @@
 <template>
-	<div class="equipment visible-scroll">
+	<div class="equipment">
 		<div class="wrap">
 			<div class="title">
 				{{ titlePage }}
@@ -18,8 +18,6 @@
 </template>
 
 <script>
-import EquipmentCascader from '@/components/equipments/Cascader'
-import GenerateForm from '@/components/GenerateForm'
 import breadcrumbs from '@/mixins/breadcrumbs'
 import Equipment from '@/classes/Equipment'
 import { required } from '@/data/rules'
@@ -32,7 +30,7 @@ export default {
 		{ title: menu[sections.equipments].children.add.title }
 	],
 	components: {
-		GenerateForm
+		GenerateForm: () => import('@/components/GenerateForm')
 	},
 	mixins: [
 		breadcrumbs
@@ -42,7 +40,7 @@ export default {
 			loading: false,
 			form: {
 				equipment: {
-					component: EquipmentCascader,
+					component: () => import('@/components/equipments/Cascader'),
 					value: [],
 					label: 'Тип, Виробник, Модель',
 					rules: required

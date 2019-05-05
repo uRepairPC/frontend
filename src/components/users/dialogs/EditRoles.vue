@@ -15,14 +15,12 @@
 </template>
 
 <script>
-import BasicEdit from '@/components/dialogs/BasicEdit'
-import GenerateForm from '@/components/GenerateForm'
-import SelectRoles from '@/components/roles/Select'
 import User from '@/classes/User'
 
 export default {
 	components: {
-		BasicEdit, GenerateForm
+		BasicEdit: () => import('@/components/dialogs/BasicEdit'),
+		GenerateForm: () => import('@/components/GenerateForm')
 	},
 	inheritAttrs: false,
 	props: {
@@ -36,7 +34,7 @@ export default {
 			loading: false,
 			form: {
 				roles: {
-					component: SelectRoles,
+					component: () => import('@/components/roles/Select'),
 					value: [],
 					label: 'Оберіть ролі (введіть текст для отримання списку)',
 					attrs: {

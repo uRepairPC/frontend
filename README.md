@@ -1,8 +1,11 @@
 # uRepairPC - Web
 
-<h1 align="center">
+<p align="center">
     <img width="200" src="https://raw.githubusercontent.com/uRepairPC/web/master/src/images/icon.png" alt="uRepairPC">
-</h1>
+</p>
+<p align="center">
+    Accounting system for orders for the repair of technical means.
+</p>
 
 <p align="center">
     <a href="https://circleci.com/gh/uRepairPC/web"><img src="https://circleci.com/gh/uRepairPC/web.svg?style=shield" alt="Build Status"></a>
@@ -31,8 +34,11 @@ See [here](https://urepairpc.github.io/docs/)
 - [ ] Requests
 - [ ] Fix Jest require.context
 - [ ] i18n (branch i18n)
-- [ ] Mobile design
 - [ ] Global search
+- [ ] Optimizing code, comments, refactoring
+
+## Changelog
+Detailed changes for each release are documented in the [CHANGELOG.md](https://github.com/uRepairPC/web/blob/master/CHANGELOG.md).
 
 ## License
-[MIT license](https://opensource.org/licenses/MIT)
+[MIT](https://opensource.org/licenses/MIT)

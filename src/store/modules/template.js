@@ -1,6 +1,7 @@
 'use strict'
 
 import { filterByPermission } from '@/scripts/utils'
+import { isObject } from '@/scripts/helpers'
 import menu from '@/data/menu'
 import Vue from 'vue'
 
@@ -14,9 +15,7 @@ const state = {
 	// Required id property
 	sidebar: {},
 	// Set dialog global on all pages (in layout)
-	dialog: {},
-	// Global settings for the website (logo, title, etc)
-	settings: {}
+	dialog: {}
 }
 
 const mutations = {
@@ -79,13 +78,6 @@ const mutations = {
 	},
 	/**
 	 * @param state
-	 * @param {object} data
-	 */
-	SET_SETTINGS(state, data) {
-		state.settings = data
-	},
-	/**
-	 * @param state
 	 * @param { component, attrs, events } data
 	 */
 	OPEN_DIALOG(state, data) {
@@ -107,6 +99,17 @@ const getters = {
 	 */
 	menu() {
 		return filterByPermission(menu)
+	},
+	historyMenu(state, getters) {
+		const list = {}
+
+		Object.entries(getters.menu).forEach(([key, obj]) => {
+			if (isObject(obj.history)) {
+				list[key] = obj
+			}
+		})
+
+		return list
 	}
 }
 

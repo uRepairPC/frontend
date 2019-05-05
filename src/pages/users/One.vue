@@ -28,18 +28,8 @@
 </template>
 
 <script>
-import EditPasswordDialog from '@/components/users/dialogs/EditPassword'
-import DeletePhotoDialog from '@/components/users/dialogs/DeleteImage'
-import EditRolesDialog from '@/components/users/dialogs/EditRoles'
-import EditPhotoDialog from '@/components/users/dialogs/EditImage'
-import EditEmailDialog from '@/components/users/dialogs/EditEmail'
-import DeleteDialog from '@/components/users/dialogs/Delete'
-import EditDialog from '@/components/users/dialogs/Edit'
-import TemplateOne from '@/components/template/One'
 import * as permissions from '@/enum/permissions'
 import broadcastOne from '@/mixins/broadcastOne'
-import UserImage from '@/components/users/Image'
-import RoleTag from '@/components/roles/Tag'
 import sections from '@/data/sections'
 import onePage from '@/mixins/onePage'
 import * as types from '@/enum/types'
@@ -47,7 +37,9 @@ import User from '@/classes/User'
 
 export default {
 	components: {
-		UserImage, RoleTag, TemplateOne
+		TemplateOne: () => import('@/components/template/One'),
+		UserImage: () => import('@/components/users/Image'),
+		RoleTag: () => import('@/components/roles/Tag')
 	},
 	mixins: [
 		onePage(sections.users), broadcastOne(sections.users)
@@ -75,46 +67,46 @@ export default {
 					title: 'Редагувати дані',
 					type: types.PRIMARY,
 					permissions: permissions.USERS_EDIT,
-					action: () => this.openDialog(EditDialog)
+					action: () => this.openDialog(import('@/components/users/dialogs/Edit'))
 				},
 				{
 					title: 'Редагувати пароль',
 					type: types.PRIMARY,
 					permissions: permissions.USERS_EDIT,
-					action: () => this.openDialog(EditPasswordDialog)
+					action: () => this.openDialog(import('@/components/users/dialogs/EditPassword'))
 				},
 				{
 					title: 'Редагувати зображення',
 					type: types.PRIMARY,
 					permissions: permissions.USERS_EDIT,
-					action: () => this.openDialog(EditPhotoDialog)
+					action: () => this.openDialog(import('@/components/users/dialogs/EditImage'))
 				},
 				{
 					title: 'Редагувати email',
 					type: types.PRIMARY,
 					permissions: permissions.USERS_EDIT,
-					action: () => this.openDialog(EditEmailDialog)
+					action: () => this.openDialog(import('@/components/users/dialogs/EditEmail'))
 				},
 				{
 					title: 'Редагування ролей',
 					type: types.PRIMARY,
 					disabled: ownProfile,
 					permissions: permissions.ROLES_MANAGE,
-					action: () => this.openDialog(EditRolesDialog)
+					action: () => this.openDialog(import('@/components/users/dialogs/EditRoles'))
 				},
 				{
 					title: 'Видалити зображення',
 					type: types.WARNING,
 					disabled: !this.model.image,
 					permissions: permissions.USERS_EDIT,
-					action: () => this.openDialog(DeletePhotoDialog)
+					action: () => this.openDialog(import('@/components/users/dialogs/DeleteImage'))
 				},
 				{
 					title: 'Видалити користувача',
 					type: types.DANGER,
 					disabled: ownProfile || this.model.id === 1,
 					permissions: permissions.USERS_DELETE,
-					action: () => this.openDialog(DeleteDialog)
+					action: () => this.openDialog(import('@/components/users/dialogs/Delete'))
 				}
 			]
 				.map((obj) => {
@@ -162,7 +154,7 @@ export default {
 		},
 		openDialog(component) {
 			this.$store.commit('template/OPEN_DIALOG', {
-				component,
+				component: () => component,
 				attrs: {
 					user: this.model
 				},

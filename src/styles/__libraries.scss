@@ -30,10 +30,17 @@
         }
       }
     }
+    .el-form + * {
+      margin-top: 20px;
+    }
   }
 }
 
 .popover-role {
+  padding: 0;
+}
+
+.el-timeline {
   padding: 0;
 }
 

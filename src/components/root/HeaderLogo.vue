@@ -21,20 +21,18 @@
 </template>
 
 <script>
-import LogoLeftFontSvg from '@/components/svg/LogoLeftFont'
 import { DEFAULT_ROUTE_NAME } from '@/router'
-import { server } from '@/data/env'
 
 export default {
 	components: {
-		LogoLeftFontSvg
+		LogoLeftFontSvg: () => import('@/components/svg/LogoLeftFont')
 	},
 	computed: {
 		settings() {
-			return this.$store.state.template.settings
+			return this.$store.state.settings.global.data
 		},
 		logo() {
-			return server + this.settings.logo_header
+			return this.settings.logo_header
 		},
 		hasAppName() {
 			if (!this.settings.logo_header && this.settings.app_name) {
@@ -53,6 +51,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "~scss/mobile/_sizes";
+
 .logo {
 	display: flex;
 	align-items: center;
@@ -87,9 +87,28 @@ export default {
 	}
 	.custom {
 		width: 170px;
+		height: 40px;
 		/deep/ .logo {
 			transition: stroke .25s;
 			stroke: #fff;
+		}
+	}
+}
+
+@media only screen and (max-width: $mobileL) {
+	.logo {
+		width: auto;
+		/deep/ img + div {
+			display: none;
+		}
+		.custom {
+			width: 40px;
+			/deep/ g.text {
+				display: none;
+			}
+			/deep/ g.logo {
+				transform: matrix(0.5, 0, 0, 0.5, 10, 12) !important;
+			}
 		}
 	}
 }

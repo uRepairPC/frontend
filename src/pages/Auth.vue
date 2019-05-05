@@ -50,13 +50,12 @@
 </template>
 
 <script>
-import BigLogo from '@/components/root/BigLogo'
 import * as rules from '@/data/rules'
 import { isDev } from '@/data/env'
 
 export default {
 	components: {
-		BigLogo
+		BigLogo: () => import('@/components/root/BigLogo')
 	},
 	data() {
 		return {

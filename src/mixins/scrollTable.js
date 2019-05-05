@@ -1,11 +1,5 @@
 'use strict'
 
-/** @type {string} */
-export const TABLE_SELECTOR = '.el-table__body-wrapper'
-
-/** @type {number} - milliseconds */
-const WAIT_UPDATE_SCROLL = 400
-
 export default {
 	activated() {
 		this.updateScrollTablePosition()
@@ -16,31 +10,27 @@ export default {
 	},
 	methods: {
 		updateScrollTablePosition() {
-			const scroll = this.$store.state.template.pagesScroll[this.$route.name]
+			const pageScroll = this.$store.state.template.pagesScroll[this.$route.name]
 
-			if (!scroll) {
+			if (!pageScroll) {
 				return
 			}
 
-			// Wait x milliseconds, because child
-			// component may not be initialized
 			setTimeout(() => {
-				const el = document.querySelector(TABLE_SELECTOR)
-				if (el) {
-					el.scrollTop = scroll
-				}
-			}, WAIT_UPDATE_SCROLL)
+				document.documentElement.scrollTop = pageScroll
+			})
 		},
 		saveScrollTablePosition() {
-			const el = document.querySelector(TABLE_SELECTOR)
+			let scroll = 0
 
-			if (!el) {
-				return
+			const documentScrollTop = document.documentElement.scrollTop || document.body.scrollTop
+			if (documentScrollTop) {
+				scroll = documentScrollTop
 			}
 
 			this.$store.commit('template/SET_PAGE_SCROLL', {
 				pageName: this.$route.name,
-				scroll: el.scrollTop
+				scroll
 			})
 		}
 	}

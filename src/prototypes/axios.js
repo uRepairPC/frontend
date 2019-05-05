@@ -1,13 +1,11 @@
 'use strict'
 
-import SettingsFrontend from '@/classes/SettingsFrontend'
 import { isArray, isObject } from '@/scripts/helpers'
 import { Message, Notification } from 'element-ui'
 import { runLoadingService } from '@/scripts/dom'
 import StorageData from '@/classes/StorageData'
 import * as types from '@/enum/types'
 import logout from '@/scripts/logout'
-import { server } from '@/data/env'
 import store from '@/store'
 import axios from 'axios'
 
@@ -15,7 +13,7 @@ import axios from 'axios'
  * In dev mode, all requests are sent to the server via
  * proxy target in webpack (env.PROXY_TARGET), to bypass CORS.
  */
-axios.defaults.baseURL = server
+axios.defaults.baseURL = '/api'
 
 /** @type {Array} */
 let requestsToRefresh = []
@@ -29,9 +27,6 @@ axios.interceptors.response.use(
 		if (resp.config.method !== 'get' && resp.data.message) {
 			Message({ message: resp.data.message, type: types.SUCCESS })
 		}
-
-		// Check for update frontend, global settings
-		SettingsFrontend.checkUpdate(resp.headers[SettingsFrontend.HEADER_NAME])
 
 		return resp
 	},

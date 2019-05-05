@@ -11,7 +11,8 @@
 					size="small"
 					@click="onUpdate"
 				>
-					Оновити
+					<span>Оновити</span>
+					<i class="material-icons">refresh</i>
 				</el-button>
 				<el-button
 					v-if="includePermission(permissionCreate)"
@@ -19,7 +20,8 @@
 					type="primary"
 					@click="openDialog('create')"
 				>
-					Додати
+					<span>Додати</span>
+					<i class="material-icons">add</i>
 				</el-button>
 			</div>
 		</div>
@@ -70,13 +72,12 @@
 
 <script>
 import { includePermission } from '@/scripts/utils'
-import ColumnData from '@/components/ColumnData'
 import sections from '@/data/sections'
 import { mapGetters } from 'vuex'
 
 export default {
 	components: {
-		ColumnData
+		ColumnData: () => import('@/components/ColumnData')
 	},
 	props: {
 		loading: {
@@ -113,6 +114,12 @@ export default {
 			menu: 'template/menu'
 		}),
 		title() {
+			const menu = this.menu[sections.settings]
+
+			if (!menu) {
+				return ''
+			}
+
 			const action = this.menu[sections.settings].children[this.$route.name]
 			return action ? action.title : ''
 		}
@@ -133,6 +140,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "~scss/mobile/_sizes";
+
 .header {
 	display: flex;
 	align-items: center;
@@ -143,11 +152,48 @@ export default {
 .title {
 	font-size: 1.2rem;
 	font-weight: bold;
+	margin-right: 15px;
 }
 
 .actions {
+	display: flex;
 	button {
 		min-width: 120px;
+		.material-icons {
+			display: none;
+		}
+	}
+}
+
+@media only screen and (max-width: $tablet) {
+	.actions {
+		button {
+			width: 45px;
+			min-width: auto;
+			&.is-loading {
+				.material-icons {
+					display: none;
+				}
+			}
+			span {
+				display: none;
+			}
+			.material-icons {
+				display: block;
+			}
+		}
+	}
+}
+
+@media only screen and (max-width: $mobileL) {
+	.actions {
+		flex-direction: column-reverse;
+		button {
+			margin: 0 0 10px;
+			&:first-child {
+				margin-bottom: 0;
+			}
+		}
 	}
 }
 </style>

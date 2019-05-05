@@ -6,6 +6,7 @@ import Equipment from '@/classes/Equipment'
 import Vue from 'vue'
 
 const state = {
+	init: true,
 	loading: false,
 	list: {}
 }
@@ -15,6 +16,7 @@ const mutations = {
 		state.loading = toggle
 	},
 	SET_LIST(state, obj) {
+		state.init = false
 		state.list = obj
 	},
 	APPEND_LIST(state, obj) {
@@ -27,16 +29,17 @@ const mutations = {
 		state.list.data.push(...obj.data)
 	},
 	CLEAR_ALL(state) {
+		state.init = true
 		state.loading = false
 		state.list = {}
 	}
 }
 
 const actions = {
-	fetchList({ commit }, params) {
+	fetchList({ commit }, params = {}) {
 		commit('SET_LOADING', true)
 
-		Equipment.fetchAll({ params })
+		return Equipment.fetchAll({ params })
 			.then(({ data }) => {
 				if (params.page > 1) {
 					commit('APPEND_LIST', data)

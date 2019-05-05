@@ -1,6 +1,6 @@
 'use strict'
 
-// NOTE: Value uses as route name
+// NOTE: Values uses as route name
 
 export default {
 	auth: 'auth',
@@ -16,5 +16,6 @@ export default {
 	equipmentsTypes: 'equipments-types',
 	roles: 'roles',
 	settings: 'settings',
-	settingsGlobal: 'settings-global'
+	settingsGlobal: 'settings-global',
+	settingsManifest: 'settings-manifest'
 }

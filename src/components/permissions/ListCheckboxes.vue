@@ -17,12 +17,11 @@
 </template>
 
 <script>
-import GroupCheckbox from '@/components/permissions/GroupCheckbox'
 import { mapState } from 'vuex'
 
 export default {
 	components: {
-		GroupCheckbox
+		GroupCheckbox: () => import('@/components/permissions/GroupCheckbox')
 	},
 	inheritAttrs: false,
 	props: {

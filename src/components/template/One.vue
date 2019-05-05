@@ -5,12 +5,12 @@
 		appear
 	>
 		<div class="template template-one">
+			<top-buttons
+				v-if="buttons"
+				:buttons="buttons"
+				:disabled="loading"
+			/>
 			<div class="template__wrap">
-				<top-buttons
-					v-if="buttons"
-					:buttons="buttons"
-					:disabled="loading"
-				/>
 				<div
 					v-if="!!$slots.header"
 					class="template-header page--width"
@@ -34,6 +34,7 @@
 						<el-table-column
 							prop="value"
 							label="Значення"
+							min-width="200"
 						>
 							<template slot-scope="{ row }">
 								<column-data
@@ -59,12 +60,11 @@
 
 <script>
 import { includePermission } from '@/scripts/utils'
-import ColumnData from '@/components/ColumnData'
-import TopButtons from '@/components/TopButtons'
 
 export default {
 	components: {
-		TopButtons, ColumnData
+		TopButtons: () => import('@/components/TopButtons'),
+		ColumnData: () => import('@/components/ColumnData')
 	},
 	props: {
 		buttons: {
@@ -90,14 +90,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "~scss/mobile/_sizes";
 @import "~scss/_colors";
 
-.template-one {
-	overflow-y: scroll !important;
-}
-
 .template__wrap {
-	margin-bottom: 50px;
+	margin: 0 20px 50px;
 }
 
 .template-header,

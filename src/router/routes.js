@@ -32,6 +32,11 @@ const authorizedRoutes = {
 			name: sections.requests,
 			component: loadPage('requests/Index')
 		},
+		{
+			path: `/${sections.requests}/create`,
+			name: `${sections.requests}-create`,
+			component: loadPage('requests/Create')
+		},
 		// ------------------------------------------------ Users
 		{
 			path: `/${sections.users}`,
@@ -92,8 +97,13 @@ const authorizedRoutes = {
 				},
 				{
 					path: `/${sections.settings}/global`,
-					name: `${sections.settingsGlobal}`,
+					name: sections.settingsGlobal,
 					component: loadPage('settings/Global')
+				},
+				{
+					path: `/${sections.settings}/manifest`,
+					name: sections.settingsManifest,
+					component: loadPage('settings/Manifest')
 				},
 				// ------------------------------------------------ Settings
 				{

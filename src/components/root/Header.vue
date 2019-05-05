@@ -48,15 +48,14 @@
 </template>
 
 <script>
-import HeaderLogo from '@/components/root/HeaderLogo'
-import Tips from '@/components/root/Tips'
 import sections from '@/data/sections'
 import { mapGetters } from 'vuex'
 import User from '@/classes/User'
 
 export default {
 	components: {
-		Tips, HeaderLogo
+		HeaderLogo: () => import('@/components/root/HeaderLogo'),
+		Tips: () => import('@/components/root/Tips')
 	},
 	computed: {
 		...mapGetters({
@@ -105,6 +104,7 @@ export default {
 	align-items: center;
 	background: #fff;
 	border-bottom: 1px solid $defaultBorder;
+	padding: 0 15px;
 	user-select: none;
 	overflow: hidden;
 }
@@ -208,20 +208,6 @@ export default {
 		flex: 1 1 auto;
 		justify-content: flex-end;
 		margin-left: 20px;
-	}
-}
-
-@media only screen and (max-width: $mobileL) {
-	.logo {
-		width: 100px;
-		/deep/ img + div {
-			display: none;
-		}
-		/deep/ .custom {
-			g.logo {
-				display: none;
-			}
-		}
 	}
 }
 </style>

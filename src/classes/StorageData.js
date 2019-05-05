@@ -3,6 +3,9 @@
 import { isArray, isObject } from '@/scripts/helpers'
 
 /** @type {string} */
+const COLUMN_REQUESTS = 'column_requests'
+
+/** @type {string} */
 const COLUMN_USERS = 'column_users'
 
 /** @type {string} */
@@ -21,7 +24,7 @@ const PROFILE = 'profile'
 const PERMISSIONS = 'permissions'
 
 /** @type {string} */
-const SETTINGS = 'settings'
+const SETTINGS_GLOBAL = 'settingsGlobal'
 
 export default class StorageData {
 
@@ -34,6 +37,9 @@ export default class StorageData {
 		const self = this
 
 		return {
+			columnRequests() {
+				return self._remove(COLUMN_REQUESTS)
+			},
 			columnUsers() {
 				return self._remove(COLUMN_USERS)
 			},
@@ -53,9 +59,20 @@ export default class StorageData {
 				return self._remove(PERMISSIONS)
 			},
 			settings() {
-				return self._remove(SETTINGS)
+				return self._remove(SETTINGS_GLOBAL)
 			}
 		}
+	}
+
+	/* Column Requests ----------------------------------------------------------------------- */
+
+	/** @return {Array} */
+	static get columnRequests() {
+		return this.getArray(COLUMN_REQUESTS)
+	}
+
+	static set columnRequests(value) {
+		this.setArray(COLUMN_REQUESTS, value)
 	}
 
 	/* Column Users -------------------------------------------------------------------------- */
@@ -124,15 +141,16 @@ export default class StorageData {
 		this.setArray(PERMISSIONS, value)
 	}
 
-	/* SettingsFrontend ----------------------------------------------------------------------------- */
+	/* Settings Global ------------------------------------------------------------------------------ */
 
+	// TODO REMOVE
 	/** @return {object} */
-	static get settings() {
-		return this.getObject(SETTINGS)
+	static get settingsGlobal() {
+		return this.getObject(SETTINGS_GLOBAL)
 	}
 
-	static set settings(value) {
-		this.setObject(SETTINGS, value)
+	static set settingsGlobal(value) {
+		this.setObject(SETTINGS_GLOBAL, value)
 	}
 
 	/* | -------------------------------------------------------------------------------------

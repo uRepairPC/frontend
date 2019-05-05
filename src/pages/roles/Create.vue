@@ -1,5 +1,5 @@
 <template>
-	<div class="role visible-scroll">
+	<div class="role">
 		<div class="wrap">
 			<div class="title">
 				{{ titlePage }}
@@ -18,7 +18,6 @@
 </template>
 
 <script>
-import GenerateForm from '@/components/GenerateForm'
 import breadcrumbs from '@/mixins/breadcrumbs'
 import { required } from '@/data/rules'
 import sections from '@/data/sections'
@@ -31,7 +30,7 @@ export default {
 		{ title: menu[sections.roles].children.add.title }
 	],
 	components: {
-		GenerateForm
+		GenerateForm: () => import('@/components/GenerateForm')
 	},
 	mixins: [
 		breadcrumbs

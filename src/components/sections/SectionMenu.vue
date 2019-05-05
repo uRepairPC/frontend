@@ -15,12 +15,10 @@
 </template>
 
 <script>
-import SectionMenuActionList from '@/components/sections/SectionMenuActionList'
-import SectionMenuHeader from '@/components/sections/SectionMenuHeader'
-
 export default {
 	components: {
-		SectionMenuHeader, SectionMenuActionList
+		SectionMenuActionList: () => import('@/components/sections/SectionMenuActionList'),
+		SectionMenuHeader: () => import('@/components/sections/SectionMenuHeader')
 	},
 	props: {
 		menu: {
@@ -32,6 +30,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "~scss/mobile/_sizes";
+
 .section-menu {
 	display: flex;
 	flex-wrap: wrap;
@@ -39,8 +39,16 @@ export default {
 }
 
 .section-menu-item {
-	width: 350px;
+	width: 340px;
 	padding: 10px;
 	margin: 10px;
+}
+
+@media only screen and (max-width: $mobileL) {
+	.section-menu-item {
+		width: 100%;
+		margin: 10px 0;
+		padding: 0;
+	}
 }
 </style>

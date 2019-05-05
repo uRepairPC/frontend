@@ -15,18 +15,24 @@
 			<el-checkbox
 				:label="column.label"
 				@change="onChange(column, $event)"
-			/>
+			>
+				<span>{{ column.label }}</span>
+				<span
+					v-if="!column.disableSearch"
+					class="support-search"
+				>
+					пошук
+				</span>
+			</el-checkbox>
 		</el-checkbox-group>
 	</filter-basic>
 </template>
 
 <script>
-import FilterBasic from './Basic'
-
 export default {
 	name: 'FilterColumns',
 	components: {
-		FilterBasic
+		FilterBasic: () => import('@/components/filters/Basic')
 	},
 	props: {
 		columns: {

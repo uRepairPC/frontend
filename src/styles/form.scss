@@ -4,7 +4,9 @@
   .el-form-item__label {
     float: none;
   }
-  .el-select, .el-cascader {
+  .el-select,
+  .el-cascader,
+  .el-upload-dragger {
     width: 100%;
   }
 }

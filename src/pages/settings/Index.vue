@@ -1,13 +1,10 @@
 <template>
 	<div class="settings">
-		<section-menu
-			:menu="pages"
-		/>
+		<section-menu :menu="pages" />
 	</div>
 </template>
 
 <script>
-import SectionMenu from '@/components/sections/SectionMenu'
 import breadcrumbs from '@/mixins/breadcrumbs'
 import sections from '@/data/sections'
 import { mapGetters } from 'vuex'
@@ -19,7 +16,7 @@ export default {
 		{ title: menu[sections.settings].title }
 	],
 	components: {
-		SectionMenu
+		SectionMenu: () => import('@/components/sections/SectionMenu')
 	},
 	mixins: [
 		breadcrumbs
@@ -29,7 +26,9 @@ export default {
 			menu: 'template/menu'
 		}),
 		pages() {
-			return this.menu[sections.settings].children
+			const section = this.menu[sections.settings] || {}
+
+			return section.children || {}
 		}
 	}
 }

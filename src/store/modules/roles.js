@@ -2,6 +2,7 @@
 
 import StorageData from '@/classes/StorageData'
 import Role from '@/classes/Role'
+import Vue from 'vue'
 
 const state = {
 	loading: false,
@@ -15,6 +16,15 @@ const mutations = {
 	SET_LIST(state, arr) {
 		state.list = arr
 	},
+	APPEND_LIST(state, obj) {
+		Object.entries(obj).forEach(([key, val]) => {
+			if (key !== 'data') {
+				Vue.set(state.list, key, val)
+			}
+		})
+
+		state.list.data.push(...obj.data)
+	},
 	CLEAR_ALL(state) {
 		state.loading = false
 		state.popover = {}
@@ -23,12 +33,16 @@ const mutations = {
 }
 
 const actions = {
-	fetchList({ commit }, params) {
+	fetchList({ commit }, params = {}) {
 		commit('SET_LOADING', true)
 
 		Role.fetchAll({ params })
 			.then(({ data }) => {
-				commit('SET_LIST', data)
+				if (params.page > 1) {
+					commit('APPEND_LIST', data)
+				} else {
+					commit('SET_LIST', data)
+				}
 			})
 			.finally(() => {
 				commit('SET_LOADING', false)

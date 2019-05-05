@@ -6,11 +6,9 @@
 </template>
 
 <script>
-import StoreDialogs from '@/components/root/StoreDialogs'
-
 export default {
 	components: {
-		StoreDialogs
+		StoreDialogs: () => import('@/components/root/StoreDialogs')
 	}
 }
 </script>

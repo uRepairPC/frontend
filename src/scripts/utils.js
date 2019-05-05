@@ -34,22 +34,6 @@ export function formatBytes(bytes, decimals = 2) {
 }
 
 /**
- * @param {string|null} input
- * @return {string|null}
- */
-export function withoutLastSlash(input) {
-	if (!input) {
-		return input
-	}
-
-	if (input.slice(-1) === '/') {
-		return input.slice(0, input.length - 1)
-	}
-
-	return input
-}
-
-/**
  * Check permission(s) with user permissions.
  * findPermissions is null - available to all.
  *

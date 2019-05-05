@@ -54,13 +54,12 @@
 </template>
 
 <script>
-import BasicEdit from '@/components/dialogs/BasicEdit'
 import * as rules from '@/data/rules'
 import User from '@/classes/User'
 
 export default {
 	components: {
-		BasicEdit
+		BasicEdit: () => import('@/components/dialogs/BasicEdit')
 	},
 	inheritAttrs: false,
 	props: {

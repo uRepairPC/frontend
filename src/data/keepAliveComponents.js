@@ -6,7 +6,8 @@ export const root = [
 	'Requests',
 	'Users',
 	'Settings',
-	'Roles'
+	'Roles',
+	'SettingsCore'
 ]
 
 /** @type {array} */
@@ -17,6 +18,7 @@ export const settings = [
 	'RequestStatuses',
 	'RequestPriorities',
 	'RequestTypes',
+	'Manifest',
 	'Global'
 ]
 

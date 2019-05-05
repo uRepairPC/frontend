@@ -15,15 +15,13 @@
 </template>
 
 <script>
-import EquipmentCascader from '@/components/equipments/Cascader'
-import BasicEdit from '@/components/dialogs/BasicEdit'
-import GenerateForm from '@/components/GenerateForm'
 import Equipment from '@/classes/Equipment'
 import { required } from '@/data/rules'
 
 export default {
 	components: {
-		BasicEdit, GenerateForm
+		BasicEdit: () => import('@/components/dialogs/BasicEdit'),
+		GenerateForm: () => import('@/components/GenerateForm')
 	},
 	inheritAttrs: false,
 	props: {
@@ -37,7 +35,7 @@ export default {
 			loading: false,
 			form: {
 				equipment: {
-					component: EquipmentCascader,
+					component: () => import('@/components/equipments/Cascader'),
 					value: [this.equipment.type_id, this.equipment.manufacturer_id, this.equipment.model_id],
 					label: 'Тип, Виробник, Модель',
 					rules: required

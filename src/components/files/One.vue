@@ -46,7 +46,7 @@
 <script>
 import { formatBytes, getApiAuth } from '@/scripts/utils'
 import { includePermission } from '@/scripts/utils'
-import moment from 'moment'
+import dayjs from 'dayjs'
 
 export default {
 	props: {
@@ -81,7 +81,7 @@ export default {
 			return `${this.file.last_name} ${this.file.first_name}, ${this.createdAt}, ${size}`
 		},
 		createdAt() {
-			return moment(this.file.created_at).calendar().toLowerCase()
+			return dayjs(this.file.created_at).format('lll')
 		},
 		canDownload() {
 			return this.urlDownload && this.includePermission(this.permissionDownload)
@@ -103,7 +103,6 @@ export default {
 	}
 }
 </script>
-
 
 <style lang="scss" scoped>
 @import "~scss/_colors";

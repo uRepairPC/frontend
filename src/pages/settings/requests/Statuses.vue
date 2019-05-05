@@ -12,11 +12,7 @@
 </template>
 
 <script>
-import CreateDialog from '@/components/requests/statuses/dialogs/Create'
-import DeleteDialog from '@/components/requests/statuses/dialogs/Delete'
-import EditDialog from '@/components/requests/statuses/dialogs/Edit'
 import { requestStatuses as columns } from '@/data/columns'
-import BasicTable from '@/components/settings/BasicTable'
 import * as permissions from '@/enum/permissions'
 import breadcrumbs from '@/mixins/breadcrumbs'
 import sections from '@/data/sections'
@@ -30,7 +26,7 @@ export default {
 		{ title: menu[sections.settings].children[sections.requestsStatuses].title }
 	],
 	components: {
-		BasicTable
+		BasicTable: () => import('@/components/settings/BasicTable')
 	},
 	mixins: [
 		breadcrumbs
@@ -40,9 +36,9 @@ export default {
 			columns,
 			permissions,
 			dialogs: {
-				create: CreateDialog,
-				edit: EditDialog,
-				delete: DeleteDialog
+				create: () => import('@/components/requests/statuses/dialogs/Create'),
+				edit: () => import('@/components/requests/statuses/dialogs/Edit'),
+				delete: () => import('@/components/requests/statuses/dialogs/Delete')
 			}
 		}
 	},

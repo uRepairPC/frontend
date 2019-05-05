@@ -31,12 +31,11 @@
 </template>
 
 <script>
-import BasicEdit from '@/components/dialogs/BasicEdit'
 import User from '@/classes/User'
 
 export default {
 	components: {
-		BasicEdit
+		BasicEdit: () => import('@/components/dialogs/BasicEdit')
 	},
 	inheritAttrs: false,
 	props: {

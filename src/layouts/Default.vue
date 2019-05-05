@@ -2,7 +2,11 @@
 	<div class="layout layout_default">
 		<el-container direction="vertical">
 			<header-box />
-			<el-container :class="{ 'search--open': openSearch }">
+			<el-container
+				:class="['container-content',
+					{ 'search--open': openSearch }
+				]"
+			>
 				<sidebar-box />
 				<el-main>
 					<breadcrumbs-box />
@@ -22,14 +26,13 @@
 
 <script>
 import { root as keepAliveRoutesName } from '@/data/keepAliveComponents'
-import BreadcrumbsBox from '@/components/root/Breadcrumbs'
-import SidebarBox from '@/components/root/Sidebar'
-import HeaderBox from '@/components/root/Header'
-import SearchBox from '@/components/root/Search'
 
 export default {
 	components: {
-		BreadcrumbsBox, SidebarBox, HeaderBox, SearchBox
+		BreadcrumbsBox: () => import('@/components/root/Breadcrumbs'),
+		SidebarBox: () => import('@/components/root/Sidebar'),
+		HeaderBox: () => import('@/components/root/Header'),
+		SearchBox: () => import('@/components/root/Search')
 	},
 	data() {
 		return {
@@ -53,10 +56,10 @@ export default {
 		}
 	},
 	mounted() {
-		document.addEventListener('keypress', this.hotKeys)
+		document.addEventListener('keydown', this.hotKeys)
 	},
 	beforeDestroy() {
-		document.removeEventListener('keypress', this.hotKeys)
+		document.removeEventListener('keydown', this.hotKeys)
 	},
 	methods: {
 		hotKeys(evt) {
@@ -74,6 +77,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "~scss/mobile/_sizes";
 @import "~scss/_variables";
 @import "~scss/_colors";
 
@@ -84,16 +88,11 @@ export default {
 }
 
 .el-main {
-	padding: 0;
+	padding: 1px;
 }
 
-.el-container {
+.container-content {
 	will-change: filter;
-}
-
-.page {
-	height: calc(100vh - #{$headerHeight + $breadcrumbsHeight});
-	overflow: auto;
 }
 
 .search--open {

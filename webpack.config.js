@@ -1,8 +1,10 @@
 'use strict'
 
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const WorkboxPlugin = require('workbox-webpack-plugin')
+const { GenerateSW } = require('workbox-webpack-plugin')
 const { VueLoaderPlugin } = require('vue-loader')
 const Dotenv = require('dotenv-webpack')
 const path = require('path')
@@ -11,16 +13,20 @@ require('dotenv').config()
 /** @type {boolean} */
 const isDev = ['dev', 'development'].includes(process.env.NODE_ENV)
 
-module.exports = {
+/** @type {object} */
+const settings = {
 	mode: isDev ? 'development' : 'production',
 	entry: [
 		'./src/main.js'
 	],
+	stats: {
+		children: false
+	},
 	output: {
-		filename: 'assets/[name].[hash].js',
-		chunkFilename: 'assets/chunks/[name].[hash].js',
+		filename: 'web/[name].[hash].js',
+		chunkFilename: 'web/chunks/[name].[hash].js',
 		publicPath: '/',
-		path: path.resolve(__dirname, 'dist')
+		path: path.resolve(__dirname, process.env.WEBPACK_OUTPUT_DIR || 'dist')
 	},
 	devtool: isDev ? 'inline-source-map' : false,
 	devServer: {
@@ -28,7 +34,6 @@ module.exports = {
 		contentBase: './dist',
 		host: process.env.WEBPACK_HOST_DEV || 'localhost',
 		hot: true,
-		writeToDisk: true,
 		clientLogLevel: 'error',
 		disableHostCheck: true,
 		proxy: {
@@ -54,7 +59,9 @@ module.exports = {
 			{
 				test: /\.scss$/,
 				use: [
-					'style-loader',
+					isDev
+						? 'vue-style-loader'
+						: MiniCssExtractPlugin.loader,
 					'css-loader',
 					'sass-loader'
 				]
@@ -65,7 +72,7 @@ module.exports = {
 					{
 						loader: 'file-loader',
 						options: {
-							outputPath: 'assets/images',
+							outputPath: 'web/images',
 						}
 					}
 				]
@@ -76,7 +83,7 @@ module.exports = {
 					{
 						loader: 'file-loader',
 						options: {
-							outputPath: 'assets/files',
+							outputPath: 'web/files',
 						}
 					}
 				]
@@ -99,24 +106,20 @@ module.exports = {
 		new Dotenv,
 		new VueLoaderPlugin,
 		new CleanWebpackPlugin({
-			verbose: true
+			dry: isDev,
+			verbose: false,
+			cleanOnceBeforeBuildPatterns: ['web/*', 'index.html', 'sw.js']
 		}),
 		new HtmlWebpackPlugin({
 			filename: 'index.html',
 			template: './index.html',
 			inject: true,
-			chunksSortMode: 'none'
+			chunksSortMode: 'none',
+			isDev: isDev
 		}),
-		new WorkboxPlugin.GenerateSW({
-			swDest: 'sw.js',
-			importWorkboxFrom: isDev ? 'cdn' : 'local',
-			importsDirectory: 'assets',
-			clientsClaim: true,
-			skipWaiting: true,
-			runtimeCaching: [{
-				urlPattern: new RegExp('api'),
-				handler: 'StaleWhileRevalidate'
-			}]
+		new MiniCssExtractPlugin({
+			filename: 'web/[name].[hash].css',
+			chunkFilename: 'web/css/[name].[hash].css'
 		})
 	],
 	resolve: {
@@ -127,3 +130,46 @@ module.exports = {
 		}
 	}
 }
+
+if (!isDev) {
+	settings.plugins.push(
+		// Add PWA
+		new GenerateSW({
+			swDest: 'sw.js',
+			importWorkboxFrom: 'local',
+			importsDirectory: 'web/pwa',
+			clientsClaim: true,
+			skipWaiting: true,
+			navigateFallback: '/index.html',
+			navigateFallbackWhitelist: [
+				// Output build
+				/^\/web/, /sw\.js$/, /index\.html/,
+				// Pages
+				/^\/auth/, /^\/requests/, /^\/users/, /^\/equipments/, /^\/roles/, /^\/settings/
+			],
+			runtimeCaching: [{
+				urlPattern: /\.json$|api\/settings/,
+				handler: 'StaleWhileRevalidate',
+				options: {
+					cacheName: 'settings'
+				}
+			}, {
+				urlPattern: /storage/,
+				handler: 'StaleWhileRevalidate',
+				options: {
+					cacheName: 'storage'
+				}
+			}, {
+				urlPattern: /api/,
+				handler: 'NetworkFirst',
+				options: {
+					cacheName: 'api'
+				}
+			}]
+		}),
+		// Check bundle
+		// new BundleAnalyzerPlugin
+	)
+}
+
+module.exports = settings

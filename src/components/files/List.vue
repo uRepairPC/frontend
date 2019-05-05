@@ -40,13 +40,12 @@
 </template>
 
 <script>
-import LoadingFiles from '@/components/files/Loading'
 import { includePermission } from '@/scripts/utils'
-import OneFile from '@/components/files/One'
 
 export default {
 	components: {
-		OneFile, LoadingFiles
+		LoadingFiles: () => import('@/components/files/Loading'),
+		OneFile: () => import('@/components/files/One')
 	},
 	props: {
 		files: {
