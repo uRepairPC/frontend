@@ -5,6 +5,7 @@ import { isObject } from '@/scripts/helpers'
 import { Notification } from 'element-ui'
 import { serverSocket } from '@/data/env'
 import io from 'socket.io-client'
+import router from '@/router'
 import store from '@/store'
 
 const socket = io(serverSocket)
@@ -27,8 +28,17 @@ export function onEventDynamic(section, id) {
 		}
 
 		if (store.state.profile.user.id !== payload.from.id) {
-			payload.data.id = id
-			store.commit('template/ADD_SIDEBAR_ITEM', { section, data: payload.data })
+			switch (payload.action) {
+			case 'delete':
+				if (`${section}-id` === router.currentRoute.name && id === +router.currentRoute.params.id) {
+					router.push({ name: section })
+				}
+				store.commit('template/REMOVE_SIDEBAR_ITEM', { section, id })
+				break
+			default:
+				payload.data.id = id
+				store.commit('template/ADD_SIDEBAR_ITEM', { section, data: payload.data })
+			}
 
 			Notification.info({
 				title: `Socket - ${payload.title}`,
