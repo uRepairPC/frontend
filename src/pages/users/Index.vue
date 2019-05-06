@@ -28,6 +28,7 @@
 			<filter-table-buttons
 				ref="buttons"
 				:section="sections.users"
+				@update="fetchList"
 			/>
 			<filter-action
 				:section="sectionName"
