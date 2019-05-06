@@ -29,7 +29,6 @@
 
 <script>
 import * as permissions from '@/enum/permissions'
-import broadcastOne from '@/mixins/broadcastOne'
 import sections from '@/data/sections'
 import onePage from '@/mixins/onePage'
 import * as types from '@/enum/types'
@@ -42,7 +41,7 @@ export default {
 		RoleTag: () => import('@/components/roles/Tag')
 	},
 	mixins: [
-		onePage(sections.users), broadcastOne(sections.users)
+		onePage(sections.users)
 	],
 	data() {
 		return {

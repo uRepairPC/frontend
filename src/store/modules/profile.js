@@ -47,9 +47,6 @@ const actions = {
 
 		axios.defaults.headers['Authorization'] = `Bearer ${token}`
 
-		// Auth in socket server
-		socket.emit('auth', token)
-
 		commit('SET_USER', profile)
 		commit('SET_PERMISSIONS', StorageData.permissions)
 		commit('SET_IS_LOGIN', true)
