@@ -6,8 +6,8 @@
 		v-on="listeners"
 	>
 		<el-form
-			v-loading="loading"
 			ref="form"
+			v-loading="loading"
 			:model="form"
 			status-icon
 			class="form--full"
