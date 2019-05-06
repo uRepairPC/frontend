@@ -46,6 +46,10 @@ const actions = {
 		}
 
 		axios.defaults.headers['Authorization'] = `Bearer ${token}`
+
+		// Auth in socket server
+		socket.emit('auth', token)
+
 		commit('SET_USER', profile)
 		commit('SET_PERMISSIONS', StorageData.permissions)
 		commit('SET_IS_LOGIN', true)
@@ -60,8 +64,7 @@ const actions = {
 				StorageData.token = data.token
 
 				// Auth in socket server
-				socket.query.token = data.token
-				socket.$emit('auth')
+				socket.emit('auth', data.token)
 
 				// Update store
 				commit('SET_USER', data.user)
@@ -81,6 +84,9 @@ const actions = {
 
 		axios.get(`users/${state.user.id}`)
 			.then(({ data }) => {
+				// Refresh user rooms
+				socket.emit('auth', data.token)
+
 				commit('SET_USER', data.user)
 				commit('SET_PERMISSIONS', data.permissions)
 			})
@@ -90,6 +96,9 @@ const actions = {
 	},
 	logout() {
 		const loadingService = runLoadingService('Виходимо з системи')
+
+		// Logout from the socket server
+		socket.emit('logout')
 
 		axios.post('auth/logout')
 			.finally(() => {

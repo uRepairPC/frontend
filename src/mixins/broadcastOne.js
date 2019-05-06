@@ -1,10 +1,14 @@
 'use strict'
 
+// TODO Global in store
+
 /*
  * NOTE: fetchRequest function is reserved!
  */
 
 import { isObject } from '@/scripts/helpers'
+import { Notification } from 'element-ui'
+import store from '@/store'
 
 export default (section) => {
 	return {
@@ -22,20 +26,15 @@ export default (section) => {
 		methods: {
 			_subscribe() {
 				this.$options.sockets[`${section}-${this.id}`] = (data) => {
-					if (!isObject(data)) {
+					if (!isObject(data) || store.state.profile.user.id === data.from.id) {
 						return
 					}
 
-					switch (data.action) {
-					case 'update':
-						if (typeof this.fetchRequest === 'function') {
-							this.fetchRequest()
-						}
-						break
-					case 'delete':
-						this.$router.push({ name: section })
-						break
-					}
+					Notification.info({
+						title: `Socket - ${data.title}`,
+						message: data.message
+					})
+					// TODO change history
 				}
 			}
 		}

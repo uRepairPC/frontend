@@ -25,13 +25,7 @@ export const isDev = ['dev', 'development'].includes(process.env.NODE_ENV)
 export const proxyTarget = withoutLastSlash(process.env.PROXY_TARGET) || 'http://localhost'
 
 /** @return {string} */
-export const serverSocketDev = process.env.SERVER_SOCKET_DEV || 'http://localhost:3000'
-
-/** @return {string} */
-export const serverSocketProd = process.env.SERVER_SOCKET_PROD || 'http://localhost:3000'
-
-/** @return {string} */
-export const serverSocket = isDev ? serverSocketDev : serverSocketProd
-
-/** @return {string} */
 export const server = isDev ? proxyTarget : location.origin
+
+/** @return {string} */
+export const serverSocket = `${server}:${+process.env.SERVER_SOCKET_PORT || 3000}`
