@@ -149,20 +149,6 @@ export default {
 			}
 		}
 	},
-	watch: {
-		settings: {
-			handler(data) {
-				const settingsData = Object.assign({}, data, { icons: undefined })
-
-				Object.entries(settingsData).forEach(([key, item]) => {
-					if (this.form[key]) {
-						this.$set(this.form[key], 'value', item)
-					}
-				})
-			},
-			immediate: true
-		}
-	},
 	computed: {
 		...mapState({
 			settings: state => state.settings.manifest.data,
@@ -179,6 +165,20 @@ export default {
 		},
 		title() {
 			return menu[sections.settings].children[sections.settingsManifest].title
+		}
+	},
+	watch: {
+		settings: {
+			handler(data) {
+				const settingsData = Object.assign({}, data, { icons: undefined })
+
+				Object.entries(settingsData).forEach(([key, item]) => {
+					if (this.form[key]) {
+						this.$set(this.form[key], 'value', item)
+					}
+				})
+			},
+			immediate: true
 		}
 	},
 	mounted() {

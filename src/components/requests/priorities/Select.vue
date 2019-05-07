@@ -11,10 +11,10 @@
 
 <script>
 export default {
-	inheritAttrs: false,
 	components: {
 		SelectSimple: () => import('@/components/SelectSimple')
 	},
+	inheritAttrs: false,
 	computed: {
 		list() {
 			return this.$store.state.requestPriorities.list

@@ -1,5 +1,6 @@
 'use strict'
 
+import { onEventDynamic, offEventDynamic } from '@/scripts/socket'
 import { filterByPermission } from '@/scripts/utils'
 import { isObject } from '@/scripts/helpers'
 import menu from '@/data/menu'
@@ -56,6 +57,10 @@ const mutations = {
 		// Prevent delete custom attributes (relationship)
 		const oldValue = state.sidebar[section][data.id]
 
+		if (typeof oldValue === 'undefined') {
+			onEventDynamic(section, data.id)
+		}
+
 		Vue.set(state.sidebar[section], data.id, {
 			...oldValue,
 			...data
@@ -71,6 +76,7 @@ const mutations = {
 			return
 		}
 
+		offEventDynamic(section, id)
 		Vue.delete(state.sidebar[section], id)
 	},
 	CLEAR_SIDEBAR(state) {

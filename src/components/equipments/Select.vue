@@ -39,13 +39,7 @@ export default {
 		listeners() {
 			return {
 				...this.$listeners,
-				focus: async () => {
-					if (this.init) {
-						await this.$store.dispatch('equipments/fetchList')
-					}
-
-					this.list = [...this.listStore]
-				}
+				focus: this.onFocus
 			}
 		}
 	},
@@ -65,6 +59,13 @@ export default {
 				.finally(() => {
 					this.loading = false
 				})
+		},
+		async onFocus() {
+			if (this.init) {
+				await this.$store.dispatch('equipments/fetchList')
+			}
+
+			this.list = [...this.listStore]
 		}
 	}
 }

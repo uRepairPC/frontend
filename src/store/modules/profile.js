@@ -4,6 +4,7 @@ import router, { DEFAULT_ROUTE_NAME } from '@/router'
 import { runLoadingService } from '@/scripts/dom'
 import StorageData from '@/classes/StorageData'
 import logout from '@/scripts/logout'
+import socket from '@/scripts/socket'
 import axios from 'axios'
 
 const state = {
@@ -45,6 +46,7 @@ const actions = {
 		}
 
 		axios.defaults.headers['Authorization'] = `Bearer ${token}`
+
 		commit('SET_USER', profile)
 		commit('SET_PERMISSIONS', StorageData.permissions)
 		commit('SET_IS_LOGIN', true)
@@ -54,11 +56,18 @@ const actions = {
 
 		return axios.post('auth/login', data)
 			.then(({ data }) => {
+				// Update axios and localStorage
 				axios.defaults.headers['Authorization'] = `Bearer ${data.token}`
 				StorageData.token = data.token
+
+				// Auth in socket server
+				socket.emit('auth', data.token)
+
+				// Update store
 				commit('SET_USER', data.user)
 				commit('SET_PERMISSIONS', data.permissions)
 				commit('SET_IS_LOGIN', true)
+
 				router.push({ name: DEFAULT_ROUTE_NAME })
 			})
 			.finally(() => {
@@ -72,6 +81,9 @@ const actions = {
 
 		axios.get(`users/${state.user.id}`)
 			.then(({ data }) => {
+				// Refresh user rooms
+				socket.emit('auth', data.token)
+
 				commit('SET_USER', data.user)
 				commit('SET_PERMISSIONS', data.permissions)
 			})
@@ -81,6 +93,9 @@ const actions = {
 	},
 	logout() {
 		const loadingService = runLoadingService('Виходимо з системи')
+
+		// Logout from the socket server
+		socket.emit('logout')
 
 		axios.post('auth/logout')
 			.finally(() => {
