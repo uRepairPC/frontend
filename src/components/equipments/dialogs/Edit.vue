@@ -15,6 +15,7 @@
 </template>
 
 <script>
+import * as permissions from '@/enum/permissions'
 import Equipment from '@/classes/Equipment'
 import { required } from '@/data/rules'
 
@@ -38,7 +39,8 @@ export default {
           component: () => import('@/components/equipments/Cascader'),
           value: [this.equipment.type_id, this.equipment.manufacturer_id, this.equipment.model_id],
           label: 'Тип, Виробник, Модель',
-          rules: required
+          rules: required,
+          permissions: [permissions.EQUIPMENTS_CONFIG_VIEW]
         },
         serial_number: {
           component: 'el-input',
