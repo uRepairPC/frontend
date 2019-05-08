@@ -8,38 +8,38 @@ import axios from 'axios'
 import Vue from 'vue'
 
 export default function () {
-	// Clear data from axios
-	axios.defaults.headers['Authorization'] = null
+  // Clear data from axios
+  axios.defaults.headers['Authorization'] = null
 
-	// Service Workers - delete API data
-	if ('caches' in window) {
-		caches.delete('api')
-	}
+  // Service Workers - delete API data
+  if ('caches' in window) {
+    caches.delete('api')
+  }
 
-	// Clear data from localStorage
-	StorageData.remove.token()
-	StorageData.remove.profile()
-	StorageData.remove.permissions()
+  // Clear data from localStorage
+  StorageData.remove.token()
+  StorageData.remove.profile()
+  StorageData.remove.permissions()
 
-	// Set isLogin to false, can access for auth page
-	store.commit('profile/SET_IS_LOGIN', false)
+  // Set isLogin to false, can access for auth page
+  store.commit('profile/SET_IS_LOGIN', false)
 
-	// And move to auth page
-	router.push({ name: sections.auth })
+  // And move to auth page
+  router.push({ name: sections.auth })
 
-	// On auth page we can safe delete user object without errors
-	Vue.nextTick(() => {
+  // On auth page we can safe delete user object without errors
+  Vue.nextTick(() => {
 
-		// Clear data from store (vuex)
-		const names = [
-			'roles', 'users', 'permissions', 'equipments', 'equipmentTypes', 'equipmentManufacturers', 'equipmentModels',
-			'requestPriorities', 'requestStatuses', 'requestTypes'
-		]
+    // Clear data from store (vuex)
+    const names = [
+      'roles', 'users', 'permissions', 'equipments', 'equipmentTypes', 'equipmentManufacturers', 'equipmentModels',
+      'requestPriorities', 'requestStatuses', 'requestTypes'
+    ]
 
-		names.forEach(name => store.commit(`${name}/CLEAR_ALL`))
+    names.forEach(name => store.commit(`${name}/CLEAR_ALL`))
 
-		store.commit('template/CLEAR_SIDEBAR')
-		store.commit('profile/SET_USER', {})
-		store.commit('profile/SET_PERMISSIONS', [])
-	})
+    store.commit('template/CLEAR_SIDEBAR')
+    store.commit('profile/SET_USER', {})
+    store.commit('profile/SET_PERMISSIONS', [])
+  })
 }

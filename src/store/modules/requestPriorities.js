@@ -3,40 +3,40 @@
 import RequestPriority from '@/classes/RequestPriority'
 
 const state = {
-	init: true,
-	loading: false,
-	list: []
+  init: true,
+  loading: false,
+  list: []
 }
 
 const mutations = {
-	SET_LOADING(state, toggle) {
-		state.loading = toggle
-	},
-	SET_LIST(state, arr) {
-		state.init = false
-		state.list = arr
-	},
-	CLEAR_ALL(state) {
-		state.init = true
-		state.loading = false
-		state.list = []
-	}
+  SET_LOADING(state, toggle) {
+    state.loading = toggle
+  },
+  SET_LIST(state, arr) {
+    state.init = false
+    state.list = arr
+  },
+  CLEAR_ALL(state) {
+    state.init = true
+    state.loading = false
+    state.list = []
+  }
 }
 
 const actions = {
-	fetchList({ commit }) {
-		commit('SET_LOADING', true)
+  fetchList({ commit }) {
+    commit('SET_LOADING', true)
 
-		RequestPriority.fetchAll()
-			.then(({ data }) => {
-				commit('SET_LIST', data)
-			})
-			.finally(() => {
-				commit('SET_LOADING', false)
-			})
-	}
+    RequestPriority.fetchAll()
+      .then(({ data }) => {
+        commit('SET_LIST', data)
+      })
+      .finally(() => {
+        commit('SET_LOADING', false)
+      })
+  }
 }
 
 export default {
-	state, mutations, actions
+  state, mutations, actions
 }

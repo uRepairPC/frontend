@@ -1,78 +1,78 @@
 <template>
-	<div class="layout layout_default">
-		<el-container direction="vertical">
-			<header-box />
-			<el-container
-				:class="['container-content',
-					{ 'search--open': openSearch }
-				]"
-			>
-				<sidebar-box />
-				<el-main>
-					<breadcrumbs-box />
-					<keep-alive :include="keepAliveRoutesName">
-						<router-view
-							ref="content"
-							:key="$route.params.id"
-							class="page"
-						/>
-					</keep-alive>
-				</el-main>
-			</el-container>
-		</el-container>
-		<search-box />
-	</div>
+  <div class="layout layout_default">
+    <el-container direction="vertical">
+      <header-box />
+      <el-container
+        :class="['container-content',
+                 { 'search--open': openSearch }
+        ]"
+      >
+        <sidebar-box />
+        <el-main>
+          <breadcrumbs-box />
+          <keep-alive :include="keepAliveRoutesName">
+            <router-view
+              ref="content"
+              :key="$route.params.id"
+              class="page"
+            />
+          </keep-alive>
+        </el-main>
+      </el-container>
+    </el-container>
+    <search-box />
+  </div>
 </template>
 
 <script>
 import { root as keepAliveRoutesName } from '@/data/keepAliveComponents'
 
 export default {
-	components: {
-		BreadcrumbsBox: () => import('@/components/root/Breadcrumbs'),
-		SidebarBox: () => import('@/components/root/Sidebar'),
-		HeaderBox: () => import('@/components/root/Header'),
-		SearchBox: () => import('@/components/root/Search')
-	},
-	data() {
-		return {
-			keepAliveRoutesName
-		}
-	},
-	computed: {
-		openSearch() {
-			return this.$store.state.template.openSearch
-		}
-	},
-	watch: {
-		/*
+  components: {
+    BreadcrumbsBox: () => import('@/components/root/Breadcrumbs'),
+    SidebarBox: () => import('@/components/root/Sidebar'),
+    HeaderBox: () => import('@/components/root/Header'),
+    SearchBox: () => import('@/components/root/Search')
+  },
+  data() {
+    return {
+      keepAliveRoutesName
+    }
+  },
+  computed: {
+    openSearch() {
+      return this.$store.state.template.openSearch
+    }
+  },
+  watch: {
+    /*
 		 * On update $route - we update breadcrumbs
 		 * from ref="content" component.
 		 */
-		'$route'() {
-			if (this.openSearch) {
-				this.$store.commit('template/CLOSE_SEARCH')
-			}
-		}
-	},
-	mounted() {
-		document.addEventListener('keydown', this.hotKeys)
-	},
-	beforeDestroy() {
-		document.removeEventListener('keydown', this.hotKeys)
-	},
-	methods: {
-		hotKeys(evt) {
-			// Open/Close Global Search - Ctrl + Shift + F
-			if (evt.ctrlKey && evt.shiftKey && evt.code === 'KeyF') {
-				if (this.openSearch) {
-					this.$store.commit('template/CLOSE_SEARCH')
-				} else {
-					this.$store.commit('template/OPEN_SEARCH')
-				}
-			}
-		}
-	}
+    '$route'() {
+      if (this.openSearch) {
+        this.$store.commit('template/CLOSE_SEARCH')
+      }
+    }
+  },
+  mounted() {
+    document.addEventListener('keydown', this.hotKeys)
+  },
+  beforeDestroy() {
+    document.removeEventListener('keydown', this.hotKeys)
+  },
+  methods: {
+    hotKeys(evt) {
+      // Open/Close Global Search - Ctrl + Shift + F
+      if (evt.ctrlKey && evt.shiftKey && evt.code === 'KeyF') {
+        if (this.openSearch) {
+          this.$store.commit('template/CLOSE_SEARCH')
+        } else {
+          this.$store.commit('template/OPEN_SEARCH')
+        }
+      }
+    }
+  }
 }
 </script>
 

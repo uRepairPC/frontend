@@ -1,7 +1,7 @@
 <template>
-	<div class="settings">
-		<section-menu :menu="pages" />
-	</div>
+  <div class="settings">
+    <section-menu :menu="pages" />
+  </div>
 </template>
 
 <script>
@@ -11,25 +11,25 @@ import { mapGetters } from 'vuex'
 import menu from '@/data/menu'
 
 export default {
-	name: 'Settings',
-	breadcrumbs: [
-		{ title: menu[sections.settings].title }
-	],
-	components: {
-		SectionMenu: () => import('@/components/sections/SectionMenu')
-	},
-	mixins: [
-		breadcrumbs
-	],
-	computed: {
-		...mapGetters({
-			menu: 'template/menu'
-		}),
-		pages() {
-			const section = this.menu[sections.settings] || {}
+  name: 'Settings',
+  breadcrumbs: [
+    { title: menu[sections.settings].title }
+  ],
+  components: {
+    SectionMenu: () => import('@/components/sections/SectionMenu')
+  },
+  mixins: [
+    breadcrumbs
+  ],
+  computed: {
+    ...mapGetters({
+      menu: 'template/menu'
+    }),
+    pages() {
+      const section = this.menu[sections.settings] || {}
 
-			return section.children || {}
-		}
-	}
+      return section.children || {}
+    }
+  }
 }
 </script>

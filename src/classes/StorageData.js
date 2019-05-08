@@ -28,236 +28,236 @@ const SETTINGS_GLOBAL = 'settingsGlobal'
 
 export default class StorageData {
 
-	/* | -------------------------------------------------------------------------------------
+  /* | -------------------------------------------------------------------------------------
 	 * | - Columns -
 	 * | -------------------------------------------------------------------------------------
 	 */
 
-	static get remove() {
-		const self = this
+  static get remove() {
+    const self = this
 
-		return {
-			columnRequests() {
-				return self._remove(COLUMN_REQUESTS)
-			},
-			columnUsers() {
-				return self._remove(COLUMN_USERS)
-			},
-			columnEquipments() {
-				return self._remove(COLUMN_EQUIPMENTS)
-			},
-			columnRoles() {
-				return self._remove(COLUMN_ROLES)
-			},
-			token() {
-				return self._remove(TOKEN)
-			},
-			profile() {
-				return self._remove(PROFILE)
-			},
-			permissions() {
-				return self._remove(PERMISSIONS)
-			},
-			settings() {
-				return self._remove(SETTINGS_GLOBAL)
-			}
-		}
-	}
+    return {
+      columnRequests() {
+        return self._remove(COLUMN_REQUESTS)
+      },
+      columnUsers() {
+        return self._remove(COLUMN_USERS)
+      },
+      columnEquipments() {
+        return self._remove(COLUMN_EQUIPMENTS)
+      },
+      columnRoles() {
+        return self._remove(COLUMN_ROLES)
+      },
+      token() {
+        return self._remove(TOKEN)
+      },
+      profile() {
+        return self._remove(PROFILE)
+      },
+      permissions() {
+        return self._remove(PERMISSIONS)
+      },
+      settings() {
+        return self._remove(SETTINGS_GLOBAL)
+      }
+    }
+  }
 
-	/* Column Requests ----------------------------------------------------------------------- */
+  /* Column Requests ----------------------------------------------------------------------- */
 
-	/** @return {Array} */
-	static get columnRequests() {
-		return this.getArray(COLUMN_REQUESTS)
-	}
+  /** @return {Array} */
+  static get columnRequests() {
+    return this.getArray(COLUMN_REQUESTS)
+  }
 
-	static set columnRequests(value) {
-		this.setArray(COLUMN_REQUESTS, value)
-	}
+  static set columnRequests(value) {
+    this.setArray(COLUMN_REQUESTS, value)
+  }
 
-	/* Column Users -------------------------------------------------------------------------- */
+  /* Column Users -------------------------------------------------------------------------- */
 
-	/** @return {Array} */
-	static get columnUsers() {
-		return this.getArray(COLUMN_USERS)
-	}
+  /** @return {Array} */
+  static get columnUsers() {
+    return this.getArray(COLUMN_USERS)
+  }
 
-	static set columnUsers(value) {
-		this.setArray(COLUMN_USERS, value)
-	}
+  static set columnUsers(value) {
+    this.setArray(COLUMN_USERS, value)
+  }
 
-	/* Column Equipments -------------------------------------------------------------------- */
+  /* Column Equipments -------------------------------------------------------------------- */
 
-	/** @return {Array} */
-	static get columnEquipments() {
-		return this.getArray(COLUMN_EQUIPMENTS)
-	}
+  /** @return {Array} */
+  static get columnEquipments() {
+    return this.getArray(COLUMN_EQUIPMENTS)
+  }
 
-	static set columnEquipments(value) {
-		this.setArray(COLUMN_EQUIPMENTS, value)
-	}
+  static set columnEquipments(value) {
+    this.setArray(COLUMN_EQUIPMENTS, value)
+  }
 
-	/* Column Roles ------------------------------------------------------------------------- */
+  /* Column Roles ------------------------------------------------------------------------- */
 
-	/** @return {Array} */
-	static get columnRoles() {
-		return this.getArray(COLUMN_ROLES)
-	}
+  /** @return {Array} */
+  static get columnRoles() {
+    return this.getArray(COLUMN_ROLES)
+  }
 
-	static set columnRoles(value) {
-		this.setArray(COLUMN_ROLES, value)
-	}
+  static set columnRoles(value) {
+    this.setArray(COLUMN_ROLES, value)
+  }
 
-	/* Token -------------------------------------------------------------------------------- */
+  /* Token -------------------------------------------------------------------------------- */
 
-	/** @return {string} */
-	static get token() {
-		return this.getString(TOKEN)
-	}
+  /** @return {string} */
+  static get token() {
+    return this.getString(TOKEN)
+  }
 
-	static set token(value) {
-		this.setString(TOKEN, value)
-	}
+  static set token(value) {
+    this.setString(TOKEN, value)
+  }
 
-	/* Profile ------------------------------------------------------------------------------ */
+  /* Profile ------------------------------------------------------------------------------ */
 
-	/** @return {object} */
-	static get profile() {
-		return this.getObject(PROFILE)
-	}
+  /** @return {object} */
+  static get profile() {
+    return this.getObject(PROFILE)
+  }
 
-	static set profile(value) {
-		this.setObject(PROFILE, value)
-	}
+  static set profile(value) {
+    this.setObject(PROFILE, value)
+  }
 
-	/* Permissions ---------------------------------------------------------------------------------- */
+  /* Permissions ---------------------------------------------------------------------------------- */
 
-	/** @return {array} */
-	static get permissions() {
-		return this.getArray(PERMISSIONS)
-	}
+  /** @return {array} */
+  static get permissions() {
+    return this.getArray(PERMISSIONS)
+  }
 
-	static set permissions(value) {
-		this.setArray(PERMISSIONS, value)
-	}
+  static set permissions(value) {
+    this.setArray(PERMISSIONS, value)
+  }
 
-	/* Settings Global ------------------------------------------------------------------------------ */
+  /* Settings Global ------------------------------------------------------------------------------ */
 
-	// TODO REMOVE
-	/** @return {object} */
-	static get settingsGlobal() {
-		return this.getObject(SETTINGS_GLOBAL)
-	}
+  // TODO REMOVE
+  /** @return {object} */
+  static get settingsGlobal() {
+    return this.getObject(SETTINGS_GLOBAL)
+  }
 
-	static set settingsGlobal(value) {
-		this.setObject(SETTINGS_GLOBAL, value)
-	}
+  static set settingsGlobal(value) {
+    this.setObject(SETTINGS_GLOBAL, value)
+  }
 
-	/* | -------------------------------------------------------------------------------------
+  /* | -------------------------------------------------------------------------------------
 	 * | - Common functions -
 	 * | -------------------------------------------------------------------------------------
 	 */
 
-	/**
+  /**
 	 * @param {string} key
 	 * @return {Array}
 	 */
-	static getArray(key) {
-		if (localStorage.getItem(key)) {
-			try {
-				const data = JSON.parse(localStorage.getItem(key))
-				return isArray(data) ? data : []
+  static getArray(key) {
+    if (localStorage.getItem(key)) {
+      try {
+        const data = JSON.parse(localStorage.getItem(key))
+        return isArray(data) ? data : []
 
-			} catch (e) {
-				return []
-			}
-		}
+      } catch (e) {
+        return []
+      }
+    }
 
-		return []
-	}
+    return []
+  }
 
-	/**
+  /**
 	 * @param {string} key
 	 * @param value
 	 */
-	static setArray(key, value) {
-		if (!value) {
-			return
-		}
+  static setArray(key, value) {
+    if (!value) {
+      return
+    }
 
-		localStorage.setItem(key, JSON.stringify(isArray(value) ? value : [value]))
-	}
+    localStorage.setItem(key, JSON.stringify(isArray(value) ? value : [value]))
+  }
 
-	/**
+  /**
 	 * @param {string} key
 	 * @returns {string}
 	 */
-	static getString(key) {
-		const item = localStorage.getItem(key)
+  static getString(key) {
+    const item = localStorage.getItem(key)
 
-		if (!item) {
-			return ''
-		}
+    if (!item) {
+      return ''
+    }
 
-		if (typeof item === 'object') {
-			return ''
-		}
+    if (typeof item === 'object') {
+      return ''
+    }
 
-		if (typeof item === 'number') {
-			return item.toString() || ''
-		}
+    if (typeof item === 'number') {
+      return item.toString() || ''
+    }
 
-		return item || ''
-	}
+    return item || ''
+  }
 
-	/**
+  /**
 	 * @param {string} key
 	 * @param value
 	 */
-	static setString(key, value) {
-		localStorage.setItem(key, value)
-	}
+  static setString(key, value) {
+    localStorage.setItem(key, value)
+  }
 
-	/**
+  /**
 	 * @param {string} key
 	 * @param value
 	 */
-	static setObject(key, value) {
-		if (!value || typeof value !== 'object') {
-			return
-		}
+  static setObject(key, value) {
+    if (!value || typeof value !== 'object') {
+      return
+    }
 
-		localStorage.setItem(key, JSON.stringify(value))
-	}
+    localStorage.setItem(key, JSON.stringify(value))
+  }
 
-	/**
+  /**
 	 * @param {string} key
 	 * @return {object}
 	 */
-	static getObject(key) {
-		if (localStorage.getItem(key)) {
-			try {
-				const data = JSON.parse(localStorage.getItem(key))
-				return isObject(data) ? data : {}
+  static getObject(key) {
+    if (localStorage.getItem(key)) {
+      try {
+        const data = JSON.parse(localStorage.getItem(key))
+        return isObject(data) ? data : {}
 
-			} catch (e) {
-				return {}
-			}
-		}
+      } catch (e) {
+        return {}
+      }
+    }
 
-		return {}
-	}
+    return {}
+  }
 
-	/**
+  /**
 	 * @param key
 	 * @return {boolean}
 	 */
-	static _remove(key) {
-		if (localStorage.getItem(key) === null) {
-			return false
-		}
+  static _remove(key) {
+    if (localStorage.getItem(key) === null) {
+      return false
+    }
 
-		localStorage.removeItem(key)
-		return true
-	}
+    localStorage.removeItem(key)
+    return true
+  }
 }

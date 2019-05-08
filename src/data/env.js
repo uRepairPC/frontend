@@ -7,15 +7,15 @@
  * @return {string}
  */
 const withoutLastSlash = (input) => {
-	if (!input) {
-		return ''
-	}
+  if (!input) {
+    return ''
+  }
 
-	if (input.slice(-1) === '/') {
-		return input.slice(0, input.length - 1)
-	}
+  if (input.slice(-1) === '/') {
+    return input.slice(0, input.length - 1)
+  }
 
-	return input
+  return input
 }
 
 /** @return {boolean} */

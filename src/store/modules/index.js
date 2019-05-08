@@ -5,14 +5,14 @@ const files = require.context('.', false, /\.js$/)
 const modules = {}
 
 files.keys().forEach((key) => {
-	if (key === './index.js') {
-		return
-	}
+  if (key === './index.js') {
+    return
+  }
 
-	const mod = files(key).default
-	mod.namespaced = true
+  const mod = files(key).default
+  mod.namespaced = true
 
-	modules[key.replace(/(\.\/|\.js)/g, '')] = mod
+  modules[key.replace(/(\.\/|\.js)/g, '')] = mod
 })
 
 export default modules

@@ -41,7 +41,7 @@ NProgress.configure({ showSpinner: false })
  * @example Vue.$axios | this.$axios
  */
 prototypes.forEach((prototype) => {
-	Vue.use(prototype)
+  Vue.use(prototype)
 })
 
 /**
@@ -49,7 +49,7 @@ prototypes.forEach((prototype) => {
  * @var {Array} directives
  */
 directives.forEach((directive) => {
-	Vue.use(directive)
+  Vue.use(directive)
 })
 
 // Set init config
@@ -57,8 +57,8 @@ SettingsGlobal.init()
 store.dispatch('profile/init')
 
 new Vue({
-	el: '#app',
-	store,
-	router,
-	render: h => h(App)
+  el: '#app',
+  store,
+  router,
+  render: h => h(App)
 })

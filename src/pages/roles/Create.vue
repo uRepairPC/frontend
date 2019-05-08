@@ -1,20 +1,20 @@
 <template>
-	<div class="role">
-		<div class="wrap">
-			<div class="title">
-				{{ titlePage }}
-			</div>
-			<generate-form
-				:form="form"
-				:loading="loading"
-				@submit="fetchRequest"
-			>
-				<template slot="button">
-					Створити
-				</template>
-			</generate-form>
-		</div>
-	</div>
+  <div class="role">
+    <div class="wrap">
+      <div class="title">
+        {{ titlePage }}
+      </div>
+      <generate-form
+        :form="form"
+        :loading="loading"
+        @submit="fetchRequest"
+      >
+        <template slot="button">
+          Створити
+        </template>
+      </generate-form>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -25,62 +25,62 @@ import Role from '@/classes/Role'
 import menu from '@/data/menu'
 
 export default {
-	breadcrumbs: [
-		{ title: menu[sections.roles].title, routeName: sections.roles },
-		{ title: menu[sections.roles].children.add.title }
-	],
-	components: {
-		GenerateForm: () => import('@/components/GenerateForm')
-	},
-	mixins: [
-		breadcrumbs
-	],
-	data() {
-		return {
-			loading: false,
-			form: {
-				name: {
-					component: 'el-input',
-					value: '',
-					label: 'Ім\'я',
-					rules: required,
-					attrs: {
-						placeholder: 'Ім\'я'
-					}
-				},
-				color: {
-					component: 'el-color-picker',
-					value: '',
-					label: 'Колір'
-				},
-				default: {
-					component: 'el-checkbox',
-					value: false,
-					attrs: {
-						label: 'За замовчуванням'
-					}
-				}
-			}
-		}
-	},
-	computed: {
-		titlePage() {
-			return menu[sections.roles].children.add.title
-		}
-	},
-	methods: {
-		fetchRequest(form) {
-			this.loading = true
+  breadcrumbs: [
+    { title: menu[sections.roles].title, routeName: sections.roles },
+    { title: menu[sections.roles].children.add.title }
+  ],
+  components: {
+    GenerateForm: () => import('@/components/GenerateForm')
+  },
+  mixins: [
+    breadcrumbs
+  ],
+  data() {
+    return {
+      loading: false,
+      form: {
+        name: {
+          component: 'el-input',
+          value: '',
+          label: 'Ім\'я',
+          rules: required,
+          attrs: {
+            placeholder: 'Ім\'я'
+          }
+        },
+        color: {
+          component: 'el-color-picker',
+          value: '',
+          label: 'Колір'
+        },
+        default: {
+          component: 'el-checkbox',
+          value: false,
+          attrs: {
+            label: 'За замовчуванням'
+          }
+        }
+      }
+    }
+  },
+  computed: {
+    titlePage() {
+      return menu[sections.roles].children.add.title
+    }
+  },
+  methods: {
+    fetchRequest(form) {
+      this.loading = true
 
-			Role.fetchStore(form)
-				.then(({ data }) => {
-					this.$router.push({ name: `${sections.roles}-id`, params: { id: data.role.id } })
-				})
-				.finally(() => {
-					this.loading = false
-				})
-		}
-	}
+      Role.fetchStore(form)
+        .then(({ data }) => {
+          this.$router.push({ name: `${sections.roles}-id`, params: { id: data.role.id } })
+        })
+        .finally(() => {
+          this.loading = false
+        })
+    }
+  }
 }
 </script>
 

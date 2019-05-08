@@ -1,53 +1,53 @@
 <template>
-	<el-aside width="250px">
-		<div class="aside-wrap">
-			<el-menu
-				ref="menu"
-				router
-				:default-active="defaultRoute"
-			>
-				<el-menu-item
-					v-for="(item, index) in menu"
-					:key="index"
-					:index="item.route.name"
-					:route="item.route"
-				>
-					<i class="material-icons">
-						{{ item.icon }}
-					</i>
-					<span>{{ item.title }}</span>
-				</el-menu-item>
-			</el-menu>
-			<history />
-		</div>
-	</el-aside>
+  <el-aside width="250px">
+    <div class="aside-wrap">
+      <el-menu
+        ref="menu"
+        router
+        :default-active="defaultRoute"
+      >
+        <el-menu-item
+          v-for="(item, index) in menu"
+          :key="index"
+          :index="item.route.name"
+          :route="item.route"
+        >
+          <i class="material-icons">
+            {{ item.icon }}
+          </i>
+          <span>{{ item.title }}</span>
+        </el-menu-item>
+      </el-menu>
+      <history />
+    </div>
+  </el-aside>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
 
 export default {
-	components: {
-		History: () => import('@/components/root/History')
-	},
-	computed: {
-		...mapGetters({
-			menu: 'template/menu'
-		}),
-		defaultRoute() {
-			return this.$route.name
-		},
-		routeNames() {
-			return Object.values(this.menu).map(m => m.route.name)
-		}
-	},
-	watch: {
-		'$route'() {
-			if (!this.routeNames.includes(this.defaultRoute)) {
-				this.$refs.menu.activeIndex = null
-			}
-		}
-	}
+  components: {
+    History: () => import('@/components/root/History')
+  },
+  computed: {
+    ...mapGetters({
+      menu: 'template/menu'
+    }),
+    defaultRoute() {
+      return this.$route.name
+    },
+    routeNames() {
+      return Object.values(this.menu).map(m => m.route.name)
+    }
+  },
+  watch: {
+    '$route'() {
+      if (!this.routeNames.includes(this.defaultRoute)) {
+        this.$refs.menu.activeIndex = null
+      }
+    }
+  }
 }
 </script>
 
@@ -57,44 +57,44 @@ export default {
 @import "~scss/_colors";
 
 .el-aside {
-	position: sticky;
-	top: 0;
-	min-height: calc(100vh - #{$headerHeight});
-	max-height: 100vh;
-	background: #fff;
-	user-select: none;
+  position: sticky;
+  top: 0;
+  min-height: calc(100vh - #{$headerHeight});
+  max-height: 100vh;
+  background: #fff;
+  user-select: none;
 }
 
 .aside-wrap {
-	border-right: 1px solid $defaultBorder;
+  border-right: 1px solid $defaultBorder;
 }
 
 .el-menu {
-	border-right: 0;
+  border-right: 0;
 }
 
 .el-menu-item {
-	display: flex;
-	align-items: center;
-	> .material-icons {
-		margin-right: 10px;
-		font-size: 1.2em;
-	}
+  display: flex;
+  align-items: center;
+  > .material-icons {
+    margin-right: 10px;
+    font-size: 1.2em;
+  }
 }
 
 @media only screen and (max-width: $laptop) {
-	.el-aside {
-		overflow: unset;
-		width: 64px !important;
-	}
-	.el-menu-item {
-		justify-content: center;
-		> .material-icons {
-			margin-right: 0;
-		}
-		> span {
-			display: none;
-		}
-	}
+  .el-aside {
+    overflow: unset;
+    width: 64px !important;
+  }
+  .el-menu-item {
+    justify-content: center;
+    > .material-icons {
+      margin-right: 0;
+    }
+    > span {
+      display: none;
+    }
+  }
 }
 </style>
