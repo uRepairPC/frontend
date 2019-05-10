@@ -4,6 +4,7 @@
 
 import { isArray, isObject } from '@/scripts/helpers'
 import { serverSocket } from '@/data/env'
+import logout from '@/scripts/logout'
 import io from 'socket.io-client'
 import router from '@/router'
 import store from '@/store'
@@ -13,7 +14,9 @@ export const SOCKET_HEADER = 'X-Socket-ID'
 
 const socket = io(serverSocket)
 
+// TODO Comments
 // TODO Update currentId => syncEvents()
+// TODO Move to subFiles
 
 socket.on('connect', () => {
   // Append socketId to every request to the server (API)
@@ -80,36 +83,44 @@ Array(
  * Sections
  */
 Array(
-  { event: 'equipments', store: 'equipments', section: 'equipments' }
+  { event: 'equipments', store: 'equipments', section: 'equipments' },
+  { event: 'users', store: 'users', section: 'users' },
+  { event: 'roles', store: 'roles', section: 'roles' }
 )
   .forEach((obj) => {
     socket.on(obj.event, (payload) => {
       const sidebar = store.state.template.sidebar[obj.store]
-
-      if ((payload.type === 'update' || payload.type === 'delete') && payload.params.id) {
-        const sidebarItem = sidebar[payload.params.id]
-        if (sidebarItem) {
-          if (payload.type === 'update') {
-            store.commit('template/ADD_SIDEBAR_ITEM', {
-              section: obj.section,
-              data: payload.data
-            })
-          } else {
-            const route = router.currentRoute
-            if (`${obj.section}-id` === route.name && payload.params.id === +route.params.id) {
-              router.push({ name: obj.section })
-            }
-
-            store.commit('template/REMOVE_SIDEBAR_ITEM', {
-              section: obj.section,
-              id: payload.params.id
-            })
-          }
-        }
+      if (!payload.params.id) {
+        return
       }
 
-      if (payload.type === 'create') {
-        // TODO ???
+      if (obj.section === 'users' && store.state.profile.user.id === payload.params.id) {
+        logout()
+        return
+      }
+
+      if ((payload.type !== 'update' && payload.type !== 'delete') || !sidebar) {
+        return
+      }
+
+      const sidebarItem = sidebar[payload.params.id]
+      if (sidebarItem) {
+        if (payload.type === 'update') {
+          store.commit('template/ADD_SIDEBAR_ITEM', {
+            section: obj.section,
+            data: { id: payload.params.id, ...payload.data }
+          })
+        } else {
+          const route = router.currentRoute
+          if (`${obj.section}-id` === route.name && payload.params.id === +route.params.id) {
+            router.push({ name: obj.section })
+          }
+
+          store.commit('template/REMOVE_SIDEBAR_ITEM', {
+            section: obj.section,
+            id: payload.params.id
+          })
+        }
       }
     })
   })
