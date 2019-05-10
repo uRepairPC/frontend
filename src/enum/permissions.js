@@ -53,6 +53,15 @@ export const REQUESTS_CREATE = 'requests.create'
 export const REQUESTS_DELETE = 'requests.delete'
 
 /*
+ * Requests Files
+ */
+export const REQUESTS_FILES_VIEW = 'requests.files.view';
+export const REQUESTS_FILES_DOWNLOAD = 'requests.files.download';
+export const REQUESTS_FILES_EDIT = 'requests.files.edit';
+export const REQUESTS_FILES_CREATE = 'requests.files.create';
+export const REQUESTS_FILES_DELETE = 'requests.files.delete';
+
+/*
  * Requests Config
  */
 export const REQUESTS_CONFIG_VIEW = 'requests.config.view'

@@ -1,10 +1,10 @@
 'use strict'
 
 import router, { DEFAULT_ROUTE_NAME } from '@/router'
+import socket, { syncEvents } from '@/scripts/socket'
 import { runLoadingService } from '@/scripts/dom'
 import StorageData from '@/classes/StorageData'
 import logout from '@/scripts/logout'
-import socket from '@/scripts/socket'
 import axios from 'axios'
 
 const state = {
@@ -60,8 +60,8 @@ const actions = {
         axios.defaults.headers['Authorization'] = `Bearer ${data.token}`
         StorageData.token = data.token
 
-        // Auth in socket server
-        socket.emit('auth', data.token)
+        // Sync rooms by permissions on socket server
+        syncEvents()
 
         // Update store
         commit('SET_USER', data.user)
@@ -81,8 +81,8 @@ const actions = {
 
     axios.get(`users/${state.user.id}`)
       .then(({ data }) => {
-        // Refresh user rooms
-        socket.emit('auth', data.token)
+        // Sync rooms by permissions on socket server
+        syncEvents()
 
         commit('SET_USER', data.user)
         commit('SET_PERMISSIONS', data.permissions)

@@ -1,30 +1,21 @@
 'use strict'
 
 import EquipmentType from '@/classes/EquipmentType'
+import settingsStore from '@/common/store/settings'
 
 const state = {
-  loading: false,
-  list: []
+  //
 }
 
 const mutations = {
-  SET_LOADING(state, toggle) {
-    state.loading = toggle
-  },
-  SET_LIST(state, arr) {
-    state.list = arr
-  },
-  CLEAR_ALL(state) {
-    state.loading = false
-    state.list = []
-  }
+  //
 }
 
 const actions = {
   fetchList({ commit }) {
     commit('SET_LOADING', true)
 
-    EquipmentType.fetchAll()
+    return EquipmentType.fetchAll()
       .then(({ data }) => {
         commit('SET_LIST', data)
       })
@@ -35,5 +26,7 @@ const actions = {
 }
 
 export default {
-  state, mutations, actions
+  state: { ...state, ...settingsStore.state },
+  mutations: { ...mutations, ...settingsStore.mutations },
+  actions: { ...actions, ...settingsStore.actions }
 }

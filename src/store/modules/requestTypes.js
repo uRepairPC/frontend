@@ -1,33 +1,21 @@
 'use strict'
 
+import settingsStore from '@/common/store/settings'
 import RequestType from '@/classes/RequestType'
 
 const state = {
-  init: true,
-  loading: false,
-  list: []
+  //
 }
 
 const mutations = {
-  SET_LOADING(state, toggle) {
-    state.loading = toggle
-  },
-  SET_LIST(state, arr) {
-    state.init = false
-    state.list = arr
-  },
-  CLEAR_ALL(state) {
-    state.init = true
-    state.loading = false
-    state.list = []
-  }
+  //
 }
 
 const actions = {
   fetchList({ commit }) {
     commit('SET_LOADING', true)
 
-    RequestType.fetchAll()
+    return RequestType.fetchAll()
       .then(({ data }) => {
         commit('SET_LIST', data)
       })
@@ -38,5 +26,7 @@ const actions = {
 }
 
 export default {
-  state, mutations, actions
+  state: { ...state, ...settingsStore.state },
+  mutations: { ...mutations, ...settingsStore.mutations },
+  actions: { ...actions, ...settingsStore.actions }
 }

@@ -160,8 +160,9 @@ if (!isDev) {
           cacheName: 'storage'
         }
       }, {
-        // Disable cache images
-        urlPattern: /api\/users\/images/,
+        // TODO Check
+        // Disable cache images and listeners
+        urlPattern: /api\/(users\/images|listeners)/,
         handler: 'NetworkOnly'
       }, {
         urlPattern: /api/,

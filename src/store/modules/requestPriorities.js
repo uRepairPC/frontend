@@ -1,33 +1,21 @@
 'use strict'
 
 import RequestPriority from '@/classes/RequestPriority'
+import settingsStore from '@/common/store/settings'
 
 const state = {
-  init: true,
-  loading: false,
-  list: []
+  //
 }
 
 const mutations = {
-  SET_LOADING(state, toggle) {
-    state.loading = toggle
-  },
-  SET_LIST(state, arr) {
-    state.init = false
-    state.list = arr
-  },
-  CLEAR_ALL(state) {
-    state.init = true
-    state.loading = false
-    state.list = []
-  }
+  //
 }
 
 const actions = {
   fetchList({ commit }) {
     commit('SET_LOADING', true)
 
-    RequestPriority.fetchAll()
+    return RequestPriority.fetchAll()
       .then(({ data }) => {
         commit('SET_LIST', data)
       })
@@ -38,5 +26,7 @@ const actions = {
 }
 
 export default {
-  state, mutations, actions
+  state: { ...state, ...settingsStore.state },
+  mutations: { ...mutations, ...settingsStore.mutations },
+  actions: { ...actions, ...settingsStore.actions }
 }
