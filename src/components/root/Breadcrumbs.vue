@@ -27,6 +27,7 @@ export default {
 
 <style lang="scss" scoped>
 @import "~scss/_variables";
+@import "~scss/_colors";
 
 .el-breadcrumb {
   display: flex;
@@ -34,5 +35,8 @@ export default {
   height: $breadcrumbsHeight;
   white-space: nowrap;
   overflow: hidden;
+  padding: 10px;
+  background: #fff;
+  border-bottom: 1px solid $defaultBorder;
 }
 </style>

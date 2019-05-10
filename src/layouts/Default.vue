@@ -77,15 +77,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~scss/mobile/_sizes";
 @import "~scss/_variables";
-@import "~scss/_colors";
-
-.el-breadcrumb {
-	padding: 10px;
-	background: #fff;
-	border-bottom: 1px solid $defaultBorder;
-}
 
 .el-main {
 	padding: 1px;
