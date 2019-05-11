@@ -3,6 +3,8 @@
 import { onEventDynamic, offEventDynamic } from '@/scripts/socket'
 import { filterByPermission } from '@/scripts/utils'
 import { isObject } from '@/scripts/helpers'
+import sections from '@/data/sections'
+import store from '@/store/index'
 import menu from '@/data/menu'
 import Vue from 'vue'
 
@@ -59,6 +61,11 @@ const mutations = {
 
     if (typeof oldValue === 'undefined') {
       onEventDynamic(section, data.id)
+    }
+
+    // Update current profile, if id is equal
+    if (section === sections.users && store.state.profile.user.id === data.id) {
+      store.commit('profile/SET_USER', data)
     }
 
     Vue.set(state.sidebar[section], data.id, {

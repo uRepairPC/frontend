@@ -16,8 +16,9 @@ const state = {
 
 const mutations = {
   SET_USER(state, obj) {
-    state.user = obj
-    StorageData.profile = obj
+    const data = { ...state.user, ...obj }
+    state.user = data
+    StorageData.profile = data
   },
   SET_PERMISSIONS(state, arr) {
     state.permissions = arr

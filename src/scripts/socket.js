@@ -4,6 +4,7 @@
 
 import { isArray, isObject } from '@/scripts/helpers'
 import { serverSocket } from '@/data/env'
+import sections from '@/data/sections'
 import logout from '@/scripts/logout'
 import io from 'socket.io-client'
 import router from '@/router'
@@ -94,9 +95,13 @@ Array(
         return
       }
 
-      if (obj.section === 'users' && store.state.profile.user.id === payload.params.id) {
-        logout()
-        return
+      if (obj.section === sections.users && store.state.profile.user.id === payload.params.id) {
+        if (payload.type === 'delete') {
+          logout()
+          return
+        }
+
+        store.commit('profile/SET_USER', payload.data)
       }
 
       if ((payload.type !== 'update' && payload.type !== 'delete') || !sidebar) {
