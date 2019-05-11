@@ -47,44 +47,29 @@ export default {
           component: 'el-input',
           value: '',
           label: 'E-mail',
-          rules: rules.email,
-          attrs: {
-            placeholder: 'E-mail'
-          }
+          rules: rules.email
         },
         first_name: {
           component: 'el-input',
           value: '',
           label: 'Ім\'я',
-          rules: rules.required,
-          attrs: {
-            placeholder: 'Ім\'я'
-          }
+          rules: rules.required
         },
         middle_name: {
           component: 'el-input',
           value: '',
-          label: 'По-батькові',
-          attrs: {
-            placeholder: 'По-батькові'
-          }
+          label: 'По-батькові'
         },
         last_name: {
           component: 'el-input',
           value: '',
           label: 'Прізвище',
-          rules: rules.required,
-          attrs: {
-            placeholder: 'Прізвище'
-          }
+          rules: rules.required
         },
         phone: {
           component: 'el-input',
           value: '',
-          label: 'Телефон',
-          attrs: {
-            placeholder: 'Телефон'
-          }
+          label: 'Телефон'
         },
         description: {
           component: 'el-input',
@@ -92,8 +77,7 @@ export default {
           label: 'Опис',
           attrs: {
             type: 'textarea',
-            autosize: { minRows: 3 },
-            placeholder: 'Опис'
+            autosize: { minRows: 3 }
           }
         }
       }

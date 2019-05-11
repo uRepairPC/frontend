@@ -46,10 +46,7 @@ export default {
           component: 'el-input',
           value: this.file.name,
           label: 'Назва',
-          rules: required,
-          attrs: {
-            placeholder: 'Назва'
-          }
+          rules: required
         }
       }
     }

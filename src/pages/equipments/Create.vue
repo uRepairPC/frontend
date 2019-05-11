@@ -48,18 +48,12 @@ export default {
         serial_number: {
           component: 'el-input',
           value: '',
-          label: 'Серійний номер',
-          attrs: {
-            placeholder: 'Серійний номер'
-          }
+          label: 'Серійний номер'
         },
         inventory_number: {
           component: 'el-input',
           value: '',
-          label: 'Інвертарний номер',
-          attrs: {
-            placeholder: 'Інвертарний номер'
-          }
+          label: 'Інвертарний номер'
         },
         description: {
           component: 'el-input',
@@ -67,8 +61,7 @@ export default {
           label: 'Опис',
           attrs: {
             type: 'textarea',
-            autosize: { minRows: 3 },
-            placeholder: 'Опис'
+            autosize: { minRows: 3 }
           }
         }
       }

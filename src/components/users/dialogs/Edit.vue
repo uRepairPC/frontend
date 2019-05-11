@@ -38,35 +38,23 @@ export default {
           component: 'el-input',
           value: this.user.first_name,
           label: 'Ім\'я',
-          rules: required,
-          attrs: {
-            placeholder: 'Ім\'я'
-          }
+          rules: required
         },
         middle_name: {
           component: 'el-input',
           value: this.user.middle_name,
-          label: 'По-батькові',
-          attrs: {
-            placeholder: 'По-батькові'
-          }
+          label: 'По-батькові'
         },
         last_name: {
           component: 'el-input',
           value: this.user.last_name,
           label: 'Прізвище',
-          rules: required,
-          attrs: {
-            placeholder: 'Прізвище'
-          }
+          rules: required
         },
         phone: {
           component: 'el-input',
           value: this.user.phone,
-          label: 'Телефон',
-          attrs: {
-            placeholder: 'Телефон'
-          }
+          label: 'Телефон'
         },
         description: {
           component: 'el-input',
@@ -74,8 +62,7 @@ export default {
           label: 'Опис',
           attrs: {
             type: 'textarea',
-            autosize: { minRows: 3 },
-            placeholder: 'Опис'
+            autosize: { minRows: 3 }
           }
         }
       }

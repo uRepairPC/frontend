@@ -38,10 +38,7 @@ export default {
           component: 'el-input',
           value: this.item.name,
           label: 'Назва',
-          rules: required,
-          attrs: {
-            placeholder: 'Назва'
-          }
+          rules: required
         },
         color: {
           component: 'el-color-picker',
@@ -54,8 +51,7 @@ export default {
           label: 'Опис',
           attrs: {
             type: 'textarea',
-            autosize: { minRows: 3 },
-            placeholder: 'Опис'
+            autosize: { minRows: 3 }
           }
         },
         default: {

@@ -43,10 +43,7 @@ export default {
           component: 'el-input',
           value: '',
           label: 'Ім\'я',
-          rules: required,
-          attrs: {
-            placeholder: 'Ім\'я'
-          }
+          rules: required
         },
         color: {
           component: 'el-color-picker',

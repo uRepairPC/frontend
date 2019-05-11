@@ -32,10 +32,7 @@ export default {
           component: 'el-input',
           value: '',
           label: 'Назва',
-          rules: required,
-          attrs: {
-            placeholder: 'Назва'
-          }
+          rules: required
         },
         value: {
           component: 'el-input-number',
@@ -58,8 +55,7 @@ export default {
           label: 'Опис',
           attrs: {
             type: 'textarea',
-            autosize: { minRows: 3 },
-            placeholder: 'Опис'
+            autosize: { minRows: 3 }
           }
         },
         default: {

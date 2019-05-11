@@ -85,19 +85,13 @@ export default {
           component: 'el-input',
           value: '',
           label: 'Назва',
-          rules: required,
-          attrs: {
-            placeholder: 'Назва'
-          }
+          rules: required
         },
         short_name: {
           component: 'el-input',
           value: '',
           label: 'Коротке ім\'я',
-          rules: required,
-          attrs: {
-            placeholder: 'Коротке ім\'я'
-          }
+          rules: required
         },
         orientation: {
           component: () => import('@/components/SelectSimple'),
