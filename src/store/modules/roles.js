@@ -36,7 +36,7 @@ const actions = {
   fetchList({ commit }, params = {}) {
     commit('SET_LOADING', true)
 
-    Role.fetchAll({ params })
+    return Role.fetchAll({ params })
       .then(({ data }) => {
         if (params.page > 1) {
           commit('APPEND_LIST', data)

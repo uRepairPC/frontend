@@ -29,7 +29,7 @@ const actions = {
   fetchList({ commit }) {
     commit('SET_LOADING', true)
 
-    Permission.fetchAll()
+    return Permission.fetchAll()
       .then(({ data }) => {
         commit('SET_LIST', data)
       })
@@ -44,7 +44,7 @@ const actions = {
 
     commit('SET_LOADING', true)
 
-    Permission.fetchAll({
+    return Permission.fetchAll({
       params: {
         group: 1
       }

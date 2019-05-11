@@ -80,7 +80,7 @@ const actions = {
       return
     }
 
-    axios.get(`users/${state.user.id}`)
+    return axios.get(`users/${state.user.id}`)
       .then(({ data }) => {
         // Sync rooms by permissions on socket server
         syncEvents()
@@ -98,7 +98,7 @@ const actions = {
     // Logout from the socket server
     socket.emit('logout')
 
-    axios.post('auth/logout')
+    return axios.post('auth/logout')
       .finally(() => {
         logout()
         loadingService.close()

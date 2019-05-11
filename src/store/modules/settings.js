@@ -40,7 +40,7 @@ const actions = {
   fetchGlobal({ commit }, params) {
     commit('SET_LOADING_GLOBAL', true)
 
-    SettingsGlobal.fetchGet({ params })
+    return SettingsGlobal.fetchGet({ params })
       .then(({ data }) => {
         commit('SET_GLOBAL', data)
       })
@@ -51,7 +51,7 @@ const actions = {
   fetchManifest({ commit }, params) {
     commit('SET_LOADING_MANIFEST', true)
 
-    SettingsManifest.fetchGet({ params })
+    return SettingsManifest.fetchGet({ params })
       .then(({ data }) => {
         commit('SET_MANIFEST', data)
       })
