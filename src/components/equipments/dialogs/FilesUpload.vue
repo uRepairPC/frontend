@@ -33,7 +33,7 @@ import Equipment from '@/classes/Equipment'
 
 export default {
   components: {
-    BasicEdit: () => import('@/components/dialogs/BasicEdit')
+    BasicEdit: () => import('@/common/components/dialogs/BasicEdit')
   },
   inheritAttrs: false,
   props: {

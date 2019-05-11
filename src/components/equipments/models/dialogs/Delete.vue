@@ -13,7 +13,7 @@ import EquipmentModel from '@/classes/EquipmentModel'
 
 export default {
   components: {
-    BasicDelete: () => import('@/components/dialogs/BasicDelete')
+    BasicDelete: () => import('@/common/components/dialogs/BasicDelete')
   },
   inheritAttrs: false,
   props: {

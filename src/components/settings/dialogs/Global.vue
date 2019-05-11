@@ -71,7 +71,7 @@ import menu from '@/data/menu'
 
 export default {
   components: {
-    BasicEdit: () => import('@/components/dialogs/BasicEdit')
+    BasicEdit: () => import('@/common/components/dialogs/BasicEdit')
   },
   inheritAttrs: false,
   data() {

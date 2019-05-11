@@ -20,7 +20,7 @@ import { required } from '@/data/rules'
 
 export default {
   components: {
-    BasicCreate: () => import('@/components/dialogs/BasicCreate'),
+    BasicCreate: () => import('@/common/components/dialogs/BasicCreate'),
     GenerateForm: () => import('@/components/GenerateForm')
   },
   inheritAttrs: false,
