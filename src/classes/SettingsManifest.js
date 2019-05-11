@@ -3,10 +3,11 @@
 import store from '@/store'
 import axios from 'axios'
 
-/** @type {string} */
-export const API_POINT = 'settings/manifest'
-
 export default class SettingsManifest {
+
+  static get __API_POINT() {
+    return 'settings/manifest'
+  }
 
   /* | ------------------------------------------------------------------------------------------------
 	 * | - Requests -
@@ -14,24 +15,20 @@ export default class SettingsManifest {
 	 */
 
   /**
-	 * Get resource.
-	 *
-	 * @param {AxiosRequestConfig} config
-	 * @return {Promise<AxiosPromise<any>>}
-	 */
+   * @param {AxiosRequestConfig} config
+   * @return {Promise<AxiosPromise<any>>}
+   */
   static fetchGet(config = null) {
-    return axios.get(API_POINT, config)
+    return axios.get(this.__API_POINT, config)
   }
 
   /**
-	 * Store resource.
-	 *
-	 * @param {*} data
-	 * @param {AxiosRequestConfig} config
-	 * @return {Promise<AxiosPromise<any>>}
-	 */
+   * @param {*} data
+   * @param {AxiosRequestConfig} config
+   * @return {Promise<AxiosPromise<any>>}
+   */
   static fetchStore(data = null, config = null) {
-    return axios.post(API_POINT, data, config)
+    return axios.post(this.__API_POINT, data, config)
       .then((res) => {
         store.commit('settings/SET_MANIFEST', res.data.data)
         return res

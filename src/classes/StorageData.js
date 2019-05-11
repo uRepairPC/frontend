@@ -159,9 +159,9 @@ export default class StorageData {
 	 */
 
   /**
-	 * @param {string} key
-	 * @return {Array}
-	 */
+   * @param {string} key
+   * @return {Array}
+   */
   static getArray(key) {
     if (localStorage.getItem(key)) {
       try {
@@ -177,9 +177,9 @@ export default class StorageData {
   }
 
   /**
-	 * @param {string} key
-	 * @param value
-	 */
+   * @param {string} key
+   * @param value
+   */
   static setArray(key, value) {
     if (!value) {
       return
@@ -189,9 +189,9 @@ export default class StorageData {
   }
 
   /**
-	 * @param {string} key
-	 * @returns {string}
-	 */
+   * @param {string} key
+   * @returns {string}
+   */
   static getString(key) {
     const item = localStorage.getItem(key)
 
@@ -211,17 +211,17 @@ export default class StorageData {
   }
 
   /**
-	 * @param {string} key
-	 * @param value
-	 */
+   * @param {string} key
+   * @param value
+   */
   static setString(key, value) {
     localStorage.setItem(key, value)
   }
 
   /**
-	 * @param {string} key
-	 * @param value
-	 */
+   * @param {string} key
+   * @param value
+   */
   static setObject(key, value) {
     if (!value || typeof value !== 'object') {
       return
@@ -231,9 +231,9 @@ export default class StorageData {
   }
 
   /**
-	 * @param {string} key
-	 * @return {object}
-	 */
+   * @param {string} key
+   * @return {object}
+   */
   static getObject(key) {
     if (localStorage.getItem(key)) {
       try {
@@ -249,9 +249,9 @@ export default class StorageData {
   }
 
   /**
-	 * @param key
-	 * @return {boolean}
-	 */
+   * @param key
+   * @return {boolean}
+   */
   static _remove(key) {
     if (localStorage.getItem(key) === null) {
       return false
