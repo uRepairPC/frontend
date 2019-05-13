@@ -141,18 +141,6 @@ export default class StorageData {
     this.setArray(PERMISSIONS, value)
   }
 
-  /* Settings Global ------------------------------------------------------------------------------ */
-
-  // TODO REMOVE
-  /** @return {object} */
-  static get settingsGlobal() {
-    return this.getObject(SETTINGS_GLOBAL)
-  }
-
-  static set settingsGlobal(value) {
-    this.setObject(SETTINGS_GLOBAL, value)
-  }
-
   /* | -------------------------------------------------------------------------------------
 	 * | - Common functions -
 	 * | -------------------------------------------------------------------------------------
