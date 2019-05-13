@@ -2,35 +2,16 @@
 
 import { includePermission } from '@/scripts/utils'
 import * as permissions from '@/enum/permissions'
+import commonStore from '@/common/store/section'
 import StorageData from '@/classes/StorageData'
 import User from '@/classes/User'
-import Vue from 'vue'
 
 const state = {
-  loading: false,
-  list: {}
+  //
 }
 
 const mutations = {
-  SET_LOADING(state, toggle) {
-    state.loading = toggle
-  },
-  SET_LIST(state, obj) {
-    state.list = obj
-  },
-  APPEND_LIST(state, obj) {
-    Object.entries(obj).forEach(([key, val]) => {
-      if (key !== 'data') {
-        Vue.set(state.list, key, val)
-      }
-    })
-
-    state.list.data.push(...obj.data)
-  },
-  CLEAR_ALL(state) {
-    state.loading = false
-    state.list = {}
-  }
+  //
 }
 
 const actions = {
@@ -87,5 +68,8 @@ const getters = {
 }
 
 export default {
-  state, mutations, actions, getters
+  state: { ...state, ...commonStore.state },
+  mutations: { ...mutations, ...commonStore.mutations },
+  actions: { ...actions, ...commonStore.actions },
+  getters
 }

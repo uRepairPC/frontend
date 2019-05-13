@@ -1,38 +1,16 @@
 'use strict'
 
 import { includePermission } from '@/scripts/utils'
+import commonStore from '@/common/store/section'
 import StorageData from '@/classes/StorageData'
 import Equipment from '@/classes/Equipment'
-import Vue from 'vue'
 
 const state = {
-  init: true,
-  loading: false,
-  list: {}
+  //
 }
 
 const mutations = {
-  SET_LOADING(state, toggle) {
-    state.loading = toggle
-  },
-  SET_LIST(state, obj) {
-    state.init = false
-    state.list = obj
-  },
-  APPEND_LIST(state, obj) {
-    Object.entries(obj).forEach(([key, val]) => {
-      if (key !== 'data') {
-        Vue.set(state.list, key, val)
-      }
-    })
-
-    state.list.data.push(...obj.data)
-  },
-  CLEAR_ALL(state) {
-    state.init = true
-    state.loading = false
-    state.list = {}
-  }
+  //
 }
 
 const actions = {
@@ -124,5 +102,8 @@ const getters = {
 }
 
 export default {
-  state, mutations, actions, getters
+  state: { ...state, ...commonStore.state },
+  mutations: { ...mutations, ...commonStore.mutations },
+  actions: { ...actions, ...commonStore.actions },
+  getters
 }
