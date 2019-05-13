@@ -7,15 +7,15 @@
  * @return {string}
  */
 const withoutLastSlash = (input) => {
-	if (!input) {
-		return ''
-	}
+  if (!input) {
+    return ''
+  }
 
-	if (input.slice(-1) === '/') {
-		return input.slice(0, input.length - 1)
-	}
+  if (input.slice(-1) === '/') {
+    return input.slice(0, input.length - 1)
+  }
 
-	return input
+  return input
 }
 
 /** @return {boolean} */
@@ -26,3 +26,6 @@ export const proxyTarget = withoutLastSlash(process.env.PROXY_TARGET) || 'http:/
 
 /** @return {string} */
 export const server = isDev ? proxyTarget : location.origin
+
+/** @return {string} */
+export const serverSocket = `${isDev ? proxyTarget : location.hostname}:${+process.env.SERVER_SOCKET_PORT || 3000}`

@@ -6,7 +6,7 @@
  * @return {function(): (Promise<*>|*)}
  */
 export function load(name) {
-	return () => import(`@/${name}.vue`)
+  return () => import(`@/${name}.vue`)
 }
 
 /**
@@ -15,7 +15,7 @@ export function load(name) {
  * @return {function(): (Promise<*>|*)}
  */
 export function loadComponent(component) {
-	return load(`components/${component}`)
+  return load(`components/${component}`)
 }
 
 /**
@@ -24,7 +24,7 @@ export function loadComponent(component) {
  * @return {function(): (Promise<*>|*)}
  */
 export function loadPage(page) {
-	return load(`pages/${page}`)
+  return load(`pages/${page}`)
 }
 
 /**
@@ -33,5 +33,5 @@ export function loadPage(page) {
  * @return {function(): (Promise<*>|*)}
  */
 export function loadLayout(layout) {
-	return load(`layouts/${layout}`)
+  return load(`layouts/${layout}`)
 }

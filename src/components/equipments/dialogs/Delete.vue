@@ -1,68 +1,68 @@
 <template>
-	<basic-delete
-		:title="equipmentObj.title"
-		:confirm="equipment.id"
-		:loading="loading"
-		v-bind="$attrs"
-		v-on="listeners"
-	>
-		<el-checkbox
-			slot="content-bottom"
-			v-model="filesDelete"
-		>
-			Видалити всі файли
-		</el-checkbox>
-	</basic-delete>
+  <basic-delete
+    :title="equipmentObj.title"
+    :confirm="equipment.id"
+    :loading="loading"
+    v-bind="$attrs"
+    v-on="listeners"
+  >
+    <el-checkbox
+      slot="content-bottom"
+      v-model="filesDelete"
+    >
+      Видалити всі файли
+    </el-checkbox>
+  </basic-delete>
 </template>
 
 <script>
 import Equipment from '@/classes/Equipment'
 
 export default {
-	components: {
-		BasicDelete: () => import('@/components/dialogs/BasicDelete')
-	},
-	inheritAttrs: false,
-	props: {
-		equipment: {
-			type: Object,
-			required: true
-		}
-	},
-	data() {
-		return {
-			loading: false,
-			filesDelete: true
-		}
-	},
-	computed: {
-		listeners() {
-			return {
-				...this.$listeners,
-				submit: this.fetchRequest
-			}
-		},
-		equipmentObj() {
-			return new Equipment(this.equipment)
-		}
-	},
-	methods: {
-		fetchRequest() {
-			this.loading = true
+  components: {
+    BasicDelete: () => import('@/common/components/dialogs/BasicDelete')
+  },
+  inheritAttrs: false,
+  props: {
+    equipment: {
+      type: Object,
+      required: true
+    }
+  },
+  data() {
+    return {
+      loading: false,
+      filesDelete: true
+    }
+  },
+  computed: {
+    listeners() {
+      return {
+        ...this.$listeners,
+        submit: this.fetchRequest
+      }
+    },
+    equipmentObj() {
+      return new Equipment(this.equipment)
+    }
+  },
+  methods: {
+    fetchRequest() {
+      this.loading = true
 
-			Equipment.fetchDelete(this.equipment.id, {
-				data: {
-					files_delete: this.filesDelete
-				}
-			})
-				.then(() => {
-					this.$emit('delete')
-					this.$emit('close')
-				})
-				.finally(() => {
-					this.loading = false
-				})
-		}
-	}
+      Equipment.fetchDelete(this.equipment.id, {
+        data: {
+          files_delete: this.filesDelete
+        }
+      })
+        .then(() => {
+          this.$emit('delete')
+          this.$emit('close')
+        })
+        .finally(() => {
+          this.loading = false
+        })
+    }
+  }
 }
 </script>

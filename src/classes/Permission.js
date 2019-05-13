@@ -2,23 +2,22 @@
 
 import axios from 'axios'
 
-/** @type {string} */
-export const API_POINT = 'permissions'
-
 export default class Permission {
 
-	/* | ------------------------------------------------------------------------------------------------
+  static get __API_POINT() {
+    return 'permissions'
+  }
+
+  /* | ------------------------------------------------------------------------------------------------
 	 * | - Requests -
 	 * | ------------------------------------------------------------------------------------------------
 	 */
 
-	/**
-	 * Get resource.
-	 *
-	 * @param {AxiosRequestConfig} config
-	 * @return {Promise<AxiosPromise<any>>}
-	 */
-	static fetchAll(config = null) {
-		return axios.get(API_POINT, config)
-	}
+  /**
+   * @param {AxiosRequestConfig} config
+   * @return {Promise<AxiosPromise<any>>}
+   */
+  static fetchAll(config = null) {
+    return axios.get(this.__API_POINT, config)
+  }
 }

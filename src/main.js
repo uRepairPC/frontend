@@ -2,8 +2,9 @@
 
 import '@babel/polyfill'
 import LocalizedFormat from 'dayjs/plugin/localizedFormat'
-import SettingsFrontend from '@/classes/SettingsFrontend'
+import SettingsGlobal from '@/classes/SettingsGlobal'
 import locale from 'element-ui/lib/locale/lang/ua'
+import VueSocketIO from 'vue-socket.io-extended'
 import prototypes from '@/prototypes'
 import directives from '@/directives'
 import ElementUI from 'element-ui'
@@ -12,6 +13,7 @@ import router from '@/router'
 import App from '@/App.vue'
 import store from '@/store'
 import dayjs from 'dayjs'
+import io from '@/socket'
 import 'dayjs/locale/uk'
 import Vue from 'vue'
 
@@ -23,6 +25,7 @@ import '@/styles/index'
 
 // Connect libraries to Vue
 Vue.use(ElementUI, { locale })
+Vue.use(VueSocketIO, io)
 
 // Prevent the production tip on Vue startup
 Vue.config.productionTip = false
@@ -38,7 +41,7 @@ NProgress.configure({ showSpinner: false })
  * @example Vue.$axios | this.$axios
  */
 prototypes.forEach((prototype) => {
-	Vue.use(prototype)
+  Vue.use(prototype)
 })
 
 /**
@@ -46,16 +49,16 @@ prototypes.forEach((prototype) => {
  * @var {Array} directives
  */
 directives.forEach((directive) => {
-	Vue.use(directive)
+  Vue.use(directive)
 })
 
 // Set init config
-SettingsFrontend.init()
+SettingsGlobal.init()
 store.dispatch('profile/init')
 
 new Vue({
-	el: '#app',
-	store,
-	router,
-	render: h => h(App)
+  el: '#app',
+  store,
+  router,
+  render: h => h(App)
 })

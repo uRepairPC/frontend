@@ -10,7 +10,7 @@ import store from '@/store'
  * @returns {string}
  */
 export function getApiAuth(path) {
-	return server + '/api/' + path + '?token=' + StorageData.token
+  return server + '/api/' + path + '?token=' + StorageData.token
 }
 
 /**
@@ -20,17 +20,17 @@ export function getApiAuth(path) {
  * @see https://stackoverflow.com/questions/15900485/
  */
 export function formatBytes(bytes, decimals = 2) {
-	if (!bytes) {
-		return '0 Bytes'
-	}
+  if (!bytes) {
+    return '0 Bytes'
+  }
 
-	const k = 1024
-	const dm = decimals < 0 ? 0 : decimals
-	const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
+  const k = 1024
+  const dm = decimals < 0 ? 0 : decimals
+  const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
 
-	const i = Math.floor(Math.log(bytes) / Math.log(k))
+  const i = Math.floor(Math.log(bytes) / Math.log(k))
 
-	return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i]
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i]
 }
 
 /**
@@ -42,15 +42,15 @@ export function formatBytes(bytes, decimals = 2) {
  * @return {boolean}
  */
 export function includePermission(findPermissions, comparePermissions = store.state.profile.permissions) {
-	if (!findPermissions) {
-		return true
-	}
+  if (!findPermissions) {
+    return true
+  }
 
-	if (isArray(findPermissions)) {
-		return findPermissions.some(permission => comparePermissions.includes(permission))
-	}
+  if (isArray(findPermissions)) {
+    return findPermissions.some(permission => comparePermissions.includes(permission))
+  }
 
-	return comparePermissions.includes(findPermissions)
+  return comparePermissions.includes(findPermissions)
 }
 
 /**
@@ -60,19 +60,19 @@ export function includePermission(findPermissions, comparePermissions = store.st
  * @param {object} data
  */
 export function filterByPermission(data) {
-	const result = {}
+  const result = {}
 
-	for (const [key, obj] of Object.entries(data)) {
-		if (!includePermission(obj.permissions)) {
-			continue
-		}
+  for (const [key, obj] of Object.entries(data)) {
+    if (!includePermission(obj.permissions)) {
+      continue
+    }
 
-		result[key] = { ...obj }
+    result[key] = { ...obj }
 
-		if (isObject(obj.children)) {
-			result[key].children = filterByPermission(obj.children)
-		}
-	}
+    if (isObject(obj.children)) {
+      result[key].children = filterByPermission(obj.children)
+    }
+  }
 
-	return result
+  return result
 }

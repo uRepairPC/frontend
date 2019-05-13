@@ -8,12 +8,6 @@
 .filters-core {
   display: flex;
   flex-direction: column;
-  height: 100%;
-}
-
-.filters-core__content {
-  flex: 1 1 auto;
-  padding-bottom: 20px;
 }
 
 /*
@@ -28,10 +22,17 @@
 }
 
 .filter-title {
+  font-size: 1rem;
   font-weight: 600;
-  padding: 5px 5px 5px 15px;
+  padding: 0 5px 0 15px;
   margin-bottom: 15px;
   border-left: 5px solid $primary;
+}
+
+.filter__content {
+  .el-select {
+    width: 100%;
+  }
 }
 
 /*
@@ -45,6 +46,12 @@
   .el-checkbox.is-bordered {
     display: flex;
     align-items: center;
+  }
+  .support-search {
+    color: $success;
+    text-transform: uppercase;
+    font-size: .5rem;
+    vertical-align: super;
   }
 }
 
@@ -156,9 +163,6 @@
     margin-bottom: 0;
     .filter-title {
       display: block;
-    }
-    .top {
-      display: none;
     }
   }
 }

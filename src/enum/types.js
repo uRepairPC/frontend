@@ -16,8 +16,17 @@ export const DANGER = 'danger'
 export const INFO = 'info'
 
 /**
- * IMPORTANT: Only for Message component
+ * NOTE: Only for Message component
  * @type {string}
  * @see https://element.eleme.io/#/en-US/component/message
  */
 export const ERROR = 'error'
+
+export default {
+  PRIMARY,
+  SUCCESS,
+  WARNING,
+  DANGER,
+  INFO,
+  ERROR
+}

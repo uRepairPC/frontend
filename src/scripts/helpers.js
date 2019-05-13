@@ -5,7 +5,7 @@
  * @return {boolean}
  */
 export function isObject(input) {
-	return input && typeof input === 'object' && input.constructor === Object
+  return input && typeof input === 'object' && input.constructor === Object
 }
 
 /**
@@ -13,7 +13,7 @@ export function isObject(input) {
  * @return {boolean}
  */
 export function isArray(input) {
-	return Array.isArray(input)
+  return Array.isArray(input)
 }
 
 /**
@@ -21,15 +21,15 @@ export function isArray(input) {
  * @return {boolean}
  */
 export function isEmpty(input) {
-	if (isArray(input)) {
-		return !input.length
-	}
+  if (isArray(input)) {
+    return !input.length
+  }
 
-	if (isObject(input)) {
-		return !Object.keys(input).length
-	}
+  if (isObject(input)) {
+    return !Object.keys(input).length
+  }
 
-	return !input
+  return !input
 }
 
 /**
@@ -39,5 +39,5 @@ export function isEmpty(input) {
  * @return {number}
  */
 export function getRndInteger(min, max) {
-	return Math.floor(Math.random() * (max - min + 1)) + min
+  return Math.floor(Math.random() * (max - min + 1)) + min
 }

@@ -2,7 +2,7 @@
 
 import keepAliveRoutesName from '@/data/keepAliveComponents'
 import { DEFAULT_ROUTE_NAME } from '@/router'
-import sections from '@/data/sections'
+import sections from '@/enum/sections'
 import menu from '@/data/menu'
 
 /**
@@ -14,39 +14,39 @@ import menu from '@/data/menu'
  *  - routeName - RouterLink
  */
 function getFirstBreadcrumb(hasLink) {
-	const title = menu[sections.home].title
+  const title = menu[sections.home].title
 
-	if (hasLink) {
-		return { title, routeName: DEFAULT_ROUTE_NAME }
-	}
+  if (hasLink) {
+    return { title, routeName: DEFAULT_ROUTE_NAME }
+  }
 
-	return { title }
+  return { title }
 }
 
 export default {
-	/*
+  /*
 	 * When page is activated - we update breadcrumbs
 	 * in Default layout.
 	 */
-	activated() {
-		this.$nextTick(this.updateBreadcrumbs)
-	},
-	mounted() {
-		if (!this.$options.name || !keepAliveRoutesName.includes(this.$options.name)) {
-			this.$nextTick(this.updateBreadcrumbs)
-		}
-	},
-	methods: {
-		updateBreadcrumbs() {
-			if (!this.$options.breadcrumbs) {
-				this.$store.commit('template/SET_BREADCRUMBS', [getFirstBreadcrumb(false)])
-				return
-			}
+  activated() {
+    this.$nextTick(this.updateBreadcrumbs)
+  },
+  mounted() {
+    if (!this.$options.name || !keepAliveRoutesName.includes(this.$options.name)) {
+      this.$nextTick(this.updateBreadcrumbs)
+    }
+  },
+  methods: {
+    updateBreadcrumbs() {
+      if (!this.$options.breadcrumbs) {
+        this.$store.commit('template/SET_BREADCRUMBS', [getFirstBreadcrumb(false)])
+        return
+      }
 
-			this.$store.commit('template/SET_BREADCRUMBS', [
-				getFirstBreadcrumb(true),
-				...this.$options.breadcrumbs
-			])
-		}
-	}
+      this.$store.commit('template/SET_BREADCRUMBS', [
+        getFirstBreadcrumb(true),
+        ...this.$options.breadcrumbs
+      ])
+    }
+  }
 }

@@ -30,6 +30,9 @@
         }
       }
     }
+    .el-form + * {
+      margin-top: 20px;
+    }
   }
 }
 

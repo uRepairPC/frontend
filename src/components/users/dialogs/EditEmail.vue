@@ -1,32 +1,32 @@
 <template>
-	<basic-edit
-		title="Редагування E-mail"
-		:loading="loading"
-		v-bind="$attrs"
-		v-on="listeners"
-	>
-		<el-form
-			ref="form"
-			:model="form"
-			:rules="rules"
-			status-icon
-			@submit.native.prevent="onSubmit"
-		>
-			<el-form-item prop="email">
-				<el-input
-					v-model="form.email"
-					placeholder="E-mail"
-				>
-					<i
-						slot="prepend"
-						class="material-icons"
-					>
-						email
-					</i>
-				</el-input>
-			</el-form-item>
-		</el-form>
-	</basic-edit>
+  <basic-edit
+    title="Редагування E-mail"
+    :loading="loading"
+    v-bind="$attrs"
+    v-on="listeners"
+  >
+    <el-form
+      ref="form"
+      :model="form"
+      :rules="rules"
+      status-icon
+      @submit.native.prevent="onSubmit"
+    >
+      <el-form-item prop="email">
+        <el-input
+          v-model="form.email"
+          placeholder="E-mail"
+        >
+          <i
+            slot="prepend"
+            class="material-icons"
+          >
+            email
+          </i>
+        </el-input>
+      </el-form-item>
+    </el-form>
+  </basic-edit>
 </template>
 
 <script>
@@ -34,57 +34,57 @@ import * as rules from '@/data/rules'
 import User from '@/classes/User'
 
 export default {
-	components: {
-		BasicEdit: () => import('@/components/dialogs/BasicEdit')
-	},
-	inheritAttrs: false,
-	props: {
-		user: {
-			type: Object,
-			required: true
-		}
-	},
-	data() {
-		return {
-			loading: false,
-			form: {
-				email: ''
-			},
-			rules: {
-				email: rules.email
-			}
-		}
-	},
-	computed: {
-		listeners() {
-			return {
-				...this.$listeners,
-				submit: this.onSubmit
-			}
-		}
-	},
-	methods: {
-		fetchRequest() {
-			this.loading = true
+  components: {
+    BasicEdit: () => import('@/common/components/dialogs/BasicEdit')
+  },
+  inheritAttrs: false,
+  props: {
+    user: {
+      type: Object,
+      required: true
+    }
+  },
+  data() {
+    return {
+      loading: false,
+      form: {
+        email: ''
+      },
+      rules: {
+        email: rules.email
+      }
+    }
+  },
+  computed: {
+    listeners() {
+      return {
+        ...this.$listeners,
+        submit: this.onSubmit
+      }
+    }
+  },
+  methods: {
+    fetchRequest() {
+      this.loading = true
 
-			User.fetchEditEmail(this.user.id, this.form)
-				.then(() => {
-					this.$emit('edit-email')
-					this.$emit('close')
-				})
-				.finally(() => {
-					this.loading = false
-				})
-		},
-		onSubmit() {
-			this.$refs.form.validate((valid) => {
-				if (!valid) {
-					return
-				}
+      User.fetchEditEmail(this.user.id, this.form)
+        .then(() => {
+          this.$emit('edit-email')
+          this.$emit('close')
+        })
+        .finally(() => {
+          this.loading = false
+        })
+    },
+    onSubmit() {
+      this.$refs.form.validate((valid) => {
+        if (!valid) {
+          return
+        }
 
-				this.fetchRequest()
-			})
-		}
-	}
+        this.fetchRequest()
+      })
+    }
+  }
 }
 </script>

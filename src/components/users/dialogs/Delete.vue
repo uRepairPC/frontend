@@ -1,68 +1,68 @@
 <template>
-	<basic-delete
-		:title="userObj.fullName"
-		:confirm="user.id"
-		:loading="loading"
-		v-bind="$attrs"
-		v-on="listeners"
-	>
-		<el-checkbox
-			slot="content-bottom"
-			v-model="imageDelete"
-		>
-			Видалити зображення
-		</el-checkbox>
-	</basic-delete>
+  <basic-delete
+    :title="userObj.fullName"
+    :confirm="user.id"
+    :loading="loading"
+    v-bind="$attrs"
+    v-on="listeners"
+  >
+    <el-checkbox
+      slot="content-bottom"
+      v-model="imageDelete"
+    >
+      Видалити зображення
+    </el-checkbox>
+  </basic-delete>
 </template>
 
 <script>
 import User from '@/classes/User'
 
 export default {
-	components: {
-		BasicDelete: () => import('@/components/dialogs/BasicDelete')
-	},
-	inheritAttrs: false,
-	props: {
-		user: {
-			type: Object,
-			required: true
-		}
-	},
-	data() {
-		return {
-			loading: false,
-			imageDelete: true
-		}
-	},
-	computed: {
-		listeners() {
-			return {
-				...this.$listeners,
-				submit: this.fetchRequest
-			}
-		},
-		userObj() {
-			return new User(this.user)
-		}
-	},
-	methods: {
-		fetchRequest() {
-			this.loading = true
+  components: {
+    BasicDelete: () => import('@/common/components/dialogs/BasicDelete')
+  },
+  inheritAttrs: false,
+  props: {
+    user: {
+      type: Object,
+      required: true
+    }
+  },
+  data() {
+    return {
+      loading: false,
+      imageDelete: true
+    }
+  },
+  computed: {
+    listeners() {
+      return {
+        ...this.$listeners,
+        submit: this.fetchRequest
+      }
+    },
+    userObj() {
+      return new User(this.user)
+    }
+  },
+  methods: {
+    fetchRequest() {
+      this.loading = true
 
-			User.fetchDelete(this.user.id, {
-				data: {
-					image_delete: this.imageDelete
-				}
-			})
-				.then(() => {
-					this.$emit('delete')
-					this.$emit('close')
-				})
-				.finally(() => {
-					this.loading = false
-				})
-		}
-	}
+      User.fetchDelete(this.user.id, {
+        data: {
+          image_delete: this.imageDelete
+        }
+      })
+        .then(() => {
+          this.$emit('delete')
+          this.$emit('close')
+        })
+        .finally(() => {
+          this.loading = false
+        })
+    }
+  }
 }
 </script>

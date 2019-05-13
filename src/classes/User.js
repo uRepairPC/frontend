@@ -1,266 +1,141 @@
 'use strict'
 
+import ApiHasHistory from '@/common/classes/ApiHasHistory'
 import StorageData from '@/classes/StorageData'
-import sections from '@/data/sections'
+import sections from '@/enum/sections'
 import { server } from '@/data/env'
 import store from '@/store'
 import axios from 'axios'
 
-/** @type {string} */
-export const API_POINT = 'users'
+export default class User extends ApiHasHistory {
 
-export default class User {
+  static get __API_POINT() {
+    return 'users'
+  }
 
-	/**
-	 * @param {object} obj - User object
-	 */
-	constructor(obj) {
-		this.user = obj
-	}
+  static get __SECTION() {
+    return sections.users
+  }
 
-	/* | ------------------------------------------------------------------------------------------------
-	 * | - Sidebar History -
-	 * | ------------------------------------------------------------------------------------------------
-	 */
+  static get __JSON_ATTR() {
+    return 'user'
+  }
 
-	static sidebar() {
-		return {
-			get(id) {
-				const users = store.state.template.sidebar[sections.users] || {}
+  /**
+   * @param {object} obj - User object
+   */
+  constructor(obj) {
+    super()
+    this.user = obj
+  }
 
-				return users[id]
-			},
-			add(user) {
-				if (store.state.profile.user.id === user.id) {
-					// Prevent delete custom attributes (relationship), like roles
-					store.commit('profile/SET_USER', {
-						...store.state.profile.user,
-						...user
-					})
-				}
-
-				store.commit('template/ADD_SIDEBAR_ITEM', {
-					section: sections.users,
-					data: user
-				})
-			},
-			remove(id) {
-				store.commit('template/REMOVE_SIDEBAR_ITEM', {
-					section: sections.users,
-					id
-				})
-			}
-		}
-	}
-
-	/* | ------------------------------------------------------------------------------------------------
+  /* | ------------------------------------------------------------------------------------------------
 	 * | - Requests -
 	 * | ------------------------------------------------------------------------------------------------
 	 */
 
-	/**
-	 * Get resource list.
-	 *
-	 * @param {AxiosRequestConfig} config
-	 * @return {Promise<AxiosPromise<any>>}
-	 */
-	static fetchAll(config = null) {
-		return axios.get(API_POINT, config)
-	}
+  /**
+   * @param {number} id
+   * @param {AxiosRequestConfig} config
+   * @return {Promise<AxiosPromise<any>>}
+   */
+  static fetchOne(id, config = null) {
+    return super.fetchOne(id, config)
+      .then((response) => {
+        // Update for current user new permissions
+        if (store.state.profile.user.id === id && response.data.permissions) {
+          store.commit('profile/SET_PERMISSIONS', response.data.permissions)
+        }
+        return response
+      })
+  }
 
-	/**
-	 * Get resource by id and working with leftSidebar.
-	 *
-	 * @param {number} id
-	 * @param {AxiosRequestConfig} config
-	 * @return {Promise<AxiosPromise<any>>}
-	 */
-	static fetchOne(id, config = null) {
-		return axios.get(`${API_POINT}/${id}`, config)
-			.then((response) => {
-				// Update for current user new permissions
-				if (store.state.profile.user.id === id && response.data.permissions) {
-					store.commit('profile/SET_PERMISSIONS', response.data.permissions)
-				}
+  /**
+   * Update email for user by id.
+   * @param {number} id
+   * @param {*} data
+   * @param {AxiosRequestConfig} config
+   * @return {Promise<AxiosPromise<any>>}
+   */
+  static fetchEditEmail(id, data = null, config = null) {
+    return this._appendToSidebar(axios.put(`${this.__API_POINT}/${id}/email`, data, config))
+  }
 
-				User.sidebar().add(response.data.user)
-				return response
-			})
-			.catch((err) => {
-				User.sidebar().remove(id)
-				throw err
-			})
-	}
+  /**
+   * Update image for user by id.
+   * @param {number} id
+   * @param {*} data
+   * @param {AxiosRequestConfig} config
+   * @return {Promise<AxiosPromise<any>>}
+   */
+  static fetchEditImage(id, data = null, config = null) {
+    return this._appendToSidebar(axios.post(`${this.__API_POINT}/${id}/image`, data, config))
+  }
 
-	/**
-	 * Edit resource data by id and working with leftSidebar.
-	 *
-	 * @param {number} id
-	 * @param {*} data
-	 * @param {AxiosRequestConfig} config
-	 * @return {Promise<AxiosPromise<any>>}
-	 */
-	static fetchEdit(id, data = null, config = null) {
-		return axios.put(`${API_POINT}/${id}`, data, config)
-			.then((response) => {
-				User.sidebar().add(response.data.user)
-				return response
-			})
-	}
+  /**
+   * Update password for user by id.
+   * @param {number} id
+   * @param {*} data
+   * @param {AxiosRequestConfig} config
+   * @return {Promise<AxiosPromise<any>>}
+   */
+  static fetchEditPassword(id, data = null, config = null) {
+    return axios.put(`${this.__API_POINT}/${id}/password`, data, config)
+  }
 
-	/**
-	 * Edit resource email by id and working with leftSidebar.
-	 *
-	 * @param {number} id
-	 * @param {*} data
-	 * @param {AxiosRequestConfig} config
-	 * @return {Promise<AxiosPromise<any>>}
-	 */
-	static fetchEditEmail(id, data = null, config = null) {
-		return axios.put(`${API_POINT}/${id}/email`, data, config)
-			.then((response) => {
-				User.sidebar().add(response.data.user)
-				return response
-			})
-	}
+  /**
+   * Update roles for user by id.
+   * @param {number} id
+   * @param {*} data
+   * @param {AxiosRequestConfig} config
+   * @return {Promise<AxiosPromise<any>>}
+   */
+  static fetchEditRoles(id, data = null, config = null) {
+    return this._appendToSidebar(axios.put(`${this.__API_POINT}/${id}/roles`, data, config))
+  }
 
-	/**
-	 * Edit resource image by id and working with leftSidebar.
-	 *
-	 * @param {number} id
-	 * @param {*} data
-	 * @param {AxiosRequestConfig} config
-	 * @return {Promise<AxiosPromise<any>>}
-	 */
-	static fetchEditImage(id, data = null, config = null) {
-		return axios.post(`${API_POINT}/${id}/image`, data, config)
-			.then((response) => {
-				const user = User.sidebar().get(id)
+  /**
+   * Update image for user by id.
+   * @param {number} id
+   * @param {AxiosRequestConfig} config
+   * @return {Promise<AxiosPromise<any>>}
+   */
+  static fetchDeleteImage(id, config = null) {
+    return this._appendToSidebar(axios.delete(`${this.__API_POINT}/${id}/image`, config))
+  }
 
-				if (user) {
-					User.sidebar().add({ ...user, image: response.data.image })
-				}
-
-				return response
-			})
-	}
-
-	/**
-	 * Edit resource password by id.
-	 *
-	 * @param {number} id
-	 * @param {*} data
-	 * @param {AxiosRequestConfig} config
-	 * @return {Promise<AxiosPromise<any>>}
-	 */
-	static fetchEditPassword(id, data = null, config = null) {
-		return axios.put(`${API_POINT}/${id}/password`, data, config)
-	}
-
-	/**
-	 * Edit resource password by id.
-	 *
-	 * @param {number} id
-	 * @param {*} data
-	 * @param {AxiosRequestConfig} config
-	 * @return {Promise<AxiosPromise<any>>}
-	 */
-	static fetchEditRoles(id, data = null, config = null) {
-		return axios.put(`${API_POINT}/${id}/roles`, data, config)
-			.then((response) => {
-				const user = User.sidebar().get(id)
-
-				if (user) {
-					User.sidebar().add(response.data.user)
-				}
-
-				return response
-			})
-	}
-
-	/**
-	 * Store resource and working with leftSidebar.
-	 *
-	 * @param {*} data
-	 * @param {AxiosRequestConfig} config
-	 * @return {Promise<AxiosPromise<any>>}
-	 */
-	static fetchStore(data = null, config = null) {
-		return axios.post(API_POINT, data, config)
-			.then((response) => {
-				User.sidebar().add(response.data.user)
-				return response
-			})
-	}
-
-	/**
-	 * Delete resource by id and working with leftSidebar.
-	 *
-	 * @param {number} id
-	 * @param {AxiosRequestConfig} config
-	 * @return {Promise<AxiosPromise<any>>}
-	 */
-	static fetchDelete(id, config = null) {
-		return axios.delete(`${API_POINT}/${id}`, config)
-			.then((response) => {
-				User.sidebar().remove(id)
-				return response
-			})
-	}
-
-	/**
-	 * Delete resource image by id and working with leftSidebar.
-	 *
-	 * @param {number} id
-	 * @param {AxiosRequestConfig} config
-	 * @return {Promise<AxiosPromise<any>>}
-	 */
-	static fetchDeleteImage(id, config = null) {
-		return axios.delete(`${API_POINT}/${id}/image`, config)
-			.then((response) => {
-				const user = User.sidebar().get(id)
-
-				if (user) {
-					User.sidebar().add({ ...user, image: null })
-				}
-
-				return response
-			})
-	}
-
-	/* | ------------------------------------------------------------------------------------------------
+  /* | ------------------------------------------------------------------------------------------------
 	 * | - Getters -
 	 * | ------------------------------------------------------------------------------------------------
 	 */
 
-	/** @return {string} */
-	get fullName() {
-		const name = `${this.user.last_name} ${this.user.first_name}`
+  /** @return {string} */
+  get fullName() {
+    const name = `${this.user.last_name} ${this.user.first_name}`
 
-		if (this.user.middle_name) {
-			return `${name} ${this.user.middle_name}`
-		}
+    if (this.user.middle_name) {
+      return `${name} ${this.user.middle_name}`
+    }
 
-		return name
-	}
+    return name
+  }
 
-	/** @return {string|null} */
-	get initials() {
-		if (this.user.last_name && this.user.first_name) {
-			return `${this.user.last_name[0].toUpperCase()}. ${this.user.first_name[0].toUpperCase()}.`
-		}
+  /** @return {string|null} */
+  get initials() {
+    if (this.user.last_name && this.user.first_name) {
+      return `${this.user.last_name[0].toUpperCase()}. ${this.user.first_name[0].toUpperCase()}.`
+    }
 
-		return null
-	}
+    return null
+  }
 
-	/** @return {string|null} */
-	get backgroundImage() {
-		if (this.user.image) {
-			const token = StorageData.token
+  /** @return {string|null} */
+  get backgroundImage() {
+    if (this.user.image) {
+      const token = StorageData.token
+      return `background-image: url(${server}/api/users/images/${this.user.image}?token=${token})`
+    }
 
-			return `background-image: url(${server}/api/users/${this.user.id}/image?token=${token})`
-		}
-
-		return null
-	}
+    return null
+  }
 }
