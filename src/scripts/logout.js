@@ -1,7 +1,7 @@
 'use strict'
 
 import StorageData from '@/classes/StorageData'
-import sections from '@/data/sections'
+import sections from '@/enum/sections'
 import router from '@/router'
 import store from '@/store'
 import axios from 'axios'

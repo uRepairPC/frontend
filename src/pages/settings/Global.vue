@@ -34,7 +34,7 @@
 <script>
 import SettingsGlobal from '@/classes/SettingsGlobal'
 import breadcrumbs from '@/mixins/breadcrumbs'
-import sections from '@/data/sections'
+import sections from '@/enum/sections'
 import menu from '@/data/menu'
 
 export default {

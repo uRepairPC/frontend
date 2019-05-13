@@ -66,7 +66,7 @@
 <script>
 import SettingsManifest from '@/classes/SettingsManifest'
 import { required } from '@/data/rules'
-import sections from '@/data/sections'
+import sections from '@/enum/sections'
 import { mapState } from 'vuex'
 import menu from '@/data/menu'
 

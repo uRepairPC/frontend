@@ -15,7 +15,7 @@
 import { requestStatuses as columns } from '@/data/columns'
 import * as permissions from '@/enum/permissions'
 import breadcrumbs from '@/mixins/breadcrumbs'
-import sections from '@/data/sections'
+import sections from '@/enum/sections'
 import { mapState } from 'vuex'
 import menu from '@/data/menu'
 

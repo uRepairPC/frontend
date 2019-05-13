@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import sections from '@/data/sections'
+import sections from '@/enum/sections'
 import User from '@/classes/User'
 
 export default {

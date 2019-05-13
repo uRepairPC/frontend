@@ -1,7 +1,7 @@
 'use strict'
 
 import { notAuthorizedRoutesName } from '@/router/routes'
-import sections from '@/data/sections'
+import sections from '@/enum/sections'
 import router from '@/router/router'
 import NProgress from 'nprogress'
 import store from '@/store'

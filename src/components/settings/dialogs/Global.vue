@@ -66,7 +66,7 @@
 
 <script>
 import SettingsGlobal from '@/classes/SettingsGlobal'
-import sections from '@/data/sections'
+import sections from '@/enum/sections'
 import menu from '@/data/menu'
 
 export default {

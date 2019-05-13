@@ -20,7 +20,7 @@
 <script>
 import breadcrumbs from '@/mixins/breadcrumbs'
 import { required } from '@/data/rules'
-import sections from '@/data/sections'
+import sections from '@/enum/sections'
 import Role from '@/classes/Role'
 import menu from '@/data/menu'
 

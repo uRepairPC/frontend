@@ -22,7 +22,7 @@ import * as permissions from '@/enum/permissions'
 import breadcrumbs from '@/mixins/breadcrumbs'
 import { required } from '@/data/rules'
 import Request from '@/classes/Request'
-import sections from '@/data/sections'
+import sections from '@/enum/sections'
 import menu from '@/data/menu'
 
 export default {

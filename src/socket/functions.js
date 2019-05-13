@@ -1,7 +1,7 @@
 'use strict'
 
 import { isObject } from '@/scripts/helpers'
-import sections from '@/data/sections'
+import sections from '@/enum/sections'
 import io from '@/socket/io'
 import store from '@/store'
 import axios from 'axios'

@@ -2,7 +2,7 @@
 
 import { syncEvents } from '@/socket/functions'
 import socketTypes from '@/enum/socketTypes'
-import sections from '@/data/sections'
+import sections from '@/enum/sections'
 import logout from '@/scripts/logout'
 import router from '@/router'
 import io from '@/socket/io'

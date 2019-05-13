@@ -67,7 +67,7 @@ import { includePermission } from '@/scripts/utils'
 import * as permissions from '@/enum/permissions'
 import Equipment from '@/classes/Equipment'
 import { copyNode } from '@/scripts/dom'
-import sections from '@/data/sections'
+import sections from '@/enum/sections'
 import onePage from '@/mixins/onePage'
 import * as types from '@/enum/types'
 

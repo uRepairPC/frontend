@@ -2,7 +2,7 @@
 
 import ApiHasHistory from '@/common/classes/ApiHasHistory'
 import StorageData from '@/classes/StorageData'
-import sections from '@/data/sections'
+import sections from '@/enum/sections'
 import { server } from '@/data/env'
 import store from '@/store'
 import axios from 'axios'

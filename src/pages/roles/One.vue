@@ -31,7 +31,7 @@
 
 <script>
 import * as permissions from '@/enum/permissions'
-import sections from '@/data/sections'
+import sections from '@/enum/sections'
 import onePage from '@/mixins/onePage'
 import * as types from '@/enum/types'
 import Role from '@/classes/Role'

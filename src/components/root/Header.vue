@@ -48,7 +48,7 @@
 </template>
 
 <script>
-import sections from '@/data/sections'
+import sections from '@/enum/sections'
 import { mapGetters } from 'vuex'
 import User from '@/classes/User'
 

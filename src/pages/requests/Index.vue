@@ -80,7 +80,7 @@
 import scrollTableMixin from '@/mixins/scrollTable'
 import StorageData from '@/classes/StorageData'
 import breadcrumbs from '@/mixins/breadcrumbs'
-import sections from '@/data/sections'
+import sections from '@/enum/sections'
 import Request from '@/classes/Request'
 import { mapGetters } from 'vuex'
 import menu from '@/data/menu'

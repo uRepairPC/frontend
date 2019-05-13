@@ -71,7 +71,7 @@
 <script>
 import SettingsManifest from '@/classes/SettingsManifest'
 import breadcrumbs from '@/mixins/breadcrumbs'
-import sections from '@/data/sections'
+import sections from '@/enum/sections'
 import { mapState } from 'vuex'
 import menu from '@/data/menu'
 

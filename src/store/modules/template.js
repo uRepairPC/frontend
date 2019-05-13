@@ -3,7 +3,7 @@
 import { onEventDynamic, offEventDynamic } from '@/socket/functions'
 import { filterByPermission } from '@/scripts/utils'
 import { isObject } from '@/scripts/helpers'
-import sections from '@/data/sections'
+import sections from '@/enum/sections'
 import store from '@/store/index'
 import menu from '@/data/menu'
 import Vue from 'vue'

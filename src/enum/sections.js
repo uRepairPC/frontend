@@ -1,5 +1,6 @@
 'use strict'
 
+// TODO Move to enum
 // NOTE: Values uses as route name
 
 export default {

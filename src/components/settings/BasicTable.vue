@@ -72,7 +72,7 @@
 
 <script>
 import { includePermission } from '@/scripts/utils'
-import sections from '@/data/sections'
+import sections from '@/enum/sections'
 import { mapGetters } from 'vuex'
 
 export default {

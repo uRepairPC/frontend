@@ -1,7 +1,7 @@
 'use strict'
 
 import ApiHasHistory from '@/common/classes/ApiHasHistory'
-import sections from '@/data/sections'
+import sections from '@/enum/sections'
 
 export default class Request extends ApiHasHistory {
 

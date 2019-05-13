@@ -1,7 +1,7 @@
 'use strict'
 
 import * as permissions from '@/enum/permissions'
-import sections from '@/data/sections'
+import sections from '@/enum/sections'
 import * as types from '@/enum/types'
 import router from '@/router'
 import store from '@/store'

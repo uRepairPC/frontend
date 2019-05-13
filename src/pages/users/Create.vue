@@ -24,7 +24,7 @@
 <script>
 import breadcrumbs from '@/mixins/breadcrumbs'
 import * as rules from '@/data/rules'
-import sections from '@/data/sections'
+import sections from '@/enum/sections'
 import User from '@/classes/User'
 import menu from '@/data/menu'
 

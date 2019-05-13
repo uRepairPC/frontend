@@ -21,7 +21,7 @@
 import breadcrumbs from '@/mixins/breadcrumbs'
 import Equipment from '@/classes/Equipment'
 import { required } from '@/data/rules'
-import sections from '@/data/sections'
+import sections from '@/enum/sections'
 import menu from '@/data/menu'
 
 export default {

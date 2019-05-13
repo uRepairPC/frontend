@@ -2,7 +2,7 @@
 
 import keepAliveRoutesName from '@/data/keepAliveComponents'
 import { DEFAULT_ROUTE_NAME } from '@/router'
-import sections from '@/data/sections'
+import sections from '@/enum/sections'
 import menu from '@/data/menu'
 
 /**

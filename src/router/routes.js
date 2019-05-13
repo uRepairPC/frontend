@@ -1,7 +1,7 @@
 'use strict'
 
 import { loadPage, loadLayout } from './helper'
-import sections from '@/data/sections'
+import sections from '@/enum/sections'
 
 /** @type {object} */
 const notAuthorizedRoutes = {
