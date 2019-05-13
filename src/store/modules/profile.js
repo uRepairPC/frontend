@@ -1,10 +1,11 @@
 'use strict'
 
 import router, { DEFAULT_ROUTE_NAME } from '@/router'
-import socket, { syncEvents } from '@/scripts/socket'
 import { runLoadingService } from '@/scripts/dom'
 import StorageData from '@/classes/StorageData'
+import { syncEvents } from '@/socket/functions'
 import logout from '@/scripts/logout'
+import io from '@/socket/io'
 import axios from 'axios'
 
 const state = {
@@ -96,7 +97,7 @@ const actions = {
     const loadingService = runLoadingService('Виходимо з системи')
 
     // Logout from the socket server
-    socket.emit('logout')
+    io.emit('logout')
 
     return axios.post('auth/logout')
       .finally(() => {

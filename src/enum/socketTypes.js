@@ -1,16 +1,16 @@
 'use strict'
 
 /** @type {string} */
-const TYPE_CREATE = 'create'
+const CREATE = 'create'
 
 /** @type {string} */
-const TYPE_UPDATE = 'update'
+const UPDATE = 'update'
 
 /** @type {string} */
-const TYPE_DELETE = 'delete'
+const DELETE = 'delete'
 
 export default {
-  TYPE_CREATE,
-  TYPE_UPDATE,
-  TYPE_DELETE
+  CREATE,
+  UPDATE,
+  DELETE
 }

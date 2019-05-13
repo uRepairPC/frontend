@@ -1,6 +1,6 @@
 'use strict'
 
-import { onEventDynamic, offEventDynamic } from '@/scripts/socket'
+import { onEventDynamic, offEventDynamic } from '@/socket/functions'
 import { filterByPermission } from '@/scripts/utils'
 import { isObject } from '@/scripts/helpers'
 import sections from '@/data/sections'
