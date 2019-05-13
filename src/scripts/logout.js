@@ -32,8 +32,11 @@ export default function () {
 
     // Clear data from store (vuex)
     const names = [
-      'roles', 'users', 'permissions', 'equipments', 'equipmentTypes', 'equipmentManufacturers', 'equipmentModels',
-      'requestPriorities', 'requestStatuses', 'requestTypes'
+      'roles', 'users', 'permissions',
+      // Equipments
+      'equipments', 'equipmentTypes', 'equipmentManufacturers', 'equipmentModels',
+      // Requests
+      'requests', 'requestPriorities', 'requestStatuses', 'requestTypes'
     ]
 
     names.forEach(name => store.commit(`${name}/CLEAR_ALL`))
