@@ -1,7 +1,8 @@
 'use strict'
 
-// TODO Move to enum
-// NOTE: Values uses as route name
+/*
+ * NOTE: Values also uses as routeName
+ */
 
 export default {
   auth: 'auth',

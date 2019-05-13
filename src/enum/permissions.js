@@ -74,4 +74,3 @@ export const REQUESTS_CONFIG_DELETE = 'requests.config.delete'
  */
 export const GLOBAL_SETTINGS = 'global.settings'
 export const GLOBAL_MANIFEST = 'global.manifest'
-

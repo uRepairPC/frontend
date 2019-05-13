@@ -31,8 +31,8 @@
 import * as permissions from '@/enum/permissions'
 import sections from '@/enum/sections'
 import onePage from '@/mixins/onePage'
-import * as types from '@/enum/types'
 import User from '@/classes/User'
+import types from '@/enum/types'
 
 export default {
   components: {

@@ -1,13 +1,13 @@
 'use strict'
 
 /** @type {string} */
-const CREATE = 'create'
+export const CREATE = 'create'
 
 /** @type {string} */
-const UPDATE = 'update'
+export const UPDATE = 'update'
 
 /** @type {string} */
-const DELETE = 'delete'
+export const DELETE = 'delete'
 
 export default {
   CREATE,

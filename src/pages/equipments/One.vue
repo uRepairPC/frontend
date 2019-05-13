@@ -69,7 +69,7 @@ import Equipment from '@/classes/Equipment'
 import { copyNode } from '@/scripts/dom'
 import sections from '@/enum/sections'
 import onePage from '@/mixins/onePage'
-import * as types from '@/enum/types'
+import types from '@/enum/types'
 
 export default {
   components: {
