@@ -90,7 +90,6 @@ export default {
 
       RequestPriority.fetchEdit(this.item.id, form)
         .then(() => {
-          this.$store.dispatch('requestPriorities/fetchList')
           this.$emit('edit')
           this.$emit('close')
         })

@@ -80,7 +80,6 @@ export default {
 
       RequestStatus.fetchEdit(this.item.id, form)
         .then(() => {
-          this.$store.dispatch('requestStatuses/fetchList')
           this.$emit('edit')
           this.$emit('close')
         })

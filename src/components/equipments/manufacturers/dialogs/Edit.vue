@@ -68,7 +68,6 @@ export default {
 
       EquipmentManufacturer.fetchEdit(this.item.id, form)
         .then(() => {
-          this.$store.dispatch('equipmentManufacturers/fetchList')
           this.$emit('edit')
           this.$emit('close')
         })

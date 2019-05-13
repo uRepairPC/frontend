@@ -33,7 +33,18 @@ const mutations = {
 }
 
 const actions = {
-  //
+  findReplace({ state, commit }, data) {
+    const findIndex = state.list.findIndex(item => item.id === data.id)
+    if (~findIndex) {
+      commit('REPLACE_ITEM', { index: findIndex, data })
+    }
+  },
+  findDelete({ state, commit }, id) {
+    const findIndex = state.list.findIndex(item => item.id === id)
+    if (~findIndex) {
+      commit('DELETE_ITEM', findIndex)
+    }
+  }
 }
 
 export default {

@@ -48,7 +48,7 @@ Array(
       if ((payload.type === socketTypes.UPDATE || payload.type === socketTypes.DELETE) && payload.params.id) {
         const findIndex = storeData.list.findIndex(item => item.id === payload.params.id)
         if (~findIndex) {
-          if (payload.type === 'update') {
+          if (payload.type === socketTypes.UPDATE) {
             store.commit(`${obj.store}/REPLACE_ITEM`, { index: findIndex, data: payload.data })
           } else {
             store.commit(`${obj.store}/DELETE_ITEM`, findIndex)

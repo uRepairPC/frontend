@@ -84,7 +84,6 @@ export default {
 
       RequestPriority.fetchStore(form)
         .then(() => {
-          this.$store.dispatch('requestPriorities/fetchList')
           this.$emit('create')
           this.$emit('close')
         })

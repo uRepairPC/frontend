@@ -69,7 +69,6 @@ export default {
 
       RequestType.fetchStore(form)
         .then(() => {
-          this.$store.dispatch('requestTypes/fetchList')
           this.$emit('create')
           this.$emit('close')
         })

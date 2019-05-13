@@ -41,7 +41,6 @@ export default {
 
       RequestPriority.fetchDelete(this.item.id)
         .then(() => {
-          this.$store.dispatch('requestPriorities/fetchList')
           this.$emit('delete')
           this.$emit('close')
         })

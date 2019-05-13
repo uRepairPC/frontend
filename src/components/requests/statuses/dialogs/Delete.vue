@@ -41,7 +41,6 @@ export default {
 
       RequestStatus.fetchDelete(this.item.id)
         .then(() => {
-          this.$store.dispatch('requestStatuses/fetchList')
           this.$emit('delete')
           this.$emit('close')
         })

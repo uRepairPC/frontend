@@ -41,7 +41,6 @@ export default {
 
       EquipmentType.fetchDelete(this.item.id)
         .then(() => {
-          this.$store.dispatch('equipmentTypes/fetchList')
           this.$emit('delete')
           this.$emit('close')
         })

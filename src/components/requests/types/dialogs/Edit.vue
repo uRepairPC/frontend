@@ -75,7 +75,6 @@ export default {
 
       RequestType.fetchEdit(this.item.id, form)
         .then(() => {
-          this.$store.dispatch('requestTypes/fetchList')
           this.$emit('edit')
           this.$emit('close')
         })

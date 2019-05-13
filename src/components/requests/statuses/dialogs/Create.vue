@@ -74,7 +74,6 @@ export default {
 
       RequestStatus.fetchStore(form)
         .then(() => {
-          this.$store.dispatch('requestStatuses/fetchList')
           this.$emit('create')
           this.$emit('close')
         })

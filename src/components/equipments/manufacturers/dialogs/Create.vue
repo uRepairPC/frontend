@@ -62,7 +62,6 @@ export default {
 
       EquipmentManufacturer.fetchStore(form)
         .then(() => {
-          this.$store.dispatch('equipmentManufacturers/fetchList')
           this.$emit('create')
           this.$emit('close')
         })

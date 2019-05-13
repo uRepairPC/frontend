@@ -80,7 +80,6 @@ export default {
 
       EquipmentModel.fetchEdit(this.item.id, form)
         .then(() => {
-          this.$store.dispatch('equipmentModels/fetchList')
           this.$emit('edit')
           this.$emit('close')
         })
