@@ -28,4 +28,4 @@ export const proxyTarget = withoutLastSlash(process.env.PROXY_TARGET) || 'http:/
 export const server = isDev ? proxyTarget : location.origin
 
 /** @return {string} */
-export const serverSocket = `${server}:${+process.env.SERVER_SOCKET_PORT || 3000}`
+export const serverSocket = `${isDev ? proxyTarget : location.hostname}:${+process.env.SERVER_SOCKET_PORT || 3000}`
