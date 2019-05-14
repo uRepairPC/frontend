@@ -49,6 +49,7 @@ export default {
 
 <style lang="scss" scoped>
 .priority-cell {
+  max-width: 150px;
   padding: 2px 10px;
   border-radius: 5px;
 }

@@ -37,7 +37,10 @@ export function formatBytes(bytes, decimals = 2) {
  * Check permission(s) with user permissions.
  * findPermissions is null - available to all.
  *
- * @param {array|string|null} findPermissions
+ * Pass boolean - for manual access check, for example:
+ * [USERS_VIEW, user.id === 5]
+ *
+ * @param {array|string|boolean|null} findPermissions
  * @param {array} comparePermissions
  * @return {boolean}
  */
@@ -47,7 +50,17 @@ export function includePermission(findPermissions, comparePermissions = store.st
   }
 
   if (isArray(findPermissions)) {
-    return findPermissions.some(permission => comparePermissions.includes(permission))
+    return findPermissions.some(permission => {
+      if (typeof findPermissions === 'boolean') {
+        return findPermissions
+      }
+
+      return comparePermissions.includes(permission)
+    })
+  }
+
+  if (typeof findPermissions === 'boolean') {
+    return findPermissions
   }
 
   return comparePermissions.includes(findPermissions)

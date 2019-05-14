@@ -33,6 +33,11 @@ const authorizedRoutes = {
       component: loadPage('requests/Index')
     },
     {
+      path: `/${sections.requests}/:id(\\d+)`,
+      name: `${sections.requests}-id`,
+      component: loadPage('requests/One')
+    },
+    {
       path: `/${sections.requests}/create`,
       name: `${sections.requests}-create`,
       component: loadPage('requests/Create')
