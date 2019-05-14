@@ -12,7 +12,7 @@ Array(
   { event: 'equipments', store: 'equipments', section: sections.equipments },
   { event: 'users', store: 'users', section: sections.users },
   { event: 'roles', store: 'roles', section: sections.roles },
-  { event: 'requests', store: 'requests', section: '' }
+  { event: 'requests', store: 'requests', section: sections.requests }
 )
   .forEach((obj) => {
     io.on(obj.event, (payload) => {
