@@ -26,13 +26,19 @@ export default {
   props: {
     defaultValue: {
       type: Object,
-      default: () => {}
+      default: null
     }
   },
   data() {
+    const list = []
+
+    if (this.defaultValue) {
+      list.push(this.defaultValue)
+    }
+
     return {
       loading: false,
-      list: [this.defaultValue]
+      list
     }
   },
   computed: {
