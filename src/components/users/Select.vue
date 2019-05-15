@@ -11,14 +11,14 @@
     <el-option
       v-for="item in list"
       :key="item.id"
-      :label="`${item.model_name}, ${item.serial_number || '-'} / ${item.inventory_number || '-'}`"
+      :label="`${item.last_name} ${item.first_name}`"
       :value="item.id"
     />
   </el-select>
 </template>
 
 <script>
-import Equipment from '@/classes/Equipment'
+import User from '@/classes/User'
 import { mapState } from 'vuex'
 
 export default {
@@ -37,9 +37,9 @@ export default {
   },
   computed: {
     ...mapState({
-      listStore: state => state.equipments.list.data || [],
-      loadingStore: state => state.equipments.loading,
-      init: state => state.equipments.init
+      listStore: state => state.users.list.data || [],
+      loadingStore: state => state.users.loading,
+      init: state => state.users.init
     }),
     listeners() {
       return {
@@ -52,10 +52,10 @@ export default {
     remoteMethod(search) {
       this.loading = true
 
-      Equipment.fetchAll({
+      User.fetchAll({
         params: {
           search: search || undefined,
-          columns: ['model_name', 'inventory_number', 'serial_number']
+          columns: ['last_name', 'first_name']
         }
       })
         .then(({ data }) => {
@@ -67,7 +67,7 @@ export default {
     },
     async onFocus() {
       if (this.init) {
-        await this.$store.dispatch('equipments/fetchList')
+        await this.$store.dispatch('users/fetchList')
       }
 
       this.list = [...this.listStore]

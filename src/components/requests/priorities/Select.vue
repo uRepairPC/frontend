@@ -1,9 +1,8 @@
 <template>
   <select-simple
-    :items="list"
+    :items="items"
     label-attr="name"
     value-attr="id"
-    placeholder="Пріорітет"
     v-bind="$attrs"
     v-on="listeners"
   />
@@ -15,7 +14,20 @@ export default {
     SelectSimple: () => import('@/components/SelectSimple')
   },
   inheritAttrs: false,
+  props: {
+    defaultValue: {
+      type: Object,
+      default: () => {}
+    }
+  },
   computed: {
+    items() {
+      if (this.init) {
+        return [this.defaultValue]
+      }
+
+      return this.list
+    },
     list() {
       return this.$store.state.requestPriorities.list
     },
