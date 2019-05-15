@@ -40,11 +40,12 @@ const getters = {
    * @returns {(*|{model: boolean})[]}
    */
   columns() {
-    const defaultActive = ['title', 'user_name', 'assign_name', 'type_name', 'priority_name', 'status_name']
+    const defaultActive = ['title', 'location', 'user_name', 'assign_name', 'type_name', 'priority_name', 'status_name']
 
     const columns = [
       { prop: 'id', label: 'ID', 'min-width': 70, sortable: 'custom' },
       { prop: 'title', label: 'Назва', 'min-width': 150, sortable: 'custom' },
+      { prop: 'location', label: 'Розташування', 'min-width': 150, sortable: 'custom' },
       { prop: 'user_name', label: 'Створив', 'min-width': 150 },
       { prop: 'assign_name', label: 'Виконує', 'min-width': 150 },
       { prop: 'type_name', label: 'Тип', 'min-width': 120, disableSearch: true },
@@ -53,6 +54,7 @@ const getters = {
       { prop: 'equipment_name', label: 'Обладнання', 'min-width': 150 },
       { prop: 'equipment_serial_number', label: 'Серійний номер', 'min-width': 120 },
       { prop: 'equipment_inventory_number', label: 'Інвертарний номер', 'min-width': 120 },
+      { prop: 'description', label: 'Опис', 'min-width': 250, disableSearch: true, hideList: true },
       { prop: 'updated_at', label: 'Оновлено', 'min-width': 150, sortable: 'custom', customType: 'timestamp' },
       { prop: 'created_at', label: 'Створений', 'min-width': 150, sortable: 'custom', customType: 'timestamp' }
     ]

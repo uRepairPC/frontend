@@ -24,6 +24,7 @@
         :value="row.value"
         :color="model.status_color"
       />
+      <span v-else>{{ row.value }}</span>
     </template>
   </template-one>
 </template>
@@ -73,8 +74,8 @@ export default {
     },
     tableData() {
       const props = [
-        'user_name', 'assign_name', 'type_name', 'priority_name', 'status_name', 'equipment_name',
-        'equipment_serial_number', 'equipment_inventory_number', 'created_at', 'updated_at'
+        'location', 'user_name', 'assign_name', 'type_name', 'priority_name', 'status_name', 'equipment_name',
+        'equipment_serial_number', 'equipment_inventory_number', 'description', 'created_at', 'updated_at'
       ]
       const result = []
 
