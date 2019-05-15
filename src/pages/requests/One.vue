@@ -10,7 +10,10 @@
     >
       {{ model.title }}
     </div>
-    <template slot="table" slot-scope="{ row }">
+    <template
+      slot="table"
+      slot-scope="{ row }"
+    >
       <table-cell-color
         v-if="row.prop === 'priority_name'"
         :value="row.value"
@@ -34,7 +37,6 @@ import types from '@/enum/types'
 
 export default {
   components: {
-    ListCheckboxes: () => import('@/components/permissions/ListCheckboxes'),
     TableCellColor: () => import('@/components/TableCellColor'),
     TemplateOne: () => import('@/components/template/One')
   },
