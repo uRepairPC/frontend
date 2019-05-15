@@ -17,12 +17,12 @@ export default {
   props: {
     defaultValue: {
       type: Object,
-      default: () => {}
+      default: null
     }
   },
   computed: {
     items() {
-      if (this.init) {
+      if (this.init && this.defaultValue) {
         return [this.defaultValue]
       }
 
