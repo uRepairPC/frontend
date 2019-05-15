@@ -11,7 +11,7 @@
     <el-option
       v-for="item in list"
       :key="item.id"
-      :label="`${item.model_name}, ${item.serial_number || '-'} / ${item.inventory_number || '-'}`"
+      :label="`${item.model_name || ''}, ${item.serial_number || '-'} / ${item.inventory_number || '-'}`"
       :value="item.id"
     />
   </el-select>

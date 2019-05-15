@@ -66,7 +66,7 @@ export default {
           permissions: permissions.REQUESTS_CONFIG_VIEW,
           rules: required,
           attrs: {
-            defaultValue: { name: this.request.type_name, id: this.request.type_id }
+            defaultValue: { name: this.request.type_name || '', id: this.request.type_id }
           }
         },
         priority_id: {
@@ -76,7 +76,7 @@ export default {
           permissions: permissions.REQUESTS_CONFIG_VIEW,
           rules: required,
           attrs: {
-            defaultValue: { name: this.request.priority_name, id: this.request.priority_id }
+            defaultValue: { name: this.request.priority_name || '', id: this.request.priority_id }
           }
         },
         status_id: {
@@ -86,7 +86,7 @@ export default {
           permissions: permissions.REQUESTS_CONFIG_VIEW,
           rules: required,
           attrs: {
-            defaultValue: { name: this.request.status_name, id: this.request.status_id }
+            defaultValue: { name: this.request.status_name || '', id: this.request.status_id }
           }
         },
         equipment_id: {
@@ -99,8 +99,8 @@ export default {
             defaultValue: {
               id: this.request.equipment_id,
               model_name: this.request.equipment_name,
-              serial_number: this.request.serial_number,
-              inventory_number: this.request.inventory_number
+              serial_number: this.request.equipment_serial_number,
+              inventory_number: this.request.equipment_inventory_number
             }
           }
         },

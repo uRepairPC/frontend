@@ -11,7 +11,7 @@
     <el-option
       v-for="item in list"
       :key="item.id"
-      :label="`${item.last_name} ${item.first_name}`"
+      :label="`${item.last_name || ''} ${item.first_name || ''}`"
       :value="item.id"
     />
   </el-select>
