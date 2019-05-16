@@ -3,6 +3,7 @@
 import StorageData from '@/classes/StorageData'
 import sections from '@/enum/sections'
 import router from '@/router'
+import io from '@/socket/io'
 import store from '@/store'
 import axios from 'axios'
 import Vue from 'vue'
@@ -26,6 +27,9 @@ export default function () {
 
   // And move to auth page
   router.push({ name: sections.auth })
+
+  // Logout from the socket server
+  io.emit('logout')
 
   // On auth page we can safe delete user object without errors
   Vue.nextTick(() => {

@@ -5,7 +5,6 @@ import { runLoadingService } from '@/scripts/dom'
 import StorageData from '@/classes/StorageData'
 import { syncEvents } from '@/socket/functions'
 import logout from '@/scripts/logout'
-import io from '@/socket/io'
 import axios from 'axios'
 
 const state = {
@@ -95,9 +94,6 @@ const actions = {
   },
   logout() {
     const loadingService = runLoadingService('Виходимо з системи')
-
-    // Logout from the socket server
-    io.emit('logout')
 
     return axios.post('auth/logout')
       .finally(() => {
