@@ -67,7 +67,7 @@ export default {
 
       RequestFile.fetchEdit(this.request.id, this.file.id, form)
         .then(({ data }) => {
-          this.$emit('update-file', data.request_file, this.index)
+          this.$emit('file-update', data.request_file, this.index)
           this.$emit('close')
         })
         .finally(() => {

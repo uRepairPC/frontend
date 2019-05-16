@@ -48,7 +48,7 @@ export default {
 
       RequestFile.fetchDelete(this.request.id, this.file.id)
         .then(() => {
-          this.$emit('delete-file', this.index)
+          this.$emit('file-delete', this.index)
           this.$emit('close')
         })
         .finally(() => {

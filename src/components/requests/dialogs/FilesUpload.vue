@@ -65,8 +65,8 @@ export default {
       })
 
       RequestFile.fetchStore(this.request.id, fd)
-        .then(() => {
-          this.$emit('fetch-files')
+        .then(({ data }) => {
+          this.$emit('files-upload', data.request_files)
           this.$emit('close')
         })
         .catch(({ response: { data } }) => {
