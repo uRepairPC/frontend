@@ -31,6 +31,11 @@ Array(
         // Set new data to the current user
         store.commit('profile/SET_USER', payload.data)
 
+        // Update permissions
+        if (payload.data.permission_names) {
+          store.commit('profile/SET_PERMISSIONS', payload.data.permission_names)
+        }
+
         // And refresh events
         syncEvents()
       }
