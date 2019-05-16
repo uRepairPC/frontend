@@ -1,6 +1,7 @@
 'use strict'
 
 import { notAuthorizedRoutesName } from '@/router/routes'
+import { includePermission } from '@/scripts/utils'
 import sections from '@/enum/sections'
 import router from '@/router/router'
 import NProgress from 'nprogress'
@@ -17,18 +18,24 @@ import store from '@/store'
 export const DEFAULT_ROUTE_NAME = sections.home
 
 router.beforeEach((to, from, next) => {
-  NProgress.start()
   const isLogin = store.state.profile.isLogin
+  NProgress.start()
 
+  // Guard - User not auth or/and Auth page
   if (to.path === '/' && to.name !== DEFAULT_ROUTE_NAME) {
-    next({ name: DEFAULT_ROUTE_NAME })
+    return next({ name: DEFAULT_ROUTE_NAME })
   } else if (to.name === sections.auth && isLogin) {
-    next({ name: DEFAULT_ROUTE_NAME })
+    return next({ name: DEFAULT_ROUTE_NAME })
   } else if (!notAuthorizedRoutesName.includes(to.name) && !isLogin) {
-    next({ name: sections.auth })
-  } else {
-    next()
+    return next({ name: sections.auth })
   }
+
+  // Guard - User auth and permissions
+  if (to.meta.permissions && !includePermission(to.meta.permissions)) {
+    return next({ name: to.meta.failRouteName || sections.home })
+  }
+
+  next()
 })
 
 router.afterEach(() => {
