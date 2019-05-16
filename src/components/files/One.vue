@@ -46,7 +46,7 @@
 <script>
 import { formatBytes, getApiAuth } from '@/scripts/utils'
 import { includePermission } from '@/scripts/utils'
-import dayjs from 'dayjs'
+import dayjs from '@/libraries/dayjs'
 
 export default {
   props: {

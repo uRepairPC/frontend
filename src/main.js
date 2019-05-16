@@ -1,19 +1,15 @@
 'use strict'
 
-import LocalizedFormat from 'dayjs/plugin/localizedFormat'
 import SettingsGlobal from '@/classes/SettingsGlobal'
 import locale from 'element-ui/lib/locale/lang/ua'
 import VueSocketIO from 'vue-socket.io-extended'
 import prototypes from '@/prototypes'
-import directives from '@/directives'
 import ElementUI from 'element-ui'
 import NProgress from 'nprogress'
 import router from '@/router'
 import io from '@/socket/io'
 import App from '@/App.vue'
 import store from '@/store'
-import dayjs from 'dayjs'
-import 'dayjs/locale/uk'
 import Vue from 'vue'
 
 // Import Service Worker
@@ -27,8 +23,6 @@ Vue.use(VueSocketIO, io)
 Vue.config.productionTip = false
 
 // Other libraries
-dayjs.extend(LocalizedFormat)
-dayjs.locale('uk')
 NProgress.configure({ showSpinner: false })
 
 /**
@@ -38,14 +32,6 @@ NProgress.configure({ showSpinner: false })
  */
 prototypes.forEach((prototype) => {
   Vue.use(prototype)
-})
-
-/**
- * Install global directives
- * @var {Array} directives
- */
-directives.forEach((directive) => {
-  Vue.use(directive)
 })
 
 // Set init config
