@@ -140,7 +140,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~scss/mobile/_sizes";
+@import "~scss/_variables";
 
 .header {
   display: flex;

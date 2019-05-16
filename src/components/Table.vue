@@ -103,8 +103,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~scss/mobile/_sizes";
-@import "~scss/keyframes";
+@import "~scss/_variables";
+@import "~scss/_keyframes";
 
 .loading {
   /deep/ .el-table__row {

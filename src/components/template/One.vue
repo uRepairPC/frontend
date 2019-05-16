@@ -90,7 +90,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~scss/mobile/_sizes";
+@import "~scss/_variables";
 @import "~scss/_colors";
 
 .template__wrap {

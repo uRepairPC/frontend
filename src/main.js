@@ -19,9 +19,6 @@ import Vue from 'vue'
 // Import Service Worker
 import '@/scripts/sw'
 
-// Import styles
-import '@/styles/index'
-
 // Connect libraries to Vue
 Vue.use(ElementUI, { locale })
 Vue.use(VueSocketIO, io)

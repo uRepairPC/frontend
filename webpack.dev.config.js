@@ -8,7 +8,10 @@ require('dotenv').config()
 
 module.exports = {
   mode: 'development',
-  entry: './src/main.js',
+  entry: [
+    './src/main.js',
+    './src/styles/index.scss'
+  ],
   stats: {
     children: false
   },
