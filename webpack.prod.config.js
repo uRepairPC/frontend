@@ -1,24 +1,17 @@
 'use strict'
 
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const { VueLoaderPlugin } = require('vue-loader/lib/index')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { GenerateSW } = require('workbox-webpack-plugin')
-const { VueLoaderPlugin } = require('vue-loader')
 const Dotenv = require('dotenv-webpack')
 const path = require('path')
 require('dotenv').config()
 
-/** @type {boolean} */
-const isDev = ['dev', 'development'].includes(process.env.NODE_ENV)
-
-/** @type {object} */
-const settings = {
-  mode: isDev ? 'development' : 'production',
-  entry: [
-    './src/main.js'
-  ],
+module.exports = {
+  mode: 'production',
+  entry: './src/main.js',
   stats: {
     children: false
   },
@@ -28,21 +21,7 @@ const settings = {
     publicPath: '/',
     path: path.resolve(__dirname, process.env.WEBPACK_OUTPUT_DIR || 'dist')
   },
-  devtool: isDev ? 'inline-source-map' : false,
-  devServer: {
-    publicPath: '/',
-    contentBase: './dist',
-    host: process.env.WEBPACK_HOST_DEV || 'localhost',
-    hot: true,
-    clientLogLevel: 'error',
-    disableHostCheck: true,
-    proxy: {
-      '/api/*': {
-        target: process.env.PROXY_TARGET || 'http://localhost/',
-        changeOrigin: true
-      }
-    }
-  },
+  devtool: false,
   optimization: {
     splitChunks: {
       cacheGroups: {
@@ -59,9 +38,7 @@ const settings = {
       {
         test: /\.scss$/,
         use: [
-          isDev
-            ? 'vue-style-loader'
-            : MiniCssExtractPlugin.loader,
+          MiniCssExtractPlugin.loader,
           'css-loader',
           'sass-loader'
         ]
@@ -106,7 +83,6 @@ const settings = {
     new Dotenv,
     new VueLoaderPlugin,
     new CleanWebpackPlugin({
-      dry: isDev,
       verbose: false,
       cleanOnceBeforeBuildPatterns: ['web/*', 'index.html', 'sw.js']
     }),
@@ -115,25 +91,12 @@ const settings = {
       template: './index.html',
       inject: true,
       chunksSortMode: 'none',
-      isDev: isDev
+      isDev: false
     }),
     new MiniCssExtractPlugin({
       filename: 'web/[name].[hash].css',
       chunkFilename: 'web/css/[name].[hash].css'
-    })
-  ],
-  resolve: {
-    extensions: ['.js', '.vue', '.json'],
-    alias: {
-      '@': path.resolve(__dirname, './src/'),
-      'scss': path.resolve(__dirname, './src/styles/')
-    }
-  }
-}
-
-if (!isDev) {
-  settings.plugins.push(
-    // Add PWA
+    }),
     new GenerateSW({
       swDest: 'sw.js',
       importWorkboxFrom: 'local',
@@ -170,10 +133,14 @@ if (!isDev) {
           cacheName: 'api'
         }
       }]
-    })
-    // Check bundle
-    // new BundleAnalyzerPlugin
-  )
+    }),
+    // new (require('webpack-bundle-analyzer').BundleAnalyzerPlugin)
+  ],
+  resolve: {
+    extensions: ['.js', '.vue', '.json'],
+    alias: {
+      '@': path.resolve(__dirname, './src/'),
+      'scss': path.resolve(__dirname, './src/styles/')
+    }
+  }
 }
-
-module.exports = settings

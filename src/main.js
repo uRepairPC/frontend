@@ -1,6 +1,5 @@
 'use strict'
 
-import '@babel/polyfill'
 import LocalizedFormat from 'dayjs/plugin/localizedFormat'
 import SettingsGlobal from '@/classes/SettingsGlobal'
 import locale from 'element-ui/lib/locale/lang/ua'
