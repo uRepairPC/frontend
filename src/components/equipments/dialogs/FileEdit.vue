@@ -67,7 +67,7 @@ export default {
 
       EquipmentFile.fetchEdit(this.equipment.id, this.file.id, form)
         .then(({ data }) => {
-          this.$emit('update-file', data.file, this.index)
+          this.$emit('file-update', data.equipment_file, this.index)
           this.$emit('close')
         })
         .finally(() => {

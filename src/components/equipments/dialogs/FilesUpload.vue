@@ -69,8 +69,8 @@ export default {
       })
 
       EquipmentFile.fetchStore(this.equipment.id, fd)
-        .then(() => {
-          this.$emit('fetch-files')
+        .then(({ data }) => {
+          this.$emit('files-upload', data.equipment_files)
           this.$emit('close')
         })
         .catch(({ response: { data } }) => {
