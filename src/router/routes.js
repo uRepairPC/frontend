@@ -179,6 +179,10 @@ const authorizedRoutes = {
           meta: { permissions: permissions.EQUIPMENTS_CONFIG_VIEW, failRouteName: sections.settings }
         }
       ]
+    },
+    {
+      path: '*',
+      redirect: { name: sections.home }
     }
   ]
 }
