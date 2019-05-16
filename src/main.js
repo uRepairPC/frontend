@@ -1,10 +1,9 @@
 'use strict'
 
 import SettingsGlobal from '@/classes/SettingsGlobal'
-import locale from 'element-ui/lib/locale/lang/ua'
 import prototypes from '@/prototypes'
-import ElementUI from 'element-ui'
 import router from '@/router'
+import '@/libraries/element'
 import App from '@/App.vue'
 import store from '@/store'
 import Vue from 'vue'
@@ -12,9 +11,6 @@ import Vue from 'vue'
 // Import Service Worker and socket.io
 import '@/scripts/sw'
 import '@/socket'
-
-// Connect libraries to Vue
-Vue.use(ElementUI, { locale })
 
 // Prevent the production tip on Vue startup
 Vue.config.productionTip = false
