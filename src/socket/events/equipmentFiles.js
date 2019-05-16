@@ -41,7 +41,7 @@ io.on('equipment_files', (payload) => {
   if (payload.type === socketTypes.CREATE) {
     store.commit('template/ADD_SIDEBAR_ITEM', {
       section: sections.equipments,
-      data: { ...sidebarItem, files: [...payload.data, ...sidebarItem.files] }
+      data: { ...sidebarItem, files: [...payload.data, ...sidebarItem.files || []] }
     })
   }
 })
