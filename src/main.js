@@ -2,22 +2,20 @@
 
 import SettingsGlobal from '@/classes/SettingsGlobal'
 import locale from 'element-ui/lib/locale/lang/ua'
-import VueSocketIO from 'vue-socket.io-extended'
 import prototypes from '@/prototypes'
 import ElementUI from 'element-ui'
 import NProgress from 'nprogress'
 import router from '@/router'
-import io from '@/socket/io'
 import App from '@/App.vue'
 import store from '@/store'
 import Vue from 'vue'
 
-// Import Service Worker
+// Import Service Worker and socket.io
 import '@/scripts/sw'
+import '@/socket'
 
 // Connect libraries to Vue
 Vue.use(ElementUI, { locale })
-Vue.use(VueSocketIO, io)
 
 // Prevent the production tip on Vue startup
 Vue.config.productionTip = false
