@@ -1,22 +1,14 @@
 <template>
   <basic-delete
-    :title="request.title"
-    :confirm="request.id"
+    :title="file.name"
     :loading="loading"
     v-bind="$attrs"
     v-on="listeners"
-  >
-    <el-checkbox
-      slot="content-bottom"
-      v-model="filesDelete"
-    >
-      Видалити файли?
-    </el-checkbox>
-  </basic-delete>
+  />
 </template>
 
 <script>
-import Request from '@/classes/Request'
+import RequestFile from '@/classes/RequestFile'
 
 export default {
   components: {
@@ -27,12 +19,19 @@ export default {
     request: {
       type: Object,
       required: true
+    },
+    file: {
+      type: Object,
+      required: true
+    },
+    index: {
+      type: Number,
+      default: 0
     }
   },
   data() {
     return {
-      loading: false,
-      filesDelete: true
+      loading: false
     }
   },
   computed: {
@@ -47,13 +46,9 @@ export default {
     fetchRequest() {
       this.loading = true
 
-      Request.fetchDelete(this.request.id, {
-        data: {
-          files_delete: this.filesDelete
-        }
-      })
+      RequestFile.fetchDelete(this.request.id, this.file.id)
         .then(() => {
-          this.$emit('delete')
+          this.$emit('delete-file', this.index)
           this.$emit('close')
         })
         .finally(() => {

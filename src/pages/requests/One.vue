@@ -26,11 +26,33 @@
       />
       <span v-else>{{ row.value }}</span>
     </template>
+    <div
+      v-if="model.files && (model.files.length || loadingFiles)"
+      class="page--width"
+    >
+      <div class="divider">
+        <span>Файли</span>
+      </div>
+      <div>
+        <files-list
+          :files="model.files"
+          :loading="loadingFiles"
+          :url-download="(file) => `requests/${model.id}/files/${file.id}`"
+          :permission-edit="fileActionPermissions"
+          :permission-delete="fileActionPermissions"
+          @add="onAdd"
+          @edit="onEdit"
+          @delete="onDelete"
+          @refresh="fetchRequestFiles"
+        />
+      </div>
+    </div>
   </template-one>
 </template>
 
 <script>
 import * as permissions from '@/enum/permissions'
+import RequestFile from '@/classes/RequestFile'
 import Request from '@/classes/Request'
 import sections from '@/enum/sections'
 import onePage from '@/mixins/onePage'
@@ -39,14 +61,16 @@ import types from '@/enum/types'
 export default {
   components: {
     TableCellColor: () => import('@/components/TableCellColor'),
-    TemplateOne: () => import('@/components/template/One')
+    TemplateOne: () => import('@/components/template/One'),
+    FilesList: () => import('@/components/files/List')
   },
   mixins: [
     onePage(sections.requests)
   ],
   data() {
     return {
-      loading: false
+      loading: false,
+      loadingFiles: false
     }
   },
   computed: {
@@ -63,6 +87,11 @@ export default {
           type: types.PRIMARY,
           permissions: [permissions.REQUESTS_EDIT, this.model.id === this.model.assign_id],
           action: () => this.openDialog(import('@/components/requests/dialogs/Edit'))
+        },
+        {
+          title: 'Завантажити файл',
+          type: types.PRIMARY,
+          action: () => this.openDialog(import('@/components/requests/dialogs/FilesUpload'))
         },
         {
           title: 'Видалити',
@@ -91,12 +120,18 @@ export default {
         })
 
       return result
+    },
+    currentUser() {
+      return this.$store.state.profile.user
     }
   },
   methods: {
     fetchData() {
       if (!this.model.id) {
         this.fetchRequest()
+      }
+      if (!this.model.files) {
+        this.fetchRequestFiles()
       }
     },
     fetchRequest() {
@@ -110,6 +145,18 @@ export default {
           this.loading = false
         })
     },
+    fetchRequestFiles() {
+      this.loadingFiles = true
+      this.updateFiles([])
+
+      RequestFile.fetchAll(+this.$route.params.id)
+        .then(({ data }) => {
+          this.updateFiles(data.request_files)
+        })
+        .finally(() => {
+          this.loadingFiles = false
+        })
+    },
     openDialog(component, attrs = {}) {
       this.$store.commit('template/OPEN_DIALOG', {
         component: () => component,
@@ -120,9 +167,38 @@ export default {
         events: {
           delete: () => {
             this.$router.push({ name: sections.requests })
+          },
+          'fetch-files': this.fetchRequestFiles,
+          'update-file': (file, index) => {
+            const files = this.model.files
+            files[index] = file
+            this.updateFiles(files)
+          },
+          'delete-file': (index) => {
+            const files = [...this.model.files]
+            files.splice(index, 1)
+            this.updateFiles(files)
           }
         }
       })
+    },
+    fileActionPermissions() {
+      return [
+        permissions.REQUESTS_EDIT,
+        (file) => file.user_id === this.currentUser.id
+      ]
+    },
+    updateFiles(files) {
+      Request.sidebar().add({ id: +this.$route.params.id, files })
+    },
+    onAdd() {
+      this.openDialog(import('@/components/requests/dialogs/FilesUpload'))
+    },
+    onEdit(file, index) {
+      this.openDialog(import('@/components/requests/dialogs/FileEdit'), { file, index })
+    },
+    onDelete(file, index) {
+      this.openDialog(import('@/components/requests/dialogs/FileDelete'), { file, index })
     }
   }
 }

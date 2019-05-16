@@ -40,30 +40,42 @@ export function formatBytes(bytes, decimals = 2) {
  * Pass boolean - for manual access check, for example:
  * [USERS_VIEW, user.id === 5]
  *
+ * Pass callback and cbData to check through function, for example:
+ * [USERS_VIEW, (cbData) => cbData.id === user.id]
+ *
  * @param {array|string|boolean|null} findPermissions
+ * @param {function} cbData
  * @param {array} comparePermissions
  * @return {boolean}
  */
-export function includePermission(findPermissions, comparePermissions = store.state.profile.permissions) {
+export function includePermission(findPermissions, cbData = null, comparePermissions = store.state.profile.permissions) {
   if (!findPermissions) {
     return true
   }
 
-  if (isArray(findPermissions)) {
-    return findPermissions.some(permission => {
-      if (typeof findPermissions === 'boolean') {
-        return findPermissions
+  const checkPermission = (permission) => {
+    if (typeof permission === 'boolean') {
+      return permission
+    }
+
+    if (typeof permission === 'function') {
+      const fnData = permission(cbData)
+
+      if (isArray(fnData)) {
+        return includePermission(fnData, cbData)
       }
 
-      return comparePermissions.includes(permission)
-    })
+      return fnData
+    }
+
+    return comparePermissions.includes(permission)
   }
 
-  if (typeof findPermissions === 'boolean') {
-    return findPermissions
+  if (isArray(findPermissions)) {
+    return findPermissions.some(permission => checkPermission(permission))
   }
 
-  return comparePermissions.includes(findPermissions)
+  return checkPermission(findPermissions)
 }
 
 /**
