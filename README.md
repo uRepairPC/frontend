@@ -33,7 +33,7 @@ See [here](https://urepairpc.github.io/docs/)
 
 ## TODO
 - [ ] Requests
-- [ ] Fix Jest require.context
+- [ ] Tests
 - [ ] i18n (branch i18n)
 - [ ] Global search
 - [ ] Optimizing code, comments, refactoring
