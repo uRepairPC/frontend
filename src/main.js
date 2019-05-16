@@ -4,7 +4,6 @@ import SettingsGlobal from '@/classes/SettingsGlobal'
 import locale from 'element-ui/lib/locale/lang/ua'
 import prototypes from '@/prototypes'
 import ElementUI from 'element-ui'
-import NProgress from 'nprogress'
 import router from '@/router'
 import App from '@/App.vue'
 import store from '@/store'
@@ -19,9 +18,6 @@ Vue.use(ElementUI, { locale })
 
 // Prevent the production tip on Vue startup
 Vue.config.productionTip = false
-
-// Other libraries
-NProgress.configure({ showSpinner: false })
 
 /**
  * Install global prototypes

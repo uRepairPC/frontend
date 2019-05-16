@@ -2,9 +2,9 @@
 
 import { notAuthorizedRoutesName } from '@/router/routes'
 import { includePermission } from '@/scripts/utils'
+import NProgress from '@/libraries/nprogress'
 import sections from '@/enum/sections'
 import router from '@/router/router'
-import NProgress from 'nprogress'
 import store from '@/store'
 
 /**
