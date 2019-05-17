@@ -89,6 +89,11 @@ export default {
           action: () => this.openDialog(import('@/components/requests/dialogs/Edit'))
         },
         {
+          title: 'Написати коментарій',
+          type: types.PRIMARY,
+          action: () => this.openDialog(import('@/components/requests/dialogs/CommentCreate'))
+        },
+        {
           title: 'Завантажити файл',
           type: types.PRIMARY,
           action: () => this.openDialog(import('@/components/requests/dialogs/FilesUpload'))
