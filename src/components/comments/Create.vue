@@ -22,9 +22,6 @@
 import RequestComment from '@/classes/RequestComment'
 
 export default {
-  components: {
-    GenerateForm: () => import('@/components/GenerateForm')
-  },
   props: {
     request: {
       type: Object,
