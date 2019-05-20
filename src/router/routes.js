@@ -47,7 +47,7 @@ const authorizedRoutes = {
       path: `/${sections.requests}/:id(\\d+)`,
       name: `${sections.requests}-id`,
       component: loadPage('requests/One')
-      // Permissions - check on the page
+      // Permissions - check on the page (user_id, assign_id also can view)
     },
     {
       path: `/${sections.requests}/create`,
@@ -66,7 +66,7 @@ const authorizedRoutes = {
       path: `/${sections.users}/:id(\\d+)`,
       name: `${sections.users}-id`,
       component: loadPage('users/One'),
-      meta: { permissions: permissions.USERS_VIEW }
+      // Permissions - check on the page (profile page)
     },
     {
       path: `/${sections.users}/create`,
