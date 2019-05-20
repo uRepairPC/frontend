@@ -47,7 +47,7 @@ module.exports = {
         ]
       },
       {
-        test: /\.(png|svg|jpg|gif)$/,
+        test: /\.(png|svg|jpe?g|gif)$/,
         use: [
           {
             loader: 'file-loader',
@@ -86,7 +86,6 @@ module.exports = {
     new Dotenv,
     new VueLoaderPlugin,
     new CleanWebpackPlugin({
-      verbose: false,
       cleanOnceBeforeBuildPatterns: ['web/*', 'index.html', 'sw.js']
     }),
     new HtmlWebpackPlugin({
