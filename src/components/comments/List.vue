@@ -4,6 +4,10 @@
       v-for="(comment, index) in comments"
       :key="index"
       :comment="comment"
+      :permission-edit="permissionEdit"
+      :permission-delete="permissionDelete"
+      @edit="onEdit($event, index)"
+      @delete="onDelete($event, index)"
     />
   </div>
 </template>
@@ -17,6 +21,22 @@ export default {
     comments: {
       type: Array,
       required: true
+    },
+    permissionEdit: {
+      type: [String, Boolean, Function],
+      default: null
+    },
+    permissionDelete: {
+      type: [String, Boolean, Function],
+      default: null
+    }
+  },
+  methods: {
+    onEdit(...data) {
+      this.$emit('edit', ...data)
+    },
+    onDelete(...data) {
+      this.$emit('delete', ...data)
     }
   }
 }

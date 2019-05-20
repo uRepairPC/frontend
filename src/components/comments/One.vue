@@ -15,11 +15,33 @@
       <div class="date">
         {{ createdAt }}
       </div>
+      <div
+        v-if="canEdit || canDelete"
+        class="actions"
+      >
+        <i
+          v-if="canEdit"
+          class="material-icons"
+          title="Редагувати"
+          @click="onClickEdit"
+        >
+          edit
+        </i>
+        <i
+          v-if="canDelete"
+          class="material-icons"
+          title="Видалити"
+          @click="onClickDelete"
+        >
+          delete
+        </i>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import { includePermission } from '@/scripts/utils'
 import sections from '@/enum/sections'
 import dayjs from 'dayjs'
 
@@ -42,8 +64,22 @@ export default {
     userPage() {
       return { name: `${sections.users}-id`, params: { id: this.comment.user_id } }
     },
+    canEdit() {
+      return includePermission(this.permissionEdit, this.comment)
+    },
     createdAt() {
       return dayjs(this.comment.created_at).format('lll')
+    },
+    canDelete() {
+      return includePermission(this.permissionDelete, this.comment)
+    }
+  },
+  methods: {
+    onClickEdit() {
+      this.$emit('edit', this.comment)
+    },
+    onClickDelete() {
+      this.$emit('delete', this.comment)
     }
   }
 }
@@ -58,12 +94,16 @@ export default {
   transition: 0.15s;
   &:hover {
     box-shadow: 0 0 10px 2px rgba(0, 0, 0, .12);
-    .comment__right {
+    .actions {
       opacity: 1;
     }
   }
   &:last-child {
     border-bottom: 0;
+    padding-bottom: 15px;
+  }
+  &:first-child {
+    padding-top: 15px;
   }
 }
 
@@ -94,5 +134,32 @@ export default {
 
 .date {
   margin-left: 5px;
+  flex: 1 1 auto;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  transition: .15s;
+  user-select: none;
+  opacity: 0;
+  i {
+    margin-right: 5px;
+    padding: 3px 5px;
+    cursor: pointer;
+    color: $secondaryText;
+    transition: 0.15s;
+    &:last-child {
+      margin-right: 0;
+    }
+    &:hover {
+      &.edit {
+        color: $primary;
+      }
+      &.delete {
+        color: $danger;
+      }
+    }
+  }
 }
 </style>

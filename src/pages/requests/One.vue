@@ -40,9 +40,9 @@
           :url-download="(file) => `requests/${model.id}/files/${file.id}`"
           :permission-edit="fileActionPermissions"
           :permission-delete="fileActionPermissions"
-          @add="onAdd"
-          @edit="onEdit"
-          @delete="onDelete"
+          @add="onAddFile"
+          @edit="onEditFile"
+          @delete="onDeleteFile"
           @refresh="fetchRequestFiles"
         />
       </div>
@@ -58,6 +58,10 @@
         <comments-list
           :comments="model.comments"
           :loading="loadingComments"
+          :permission-edit="commentActionPermissions"
+          :permission-delete="commentActionPermissions"
+          @edit="onEditComment"
+          @delete="onDeleteComment"
         />
       </div>
     </div>
@@ -229,17 +233,29 @@ export default {
         (file) => file.user_id === this.currentUser.id
       ]
     },
+    commentActionPermissions() {
+      return [
+        permissions.REQUESTS_EDIT,
+        (comment) => comment.user_id === this.currentUser.id
+      ]
+    },
     updateData(data) {
       Request.sidebar().add({ id: +this.$route.params.id, ...data })
     },
-    onAdd() {
+    onAddFile() {
       this.openDialog(import('@/components/requests/dialogs/FilesUpload'))
     },
-    onEdit(file, index) {
+    onEditFile(file, index) {
       this.openDialog(import('@/components/requests/dialogs/FileEdit'), { file, index })
     },
-    onDelete(file, index) {
+    onDeleteFile(file, index) {
       this.openDialog(import('@/components/requests/dialogs/FileDelete'), { file, index })
+    },
+    onEditComment(comment, index) {
+      console.log('onEditComment', comment, index)
+    },
+    onDeleteComment(comment, index) {
+      console.log('onDeleteComment', comment, index)
     }
   }
 }
