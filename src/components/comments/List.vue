@@ -9,7 +9,11 @@
         Оновити
       </div>
     </div>
-    <div class="comments">
+    <loading-comments v-if="loading" />
+    <div
+      v-else
+      class="comments"
+    >
       <comment-one
         v-for="(comment, index) in comments"
         :key="index"
@@ -26,12 +30,17 @@
 <script>
 export default {
   components: {
+    LoadingComments: () => import('@/components/comments/Loading'),
     CommentOne: () => import('@/components/comments/One')
   },
   props: {
     comments: {
       type: Array,
       required: true
+    },
+    loading: {
+      type: Boolean,
+      default: false
     },
     permissionEdit: {
       type: [String, Boolean, Function],

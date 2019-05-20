@@ -100,10 +100,6 @@ export default {
   }
   &:last-child {
     border-bottom: 0;
-    padding-bottom: 12px;
-  }
-  &:first-child {
-    padding-top: 12px;
   }
 }
 
