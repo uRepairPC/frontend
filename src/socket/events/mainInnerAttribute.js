@@ -11,26 +11,48 @@ import store from '@/store'
  */
 
 Array(
-  { event: 'equipment_files', section: sections.equipments, sectionAttrId: 'equipment_id', attr: 'files' },
-  { event: 'request_files', section: sections.requests, sectionAttrId: 'request_id', attr: 'files' },
-  { event: 'request_comments', section: sections.requests, sectionAttrId: 'request_id', attr: 'comments' }
+  {
+    event: 'equipment_files',
+    section: sections.equipments,
+    sectionAttrId: 'equipment_id',
+    attr: 'files',
+    orderByAsc: false
+  },
+  {
+    event: 'request_files',
+    section: sections.requests,
+    sectionAttrId: 'request_id',
+    attr: 'files',
+    orderByAsc: false
+  },
+  {
+    event: 'request_comments',
+    section: sections.requests,
+    sectionAttrId: 'request_id',
+    attr: 'comments',
+    orderByAsc: true
+  }
 )
   .forEach((obj) => {
     io.on(obj.event, (payload) => {
+
+      // Get sidebar section, if items not found - return
       const sidebar = store.state.template.sidebar[obj.section]
       if (!payload.params[obj.sectionAttrId]) {
         return
       }
 
+      // Get item from sidebarItem, if user not view this page - return
       const sidebarItem = sidebar[payload.params[obj.sectionAttrId]]
       if (!sidebarItem) {
         return
       }
 
+      // If event is update/delete and has attr - try update item
       if ((payload.type === socketTypes.UPDATE || payload.type === socketTypes.DELETE) &&
         isArray(sidebarItem[obj.attr]) && payload.params.id) {
 
-        // Find [obj.attr] by id in array and change or delete
+        // Find [obj.attr] by id in array
         const sidebarItemData = [...sidebarItem[obj.attr]]
         const findIndex = sidebarItemData.findIndex(item => item.id === payload.params.id)
 
@@ -49,11 +71,19 @@ Array(
       }
 
       if (payload.type === socketTypes.CREATE) {
+        // Accept [] or {}
         const payloadDataArray = isArray(payload.data) ? payload.data : [payload.data]
+        let dataAttr = []
+
+        if (obj.orderByAsc) {
+          dataAttr = [...sidebarItem[obj.attr] || [], ...payloadDataArray]
+        } else {
+          dataAttr = [...payloadDataArray, ...sidebarItem[obj.attr] || []]
+        }
 
         store.commit('template/ADD_SIDEBAR_ITEM', {
           section: obj.section,
-          data: { ...sidebarItem, [obj.attr]: [...payloadDataArray, ...sidebarItem[obj.attr] || []] }
+          data: { ...sidebarItem, [obj.attr]: dataAttr }
         })
       }
     })

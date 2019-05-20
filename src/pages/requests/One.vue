@@ -270,7 +270,7 @@ export default {
     },
     onAddComment(comment) {
       const comments = [...this.model.comments]
-      comments.unshift(comment)
+      comments.push(comment)
       this.updateData({ comments })
     },
     onEditComment(comment, index) {
