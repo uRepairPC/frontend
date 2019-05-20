@@ -15,6 +15,7 @@
           {{ top }}
         </div>
         <div class="file-center__bottom">
+          <i class="material-icons">person</i>
           {{ bottom }}
         </div>
       </div>
@@ -167,8 +168,13 @@ $transition: .15s;
 }
 
 .file-center__bottom {
+  display: flex;
+  align-items: center;
   color: $secondaryText;
-  font-size: .8rem;
+  font-size: .7rem;
+  i {
+    margin-right: 4px;
+  }
 }
 
 .file__right {
