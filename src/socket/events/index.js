@@ -6,5 +6,5 @@
 
 import '@/socket/events/basic'
 import '@/socket/events/main'
-import '@/socket/events/files'
+import '@/socket/events/mainInnerAttribute'
 import '@/socket/events/settings'
