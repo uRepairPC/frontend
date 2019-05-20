@@ -216,6 +216,16 @@ export default {
             this.$router.push({ name: sections.requests })
           },
           'comment-create': this.onAddComment,
+          'comment-update': (comment, index) => {
+            const comments = [...this.model.comments]
+            comments[index] = comment
+            this.updateData({ comments })
+          },
+          'comment-delete': (index) => {
+            const comments = [...this.model.comments]
+            comments.splice(index, 1)
+            this.updateData({ comments })
+          },
           'files-upload': (uploadFiles) => {
             const files = [...this.model.files]
             files.unshift(...uploadFiles)
@@ -264,10 +274,10 @@ export default {
       this.updateData({ comments })
     },
     onEditComment(comment, index) {
-      console.log('onEditComment', comment, index)
+      this.openDialog(import('@/components/requests/dialogs/CommentEdit'), { comment, index })
     },
     onDeleteComment(comment, index) {
-      console.log('onDeleteComment', comment, index)
+      this.openDialog(import('@/components/requests/dialogs/CommentDelete'), { comment, index })
     }
   }
 }
