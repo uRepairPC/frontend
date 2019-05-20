@@ -54,21 +54,26 @@
       <div class="divider">
         <span>Коментарії</span>
       </div>
-      <div>
-        <comments-list
-          :comments="model.comments"
-          :loading="loadingComments"
-          :permission-edit="commentActionPermissions"
-          :permission-delete="commentActionPermissions"
-          @edit="onEditComment"
-          @delete="onDeleteComment"
-        />
-      </div>
+      <comments-list
+        class="mb-20"
+        :comments="model.comments"
+        :loading="loadingComments"
+        :permission-edit="commentActionPermissions"
+        :permission-delete="commentActionPermissions"
+        @edit="onEditComment"
+        @delete="onDeleteComment"
+        @refresh="fetchRequestComments"
+      />
+      <comment-create
+        :request="model"
+        @comment-create="onAddComment"
+      />
     </div>
   </template-one>
 </template>
 
 <script>
+import CommentCreate from '@/components/comments/Create'
 import RequestComment from '@/classes/RequestComment'
 import * as permissions from '@/enum/permissions'
 import RequestFile from '@/classes/RequestFile'
@@ -79,6 +84,7 @@ import types from '@/enum/types'
 
 export default {
   components: {
+    CommentCreate,
     TableCellColor: () => import('@/components/TableCellColor'),
     CommentsList: () => import('@/components/comments/List'),
     TemplateOne: () => import('@/components/template/One'),
@@ -110,7 +116,7 @@ export default {
           action: () => this.openDialog(import('@/components/requests/dialogs/Edit'))
         },
         {
-          title: 'Написати коментарій',
+          title: 'Додати коментарій',
           type: types.PRIMARY,
           action: () => this.openDialog(import('@/components/requests/dialogs/CommentCreate'))
         },
@@ -209,13 +215,14 @@ export default {
           delete: () => {
             this.$router.push({ name: sections.requests })
           },
+          'comment-create': this.onAddComment,
           'files-upload': (uploadFiles) => {
-            const files = this.model.files || []
+            const files = [...this.model.files]
             files.unshift(...uploadFiles)
             this.updateData({ files })
           },
           'file-update': (file, index) => {
-            const files = this.model.files
+            const files = [...this.model.files]
             files[index] = file
             this.updateData({ files })
           },
@@ -250,6 +257,11 @@ export default {
     },
     onDeleteFile(file, index) {
       this.openDialog(import('@/components/requests/dialogs/FileDelete'), { file, index })
+    },
+    onAddComment(comment) {
+      const comments = [...this.model.comments]
+      comments.unshift(comment)
+      this.updateData({ comments })
     },
     onEditComment(comment, index) {
       console.log('onEditComment', comment, index)

@@ -21,7 +21,7 @@
       >
         <i
           v-if="canEdit"
-          class="material-icons"
+          class="material-icons edit"
           title="Редагувати"
           @click="onClickEdit"
         >
@@ -29,7 +29,7 @@
         </i>
         <i
           v-if="canDelete"
-          class="material-icons"
+          class="material-icons delete"
           title="Видалити"
           @click="onClickDelete"
         >
@@ -43,7 +43,6 @@
 <script>
 import { includePermission } from '@/scripts/utils'
 import sections from '@/enum/sections'
-import dayjs from 'dayjs'
 
 export default {
   props: {
@@ -68,7 +67,7 @@ export default {
       return includePermission(this.permissionEdit, this.comment)
     },
     createdAt() {
-      return dayjs(this.comment.created_at).format('lll')
+      return new Date(this.comment.created_at).toLocaleString('uk')
     },
     canDelete() {
       return includePermission(this.permissionDelete, this.comment)
@@ -84,6 +83,7 @@ export default {
   }
 }
 </script>
+
 
 <style lang="scss" scoped>
 @import "~scss/_colors";
@@ -128,8 +128,9 @@ export default {
 }
 
 .message {
-  font-weight: 600;
   font-size: .9rem;
+  color: #000;
+  line-height: 1.3;
 }
 
 .date {

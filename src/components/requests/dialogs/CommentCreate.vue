@@ -62,8 +62,8 @@ export default {
       this.loading = true
 
       RequestComment.fetchStore(this.request.id, form)
-        .then(() => {
-          this.$emit('create')
+        .then(({ data }) => {
+          this.$emit('comment-create', data.request_comment)
           this.$emit('close')
         })
         .finally(() => {

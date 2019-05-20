@@ -1,14 +1,25 @@
 <template>
   <div class="comments-list">
-    <comment-one
-      v-for="(comment, index) in comments"
-      :key="index"
-      :comment="comment"
-      :permission-edit="permissionEdit"
-      :permission-delete="permissionDelete"
-      @edit="onEdit($event, index)"
-      @delete="onDelete($event, index)"
-    />
+    <div class="actions">
+      <div
+        class="refresh"
+        @click="onRefresh"
+      >
+        <i class="material-icons">refresh</i>
+        Оновити
+      </div>
+    </div>
+    <div class="comments">
+      <comment-one
+        v-for="(comment, index) in comments"
+        :key="index"
+        :comment="comment"
+        :permission-edit="permissionEdit"
+        :permission-delete="permissionDelete"
+        @edit="onEdit($event, index)"
+        @delete="onDelete($event, index)"
+      />
+    </div>
   </div>
 </template>
 
@@ -32,6 +43,9 @@ export default {
     }
   },
   methods: {
+    onRefresh() {
+      this.$emit('refresh')
+    },
     onEdit(...data) {
       this.$emit('edit', ...data)
     },
@@ -45,8 +59,29 @@ export default {
 <style lang="scss" scoped>
 @import "~scss/_colors";
 
-.comments-list {
+.comments {
   background: #fff;
   border: 1px solid $defaultBorder;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  .refresh {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 5px 10px;
+    font-size: .9rem;
+    color: $secondaryText;
+    transition: color .15s;
+    cursor: pointer;
+    &:hover {
+      color: $primary;
+    }
+    > i {
+      margin-right: 5px;
+    }
+  }
 }
 </style>
