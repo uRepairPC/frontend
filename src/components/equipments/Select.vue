@@ -1,6 +1,5 @@
 <template>
   <el-select
-    placeholder="Обладнання"
     filterable
     remote
     :remote-method="remoteMethod"
@@ -12,7 +11,7 @@
     <el-option
       v-for="item in list"
       :key="item.id"
-      :label="`${item.model_name}, ${item.serial_number || '-'} / ${item.inventory_number || '-'}`"
+      :label="`${item.model_name || ''}, ${item.serial_number || '-'} / ${item.inventory_number || '-'}`"
       :value="item.id"
     />
   </el-select>
@@ -24,10 +23,22 @@ import { mapState } from 'vuex'
 
 export default {
   inheritAttrs: false,
+  props: {
+    defaultValue: {
+      type: Object,
+      default: null
+    }
+  },
   data() {
+    const list = []
+
+    if (this.defaultValue) {
+      list.push(this.defaultValue)
+    }
+
     return {
       loading: false,
-      list: []
+      list
     }
   },
   computed: {

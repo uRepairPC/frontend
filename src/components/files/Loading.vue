@@ -33,7 +33,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~scss/keyframes";
+@import "~scss/_keyframes";
 @import "~scss/_colors";
 
 .files-loading {

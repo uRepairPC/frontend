@@ -6,7 +6,7 @@
  * @return {function(): (Promise<*>|*)}
  */
 export function load(name) {
-  return () => import(`@/${name}.vue`)
+  return () => import(`@/${name}`)
 }
 
 /**
@@ -19,7 +19,7 @@ export function loadComponent(component) {
 }
 
 /**
- * File Import Assistant (Component).
+ * File Import Assistant (Page).
  * @param {String} page
  * @return {function(): (Promise<*>|*)}
  */

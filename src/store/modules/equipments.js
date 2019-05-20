@@ -105,5 +105,6 @@ export default {
   state: { ...state, ...commonStore.state },
   mutations: { ...mutations, ...commonStore.mutations },
   actions: { ...actions, ...commonStore.actions },
-  getters
+  getters,
+  namespaced: true
 }

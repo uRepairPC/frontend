@@ -1,12 +1,10 @@
 'use strict'
 
-// eslint-disable-next-line
-const files = require.context('.', false, /\.js$/)
+/*
+ * Don't use require.context for performance
+ */
 
-files.keys().forEach((key) => {
-  if (key === './index.js') {
-    return
-  }
-
-  files(key)
-})
+import '@/socket/events/basic'
+import '@/socket/events/main'
+import '@/socket/events/mainInnerAttribute'
+import '@/socket/events/settings'

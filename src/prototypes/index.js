@@ -1,15 +1,11 @@
 'use strict'
 
-// eslint-disable-next-line
-const files = require.context('.', false, /\.js$/)
-const prototypes = []
+/*
+ * Don't use require.context for performance
+ */
 
-files.keys().forEach((key) => {
-  if (key === './index.js') {
-    return
-  }
+import axios from '@/prototypes/axios'
 
-  prototypes.push(files(key).default)
-})
-
-export default prototypes
+export default [
+  axios
+]

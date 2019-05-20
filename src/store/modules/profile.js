@@ -4,8 +4,8 @@ import router, { DEFAULT_ROUTE_NAME } from '@/router'
 import { runLoadingService } from '@/scripts/dom'
 import StorageData from '@/classes/StorageData'
 import { syncEvents } from '@/socket/functions'
+import { isArray } from '@/scripts/helpers'
 import logout from '@/scripts/logout'
-import io from '@/socket/io'
 import axios from 'axios'
 
 const state = {
@@ -87,7 +87,10 @@ const actions = {
         syncEvents()
 
         commit('SET_USER', data.user)
-        commit('SET_PERMISSIONS', data.permissions)
+
+        if (isArray(data.user.permission_names)) {
+          commit('SET_PERMISSIONS', data.user.permission_names)
+        }
       })
       .finally(() => {
         commit('SET_LOADING', false)
@@ -95,9 +98,6 @@ const actions = {
   },
   logout() {
     const loadingService = runLoadingService('Виходимо з системи')
-
-    // Logout from the socket server
-    io.emit('logout')
 
     return axios.post('auth/logout')
       .finally(() => {
@@ -108,5 +108,8 @@ const actions = {
 }
 
 export default {
-  state, mutations, actions
+  state,
+  mutations,
+  actions,
+  namespaced: true
 }

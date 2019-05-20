@@ -23,9 +23,6 @@ const PROFILE = 'profile'
 /** @type {string} */
 const PERMISSIONS = 'permissions'
 
-/** @type {string} */
-const SETTINGS_GLOBAL = 'settingsGlobal'
-
 export default class StorageData {
 
   /* | -------------------------------------------------------------------------------------
@@ -57,9 +54,6 @@ export default class StorageData {
       },
       permissions() {
         return self._remove(PERMISSIONS)
-      },
-      settings() {
-        return self._remove(SETTINGS_GLOBAL)
       }
     }
   }

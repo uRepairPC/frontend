@@ -37,20 +37,45 @@ export function formatBytes(bytes, decimals = 2) {
  * Check permission(s) with user permissions.
  * findPermissions is null - available to all.
  *
- * @param {array|string|null} findPermissions
+ * Pass boolean - for manual access check, for example:
+ * [USERS_VIEW, user.id === 5]
+ *
+ * Pass callback and cbData to check through function, for example:
+ * [USERS_VIEW, (cbData) => cbData.id === user.id]
+ *
+ * @param {array|string|boolean|null} findPermissions
+ * @param {function} cbData
  * @param {array} comparePermissions
  * @return {boolean}
  */
-export function includePermission(findPermissions, comparePermissions = store.state.profile.permissions) {
+export function includePermission(findPermissions, cbData = null, comparePermissions = store.state.profile.permissions) {
   if (!findPermissions) {
     return true
   }
 
-  if (isArray(findPermissions)) {
-    return findPermissions.some(permission => comparePermissions.includes(permission))
+  const checkPermission = (permission) => {
+    if (typeof permission === 'boolean') {
+      return permission
+    }
+
+    if (typeof permission === 'function') {
+      const fnData = permission(cbData)
+
+      if (isArray(fnData)) {
+        return includePermission(fnData, cbData)
+      }
+
+      return fnData
+    }
+
+    return comparePermissions.includes(permission)
   }
 
-  return comparePermissions.includes(findPermissions)
+  if (isArray(findPermissions)) {
+    return findPermissions.some(permission => checkPermission(permission))
+  }
+
+  return checkPermission(findPermissions)
 }
 
 /**

@@ -19,7 +19,7 @@
 
 <script>
 import { isObject } from '@/scripts/helpers'
-import dayjs from 'dayjs'
+import dayjs from '@/libraries/dayjs'
 
 export default {
   props: {

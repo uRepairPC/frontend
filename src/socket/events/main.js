@@ -12,7 +12,7 @@ Array(
   { event: 'equipments', store: 'equipments', section: sections.equipments },
   { event: 'users', store: 'users', section: sections.users },
   { event: 'roles', store: 'roles', section: sections.roles },
-  { event: 'requests', store: 'requests', section: '' }
+  { event: 'requests', store: 'requests', section: sections.requests }
 )
   .forEach((obj) => {
     io.on(obj.event, (payload) => {
@@ -30,6 +30,11 @@ Array(
 
         // Set new data to the current user
         store.commit('profile/SET_USER', payload.data)
+
+        // Update permissions
+        if (payload.data.permission_names) {
+          store.commit('profile/SET_PERMISSIONS', payload.data.permission_names)
+        }
 
         // And refresh events
         syncEvents()

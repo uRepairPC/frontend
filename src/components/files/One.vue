@@ -15,16 +15,17 @@
           {{ top }}
         </div>
         <div class="file-center__bottom">
+          <i class="material-icons">person</i>
           {{ bottom }}
         </div>
       </div>
     </div>
     <div
-      v-if="includePermission([permissionEdit, permissionDelete])"
+      v-if="includePermission([permissionEdit, permissionDelete], file)"
       class="file__right"
     >
       <i
-        v-if="includePermission(permissionEdit)"
+        v-if="includePermission(permissionEdit, file)"
         class="material-icons edit"
         title="Редагувати"
         @click="onClickEdit"
@@ -32,7 +33,7 @@
         edit
       </i>
       <i
-        v-if="includePermission(permissionDelete)"
+        v-if="includePermission(permissionDelete, file)"
         class="material-icons delete"
         title="Видалити"
         @click="onClickDelete"
@@ -46,7 +47,7 @@
 <script>
 import { formatBytes, getApiAuth } from '@/scripts/utils'
 import { includePermission } from '@/scripts/utils'
-import dayjs from 'dayjs'
+import dayjs from '@/libraries/dayjs'
 
 export default {
   props: {
@@ -59,15 +60,15 @@ export default {
       default: null
     },
     permissionDownload: {
-      type: String,
+      type: [String, Boolean, Function],
       default: null
     },
     permissionEdit: {
-      type: String,
+      type: [String, Boolean, Function],
       default: null
     },
     permissionDelete: {
-      type: String,
+      type: [String, Boolean, Function],
       default: null
     }
   },
@@ -167,8 +168,13 @@ $transition: .15s;
 }
 
 .file-center__bottom {
+  display: flex;
+  align-items: center;
   color: $secondaryText;
-  font-size: .8rem;
+  font-size: .7rem;
+  i {
+    margin-right: 4px;
+  }
 }
 
 .file__right {

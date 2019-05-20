@@ -97,15 +97,15 @@ export default {
       required: true
     },
     permissionCreate: {
-      type: String,
+      type: [String, Boolean, Function],
       default: null
     },
     permissionEdit: {
-      type: String,
+      type: [String, Boolean, Function],
       default: null
     },
     permissionDelete: {
-      type: String,
+      type: [String, Boolean, Function],
       default: null
     }
   },
@@ -140,7 +140,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~scss/mobile/_sizes";
+@import "~scss/_variables";
 
 .header {
   display: flex;

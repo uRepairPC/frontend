@@ -28,5 +28,6 @@ const actions = {
 export default {
   state: { ...state, ...settingsStore.state },
   mutations: { ...mutations, ...settingsStore.mutations },
-  actions: { ...actions, ...settingsStore.actions }
+  actions: { ...actions, ...settingsStore.actions },
+  namespaced: true
 }

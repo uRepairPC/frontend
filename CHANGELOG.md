@@ -2,6 +2,33 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.1.0](https://github.com/uRepairPC/web/compare/v2.0.0...v2.1.0) (2019-05-20)
+
+
+### Bug Fixes
+
+* **socket:** append files on null ([7e9d05d](https://github.com/uRepairPC/web/commit/7e9d05d))
+* accept type of permission (props) ([3cf81d1](https://github.com/uRepairPC/web/commit/3cf81d1))
+* access for profile page ([6cba9f7](https://github.com/uRepairPC/web/commit/6cba9f7))
+* defaultValue not pass on select components ([1829c55](https://github.com/uRepairPC/web/commit/1829c55))
+* display add button on TableButtons component ([81e0aea](https://github.com/uRepairPC/web/commit/81e0aea))
+* init Select component for equipments and users ([54954b4](https://github.com/uRepairPC/web/commit/54954b4))
+* open component (dialog) through store ([0d7d4e7](https://github.com/uRepairPC/web/commit/0d7d4e7))
+* set permissions on update profile ([f628b5e](https://github.com/uRepairPC/web/commit/f628b5e))
+* show loading on create comment ([dd9f4fe](https://github.com/uRepairPC/web/commit/dd9f4fe))
+
+
+### Features
+
+* add delete dialog for requests section ([c0e67bb](https://github.com/uRepairPC/web/commit/c0e67bb))
+* add display comments to request ([e5289ec](https://github.com/uRepairPC/web/commit/e5289ec))
+* add edit dialog for request section ([0da5a22](https://github.com/uRepairPC/web/commit/0da5a22))
+* add files to request, improved includePermission fn ([74d3ea4](https://github.com/uRepairPC/web/commit/74d3ea4))
+* add permissions on route (Guard) ([ea7f8bd](https://github.com/uRepairPC/web/commit/ea7f8bd))
+* add requests/One page ([e566ac5](https://github.com/uRepairPC/web/commit/e566ac5))
+
+
+
 ## [2.0.0](https://github.com/uRepairPC/web/compare/v1.0.1...v2.0.0) (2019-05-13)
 
 

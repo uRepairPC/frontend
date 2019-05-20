@@ -92,7 +92,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~scss/mobile/_sizes";
+@import "~scss/_variables";
 
 #auth {
   width: 100%;

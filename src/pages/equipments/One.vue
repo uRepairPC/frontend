@@ -166,7 +166,7 @@ export default {
 
       EquipmentFile.fetchAll(+this.$route.params.id)
         .then(({ data }) => {
-          this.updateFiles(data.files)
+          this.updateFiles(data.equipment_files)
         })
         .finally(() => {
           this.loadingFiles = false
@@ -190,13 +190,17 @@ export default {
           delete: () => {
             this.$router.push({ name: sections.equipments })
           },
-          'fetch-files': this.fetchRequestFiles,
-          'update-file': (file, index) => {
+          'files-upload': (uploadFiles) => {
+            const files = this.model.files || []
+            files.unshift(...uploadFiles)
+            this.updateFiles(files)
+          },
+          'file-update': (file, index) => {
             const files = this.model.files
             files[index] = file
             this.updateFiles(files)
           },
-          'delete-file': (index) => {
+          'file-delete': (index) => {
             const files = [...this.model.files]
             files.splice(index, 1)
             this.updateFiles(files)

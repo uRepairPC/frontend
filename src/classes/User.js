@@ -43,8 +43,8 @@ export default class User extends ApiHasHistory {
     return super.fetchOne(id, config)
       .then((response) => {
         // Update for current user new permissions
-        if (store.state.profile.user.id === id && response.data.permissions) {
-          store.commit('profile/SET_PERMISSIONS', response.data.permissions)
+        if (store.state.profile.user.id === id && response.data.user.permission_names) {
+          store.commit('profile/SET_PERMISSIONS', response.data.user.permission_names)
         }
         return response
       })

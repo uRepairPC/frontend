@@ -61,19 +61,19 @@ export default {
       default: null
     },
     permissionCreate: {
-      type: String,
+      type: [String, Boolean, Function],
       default: null
     },
     permissionDownload: {
-      type: String,
+      type: [String, Boolean, Function],
       default: null
     },
     permissionEdit: {
-      type: String,
+      type: [String, Boolean, Function],
       default: null
     },
     permissionDelete: {
-      type: String,
+      type: [String, Boolean, Function],
       default: null
     }
   },
