@@ -47,10 +47,25 @@
         />
       </div>
     </div>
+    <div
+      v-if="model.comments && (model.comments.length || loadingComments)"
+      class="page--width"
+    >
+      <div class="divider">
+        <span>Коментарії</span>
+      </div>
+      <div>
+        <comments-list
+          :comments="model.comments"
+          :loading="loadingComments"
+        />
+      </div>
+    </div>
   </template-one>
 </template>
 
 <script>
+import RequestComment from '@/classes/RequestComment'
 import * as permissions from '@/enum/permissions'
 import RequestFile from '@/classes/RequestFile'
 import Request from '@/classes/Request'
@@ -61,6 +76,7 @@ import types from '@/enum/types'
 export default {
   components: {
     TableCellColor: () => import('@/components/TableCellColor'),
+    CommentsList: () => import('@/components/comments/List'),
     TemplateOne: () => import('@/components/template/One'),
     FilesList: () => import('@/components/files/List')
   },
@@ -70,7 +86,8 @@ export default {
   data() {
     return {
       loading: false,
-      loadingFiles: false
+      loadingFiles: false,
+      loadingComments: false
     }
   },
   computed: {
@@ -138,6 +155,9 @@ export default {
       if (!this.model.files) {
         this.fetchRequestFiles()
       }
+      if (!this.model.comments) {
+        this.fetchRequestComments()
+      }
     },
     fetchRequest() {
       this.loading = true
@@ -152,14 +172,26 @@ export default {
     },
     fetchRequestFiles() {
       this.loadingFiles = true
-      this.updateFiles([])
+      this.updateData({ files: [] })
 
       RequestFile.fetchAll(+this.$route.params.id)
         .then(({ data }) => {
-          this.updateFiles(data.request_files)
+          this.updateData({ files: data.request_files })
         })
         .finally(() => {
           this.loadingFiles = false
+        })
+    },
+    fetchRequestComments() {
+      this.loadingComments = true
+      this.updateData({ comments: [] })
+
+      RequestComment.fetchAll(+this.$route.params.id)
+        .then(({ data }) => {
+          this.updateData({ comments: data.request_comments })
+        })
+        .finally(() => {
+          this.loadingComments = false
         })
     },
     openDialog(component, attrs = {}) {
@@ -176,17 +208,17 @@ export default {
           'files-upload': (uploadFiles) => {
             const files = this.model.files || []
             files.unshift(...uploadFiles)
-            this.updateFiles(files)
+            this.updateData({ files })
           },
           'file-update': (file, index) => {
             const files = this.model.files
             files[index] = file
-            this.updateFiles(files)
+            this.updateData({ files })
           },
           'file-delete': (index) => {
             const files = [...this.model.files]
             files.splice(index, 1)
-            this.updateFiles(files)
+            this.updateData({ files })
           }
         }
       })
@@ -197,8 +229,8 @@ export default {
         (file) => file.user_id === this.currentUser.id
       ]
     },
-    updateFiles(files) {
-      Request.sidebar().add({ id: +this.$route.params.id, files })
+    updateData(data) {
+      Request.sidebar().add({ id: +this.$route.params.id, ...data })
     },
     onAdd() {
       this.openDialog(import('@/components/requests/dialogs/FilesUpload'))
