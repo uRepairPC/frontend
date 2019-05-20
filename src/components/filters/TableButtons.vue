@@ -18,11 +18,12 @@
       circle
       @click="actionAdd.action"
     />
+    <slot />
   </filter-basic>
 </template>
 
 <script>
-import menu from '@/data/menu'
+import { isObject } from '@/scripts/helpers'
 
 export default {
   name: 'FilterTableButtons',
@@ -41,7 +42,13 @@ export default {
         return null
       }
 
-      const childrenItems = menu[this.section].children || {}
+      const storeMenu = this.$store.getters['template/menu']
+
+      if (!isObject(storeMenu[this.section])) {
+        return null
+      }
+
+      const childrenItems = storeMenu[this.section].children || {}
 
       return childrenItems.add
     }
