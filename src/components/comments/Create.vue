@@ -39,6 +39,8 @@ export default {
   },
   methods: {
     onClick() {
+      this.loading = true
+
       RequestComment.fetchStore(this.request.id, {
         message: this.message
       })
