@@ -43,13 +43,13 @@ export function formatBytes(bytes, decimals = 2) {
  * Pass callback and cbData to check through function, for example:
  * [USERS_VIEW, (cbData) => cbData.id === user.id]
  *
- * @param {array|string|boolean|null} findPermissions
- * @param {function} cbData
+ * @param {array|string|boolean|function|null} findPermissions
+ * @param {*} cbData
  * @param {array} comparePermissions
  * @return {boolean}
  */
 export function includePermission(findPermissions, cbData = null, comparePermissions = store.state.profile.permissions) {
-  if (!findPermissions) {
+  if (!findPermissions && typeof findPermissions !== 'boolean') {
     return true
   }
 
@@ -82,21 +82,28 @@ export function includePermission(findPermissions, cbData = null, comparePermiss
  * Recursively go around the object (children)
  * and check for permissions.
  *
+ * @param {*} cbData
  * @param {object} data
+ * @param {array} comparePermissions
+ * @return {?object}
+ * @example
+ *  data - { test: 123, children: { test: 321, permissions: 'p1' } } =>
+ *  comparePermissions - ['t1']
+ *  return { test: 123 }
  */
-export function filterByPermission(data) {
-  const result = {}
+export function filterByPermission(data, cbData = null, comparePermissions = store.state.profile.permissions) {
+  if (!data) {
+    return data
+  }
 
-  for (const [key, obj] of Object.entries(data)) {
-    if (!includePermission(obj.permissions)) {
-      continue
-    }
+  if (!includePermission(data.permissions, cbData, comparePermissions)) {
+    return {}
+  }
 
-    result[key] = { ...obj }
+  const result = { ...data }
 
-    if (isObject(obj.children)) {
-      result[key].children = filterByPermission(obj.children)
-    }
+  if (isObject(data.children)) {
+    result.children = filterByPermission(data.children, cbData, comparePermissions)
   }
 
   return result
