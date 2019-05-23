@@ -172,7 +172,7 @@ export default {
     fetchRequest() {
       this.loading = true
 
-      Request.fetchOne(+this.$route.params.id)
+      Request.fetchOne(this.pageId)
         .catch(() => {
           this.$router.push({ name: sections.requests })
         })
@@ -184,7 +184,7 @@ export default {
       this.loadingFiles = true
       this.updateData({ files: [] })
 
-      RequestFile.fetchAll(+this.$route.params.id)
+      RequestFile.fetchAll(this.pageId)
         .then(({ data }) => {
           this.updateData({ files: data.request_files })
         })
@@ -196,7 +196,7 @@ export default {
       this.loadingComments = true
       this.updateData({ comments: [] })
 
-      RequestComment.fetchAll(+this.$route.params.id)
+      RequestComment.fetchAll(this.pageId)
         .then(({ data }) => {
           this.updateData({ comments: data.request_comments })
         })
@@ -257,7 +257,7 @@ export default {
       ]
     },
     updateData(data) {
-      Request.sidebar().add({ id: +this.$route.params.id, ...data })
+      Request.sidebar().add({ id: this.pageId, ...data })
     },
     onAddFile() {
       this.openDialog(import('@/components/requests/dialogs/FilesUpload'))

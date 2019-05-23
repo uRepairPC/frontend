@@ -120,7 +120,7 @@ export default {
     fetchRequest(loadingAttr) {
       this[loadingAttr] = true
 
-      Role.fetchOne(+this.$route.params.id)
+      Role.fetchOne(this.pageId)
         .catch(() => {
           this.$router.push({ name: sections.roles })
         })

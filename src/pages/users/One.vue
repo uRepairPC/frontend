@@ -143,7 +143,7 @@ export default {
     fetchRequest() {
       this.loading = true
 
-      User.fetchOne(+this.$route.params.id)
+      User.fetchOne(this.pageId)
         .catch(() => {
           this.$router.push({ name: sections.users })
         })
