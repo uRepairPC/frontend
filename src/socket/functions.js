@@ -16,7 +16,7 @@ export function syncEvents() {
   Object.entries(sidebar).forEach(([key, obj]) => {
     if (isObject(obj)) {
       Object.keys(obj).forEach((itemKey) => {
-        rooms.push(...generateRooms(key, itemKey))
+        rooms.push(...generateRooms(key, +itemKey))
       })
     }
   })
