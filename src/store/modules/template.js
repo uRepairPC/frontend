@@ -9,7 +9,6 @@ import menu from '@/data/menu'
 import Vue from 'vue'
 
 const state = {
-  openSearch: false,
   // Uses on every page for display path
   breadcrumbs: [],
   // Restore user scroll on Page template
@@ -22,12 +21,6 @@ const state = {
 }
 
 const mutations = {
-  OPEN_SEARCH(state) {
-    state.openSearch = true
-  },
-  CLOSE_SEARCH(state) {
-    state.openSearch = false
-  },
   SET_BREADCRUMBS(state, arr) {
     state.breadcrumbs = arr
   },

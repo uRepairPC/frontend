@@ -32,11 +32,9 @@ See [here](https://urepairpc.github.io/docs/)
 </p>
 
 ## TODO
-- [ ] Requests
+- [ ] Optimizing code, comments, refactoring
 - [ ] Tests
 - [ ] i18n (branch i18n)
-- [ ] Global search
-- [ ] Optimizing code, comments, refactoring
 
 ## Ecosystem
 | Project | Status | Description |

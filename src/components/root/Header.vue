@@ -18,14 +18,6 @@
       <tips />
     </div>
     <div class="header--right">
-      <el-button
-        size="mini"
-        :type="openSearch ? 'danger' : 'default'"
-        @click="onClickSearch"
-      >
-        <i class="material-icons">{{ openSearch ? 'close' : 'search' }}</i>
-        <span>Глобальний пошук</span>
-      </el-button>
       <div
         class="user"
         @click="onClickEmail"
@@ -64,9 +56,6 @@ export default {
     user() {
       return this.$store.state.profile.user
     },
-    openSearch() {
-      return this.$store.state.template.openSearch
-    },
     sectionRequestMenuActions() {
       const section = this.menu[sections.requests] || {}
 
@@ -79,13 +68,6 @@ export default {
     },
     onClickCreateRequest() {
       this.$router.push({ name: `${sections.requests}-create` })
-    },
-    onClickSearch() {
-      if (this.openSearch) {
-        this.$store.commit('template/CLOSE_SEARCH')
-      } else {
-        this.$store.commit('template/OPEN_SEARCH')
-      }
     },
     onClickEmail() {
       User.sidebar().add(this.user)
