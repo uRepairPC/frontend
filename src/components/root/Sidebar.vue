@@ -83,7 +83,6 @@ export default {
 
 @media only screen and (max-width: $laptop) {
   .el-aside {
-    overflow: unset;
     width: 64px !important;
   }
   .el-menu-item {
