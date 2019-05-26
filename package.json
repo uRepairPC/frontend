@@ -1,10 +1,10 @@
 {
   "name": "@urepairpc/web",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "main": "src/main.js",
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server --hot --progress --config webpack.dev.config.js",
-    "build": "cross-env NODE_ENV=production webpack -p --config webpack.prod.config.js",
+    "build": "cross-env NODE_ENV=production webpack -p --config webpack.config.js",
     "lint": "eslint --ext .js,.vue src --fix",
     "test": "npm run test:unit",
     "test:coverage": "npm run test:unit:coverage",
@@ -34,10 +34,10 @@
     "vuex": "^3.1.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.4.4",
+    "@babel/core": "^7.4.5",
     "@babel/plugin-syntax-dynamic-import": "^7.2.0",
     "@babel/plugin-transform-runtime": "^7.4.4",
-    "@babel/preset-env": "^7.4.4",
+    "@babel/preset-env": "^7.4.5",
     "@vue/cli-plugin-unit-jest": "^3.7.0",
     "@vue/cli-service": "^3.7.0",
     "@vue/test-utils": "1.0.0-beta.29",
@@ -62,10 +62,10 @@
     "vue-jest": "^3.0.4",
     "vue-loader": "^15.7.0",
     "vue-template-compiler": "^2.6.10",
-    "webpack": "^4.31.0",
+    "webpack": "^4.32.2",
     "webpack-bundle-analyzer": "^3.3.2",
     "webpack-cli": "^3.3.2",
-    "webpack-dev-server": "^3.3.1",
+    "webpack-dev-server": "^3.4.1",
     "workbox-webpack-plugin": "^4.3.1"
   }
 }

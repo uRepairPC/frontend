@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.2.0](https://github.com/uRepairPC/web/compare/v2.1.0...v2.2.0) (2019-05-26)
+
+
+### Bug Fixes
+
+* show items in sidebar on small devices ([f2cac3a](https://github.com/uRepairPC/web/commit/f2cac3a))
+
+
+### Features
+
+* remove global Search ([8d8ce17](https://github.com/uRepairPC/web/commit/8d8ce17))
+
+
+
 ## [2.1.0](https://github.com/uRepairPC/web/compare/v2.0.0...v2.1.0) (2019-05-20)
 
 

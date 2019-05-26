@@ -148,7 +148,7 @@ export default {
     fetchRequest() {
       this.loading = true
 
-      Equipment.fetchOne(+this.$route.params.id)
+      Equipment.fetchOne(this.pageId)
         .catch(() => {
           this.$router.push({ name: sections.equipments })
         })
@@ -164,7 +164,7 @@ export default {
       this.loadingFiles = true
       this.updateFiles([])
 
-      EquipmentFile.fetchAll(+this.$route.params.id)
+      EquipmentFile.fetchAll(this.pageId)
         .then(({ data }) => {
           this.updateFiles(data.equipment_files)
         })
@@ -209,7 +209,7 @@ export default {
       })
     },
     updateFiles(files) {
-      Equipment.sidebar().add({ id: +this.$route.params.id, files })
+      Equipment.sidebar().add({ id: this.pageId, files })
     },
     onAdd() {
       this.openDialog(import('@/components/equipments/dialogs/FilesUpload'))

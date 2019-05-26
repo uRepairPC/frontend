@@ -16,13 +16,17 @@ export default (section) => {
     mixins: [
       breadcrumbs
     ],
+    data() {
+      return {
+        pageId: +this.$route.params.id
+      }
+    },
     computed: {
       model() {
         const list = this.$store.state.template.sidebar[section]
-        const id = this.$route.params.id
 
-        if (list && list[id]) {
-          return list[id]
+        if (list && list[this.pageId]) {
+          return list[this.pageId]
         }
 
         return {}

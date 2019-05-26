@@ -10,13 +10,7 @@ import * as permissions from '@/enum/permissions'
  */
 export default [
   {
-    text: '<code>Ctrl + Shift + F / Esc</code> - закрити глобальний пошук.'
-  },
-  {
     text: '<code>Shift + Mouse Wheel</code> - переміщати горизонтальний скролл.'
-  },
-  {
-    text: '<code>Ctrl + Shift + F</code> - відкрити глобальний пошук.'
   },
   {
     text: 'Ви можете призначати декілька ролей на одного користувача.',

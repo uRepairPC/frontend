@@ -2,11 +2,7 @@
   <div class="layout layout_default">
     <el-container direction="vertical">
       <header-box />
-      <el-container
-        :class="['container-content',
-                 { 'search--open': openSearch }
-        ]"
-      >
+      <el-container>
         <sidebar-box />
         <el-main>
           <breadcrumbs-box />
@@ -20,7 +16,6 @@
         </el-main>
       </el-container>
     </el-container>
-    <search-box />
   </div>
 </template>
 
@@ -31,46 +26,11 @@ export default {
   components: {
     BreadcrumbsBox: () => import('@/components/root/Breadcrumbs'),
     SidebarBox: () => import('@/components/root/Sidebar'),
-    HeaderBox: () => import('@/components/root/Header'),
-    SearchBox: () => import('@/components/root/Search')
+    HeaderBox: () => import('@/components/root/Header')
   },
   data() {
     return {
       keepAliveRoutesName
-    }
-  },
-  computed: {
-    openSearch() {
-      return this.$store.state.template.openSearch
-    }
-  },
-  watch: {
-    /*
-		 * On update $route - we update breadcrumbs
-		 * from ref="content" component.
-		 */
-    '$route'() {
-      if (this.openSearch) {
-        this.$store.commit('template/CLOSE_SEARCH')
-      }
-    }
-  },
-  mounted() {
-    document.addEventListener('keydown', this.hotKeys)
-  },
-  beforeDestroy() {
-    document.removeEventListener('keydown', this.hotKeys)
-  },
-  methods: {
-    hotKeys(evt) {
-      // Open/Close Global Search - Ctrl + Shift + F
-      if (evt.ctrlKey && evt.shiftKey && evt.code === 'KeyF') {
-        if (this.openSearch) {
-          this.$store.commit('template/CLOSE_SEARCH')
-        } else {
-          this.$store.commit('template/OPEN_SEARCH')
-        }
-      }
     }
   }
 }
@@ -80,15 +40,6 @@ export default {
 @import "~scss/_variables";
 
 .el-main {
-	padding: 1px;
-}
-
-.container-content {
-	will-change: filter;
-}
-
-.search--open {
-	transition: $searchTransition;
-	filter: blur(5px);
+  padding: 1px;
 }
 </style>
