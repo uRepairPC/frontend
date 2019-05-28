@@ -82,18 +82,23 @@ export default {
         this.$emit('fetch', this.list.current_page + 1)
       }
     },
-    wrapperElDisplayed() {
-      return this.wrapperEl.scrollHeight === 0
-    },
     onWindowScroll() {
       clearTimeout(this._timeoutWindowScroll)
 
       this._timeoutWindowScroll = setTimeout(() => {
-        if (this.wrapperElDisplayed()) {
+        // Element is visible
+        if (this.wrapperEl.scrollHeight === 0) {
           return
         }
 
-        if (window.innerHeight + window.pageYOffset >= document.body.offsetHeight - OFFSET_BOTTOM) {
+        const offsetWin = window.innerHeight + window.pageYOffset
+        const offsetDoc = document.body.offsetHeight
+
+        if (offsetWin >= offsetDoc - OFFSET_BOTTOM) {
+          // Disable scroll window to bottom after append new content
+          if (offsetWin === offsetDoc) {
+            window.scrollTo(0, window.scrollY - 10)
+          }
           this.emitFetch()
         }
       }, WAIT_TIMEOUT)
