@@ -1,8 +1,8 @@
 'use strict'
 
 import { onEventDynamic, offEventDynamic } from '@/socket/functions'
+import { isObject, isEmpty } from '@/scripts/helpers'
 import { filterByPermission } from '@/scripts/utils'
-import { isObject } from '@/scripts/helpers'
 import sections from '@/enum/sections'
 import store from '@/store/index'
 import menu from '@/data/menu'
@@ -104,7 +104,15 @@ const getters = {
    * depends by user permissions.
    */
   menu() {
-    return filterByPermission(menu)
+    const result = {}
+
+    Object.entries(menu).forEach(([key, val]) => {
+      if (!isEmpty(filterByPermission(val))) {
+        result[key] = val
+      }
+    })
+
+    return result
   },
   historyMenu(state, getters) {
     const list = {}
