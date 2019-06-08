@@ -10,15 +10,6 @@ export function load(name) {
 }
 
 /**
- * File Import Assistant (Component).
- * @param {String} component
- * @return {function(): (Promise<*>|*)}
- */
-export function loadComponent(component) {
-  return load(`components/${component}`)
-}
-
-/**
  * File Import Assistant (Page).
  * @param {String} page
  * @return {function(): (Promise<*>|*)}
