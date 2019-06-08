@@ -16,13 +16,12 @@ jobs:
       # documented at https://circleci.com/docs/2.0/circleci-images/
       # - image: circleci/mongo:3.4.4
 
-    environment:
-      NPM_VERSION: "5.7.0"
-
     working_directory: ~/repo
 
     steps:
       - checkout
+
+      - run: sudo npm install -g npm@latest
 
       # Download and cache dependencies
       - restore_cache:
