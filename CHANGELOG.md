@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.2.1](https://github.com/uRepairPC/web/compare/v2.2.0...v2.2.1) (2019-06-08)
+
+
+### Bug Fixes
+
+* change menu on user permissions ([d31252b](https://github.com/uRepairPC/web/commit/d31252b))
+* scroll window to bottom after append new content ([bb4e0dc](https://github.com/uRepairPC/web/commit/bb4e0dc))
+
+
+
 ## [2.2.0](https://github.com/uRepairPC/web/compare/v2.1.0...v2.2.0) (2019-05-26)
 
 
