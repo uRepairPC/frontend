@@ -20,7 +20,7 @@ export default {
   },
   [sections.requests]: {
     icon: 'description',
-    title: 'Заявки',
+    title: 'Замовлення',
     route: { name: sections.requests },
     permissions: [
       permissions.REQUESTS_VIEW,
@@ -32,7 +32,7 @@ export default {
     },
     children: {
       add: {
-        title: 'Створити заявку',
+        title: 'Створити замовлення',
         icon: 'add',
         type: types.PRIMARY,
         permissions: permissions.REQUESTS_CREATE,
@@ -148,7 +148,7 @@ export default {
         }
       },
       [sections.requestsStatuses]: {
-        title: 'Статуси заявок',
+        title: 'Статуси замовлень',
         icon: 'dashboard',
         tag: 'page',
         permissions: permissions.REQUESTS_CONFIG_VIEW,
@@ -168,7 +168,7 @@ export default {
         }
       },
       [sections.requestsPriorities]: {
-        title: 'Пріорітети заявок',
+        title: 'Пріорітети замовлень',
         icon: 'dashboard',
         tag: 'page',
         permissions: permissions.REQUESTS_CONFIG_VIEW,
@@ -188,7 +188,7 @@ export default {
         }
       },
       [sections.requestsTypes]: {
-        title: 'Типи заявок',
+        title: 'Типи замовлень',
         icon: 'dashboard',
         tag: 'page',
         permissions: permissions.REQUESTS_CONFIG_VIEW,
