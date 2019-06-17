@@ -18,8 +18,23 @@ const withoutLastSlash = (input) => {
   return input
 }
 
+/**
+ * @param {undefined|string} val
+ * @return {boolean}
+ */
+const toBool = (val) => {
+  if (!val) {
+    return false
+  }
+
+  return ['true', 'ok', 'yes', '1'].includes(val)
+}
+
 /** @return {boolean} */
 export const isDev = ['dev', 'development'].includes(process.env.NODE_ENV)
+
+/** @type {boolean} */
+export const isDemo = toBool(process.env.APP_DEMO)
 
 /** @return {string} */
 export const proxyTarget = withoutLastSlash(process.env.PROXY_TARGET) || 'http://localhost'
