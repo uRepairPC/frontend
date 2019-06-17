@@ -1,5 +1,6 @@
 'use strict'
 
+import { tryCloseLoading, REP_WEBSOCKET } from '@/socket/events/autodeploy'
 import { syncEvents } from '@/socket/functions'
 import io from '@/socket/io'
 import store from '@/store'
@@ -16,6 +17,8 @@ io.on('connect', () => {
     // Join to default rooms for listen events
     syncEvents()
   }
+
+  tryCloseLoading(REP_WEBSOCKET)
 })
 
 io.on('disconnect', () => {
