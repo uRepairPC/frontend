@@ -19,7 +19,7 @@
 </p>
 
 ## Docs
-See [here](https://urepairpc.github.io/docs/)
+See [here](https://docs.urepairpc.com/)
 
 ## Preview (ukr)
 <p align="center">
