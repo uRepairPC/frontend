@@ -1,67 +1,75 @@
 <template>
   <div id="auth">
-    <big-logo />
-    <el-form
-      ref="form"
-      :model="form"
-      :rules="rules"
-      status-icon
-      @submit.native.prevent="onSubmit"
-    >
-      <el-form-item prop="email">
-        <el-input
-          ref="email"
-          v-model="form.email"
-          placeholder="E-mail"
-        >
-          <i
-            slot="prepend"
-            class="material-icons"
+    <demo-info
+      v-if="isDemo"
+      class="demo-wrap"
+    />
+    <div class="auth-wrap">
+      <big-logo />
+      <el-form
+        ref="form"
+        :model="form"
+        :rules="rules"
+        status-icon
+        @submit.native.prevent="onSubmit"
+      >
+        <el-form-item prop="email">
+          <el-input
+            ref="email"
+            v-model="form.email"
+            placeholder="E-mail"
           >
-            email
-          </i>
-        </el-input>
-      </el-form-item>
-      <el-form-item prop="password">
-        <el-input
-          v-model="form.password"
-          type="password"
-          placeholder="Пароль"
-        >
-          <i
-            slot="prepend"
-            class="material-icons"
+            <i
+              slot="prepend"
+              class="material-icons"
+            >
+              email
+            </i>
+          </el-input>
+        </el-form-item>
+        <el-form-item prop="password">
+          <el-input
+            v-model="form.password"
+            type="password"
+            placeholder="Пароль"
           >
-            lock
-          </i>
-        </el-input>
-      </el-form-item>
-      <el-form-item class="mb-0">
-        <el-button
-          native-type="submit"
-          type="primary"
-          :loading="loading"
-        >
-          Увійти
-        </el-button>
-      </el-form-item>
-    </el-form>
+            <i
+              slot="prepend"
+              class="material-icons"
+            >
+              lock
+            </i>
+          </el-input>
+        </el-form-item>
+        <el-form-item class="mb-0">
+          <el-button
+            native-type="submit"
+            type="primary"
+            :loading="loading"
+          >
+            Увійти
+          </el-button>
+        </el-form-item>
+      </el-form>
+    </div>
   </div>
 </template>
 
 <script>
+import { isDev, isDemo } from '@/data/env'
 import * as rules from '@/data/rules'
-import { isDev } from '@/data/env'
 
 export default {
   components: {
-    BigLogo: () => import('@/components/root/BigLogo')
+    BigLogo: () => import('@/components/root/BigLogo'),
+    DemoInfo: () => import('@/components/DemoInfo')
   },
   data() {
     return {
+      isDemo,
       form: {
-        email: isDev ? 'admin@example.com' : '',
-        password: isDev ? 'admin123' : ''
+        email: isDemo || isDev ? 'admin@example.com' : '',
+        password: isDemo || isDev ? 'admin123' : ''
       },
       rules: {
         email: rules.email,
@@ -96,6 +104,9 @@ export default {
 
 #auth {
   width: 100%;
+}
+
+.auth-wrap {
   max-width: 450px;
   margin: 50px auto;
   padding: 35px;
