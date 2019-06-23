@@ -1,5 +1,6 @@
 'use strict'
 
+import SettingsGlobal from '@/classes/SettingsGlobal'
 import socketTypes from '@/enum/socketTypes'
 import io from '@/socket/io'
 import store from '@/store'
@@ -9,6 +10,7 @@ import store from '@/store'
  */
 io.on('settings.global', (payload) => {
   store.commit('settings/SET_GLOBAL', payload.data)
+  SettingsGlobal.updateDOM(payload.data)
 })
 
 /*
