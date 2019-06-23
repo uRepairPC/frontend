@@ -41,18 +41,21 @@
       <filter-basic title="Фільтри">
         <request-priority-select
           v-model="filters.priority_id"
+          placeholder="Пріорітет"
           size="small"
           class="mb-10"
           clearable
         />
         <request-status-select
           v-model="filters.status_id"
+          placeholder="Статус"
           size="small"
           class="mb-10"
           clearable
         />
         <request-type-select
           v-model="filters.type_id"
+          placeholder="Тип"
           size="small"
           clearable
         />
