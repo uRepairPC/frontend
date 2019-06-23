@@ -177,14 +177,22 @@ export default {
   },
   methods: {
     fetchList(page = 1) {
-      this.$store.dispatch('requests/fetchList', {
+      const data = {
         page,
         sortColumn: this.sort.column,
         sortOrder: this.sort.order,
         columns: this.activeColumnProps,
-        search: this.search || null,
-        ...this.filters
+        search: this.search || null
+      }
+
+      // Add filters if selected
+      Object.entries(this.filters).forEach(([key, obj]) => {
+        if (obj) {
+          data[key] = obj
+        }
       })
+
+      this.$store.dispatch('requests/fetchList', data)
     },
     onChangeColumn() {
       StorageData.columnRequests = this.filterColumns.map(i => i.prop)
