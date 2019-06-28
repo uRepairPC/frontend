@@ -18,9 +18,6 @@
               :role="role"
             />
           </template>
-          <template v-else>
-            {{ data }}
-          </template>
         </template>
       </table-component>
     </template>

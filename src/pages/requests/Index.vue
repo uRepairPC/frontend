@@ -23,9 +23,6 @@
               :color="row.status_color"
             />
           </template>
-          <template v-else>
-            {{ data }}
-          </template>
         </template>
       </table-component>
     </template>

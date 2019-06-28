@@ -2,6 +2,7 @@
 
 import commonStore from '@/common/store/section'
 import StorageData from '@/classes/StorageData'
+import columnTypes from '@/enum/columnTypes'
 import Role from '@/classes/Role'
 
 const state = {
@@ -44,11 +45,11 @@ const getters = {
 
     const columns = [
       { prop: 'id', label: 'ID', 'min-width': 70, sortable: 'custom' },
-      { prop: 'color', label: 'Колір', 'min-width': 100, disableSearch: true, customType: 'color' },
+      { prop: 'color', label: 'Колір', 'min-width': 100, disableSearch: true, customType: columnTypes.TYPE_COLOR },
       { prop: 'name', label: 'Ім\'я', 'min-width': 200, sortable: 'custom' },
-      { prop: 'default', label: 'За замовчуванням', 'min-width': 150, sortable: 'custom', customType: 'bool' },
-      { prop: 'updated_at', label: 'Оновлено', 'min-width': 150, sortable: 'custom', customType: 'timestamp' },
-      { prop: 'created_at', label: 'Створений', 'min-width': 150, sortable: 'custom', customType: 'timestamp' }
+      { prop: 'default', label: 'За замовчуванням', 'min-width': 150, sortable: 'custom', customType: columnTypes.TYPE_BOOL },
+      { prop: 'updated_at', label: 'Оновлено', 'min-width': 150, sortable: 'custom', customType: columnTypes.TYPE_TIMESTAMP },
+      { prop: 'created_at', label: 'Створений', 'min-width': 150, sortable: 'custom', customType: columnTypes.TYPE_TIMESTAMP }
     ]
 
     const data = StorageData.columnRoles.length ? StorageData.columnRoles : defaultActive

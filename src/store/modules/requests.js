@@ -1,5 +1,6 @@
 'use strict'
 
+import { TYPE_TIMESTAMP } from '@/enum/columnTypes'
 import commonStore from '@/common/store/section'
 import StorageData from '@/classes/StorageData'
 import Request from '@/classes/Request'
@@ -55,8 +56,8 @@ const getters = {
       { prop: 'equipment_serial_number', label: 'Серійний номер', 'min-width': 120 },
       { prop: 'equipment_inventory_number', label: 'Інвертарний номер', 'min-width': 120 },
       { prop: 'description', label: 'Опис', 'min-width': 250, disableSearch: true, hideList: true },
-      { prop: 'updated_at', label: 'Оновлено', 'min-width': 150, sortable: 'custom', customType: 'timestamp' },
-      { prop: 'created_at', label: 'Створений', 'min-width': 150, sortable: 'custom', customType: 'timestamp' }
+      { prop: 'updated_at', label: 'Оновлено', 'min-width': 150, sortable: 'custom', customType: TYPE_TIMESTAMP },
+      { prop: 'created_at', label: 'Створений', 'min-width': 150, sortable: 'custom', customType: TYPE_TIMESTAMP }
     ]
 
     const data = StorageData.columnRequests.length ? StorageData.columnRequests : defaultActive
