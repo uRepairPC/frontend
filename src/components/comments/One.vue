@@ -42,8 +42,8 @@
 
 <script>
 import { includePermission } from '@/scripts/utils'
-import { getDate } from '@/scripts/date'
 import sections from '@/enum/sections'
+import Lang from '@/classes/Lang'
 
 export default {
   props: {
@@ -68,7 +68,7 @@ export default {
       return includePermission(this.permissionEdit, this.comment)
     },
     createdAt() {
-      return getDate(this.comment.created_at)
+      return Lang.getDateString(this.comment.created_at)
     },
     canDelete() {
       return includePermission(this.permissionDelete, this.comment)

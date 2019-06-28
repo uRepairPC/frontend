@@ -54,4 +54,13 @@ export default class Lang {
     // Set html lang
     document.querySelector('html').setAttribute('lang', lang)
   }
+
+  /**
+   * @param {string} value
+   * @param {string} key - long|short
+   * @returns {VueI18n.DateTimeFormatResult}
+   */
+  static getDateString(value, key = 'long') {
+    return i18n.d(Date.parse(value), key)
+  }
 }

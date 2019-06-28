@@ -47,7 +47,7 @@
 <script>
 import { formatBytes, getApiAuth } from '@/scripts/utils'
 import { includePermission } from '@/scripts/utils'
-import { getDate } from '@/scripts/date'
+import Lang from '@/classes/Lang'
 
 export default {
   props: {
@@ -78,8 +78,9 @@ export default {
     },
     bottom() {
       const size = formatBytes(this.file.size).toLowerCase()
+      const date = Lang.getDateString(this.file.created_at)
 
-      return `${this.file.last_name} ${this.file.first_name}, ${getDate(this.file.created_at)}, ${size}`
+      return `${this.file.last_name} ${this.file.first_name}, ${date}, ${size}`
     },
     canDownload() {
       return this.urlDownload && this.includePermission(this.permissionDownload)

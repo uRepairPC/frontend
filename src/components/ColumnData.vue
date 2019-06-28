@@ -19,7 +19,7 @@
 
 <script>
 import columnTypes from '@/enum/columnTypes'
-import { getDate } from '@/scripts/date'
+import Lang from '@/classes/Lang'
 
 export default {
   props: {
@@ -43,7 +43,7 @@ export default {
       return this.column.customType === columnTypes.TYPE_TIMESTAMP
     },
     timestamp() {
-      return getDate(this.value)
+      return Lang.getDateString(this.value)
     }
   }
 }
