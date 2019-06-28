@@ -17,7 +17,7 @@
           <el-input
             ref="email"
             v-model="form.email"
-            placeholder="E-mail"
+            :placeholder="$t('pages.auth.form.email')"
           >
             <i
               slot="prepend"
@@ -31,7 +31,7 @@
           <el-input
             v-model="form.password"
             type="password"
-            placeholder="Пароль"
+            :placeholder="$t('pages.auth.form.password')"
           >
             <i
               slot="prepend"
@@ -47,10 +47,18 @@
             type="primary"
             :loading="loading"
           >
-            Увійти
+            {{ $t('pages.auth.form.button') }}
           </el-button>
         </el-form-item>
       </el-form>
+    </div>
+    <div class="locale">
+      <el-divider>
+        <i class="material-icons">public</i>
+      </el-divider>
+      <div class="text--center">
+        <change-locale />
+      </div>
     </div>
   </div>
 </template>
@@ -61,6 +69,7 @@ import * as rules from '@/data/rules'
 
 export default {
   components: {
+    ChangeLocale: () => import('@/components/ChangeLocale'),
     BigLogo: () => import('@/components/root/BigLogo'),
     DemoInfo: () => import('@/components/DemoInfo')
   },
@@ -106,9 +115,13 @@ export default {
   width: 100%;
 }
 
-.auth-wrap {
-  max-width: 450px;
+.auth-wrap,
+.locale {
   margin: 50px auto;
+  max-width: 450px;
+}
+
+.auth-wrap {
   padding: 35px;
   background: #fff;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .2), 0 1px 1px 0 rgba(0, 0, 0, .14), 0 2px 1px -1px rgba(0, 0, 0, .12);
@@ -116,6 +129,14 @@ export default {
 
 .el-button {
   width: 100%;
+}
+
+.el-divider {
+  margin: 50px 0;
+}
+
+.el-divider__text {
+  background: #fbfbfb;
 }
 
 @media only screen and (max-width: $mobileL) {
