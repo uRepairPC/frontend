@@ -1,0 +1,11 @@
+{
+  "email": {
+    "required": "Please enter an E-mail",
+    "type": "Enter a valid email address"
+  },
+  "password": {
+    "required": "Please enter a password",
+    "len": "Password must be more than 5 characters"
+  },
+  "required": "Please enter data"
+}
