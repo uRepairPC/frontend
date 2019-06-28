@@ -28,7 +28,7 @@ export default class Lang {
     if (storageLang) {
       Lang.setLocale(storageLang)
     } else {
-      Lang.setLocale(navigator.language)
+      Lang.setLocale(navigator.language.split('-')[0])
     }
   }
 
