@@ -1,7 +1,9 @@
 'use strict'
 
-import locale from 'element-ui/lib/locale/lang/ua'
 import ElementUI from 'element-ui'
+import i18n from '@/locale'
 import Vue from 'vue'
 
-Vue.use(ElementUI, { locale })
+Vue.use(ElementUI, {
+  i18n: (key, value) => i18n.t(key, value)
+})

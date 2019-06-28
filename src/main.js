@@ -2,13 +2,15 @@
 
 import SettingsGlobal from '@/classes/SettingsGlobal'
 import prototypes from '@/prototypes'
+import Lang from '@/classes/Lang'
 import router from '@/router'
-import '@/libraries/element'
+import i18n from '@/locale'
 import App from '@/App.vue'
 import store from '@/store'
 import Vue from 'vue'
 
-// Import Service Worker and socket.io
+// Import Service Worker, socket.io and libraries
+import '@/libraries/element'
 import '@/scripts/sw'
 import '@/socket'
 
@@ -25,6 +27,7 @@ prototypes.forEach((prototype) => {
 })
 
 // Set init config
+Lang.init()
 SettingsGlobal.init()
 store.dispatch('profile/init')
 
@@ -32,5 +35,6 @@ new Vue({
   el: '#app',
   store,
   router,
+  i18n,
   render: h => h(App)
 })
