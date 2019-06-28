@@ -23,6 +23,9 @@ const PROFILE = 'profile'
 /** @type {string} */
 const PERMISSIONS = 'permissions'
 
+/** @type {string} */
+const LANG = 'lang'
+
 export default class StorageData {
 
   /* | -------------------------------------------------------------------------------------
@@ -54,6 +57,9 @@ export default class StorageData {
       },
       permissions() {
         return self._remove(PERMISSIONS)
+      },
+      lang() {
+        return self._remove(LANG)
       }
     }
   }
@@ -133,6 +139,17 @@ export default class StorageData {
 
   static set permissions(value) {
     this.setArray(PERMISSIONS, value)
+  }
+
+  /* Lang ----------------------------------------------------------------------------------------- */
+
+  /** @return {string} */
+  static get lang() {
+    return this.getString(LANG)
+  }
+
+  static set lang(value) {
+    this.setString(LANG, value)
   }
 
   /* | -------------------------------------------------------------------------------------
