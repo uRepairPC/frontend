@@ -9,10 +9,10 @@ import io from '@/socket/io'
 import store from '@/store'
 
 Array(
-  { event: 'equipments', store: 'equipments', section: sections.equipments },
-  { event: 'users', store: 'users', section: sections.users },
-  { event: 'roles', store: 'roles', section: sections.roles },
-  { event: 'requests', store: 'requests', section: sections.requests }
+  { event: 'server.equipments', store: 'equipments', section: sections.equipments },
+  { event: 'server.users', store: 'users', section: sections.users },
+  { event: 'server.roles', store: 'roles', section: sections.roles },
+  { event: 'server.requests', store: 'requests', section: sections.requests }
 )
   .forEach((obj) => {
     io.on(obj.event, (payload) => {
