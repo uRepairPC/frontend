@@ -52,6 +52,7 @@ export default {
 
 <style lang="scss" scoped>
 @import "~scss/_variables";
+@import "~scss/_colors";
 
 .logo {
   display: flex;
@@ -64,11 +65,11 @@ export default {
       opacity: 1;
     }
     .custom /deep/ .logo {
-      stroke: #000;
+      stroke: $primary;
     }
   }
   > img {
-    height: 45px;
+    height: 40px;
     width: auto;
     + div {
       margin-left: 15px;

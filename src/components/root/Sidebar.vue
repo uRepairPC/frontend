@@ -57,9 +57,8 @@ export default {
 
 .el-aside {
   position: sticky;
-  top: 0;
-  min-height: calc(100vh - #{$headerHeight});
-  max-height: 100vh;
+  top: $headerHeight;
+  height: calc(100vh - #{$headerHeight});
   background: #fff;
   user-select: none;
 }

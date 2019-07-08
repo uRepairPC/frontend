@@ -2,7 +2,7 @@
   <div class="layout layout_default">
     <el-container direction="vertical">
       <header-box />
-      <el-container>
+      <el-container class="container">
         <sidebar-box />
         <el-main>
           <breadcrumbs-box />
@@ -41,5 +41,9 @@ export default {
 
 .el-main {
   padding: 1px;
+}
+
+.container {
+  padding-top: 50px;
 }
 </style>
