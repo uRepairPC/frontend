@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.3.1](https://github.com/uRepairPC/web/compare/v2.3.0...v2.3.1) (2019-07-08)
+
+
+### Bug Fixes
+
+* clear filters and fetch data ([26c8037](https://github.com/uRepairPC/web/commit/26c8037))
+* **socket:** update favicon/title on settings.global event ([97460e4](https://github.com/uRepairPC/web/commit/97460e4))
+* jump table on scroll bottom (last page) ([eb51629](https://github.com/uRepairPC/web/commit/eb51629))
+
+
+
 ## [2.3.0](https://github.com/uRepairPC/web/compare/v2.2.1...v2.3.0) (2019-06-18)
 
 
