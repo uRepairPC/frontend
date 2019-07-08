@@ -1,14 +1,9 @@
 'use strict'
 
 import { runLoadingService } from '@/scripts/dom'
+import { WEB as APP_WEB } from '@/enum/apps'
 import { Message } from 'element-ui'
 import io from '@/socket/io'
-
-/** @type {string} */
-export const REP_WEB = 'web'
-
-/** @type {string} */
-export const REP_WEBSOCKET = 'websocket'
 
 /**
  * @type {object}
@@ -35,7 +30,7 @@ export const tryCloseLoading = (moduleName) => {
     modules[moduleName].loading.close()
 
     // For Web module - show message (build dist to server module)
-    if (moduleName === REP_WEB) {
+    if (moduleName === APP_WEB) {
       Message.info('Необхідно оновити сторінку для оновлення інтерфейсу')
     }
 
