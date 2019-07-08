@@ -19,10 +19,17 @@ import { getRndInteger } from '@/scripts/helpers'
 import tips from '@/data/tips'
 
 export default {
+  props: {
+    nextTipCount: {
+      type: Number,
+      default: 8
+    }
+  },
   data() {
     return {
       index: 0,
-      currentTip: ''
+      currentTip: '',
+      nextTip: this.nextTipCount
     }
   },
   computed: {
@@ -34,6 +41,14 @@ export default {
     },
     tipsList() {
       return tips.filter(obj => includePermission(obj.permissions))
+    }
+  },
+  watch: {
+    '$route'() {
+      if (--this.nextTip <= 0) {
+        this.changeTip()
+        this.nextTip = this.nextTipCount
+      }
     }
   },
   created() {

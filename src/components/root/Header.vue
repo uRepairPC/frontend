@@ -1,5 +1,5 @@
 <template>
-  <el-header>
+  <el-header height="50px">
     <div class="header--left">
       <header-logo />
       <el-button
@@ -82,6 +82,8 @@ export default {
 @import "~scss/_colors";
 
 .el-header {
+  position: fixed;
+  width: 100%;
   display: flex;
   align-items: center;
   background: #fff;
@@ -89,6 +91,7 @@ export default {
   padding: 0 15px;
   user-select: none;
   overflow: hidden;
+  z-index: 999;
 }
 
 .el-button {

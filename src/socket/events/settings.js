@@ -1,5 +1,6 @@
 'use strict'
 
+import SettingsGlobal from '@/classes/SettingsGlobal'
 import socketTypes from '@/enum/socketTypes'
 import io from '@/socket/io'
 import store from '@/store'
@@ -7,14 +8,15 @@ import store from '@/store'
 /*
  * Global data (title, logo, etc)
  */
-io.on('settings.global', (payload) => {
+io.on('server.settings.global', (payload) => {
   store.commit('settings/SET_GLOBAL', payload.data)
+  SettingsGlobal.updateDOM(payload.data)
 })
 
 /*
  * PWA
  */
-io.on('settings.manifest', (payload) => {
+io.on('server.settings.manifest', (payload) => {
   store.commit('settings/SET_MANIFEST', payload.data)
 })
 
@@ -22,12 +24,12 @@ io.on('settings.manifest', (payload) => {
  * Other sections with the same structure.
  */
 Array(
-  { event: 'request_types', store: 'requestTypes' },
-  { event: 'request_statuses', store: 'requestStatuses' },
-  { event: 'request_priorities', store: 'requestPriorities' },
-  { event: 'equipment_types', store: 'equipmentTypes' },
-  { event: 'equipment_manufacturers', store: 'equipmentManufacturers' },
-  { event: 'equipment_models', store: 'equipmentModels' }
+  { event: 'server.request_types', store: 'requestTypes' },
+  { event: 'server.request_statuses', store: 'requestStatuses' },
+  { event: 'server.request_priorities', store: 'requestPriorities' },
+  { event: 'server.equipment_types', store: 'equipmentTypes' },
+  { event: 'server.equipment_manufacturers', store: 'equipmentManufacturers' },
+  { event: 'server.equipment_models', store: 'equipmentModels' }
 )
   .forEach((obj) => {
     io.on(obj.event, (payload) => {

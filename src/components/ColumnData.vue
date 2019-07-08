@@ -1,6 +1,6 @@
 <template>
-  <div v-if="isDate">
-    {{ dateValue }}
+  <div v-if="isTimestamp">
+    {{ timestamp }}
   </div>
   <div v-else-if="isBool">
     {{ value ? 'Так' : 'Ні' }}
@@ -18,8 +18,8 @@
 </template>
 
 <script>
-import { isObject } from '@/scripts/helpers'
-import dayjs from '@/libraries/dayjs'
+import columnTypes from '@/enum/columnTypes'
+import { getDate } from '@/scripts/date'
 
 export default {
   props: {
@@ -33,33 +33,17 @@ export default {
     }
   },
   computed: {
-    typeIsObject() {
-      return isObject(this.column.customType)
-    },
-    type() {
-      if (this.typeIsObject) {
-        return this.column.customType.key
-      }
-
-      return this.column.customType
-    },
     isBool() {
-      return this.type === 'bool' || this.type === 'boolean'
-    },
-    isDate() {
-      return this.type === 'timestamp'
+      return this.column.customType === columnTypes.TYPE_BOOL
     },
     isColor() {
-      return this.type === 'color'
+      return this.column.customType === columnTypes.TYPE_COLOR
     },
-    dateValue() {
-      let format = 'LL'
-
-      if (this.typeIsObject && this.column.customType.value) {
-        format = this.column.customType.value
-      }
-
-      return dayjs(this.value).format(format)
+    isTimestamp() {
+      return this.column.customType === columnTypes.TYPE_TIMESTAMP
+    },
+    timestamp() {
+      return getDate(this.value)
     }
   }
 }

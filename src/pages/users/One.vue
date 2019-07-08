@@ -123,11 +123,7 @@ export default {
       this.$store.getters['users/columns']
         .forEach((obj) => {
           if (props.includes(obj.prop)) {
-            const customType = obj.customType === 'timestamp'
-              ? { key: 'timestamp', value: 'LLL' }
-              : obj.customType
-
-            result.push({ ...obj, customType, value: this.model[obj.prop] })
+            result.push({ ...obj, value: this.model[obj.prop] })
           }
         })
 

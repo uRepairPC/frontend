@@ -12,21 +12,21 @@ import store from '@/store'
 
 Array(
   {
-    event: 'equipment_files',
+    event: 'server.equipment_files',
     section: sections.equipments,
     sectionAttrId: 'equipment_id',
     attr: 'files',
     orderByAsc: false
   },
   {
-    event: 'request_files',
+    event: 'server.request_files',
     section: sections.requests,
     sectionAttrId: 'request_id',
     attr: 'files',
     orderByAsc: false
   },
   {
-    event: 'request_comments',
+    event: 'server.request_comments',
     section: sections.requests,
     sectionAttrId: 'request_id',
     attr: 'comments',

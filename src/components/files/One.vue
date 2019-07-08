@@ -47,7 +47,7 @@
 <script>
 import { formatBytes, getApiAuth } from '@/scripts/utils'
 import { includePermission } from '@/scripts/utils'
-import dayjs from '@/libraries/dayjs'
+import { getDate } from '@/scripts/date'
 
 export default {
   props: {
@@ -79,10 +79,7 @@ export default {
     bottom() {
       const size = formatBytes(this.file.size).toLowerCase()
 
-      return `${this.file.last_name} ${this.file.first_name}, ${this.createdAt}, ${size}`
-    },
-    createdAt() {
-      return dayjs(this.file.created_at).format('lll')
+      return `${this.file.last_name} ${this.file.first_name}, ${getDate(this.file.created_at)}, ${size}`
     },
     canDownload() {
       return this.urlDownload && this.includePermission(this.permissionDownload)

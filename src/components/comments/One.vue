@@ -42,6 +42,7 @@
 
 <script>
 import { includePermission } from '@/scripts/utils'
+import { getDate } from '@/scripts/date'
 import sections from '@/enum/sections'
 
 export default {
@@ -67,7 +68,7 @@ export default {
       return includePermission(this.permissionEdit, this.comment)
     },
     createdAt() {
-      return new Date(this.comment.created_at).toLocaleString('uk')
+      return getDate(this.comment.created_at)
     },
     canDelete() {
       return includePermission(this.permissionDelete, this.comment)

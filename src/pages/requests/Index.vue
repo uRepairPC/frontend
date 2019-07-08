@@ -23,9 +23,6 @@
               :color="row.status_color"
             />
           </template>
-          <template v-else>
-            {{ data }}
-          </template>
         </template>
       </table-component>
     </template>
@@ -41,18 +38,21 @@
       <filter-basic title="Фільтри">
         <request-priority-select
           v-model="filters.priority_id"
+          placeholder="Пріорітет"
           size="small"
           class="mb-10"
           clearable
         />
         <request-status-select
           v-model="filters.status_id"
+          placeholder="Статус"
           size="small"
           class="mb-10"
           clearable
         />
         <request-type-select
           v-model="filters.type_id"
+          placeholder="Тип"
           size="small"
           clearable
         />
@@ -80,8 +80,8 @@
 import scrollTableMixin from '@/mixins/scrollTable'
 import StorageData from '@/classes/StorageData'
 import breadcrumbs from '@/mixins/breadcrumbs'
-import sections from '@/enum/sections'
 import Request from '@/classes/Request'
+import sections from '@/enum/sections'
 import { mapGetters } from 'vuex'
 import menu from '@/data/menu'
 
@@ -174,14 +174,22 @@ export default {
   },
   methods: {
     fetchList(page = 1) {
-      this.$store.dispatch('requests/fetchList', {
+      const data = {
         page,
         sortColumn: this.sort.column,
         sortOrder: this.sort.order,
         columns: this.activeColumnProps,
-        search: this.search || null,
-        ...this.filters
+        search: this.search || null
+      }
+
+      // Add filters if selected
+      Object.entries(this.filters).forEach(([key, obj]) => {
+        if (obj) {
+          data[key] = obj
+        }
       })
+
+      this.$store.dispatch('requests/fetchList', data)
     },
     onChangeColumn() {
       StorageData.columnRequests = this.filterColumns.map(i => i.prop)

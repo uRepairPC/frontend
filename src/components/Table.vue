@@ -77,11 +77,6 @@ export default {
   },
   methods: {
     isEmpty,
-    emitFetch() {
-      if (!this.loading && this.list.current_page < this.list.last_page) {
-        this.$emit('fetch', this.list.current_page + 1)
-      }
-    },
     onWindowScroll() {
       clearTimeout(this._timeoutWindowScroll)
 
@@ -95,11 +90,16 @@ export default {
         const offsetDoc = document.body.offsetHeight
 
         if (offsetWin >= offsetDoc - OFFSET_BOTTOM) {
+          if (this.list.current_page >= this.list.last_page) {
+            return
+          }
           // Disable scroll window to bottom after append new content
           if (offsetWin === offsetDoc) {
             window.scrollTo(0, window.scrollY - 10)
           }
-          this.emitFetch()
+          if (!this.loading) {
+            this.$emit('fetch', this.list.current_page + 1)
+          }
         }
       }, WAIT_TIMEOUT)
     }
