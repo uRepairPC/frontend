@@ -187,12 +187,12 @@ export default {
             this.$router.push({ name: sections.equipments })
           },
           'files-upload': (uploadFiles) => {
-            const files = this.model.files || []
+            const files = [...this.model.files]
             files.unshift(...uploadFiles)
             this.updateFiles(files)
           },
           'file-update': (file, index) => {
-            const files = this.model.files
+            const files = [...this.model.files]
             files[index] = file
             this.updateFiles(files)
           },
