@@ -16,6 +16,7 @@
 
 <script>
 import * as permissions from '@/enum/permissions'
+import { isArray } from '@/scripts/helpers'
 import Equipment from '@/classes/Equipment'
 import { required } from '@/data/rules'
 
@@ -81,12 +82,13 @@ export default {
     fetchRequest(form) {
       this.loading = true
 
-      Equipment.fetchEdit(this.equipment.id, {
-        ...form,
-        type_id: form.equipment[0] || null,
-        manufacturer_id: form.equipment[1] || null,
-        model_id: form.equipment[2] || null
-      })
+      if (isArray(form.equipment)) {
+        form.type_id = form.equipment[0] || null
+        form.manufacturer_id = form.equipment[1] || null
+        form.model_id = form.equipment[2] || null
+      }
+
+      Equipment.fetchEdit(this.equipment.id, form)
         .then(() => {
           this.$emit('edit')
           this.$emit('close')
