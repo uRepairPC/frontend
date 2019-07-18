@@ -1,6 +1,7 @@
 'use strict'
 
-import { tryCloseLoading, REP_WEBSOCKET } from '@/socket/events/autodeploy'
+import { tryCloseLoading } from '@/socket/events/autodeploy'
+import { WEBSOCKET as APP_WEBSOCKET } from '@/enum/apps'
 import { syncEvents } from '@/socket/functions'
 import io from '@/socket/io'
 import store from '@/store'
@@ -18,7 +19,7 @@ io.on('connect', () => {
     syncEvents()
   }
 
-  tryCloseLoading(REP_WEBSOCKET)
+  tryCloseLoading(APP_WEBSOCKET)
 })
 
 io.on('disconnect', () => {
