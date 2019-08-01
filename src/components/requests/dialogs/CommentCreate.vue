@@ -35,7 +35,7 @@ export default {
       loading: false,
       form: {
         message: {
-          component: 'el-input',
+          component: () => import('element-ui/lib/input'),
           value: '',
           label: 'Коментарій',
           rules: required,

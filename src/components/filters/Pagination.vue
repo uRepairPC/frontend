@@ -30,7 +30,8 @@ export default {
   name: 'FilterPagination',
   components: {
     CircleProgress: () => import('@/components/CircleProgress'),
-    FilterBasic: () => import('@/components/filters/Basic')
+    FilterBasic: () => import('@/components/filters/Basic'),
+    ElAlert: () => import('element-ui/lib/alert')
   },
   props: {
     pagination: {

@@ -18,11 +18,11 @@
 </template>
 
 <script>
-import * as permissions from '@/enum/permissions'
 import breadcrumbs from '@/mixins/breadcrumbs'
 import { required } from '@/data/rules'
 import Request from '@/classes/Request'
 import sections from '@/enum/sections'
+import * as perm from '@/enum/perm'
 import menu from '@/data/menu'
 
 export default {
@@ -41,24 +41,27 @@ export default {
       loading: false,
       form: {
         title: {
-          component: 'el-input',
+          component: () => import('element-ui/lib/input'),
           value: '',
           label: 'Назва',
           rules: required
         },
         location: {
-          component: 'el-input',
+          component: () => import('element-ui/lib/input'),
           value: undefined,
           label: 'Розташування'
         },
         equipment_id: {
           component: () => import('@/components/equipments/Select'),
           value: undefined,
-          permissions: permissions.EQUIPMENTS_VIEW,
+          permissions: [
+            perm.EQUIPMENTS_VIEW_ALL,
+            perm.EQUIPMENTS_VIEW_OWN
+          ],
           label: 'Обладнання'
         },
         description: {
-          component: 'el-input',
+          component: () => import('element-ui/lib/input'),
           value: '',
           label: 'Опис',
           attrs: {
@@ -80,6 +83,7 @@ export default {
 
       Request.fetchStore(form)
         .then(({ data }) => {
+          this.$store.commit('requests/APPEND_DATA', data.request)
           this.$router.push({ name: `${sections.requests}-id`, params: { id: data.request.id } })
         })
         .finally(() => {

@@ -71,7 +71,13 @@ import menu from '@/data/menu'
 
 export default {
   components: {
-    BasicEdit: () => import('@/common/components/dialogs/BasicEdit')
+    BasicEdit: () => import('@/common/components/dialogs/BasicEdit'),
+    ElFormItem: () => import('element-ui/lib/form-item'),
+    ElCheckbox: () => import('element-ui/lib/checkbox'),
+    ElButton: () => import('element-ui/lib/button'),
+    ElUpload: () => import('element-ui/lib/upload'),
+    ElInput: () => import('element-ui/lib/input'),
+    ElForm: () => import('element-ui/lib/form')
   },
   inheritAttrs: false,
   data() {

@@ -22,6 +22,10 @@ import User from '@/classes/User'
 import { mapState } from 'vuex'
 
 export default {
+  components: {
+    ElSelect: () => import('element-ui/lib/select'),
+    ElOption: () => import('element-ui/lib/option')
+  },
   inheritAttrs: false,
   props: {
     defaultValue: {

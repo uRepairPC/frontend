@@ -20,7 +20,9 @@
 <script>
 export default {
   components: {
-    HistoryCollapse: () => import('@/components/history/Collapse')
+    HistoryCollapse: () => import('@/components/history/Collapse'),
+    ElButton: () => import('element-ui/lib/button'),
+    ElDialog: () => import('element-ui/lib/dialog')
   },
   inheritAttrs: false,
   methods: {

@@ -22,6 +22,10 @@ import Equipment from '@/classes/Equipment'
 import { mapState } from 'vuex'
 
 export default {
+  components: {
+    ElSelect: () => import('element-ui/lib/select'),
+    ElOption: () => import('element-ui/lib/option')
+  },
   inheritAttrs: false,
   props: {
     defaultValue: {

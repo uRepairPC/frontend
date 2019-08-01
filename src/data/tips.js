@@ -1,6 +1,6 @@
 'use strict'
 
-import * as permissions from '@/enum/permissions'
+import * as perm from '@/enum/perm'
 
 /**
  * @var {array}
@@ -14,13 +14,13 @@ export default [
   },
   {
     text: 'Ви можете призначати декілька ролей на одного користувача.',
-    permissions: permissions.ROLES_MANAGE
+    permissions: perm.ROLES_EDIT_ALL
   },
   {
     text: '<code>Esc</code> - закрити модальне вікно'
   },
   {
     text: 'Користувач після створення має <strong>ролі за замовчуванням</strong>',
-    permissions: permissions.ROLES_VIEW
+    permissions: perm.ROLES_VIEW_SECTION
   }
 ]

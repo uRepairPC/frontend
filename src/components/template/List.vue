@@ -31,6 +31,10 @@ $rightColumnWidth: 300px;
     min-width: $rightColumnWidth;
     width: $rightColumnWidth;
     border-left: 1px solid $defaultBorder;
+    background: #fff;
+    /deep/ .el-collapse-item__wrap {
+      border-bottom: 0;
+    }
   }
 }
 

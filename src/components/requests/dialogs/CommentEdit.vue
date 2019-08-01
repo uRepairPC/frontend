@@ -43,7 +43,7 @@ export default {
       loading: false,
       form: {
         message: {
-          component: 'el-input',
+          component: () => import('element-ui/lib/input'),
           value: this.comment.message,
           rules: required,
           attrs: {

@@ -94,7 +94,7 @@ module.exports = {
       chunksSortMode: 'none',
       isDev: true
     }),
-    // new (require('webpack-bundle-analyzer').BundleAnalyzerPlugin)
+    // new (require('webpack-bundle-analyzer').BundleAnalyzerPlugin)()
   ],
   resolve: {
     extensions: ['.js', '.vue', '.json'],

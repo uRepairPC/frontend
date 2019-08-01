@@ -43,15 +43,20 @@
 </template>
 
 <script>
-import { includePermission } from '@/scripts/utils'
+import { hasPerm } from '@/scripts/utils'
 
 export default {
+  components: {
+    ElFormItem: () => import('element-ui/lib/form-item'),
+    ElButton: () => import('element-ui/lib/button'),
+    ElForm: () => import('element-ui/lib/form')
+  },
   inheritAttrs: false,
   props: {
     /**
      * @example {
      *   name: {
-     *     component: 'el-input',
+     *     component: () => import('element-ui/lib/input),
      *     value: '', // v-model
      *     permissions: [], // permissions enum (String, Array)
      *     hide: false, // hide this properties from loop
@@ -80,7 +85,7 @@ export default {
       const result = {}
 
       Object.entries(this.form).forEach(([key, obj]) => {
-        if (includePermission(obj.permissions)) {
+        if (hasPerm(obj.permissions)) {
           result[key] = obj
         }
       })

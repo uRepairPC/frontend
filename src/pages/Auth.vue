@@ -1,9 +1,5 @@
 <template>
   <div id="auth">
-    <demo-info
-      v-if="isDemo"
-      class="demo-wrap"
-    />
     <div class="auth-wrap">
       <big-logo />
       <el-form
@@ -52,24 +48,32 @@
         </el-form-item>
       </el-form>
     </div>
+    <div id="copyright">
+      <a
+        href="https://github.com/alexeykhr"
+        target="_blank"
+      >❤️ Made by Alexey Khrushch</a>
+    </div>
   </div>
 </template>
 
 <script>
-import { isDev, isDemo } from '@/data/env'
 import * as rules from '@/data/rules'
+import { isDev } from '@/data/env'
 
 export default {
   components: {
+    ElFormItem: () => import('element-ui/lib/form-item'),
     BigLogo: () => import('@/components/root/BigLogo'),
-    DemoInfo: () => import('@/components/DemoInfo')
+    ElButton: () => import('element-ui/lib/button'),
+    ElInput: () => import('element-ui/lib/input'),
+    ElForm: () => import('element-ui/lib/form')
   },
   data() {
     return {
-      isDemo,
       form: {
-        email: isDemo || isDev ? 'admin@example.com' : '',
-        password: isDemo || isDev ? 'admin123' : ''
+        email: isDev ? 'admin@example.com' : '',
+        password: isDev ? 'admin123' : ''
       },
       rules: {
         email: rules.email,
@@ -81,9 +85,6 @@ export default {
     loading() {
       return this.$store.state.profile.loading
     }
-  },
-  mounted() {
-    this.$refs.email.focus()
   },
   methods: {
     onSubmit() {
@@ -103,10 +104,14 @@ export default {
 @import "~scss/_variables";
 
 #auth {
+  display: flex;
+  flex-direction: column;
   width: 100%;
+  min-height: 100vh;
 }
 
 .auth-wrap {
+  width: 100%;
   max-width: 450px;
   margin: 50px auto;
   padding: 35px;
@@ -118,10 +123,30 @@ export default {
   width: 100%;
 }
 
+#copyright {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  flex: 1 1 auto;
+  margin-bottom: 20px;
+  text-align: center;
+  cursor: context-menu;
+  > a {
+    font-size: .75rem;
+    color: #909090;
+    font-weight: bold;
+    letter-spacing: .3px;
+    &:hover {
+      color: #5d5d5d;
+    }
+  }
+}
+
 @media only screen and (max-width: $mobileL) {
-  #auth {
+  .auth-wrap {
     background: none;
     box-shadow: none;
+    margin: 20px auto;
   }
 }
 </style>

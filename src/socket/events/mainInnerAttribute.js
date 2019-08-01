@@ -38,7 +38,7 @@ Array(
 
       // Get sidebar section, if items not found - return
       const sidebar = store.state.template.sidebar[obj.section]
-      if (!payload.params[obj.sectionAttrId]) {
+      if (!payload.params || !payload.params[obj.sectionAttrId]) {
         return
       }
 

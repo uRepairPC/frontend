@@ -73,7 +73,11 @@ import menu from '@/data/menu'
 export default {
   components: {
     BasicEdit: () => import('@/common/components/dialogs/BasicEdit'),
-    GenerateForm: () => import('@/components/GenerateForm')
+    GenerateForm: () => import('@/components/GenerateForm'),
+    ElFormItem: () => import('element-ui/lib/form-item'),
+    ElUpload: () => import('element-ui/lib/upload'),
+    ElButton: () => import('element-ui/lib/button'),
+    ElAlert: () => import('element-ui/lib/alert')
   },
   inheritAttrs: false,
   data() {
@@ -82,13 +86,13 @@ export default {
       loadingFetch: false,
       form: {
         name: {
-          component: 'el-input',
+          component: () => import('element-ui/lib/input'),
           value: '',
           label: 'Назва',
           rules: required
         },
         short_name: {
-          component: 'el-input',
+          component: () => import('element-ui/lib/input'),
           value: '',
           label: 'Коротке ім\'я',
           rules: required
@@ -121,13 +125,13 @@ export default {
           }
         },
         background_color: {
-          component: 'el-color-picker',
+          component: () => import('element-ui/lib/color-picker'),
           value: '',
           label: 'Колір фону',
           rules: required
         },
         theme_color: {
-          component: 'el-color-picker',
+          component: () => import('element-ui/lib/color-picker'),
           value: '',
           label: 'Колір теми',
           rules: required

@@ -20,7 +20,8 @@ import Request from '@/classes/Request'
 
 export default {
   components: {
-    BasicDelete: () => import('@/common/components/dialogs/BasicDelete')
+    BasicDelete: () => import('@/common/components/dialogs/BasicDelete'),
+    ElCheckbox: () => import('element-ui/lib/checkbox')
   },
   inheritAttrs: false,
   props: {
@@ -53,6 +54,7 @@ export default {
         }
       })
         .then(() => {
+          this.$store.commit('requests/DELETE_ITEM', this.request.id)
           this.$emit('delete')
           this.$emit('close')
         })

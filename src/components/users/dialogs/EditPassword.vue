@@ -59,7 +59,10 @@ import User from '@/classes/User'
 
 export default {
   components: {
-    BasicEdit: () => import('@/common/components/dialogs/BasicEdit')
+    BasicEdit: () => import('@/common/components/dialogs/BasicEdit'),
+    ElFormItem: () => import('element-ui/lib/form-item'),
+    ElInput: () => import('element-ui/lib/input'),
+    ElForm: () => import('element-ui/lib/form')
   },
   inheritAttrs: false,
   props: {

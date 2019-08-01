@@ -29,13 +29,13 @@ export default {
       loading: false,
       form: {
         name: {
-          component: 'el-input',
+          component: () => import('element-ui/lib/input'),
           value: '',
           label: 'Назва',
           rules: required
         },
         value: {
-          component: 'el-input-number',
+          component: () => import('element-ui/lib/input-number'),
           value: 0,
           label: 'Значення',
           rules: required,
@@ -45,12 +45,12 @@ export default {
           }
         },
         color: {
-          component: 'el-color-picker',
+          component: () => import('element-ui/lib/color-picker'),
           value: '',
           label: 'Колір'
         },
         description: {
-          component: 'el-input',
+          component: () => import('element-ui/lib/input'),
           value: '',
           label: 'Опис',
           attrs: {
@@ -59,7 +59,7 @@ export default {
           }
         },
         default: {
-          component: 'el-checkbox',
+          component: () => import('element-ui/lib/checkbox'),
           value: false,
           attrs: {
             label: 'За замовчуванням'

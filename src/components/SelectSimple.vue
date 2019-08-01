@@ -14,6 +14,10 @@
 
 <script>
 export default {
+  components: {
+    ElSelect: () => import('element-ui/lib/select'),
+    ElOption: () => import('element-ui/lib/option')
+  },
   props: {
     items: {
       type: Array,

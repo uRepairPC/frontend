@@ -15,10 +15,10 @@
 </template>
 
 <script>
-import * as permissions from '@/enum/permissions'
 import { isArray } from '@/scripts/helpers'
 import Equipment from '@/classes/Equipment'
 import { required } from '@/data/rules'
+import * as perm from '@/enum/perm'
 
 export default {
   components: {
@@ -38,23 +38,23 @@ export default {
       form: {
         equipment: {
           component: () => import('@/components/equipments/Cascader'),
-          value: [this.equipment.type_id, this.equipment.manufacturer_id, this.equipment.model_id],
+          value: [this.equipment.type_id, this.equipment.manufacturer_id, this.equipment.model_id].filter(v => !!v),
           label: 'Тип, Виробник, Модель',
           rules: required,
-          permissions: [permissions.EQUIPMENTS_CONFIG_VIEW]
+          permissions: perm.EQUIPMENTS_CONFIG_VIEW_ALL
         },
         serial_number: {
-          component: 'el-input',
+          component: () => import('element-ui/lib/input'),
           value: this.equipment.serial_number,
           label: 'Серійний номер'
         },
         inventory_number: {
-          component: 'el-input',
+          component: () => import('element-ui/lib/input'),
           value: this.equipment.inventory_number,
           label: 'Інвертарний номер'
         },
         description: {
-          component: 'el-input',
+          component: () => import('element-ui/lib/input'),
           value: this.equipment.description,
           label: 'Опис',
           attrs: {
@@ -89,7 +89,8 @@ export default {
       }
 
       Equipment.fetchEdit(this.equipment.id, form)
-        .then(() => {
+        .then(({ data }) => {
+          this.$store.commit('equipments/UPDATE_ITEM', data.equipment)
           this.$emit('edit')
           this.$emit('close')
         })

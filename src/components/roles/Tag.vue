@@ -22,11 +22,11 @@
         Доступи
       </div>
       <div
-        v-if="hasRolePermissions"
+        v-if="roleStore"
         class="sections"
       >
         <div
-          v-for="(section, key) in roleStore.permissions_grouped"
+          v-for="(section, key) in filteredActivePermissions"
           :key="key"
           class="section"
         >
@@ -38,7 +38,7 @@
             :key="index"
             class="section-list"
           >
-            {{ item.display_name }}
+            {{ item.action }}
           </div>
         </div>
       </div>
@@ -55,6 +55,10 @@
 import Role from '@/classes/Role'
 
 export default {
+  components: {
+    ElPopover: () => import('element-ui/lib/popover'),
+    ElTag: () => import('element-ui/lib/tag'),
+  },
   inheritAttrs: false,
   props: {
     role: {
@@ -65,9 +69,6 @@ export default {
   computed: {
     roleStore() {
       return Role.sidebar().get(this.role.id)
-    },
-    hasRolePermissions() {
-      return !!this.roleStore && !!this.roleStore.permissions_grouped
     },
     styles() {
       if (this.role.color) {
@@ -83,11 +84,23 @@ export default {
         'border-color': '#e6e6e6',
         color: 'inherit'
       }
+    },
+    filteredActivePermissions() {
+      const result = {}
+
+      Object.entries(this.roleStore.permissions_list).forEach(([section, arr]) => {
+        const items = arr.filter(item => !!item.active)
+        if (items.length) {
+          result[section] = items
+        }
+      })
+
+      return result
     }
   },
   methods: {
     onPopoverShow() {
-      if (!this.hasRolePermissions) {
+      if (!this.roleStore) {
         Role.fetchOne(this.role.id)
           .then(() => {
             this.$refs.popover.updatePopper()

@@ -16,9 +16,12 @@
 </template>
 
 <script>
-import { includePermission } from '@/scripts/utils'
+import { hasPerm } from '@/scripts/utils'
 
 export default {
+  components: {
+    ElButton: () => import('element-ui/lib/button'),
+  },
   props: {
     buttons: {
       type: Array,
@@ -32,7 +35,7 @@ export default {
   computed: {
     list() {
       return this.buttons.filter((obj) => {
-        return includePermission(obj.permissions) && !obj.hide
+        return hasPerm(obj.permissions) && !obj.hide
       })
     }
   }

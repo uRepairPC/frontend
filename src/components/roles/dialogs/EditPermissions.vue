@@ -7,7 +7,7 @@
   >
     <list-checkboxes
       v-model="form.permissions"
-      :permissions-grouped="role.permissions_grouped"
+      :permissions-list="role.permissions_list"
     />
   </basic-edit>
 </template>
@@ -31,7 +31,7 @@ export default {
     return {
       loading: false,
       form: {
-        permissions: []
+        permissions: this.role.permissions_active
       }
     }
   },
@@ -48,7 +48,8 @@ export default {
       this.loading = true
 
       Role.fetchEditPermissions(this.role.id, this.form)
-        .then(() => {
+        .then(({ data }) => {
+          this.$store.commit('roles/UPDATE_ITEM', data.role)
           this.$emit('edit')
           this.$emit('close')
         })

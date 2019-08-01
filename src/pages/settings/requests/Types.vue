@@ -4,18 +4,17 @@
     :loading="loading"
     :columns="columns"
     :dialogs="dialogs"
-    :permission-create="permissions.REQUESTS_CONFIG_CREATE"
-    :permission-edit="permissions.REQUESTS_CONFIG_EDIT"
-    :permission-delete="permissions.REQUESTS_CONFIG_DELETE"
+    v-bind="permissions"
     @update="fetchRequest"
   />
 </template>
 
 <script>
 import { requestTypes as columns } from '@/data/columns'
-import * as permissions from '@/enum/permissions'
 import breadcrumbs from '@/mixins/breadcrumbs'
+import { hasPerm } from '@/scripts/utils'
 import sections from '@/enum/sections'
+import * as perm from '@/enum/perm'
 import { mapState } from 'vuex'
 import menu from '@/data/menu'
 
@@ -33,8 +32,8 @@ export default {
   ],
   data() {
     return {
+      perm,
       columns,
-      permissions,
       dialogs: {
         create: () => import('@/components/requests/types/dialogs/Create'),
         edit: () => import('@/components/requests/types/dialogs/Edit'),
@@ -46,7 +45,19 @@ export default {
     ...mapState({
       loading: state => state.requestTypes.loading,
       list: state => state.requestTypes.list
-    })
+    }),
+    profile() {
+      return this.$store.state.profile.user
+    },
+    permissions() {
+      return {
+        'permission-create': perm.REQUESTS_CONFIG_CREATE,
+        'permission-edit': (obj) => hasPerm(perm.REQUESTS_CONFIG_EDIT_ALL)
+          || (hasPerm(perm.REQUESTS_CONFIG_EDIT_OWN) && obj.user_id === this.profile.id),
+        'permission-delete': (obj) => hasPerm(perm.REQUESTS_CONFIG_DELETE_ALL)
+          || (hasPerm(perm.REQUESTS_CONFIG_DELETE_OWN) && obj.user_id === this.profile.id)
+      }
+    }
   },
   mounted() {
     if (!this.list.length) {

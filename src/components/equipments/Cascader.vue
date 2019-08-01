@@ -1,8 +1,8 @@
 <template>
   <el-cascader
     :options="options"
-    :props="{ label: 'name', value: 'id' }"
-    change-on-select
+    :props="{ label: 'name', value: 'id', checkStrictly: true }"
+    :placeholder="loading ? 'Завантаження..' : 'Тип, Виробник, Модель'"
     v-bind="$attrs"
     v-on="listeners"
   />
@@ -12,7 +12,15 @@
 import { mapState, mapGetters } from 'vuex'
 
 export default {
+  components: {
+    ElCascader: () => import('element-ui/lib/cascader')
+  },
   inheritAttrs: false,
+  data() {
+    return {
+      loading: true
+    }
+  },
   computed: {
     ...mapState({
       listTypes: state => state.equipmentTypes.list,
@@ -26,27 +34,20 @@ export default {
         ...this.$listeners,
         input: (val) => {
           this.$emit('input', val)
-
-          if (val.length === 1 && !this.listModels.length) {
-            this.$store.dispatch('equipmentModels/fetchList')
-          }
-        },
-        focus: () => {
-          if (!this.listTypes.length) {
-            this.$store.dispatch('equipmentTypes/fetchList')
-          }
         }
       }
     }
   },
-  mounted() {
+  async mounted() {
     if (!this.listTypes.length) {
-      this.$store.dispatch('equipmentTypes/fetchList')
+      await this.$store.dispatch('equipmentTypes/fetchList')
     }
 
     if (!this.listModels.length) {
-      this.$store.dispatch('equipmentModels/fetchList')
+      await this.$store.dispatch('equipmentModels/fetchList')
     }
+
+    this.loading = false
   }
 }
 </script>

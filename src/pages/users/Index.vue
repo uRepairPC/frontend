@@ -25,13 +25,14 @@
       <filter-table-buttons
         ref="buttons"
         :section="sections.users"
-        @update="fetchList"
+        @update="() => fetchList(+list.current_page || 1)"
       />
       <filter-action
         :section="sectionName"
       />
       <filter-search
         v-model="search"
+        @submit="fetchList"
       />
       <filter-pagination
         :pagination="list"

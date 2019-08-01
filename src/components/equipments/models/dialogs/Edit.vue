@@ -35,7 +35,7 @@ export default {
       loading: false,
       form: {
         name: {
-          component: 'el-input',
+          component: () => import('element-ui/lib/input'),
           value: this.item.name,
           label: 'Назва',
           rules: required
@@ -53,7 +53,7 @@ export default {
           rules: required
         },
         description: {
-          component: 'el-input',
+          component: () => import('element-ui/lib/input'),
           value: this.item.description,
           label: 'Опис',
           attrs: {

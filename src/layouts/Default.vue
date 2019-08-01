@@ -1,5 +1,8 @@
 <template>
-  <div class="layout layout_default">
+  <div
+    id="layout"
+    class="layout_default"
+  >
     <el-container direction="vertical">
       <header-box />
       <el-container class="container">
@@ -25,8 +28,10 @@ import { root as keepAliveRoutesName } from '@/data/keepAliveComponents'
 export default {
   components: {
     BreadcrumbsBox: () => import('@/components/root/Breadcrumbs'),
+    ElContainer: () => import('element-ui/lib/container'),
     SidebarBox: () => import('@/components/root/Sidebar'),
-    HeaderBox: () => import('@/components/root/Header')
+    HeaderBox: () => import('@/components/root/Header'),
+    ElMain: () => import('element-ui/lib/main')
   },
   data() {
     return {

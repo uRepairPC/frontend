@@ -27,6 +27,10 @@ import { mapGetters } from 'vuex'
 
 export default {
   name: 'SettingsCore',
+  components: {
+    ElTabPane: () => import('element-ui/lib/tab-pane'),
+    ElTabs: () => import('element-ui/lib/tabs')
+  },
   computed: {
     ...mapGetters({
       menu: 'template/menu'

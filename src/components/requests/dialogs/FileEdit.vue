@@ -43,7 +43,7 @@ export default {
       loading: false,
       form: {
         name: {
-          component: 'el-input',
+          component: () => import('element-ui/lib/input'),
           value: this.file.name,
           label: 'Назва',
           rules: required

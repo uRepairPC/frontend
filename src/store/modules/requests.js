@@ -19,11 +19,7 @@ const actions = {
 
     return Request.fetchAll({ params })
       .then(({ data }) => {
-        if (params.page > 1) {
-          commit('APPEND_LIST', data)
-        } else {
-          commit('SET_LIST', data)
-        }
+        commit('SET_LIST', data)
       })
       .finally(() => {
         commit('SET_LOADING', false)

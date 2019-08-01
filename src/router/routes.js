@@ -1,14 +1,16 @@
 'use strict'
 
-import * as permissions from '@/enum/permissions'
-import { loadPage, loadLayout } from './helper'
+import { hasPerm } from '@/scripts/utils'
 import sections from '@/enum/sections'
+import * as perm from '@/enum/perm'
+import store from '@/store'
 
 /**
  * NOTE: Support meta permissions
  * @example
  * meta: {
- *   permissions: permissions.USER_VIEW, // check on includePermissions
+ *   check: (to, from) => false, // call callback on beforeRoute guard
+ *   permissions: permissions.USER_VIEW, // check on hasPerm
  *   failRouteName: 'home' // go to this route name, if permissions not found
  * }
  */
@@ -16,12 +18,12 @@ import sections from '@/enum/sections'
 /** @type {object} */
 const notAuthorizedRoutes = {
   path: `/${sections.auth}`,
-  component: loadLayout('NotAuthorized'),
+  component: () => import('@/layouts/NotAuthorized'),
   children: [
     {
       path: '/',
       name: sections.auth,
-      component: loadPage('Auth')
+      component: () => import('@/pages/Auth')
     }
   ]
 }
@@ -29,154 +31,223 @@ const notAuthorizedRoutes = {
 /** @type {object} */
 const authorizedRoutes = {
   path: '',
-  component: loadLayout('Default'),
+  component: () => import('@/layouts/Default'),
   children: [
     {
       path: '/',
       name: sections.home,
-      component: loadPage('Home')
+      component: () => import('@/pages/Home')
     },
-    // ------------------------------------------------ Requests
+    // -------------------------------------------------------------------------------------- Requests
     {
       path: `/${sections.requests}`,
       name: sections.requests,
-      component: loadPage('requests/Index'),
-      meta: { permissions: [permissions.REQUESTS_VIEW, permissions.REQUESTS_CREATE] }
+      component: () => import('@/pages/requests/Index'),
+      meta: {
+        check: () => hasPerm(perm.REQUESTS_VIEW_SECTION) && hasPerm([
+          perm.REQUESTS_VIEW_ALL, perm.REQUESTS_VIEW_ASSIGN, perm.REQUESTS_VIEW_OWN
+        ])
+      }
     },
     {
       path: `/${sections.requests}/:id(\\d+)`,
       name: `${sections.requests}-id`,
-      component: loadPage('requests/One')
-      // Permissions - check on the page (user_id, assign_id also can view)
+      component: () => import('@/pages/requests/One'),
+      meta: {
+        check: () => hasPerm(perm.REQUESTS_VIEW_SECTION) && hasPerm([
+          perm.REQUESTS_VIEW_ALL, perm.REQUESTS_VIEW_ASSIGN, perm.REQUESTS_VIEW_OWN
+        ])
+      }
     },
     {
       path: `/${sections.requests}/create`,
       name: `${sections.requests}-create`,
-      component: loadPage('requests/Create'),
-      meta: { permissions: permissions.REQUESTS_CREATE, failRouteName: sections.requests }
+      component: () => import('@/pages/requests/Create'),
+      meta: {
+        permissions: perm.REQUESTS_CREATE,
+        failRouteName: sections.requests
+      }
     },
-    // ------------------------------------------------ Users
+    // -------------------------------------------------------------------------------------- Users
     {
       path: `/${sections.users}`,
       name: sections.users,
-      component: loadPage('users/Index'),
-      meta: { permissions: permissions.USERS_VIEW }
+      component: () => import('@/pages/users/Index'),
+      meta: {
+        check: () => hasPerm(perm.USERS_VIEW_SECTION) && hasPerm(perm.USERS_VIEW_ALL)
+      }
     },
     {
       path: `/${sections.users}/:id(\\d+)`,
       name: `${sections.users}-id`,
-      component: loadPage('users/One'),
-      // Permissions - check on the page (profile page)
+      component: () => import('@/pages/users/One'),
+      meta: {
+        check: (to) => {
+          // Profile page
+          if (+to.params.id === store.state.profile.user.id) {
+            return true
+          }
+
+          return hasPerm(perm.USERS_VIEW_SECTION) && hasPerm(perm.USERS_VIEW_ALL)
+        }
+      }
     },
     {
       path: `/${sections.users}/create`,
       name: `${sections.users}-create`,
-      component: loadPage('users/Create'),
-      meta: { permissions: permissions.USERS_CREATE, failRouteName: sections.users }
+      component: () => import('@/pages/users/Create'),
+      meta: {
+        permissions: perm.USERS_CREATE,
+        failRouteName: sections.users
+      }
     },
-    // ------------------------------------------------ Roles
+    // -------------------------------------------------------------------------------------- Roles
     {
       path: `/${sections.roles}`,
       name: sections.roles,
-      component: loadPage('roles/Index'),
-      meta: { permissions: permissions.ROLES_VIEW }
+      component: () => import('@/pages/roles/Index'),
+      meta: {
+        check: () => hasPerm(perm.ROLES_VIEW_SECTION) && hasPerm(perm.ROLES_VIEW_ALL)
+      }
     },
     {
       path: `/${sections.roles}/:id(\\d+)`,
       name: `${sections.roles}-id`,
-      component: loadPage('roles/One'),
-      meta: { permissions: permissions.ROLES_VIEW }
+      component: () => import('@/pages/roles/One'),
+      meta: {
+        check: () => hasPerm(perm.ROLES_VIEW_SECTION) && hasPerm(perm.ROLES_VIEW_ALL)
+      }
     },
     {
       path: `/${sections.roles}/create`,
       name: `${sections.roles}-create`,
-      component: loadPage('roles/Create'),
-      meta: { permissions: permissions.ROLES_VIEW, failRouteName: sections.roles }
+      component: () => import('@/pages/roles/Create'),
+      meta: {
+        permissions: perm.ROLES_EDIT_ALL,
+        failRouteName: sections.roles
+      }
     },
-    // ------------------------------------------------ Equipments
+    // -------------------------------------------------------------------------------------- Equipments
     {
       path: `/${sections.equipments}`,
       name: sections.equipments,
-      component: loadPage('equipments/Index'),
-      meta: { permissions: permissions.EQUIPMENTS_VIEW }
+      component: () => import('@/pages/equipments/Index'),
+      meta: {
+        check: () => hasPerm(perm.EQUIPMENTS_VIEW_SECTION) && hasPerm([
+          perm.EQUIPMENTS_VIEW_ALL, perm.EQUIPMENTS_VIEW_OWN
+        ])
+      }
     },
     {
       path: `/${sections.equipments}/:id(\\d+)`,
       name: `${sections.equipments}-id`,
-      component: loadPage('equipments/One'),
-      meta: { permissions: permissions.EQUIPMENTS_VIEW }
+      component: () => import('@/pages/equipments/One'),
+      meta: {
+        check: () => hasPerm(perm.EQUIPMENTS_VIEW_SECTION) && hasPerm([
+          perm.EQUIPMENTS_VIEW_ALL, perm.EQUIPMENTS_VIEW_OWN
+        ])
+      }
     },
     {
       path: `/${sections.equipments}/create`,
       name: `${sections.equipments}-create`,
-      component: loadPage('equipments/Create'),
-      meta: { permissions: permissions.EQUIPMENTS_CREATE, failRouteName: sections.equipments }
+      component: () => import('@/pages/equipments/Create'),
+      meta: {
+        permissions: perm.EQUIPMENTS_CREATE,
+        failRouteName: sections.equipments
+      }
     },
-    // ------------------------------------------------ Settings
+    // -------------------------------------------------------------------------------------- Settings
     {
       path: `/${sections.settings}`,
-      component: loadPage('settings/Core'),
+      component: () => import('@/pages/settings/Core'),
       children: [
         {
           path: `/${sections.settings}`,
           name: sections.settings,
-          component: loadPage('settings/Index'),
-          meta: { permissions: [
-            permissions.GLOBAL_SETTINGS,
-            permissions.GLOBAL_MANIFEST,
-            permissions.REQUESTS_CONFIG_VIEW,
-            permissions.EQUIPMENTS_CONFIG_VIEW
-          ]}
+          component: () => import('@/pages/settings/Index'),
+          meta: {
+            permissions: [
+              perm.GLOBAL_SETTINGS_EDIT,
+              perm.GLOBAL_MANIFEST_EDIT,
+              perm.REQUESTS_CONFIG_VIEW_SECTION,
+              perm.EQUIPMENTS_CONFIG_VIEW_SECTION
+            ]
+          }
         },
         {
           path: `/${sections.settings}/global`,
           name: sections.settingsGlobal,
-          component: loadPage('settings/Global'),
-          meta: { permissions: permissions.GLOBAL_SETTINGS, failRouteName: sections.settings }
+          component: () => import('@/pages/settings/Global'),
+          meta: {
+            permissions: perm.GLOBAL_SETTINGS_EDIT,
+            failRouteName: sections.settings
+          }
         },
         {
           path: `/${sections.settings}/manifest`,
           name: sections.settingsManifest,
-          component: loadPage('settings/Manifest'),
-          meta: { permissions: permissions.GLOBAL_MANIFEST, failRouteName: sections.settings }
+          component: () => import('@/pages/settings/Manifest'),
+          meta: {
+            permissions: perm.GLOBAL_MANIFEST_EDIT,
+            failRouteName: sections.settings
+          }
         },
-        // ------------------------------------------------ Settings - Requests
+        // -------------------------------------------------------------------------------------- Settings - Requests
         {
           path: `/${sections.settings}/${sections.requestsStatuses}`,
           name: `${sections.requestsStatuses}`,
-          component: loadPage('settings/requests/Statuses'),
-          meta: { permissions: permissions.REQUESTS_CONFIG_VIEW, failRouteName: sections.settings }
+          component: () => import('@/pages/settings/requests/Statuses'),
+          meta: {
+            permissions: perm.REQUESTS_CONFIG_VIEW_SECTION,
+            failRouteName: sections.settings
+          }
         },
         {
           path: `/${sections.settings}/${sections.requestsPriorities}`,
           name: `${sections.requestsPriorities}`,
-          component: loadPage('settings/requests/Priorities'),
-          meta: { permissions: permissions.REQUESTS_CONFIG_VIEW, failRouteName: sections.settings }
+          component: () => import('@/pages/settings/requests/Priorities'),
+          meta: {
+            permissions: perm.REQUESTS_CONFIG_VIEW_SECTION,
+            failRouteName: sections.settings
+          }
         },
         {
           path: `/${sections.settings}/${sections.requestsTypes}`,
           name: `${sections.requestsTypes}`,
-          component: loadPage('settings/requests/Types'),
-          meta: { permissions: permissions.REQUESTS_CONFIG_VIEW, failRouteName: sections.settings }
+          component: () => import('@/pages/settings/requests/Types'),
+          meta: {
+            permissions: perm.REQUESTS_CONFIG_VIEW_SECTION,
+            failRouteName: sections.settings
+          }
         },
-        // ------------------------------------------------ Settings - Equipments
+        // -------------------------------------------------------------------------------------- Settings - Equipments
         {
           path: `/${sections.settings}/${sections.equipmentsManufacturers}`,
           name: `${sections.equipmentsManufacturers}`,
-          component: loadPage('settings/equipments/Manufacturers'),
-          meta: { permissions: permissions.EQUIPMENTS_CONFIG_VIEW, failRouteName: sections.settings }
+          component: () => import('@/pages/settings/equipments/Manufacturers'),
+          meta: {
+            permissions: perm.EQUIPMENTS_CONFIG_VIEW_SECTION,
+            failRouteName: sections.settings
+          }
         },
         {
           path: `/${sections.settings}/${sections.equipmentsTypes}`,
           name: `${sections.equipmentsTypes}`,
-          component: loadPage('settings/equipments/Types'),
-          meta: { permissions: permissions.EQUIPMENTS_CONFIG_VIEW, failRouteName: sections.settings }
+          component: () => import('@/pages/settings/equipments/Types'),
+          meta: {
+            permissions: perm.EQUIPMENTS_CONFIG_VIEW_SECTION,
+            failRouteName: sections.settings
+          }
         },
         {
           path: `/${sections.settings}/${sections.equipmentsModels}`,
           name: `${sections.equipmentsModels}`,
-          component: loadPage('settings/equipments/Models'),
-          meta: { permissions: permissions.EQUIPMENTS_CONFIG_VIEW, failRouteName: sections.settings }
+          component: () => import('@/pages/settings/equipments/Models'),
+          meta: {
+            permissions: perm.EQUIPMENTS_CONFIG_VIEW_SECTION,
+            failRouteName: sections.settings
+          }
         }
       ]
     },

@@ -4,7 +4,6 @@ import router, { DEFAULT_ROUTE_NAME } from '@/router'
 import { runLoadingService } from '@/scripts/dom'
 import StorageData from '@/classes/StorageData'
 import { syncEvents } from '@/socket/functions'
-import { isArray } from '@/scripts/helpers'
 import logout from '@/scripts/logout'
 import axios from 'axios'
 
@@ -12,7 +11,8 @@ const state = {
   loading: false,
   isLogin: false,
   user: {},
-  permissions: []
+  permissions: [],
+  permissionsObj: {}
 }
 
 const mutations = {
@@ -24,6 +24,9 @@ const mutations = {
   SET_PERMISSIONS(state, arr) {
     state.permissions = arr
     StorageData.permissions = arr
+
+    state.permissionsObj = {}
+    arr.forEach(name => state.permissionsObj[name] = true)
   },
   SET_LOADING(state, toggle) {
     state.loading = toggle
@@ -87,10 +90,7 @@ const actions = {
         syncEvents()
 
         commit('SET_USER', data.user)
-
-        if (isArray(data.user.permission_names)) {
-          commit('SET_PERMISSIONS', data.user.permission_names)
-        }
+        commit('SET_PERMISSIONS', data.user.permissions)
       })
       .finally(() => {
         commit('SET_LOADING', false)

@@ -27,7 +27,7 @@ export default {
     },
     attrs() {
       return {
-        'close-on-click-modal': false,
+        // 'close-on-click-modal': false,
         ...this.dialog.attrs
       }
     }

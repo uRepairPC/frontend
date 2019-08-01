@@ -15,7 +15,7 @@
           <i class="material-icons">refresh</i>
         </el-button>
         <el-button
-          v-if="includePermission(permissionCreate)"
+          v-if="hasPerm(permissionCreate)"
           size="small"
           type="primary"
           @click="openDialog('create')"
@@ -25,10 +25,9 @@
         </el-button>
       </div>
     </div>
-
     <el-table
       v-loading="loading"
-      :data="list"
+      :data="listCut"
       stripe
     >
       <el-table-column
@@ -42,13 +41,10 @@
           :value="row[column.prop]"
         />
       </el-table-column>
-      <el-table-column
-        v-if="includePermission([permissionEdit, permissionDelete])"
-        width="200"
-      >
+      <el-table-column width="200">
         <template slot-scope="scope">
           <el-button
-            v-if="includePermission(permissionEdit)"
+            v-if="hasPerm(permissionEdit, scope.row)"
             type="text"
             size="small"
             @click="openDialog('edit', scope.row)"
@@ -56,7 +52,7 @@
             Редагувати
           </el-button>
           <el-button
-            v-if="includePermission(permissionDelete)"
+            v-if="hasPerm(permissionDelete, scope.row)"
             type="text"
             size="small"
             class="danger"
@@ -67,17 +63,29 @@
         </template>
       </el-table-column>
     </el-table>
+    <el-pagination
+      background
+      layout="prev, pager, next"
+      hide-on-single-page
+      :page-size="pageSize"
+      :current-page.sync="page"
+      :total="list.length"
+    />
   </div>
 </template>
 
 <script>
-import { includePermission } from '@/scripts/utils'
+import { hasPerm } from '@/scripts/utils'
 import sections from '@/enum/sections'
 import { mapGetters } from 'vuex'
 
 export default {
   components: {
-    ColumnData: () => import('@/components/ColumnData')
+    ElTableColumn: () => import('element-ui/lib/table-column'),
+    ElPagination: () => import('element-ui/lib/pagination'),
+    ColumnData: () => import('@/components/ColumnData'),
+    ElButton: () => import('element-ui/lib/button'),
+    ElTable: () => import('element-ui/lib/table')
   },
   props: {
     loading: {
@@ -109,6 +117,12 @@ export default {
       default: null
     }
   },
+  data() {
+    return {
+      page: 1,
+      pageSize: 20
+    }
+  },
   computed: {
     ...mapGetters({
       menu: 'template/menu'
@@ -122,10 +136,20 @@ export default {
 
       const action = this.menu[sections.settings].children[this.$route.name]
       return action ? action.title : ''
+    },
+    listCut() {
+      const currentSize = (this.page - 1) * this.pageSize
+
+      return this.list.slice(currentSize, currentSize + this.pageSize)
+    }
+  },
+  watch: {
+    page() {
+      window.scrollTo(0, 0)
     }
   },
   methods: {
-    includePermission,
+    hasPerm,
     openDialog(dialogProperty, item = null) {
       this.$store.commit('template/OPEN_DIALOG', {
         component: this.dialogs[dialogProperty],
@@ -163,6 +187,13 @@ export default {
       display: none;
     }
   }
+}
+
+.el-pagination {
+  margin-top: 20px;
+  text-align: center;
+  background: #fff;
+  padding: 20px;
 }
 
 @media only screen and (max-width: $tablet) {

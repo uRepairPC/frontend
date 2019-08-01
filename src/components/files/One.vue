@@ -21,11 +21,11 @@
       </div>
     </div>
     <div
-      v-if="includePermission([permissionEdit, permissionDelete], file)"
+      v-if="hasPerm([permissionEdit, permissionDelete], file)"
       class="file__right"
     >
       <i
-        v-if="includePermission(permissionEdit, file)"
+        v-if="hasPerm(permissionEdit, file)"
         class="material-icons edit"
         title="Редагувати"
         @click="onClickEdit"
@@ -33,7 +33,7 @@
         edit
       </i>
       <i
-        v-if="includePermission(permissionDelete, file)"
+        v-if="hasPerm(permissionDelete, file)"
         class="material-icons delete"
         title="Видалити"
         @click="onClickDelete"
@@ -46,7 +46,7 @@
 
 <script>
 import { formatBytes, getApiAuth } from '@/scripts/utils'
-import { includePermission } from '@/scripts/utils'
+import { hasPerm } from '@/scripts/utils'
 import { getDate } from '@/scripts/date'
 
 export default {
@@ -82,11 +82,11 @@ export default {
       return `${this.file.last_name} ${this.file.first_name}, ${getDate(this.file.created_at)}, ${size}`
     },
     canDownload() {
-      return this.urlDownload && this.includePermission(this.permissionDownload)
+      return this.urlDownload && this.hasPerm(this.permissionDownload, this.file)
     }
   },
   methods: {
-    includePermission,
+    hasPerm,
     onClickDownload() {
       if (this.canDownload) {
         window.open(getApiAuth(this.urlDownload(this.file)), '_blank')

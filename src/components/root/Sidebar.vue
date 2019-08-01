@@ -28,7 +28,10 @@ import { mapGetters } from 'vuex'
 
 export default {
   components: {
-    History: () => import('@/components/root/History')
+    ElMenuItem: () => import('element-ui/lib/menu-item'),
+    History: () => import('@/components/root/History'),
+    ElAside: () => import('element-ui/lib/aside'),
+    ElMenu: () => import('element-ui/lib/menu')
   },
   computed: {
     ...mapGetters({
@@ -61,9 +64,6 @@ export default {
   height: calc(100vh - #{$headerHeight});
   background: #fff;
   user-select: none;
-}
-
-.aside-wrap {
   border-right: 1px solid $defaultBorder;
 }
 

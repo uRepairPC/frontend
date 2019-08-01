@@ -15,9 +15,9 @@
 </template>
 
 <script>
-import * as permissions from '@/enum/permissions'
 import { required } from '@/data/rules'
 import Request from '@/classes/Request'
+import * as perm from '@/enum/perm'
 
 export default {
   components: {
@@ -36,20 +36,20 @@ export default {
       loading: false,
       form: {
         title: {
-          component: 'el-input',
+          component: () => import('element-ui/lib/input'),
           value: this.request.title,
           label: 'Назва',
           rules: required
         },
         location: {
-          component: 'el-input',
+          component: () => import('element-ui/lib/input'),
           value: this.request.location,
           label: 'Розташування'
         },
         assign_id: {
           component: () => import('@/components/users/Select'),
           value: this.request.assign_id,
-          permissions: permissions.USERS_VIEW,
+          permissions: perm.USERS_VIEW_ALL,
           label: 'Виконує',
           attrs: {
             defaultValue: {
@@ -63,7 +63,7 @@ export default {
           component: () => import('@/components/requests/types/Select'),
           value: this.request.type_id,
           label: 'Тип',
-          permissions: permissions.REQUESTS_CONFIG_VIEW,
+          permissions: perm.REQUESTS_CONFIG_VIEW_ALL,
           rules: required,
           attrs: {
             defaultValue: { name: this.request.type_name || '', id: this.request.type_id }
@@ -73,7 +73,7 @@ export default {
           component: () => import('@/components/requests/priorities/Select'),
           value: this.request.priority_id,
           label: 'Пріорітет',
-          permissions: permissions.REQUESTS_CONFIG_VIEW,
+          permissions: perm.REQUESTS_CONFIG_VIEW_ALL,
           rules: required,
           attrs: {
             defaultValue: { name: this.request.priority_name || '', id: this.request.priority_id }
@@ -83,7 +83,7 @@ export default {
           component: () => import('@/components/requests/statuses/Select'),
           value: this.request.status_id,
           label: 'Статус',
-          permissions: permissions.REQUESTS_CONFIG_VIEW,
+          permissions: perm.REQUESTS_CONFIG_VIEW_ALL,
           rules: required,
           attrs: {
             defaultValue: { name: this.request.status_name || '', id: this.request.status_id }
@@ -92,7 +92,10 @@ export default {
         equipment_id: {
           component: () => import('@/components/equipments/Select'),
           value: this.request.equipment_id,
-          permissions: permissions.EQUIPMENTS_VIEW,
+          permissions: [
+            perm.EQUIPMENTS_VIEW_ALL,
+            perm.EQUIPMENTS_VIEW_OWN
+          ],
           label: 'Обладнання',
           attrs: {
             clearable: true,
@@ -105,7 +108,7 @@ export default {
           }
         },
         description: {
-          component: 'el-input',
+          component: () => import('element-ui/lib/input'),
           value: this.request.description,
           label: 'Опис',
           attrs: {
@@ -131,7 +134,8 @@ export default {
       this.loading = true
 
       Request.fetchEdit(this.request.id, form)
-        .then(() => {
+        .then(({ data }) => {
+          this.$store.commit('requests/UPDATE_ITEM', data.request)
           this.$emit('edit')
           this.$emit('close')
         })

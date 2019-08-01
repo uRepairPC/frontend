@@ -17,7 +17,7 @@
       v-for="item in list"
       :key="item.name"
       :label="item.name"
-      :value="item.name"
+      :value="item.id"
       :style="{
         'background-color': item.color + '10',
         color: item.color
@@ -30,6 +30,10 @@
 import Role from '@/classes/Role'
 
 export default {
+  components: {
+    ElSelect: () => import('element-ui/lib/select'),
+    ElOption: () => import('element-ui/lib/option')
+  },
   props: {
     value: {
       type: Array,
@@ -48,7 +52,7 @@ export default {
   },
   created() {
     this.list = this.defaultRoles
-    this.$emit('input', this.list.map(item => item.name))
+    this.$emit('input', this.list.map(item => item.id))
   },
   mounted() {
     this.list = []

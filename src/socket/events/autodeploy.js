@@ -1,9 +1,12 @@
 'use strict'
 
 import { runLoadingService } from '@/scripts/dom'
+import Message from 'element-ui/lib/message'
 import { WEB as APP_WEB } from '@/enum/apps'
-import { Message } from 'element-ui'
+import types from '@/enum/types'
 import io from '@/socket/io'
+
+// TODO Only 1 module!! (no name)
 
 /**
  * @type {object}
@@ -31,7 +34,10 @@ export const tryCloseLoading = (moduleName) => {
 
     // For Web module - show message (build dist to server module)
     if (moduleName === APP_WEB) {
-      Message.info('Необхідно оновити сторінку для оновлення інтерфейсу')
+      Message({
+        message: 'Необхідно оновити сторінку для оновлення інтерфейсу',
+        type: types.INFO
+      })
     }
 
     delete modules[moduleName]

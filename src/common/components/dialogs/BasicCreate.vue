@@ -23,6 +23,10 @@
 
 <script>
 export default {
+  components: {
+    ElDialog: () => import('element-ui/lib/dialog'),
+    ElButton: () => import('element-ui/lib/button')
+  },
   inheritAttrs: false,
   props: {
     loading: {

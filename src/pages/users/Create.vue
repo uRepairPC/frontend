@@ -23,8 +23,8 @@
 
 <script>
 import breadcrumbs from '@/mixins/breadcrumbs'
-import * as rules from '@/data/rules'
 import sections from '@/enum/sections'
+import * as rules from '@/data/rules'
 import User from '@/classes/User'
 import menu from '@/data/menu'
 
@@ -34,7 +34,8 @@ export default {
     { title: menu[sections.users].children.add.title }
   ],
   components: {
-    GenerateForm: () => import('@/components/GenerateForm')
+    GenerateForm: () => import('@/components/GenerateForm'),
+    ElAlert: () => import('element-ui/lib/alert')
   },
   mixins: [
     breadcrumbs
@@ -44,35 +45,35 @@ export default {
       loading: false,
       form: {
         email: {
-          component: 'el-input',
+          component: () => import('element-ui/lib/input'),
           value: '',
           label: 'E-mail',
           rules: rules.email
         },
         first_name: {
-          component: 'el-input',
+          component: () => import('element-ui/lib/input'),
           value: '',
           label: 'Ім\'я',
           rules: rules.required
         },
         middle_name: {
-          component: 'el-input',
+          component: () => import('element-ui/lib/input'),
           value: '',
           label: 'По-батькові'
         },
         last_name: {
-          component: 'el-input',
+          component: () => import('element-ui/lib/input'),
           value: '',
           label: 'Прізвище',
           rules: rules.required
         },
         phone: {
-          component: 'el-input',
+          component: () => import('element-ui/lib/input'),
           value: '',
           label: 'Телефон'
         },
         description: {
-          component: 'el-input',
+          component: () => import('element-ui/lib/input'),
           value: '',
           label: 'Опис',
           attrs: {
@@ -94,6 +95,7 @@ export default {
 
       User.fetchStore(form)
         .then(({ data }) => {
+          this.$store.commit('users/APPEND_DATA', data.user)
           this.$router.push({ name: `${sections.users}-id`, params: { id: data.user.id } })
         })
         .finally(() => {

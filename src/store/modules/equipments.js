@@ -1,10 +1,10 @@
 'use strict'
 
-import { includePermission } from '@/scripts/utils'
 import { TYPE_TIMESTAMP } from '@/enum/columnTypes'
 import commonStore from '@/common/store/section'
 import StorageData from '@/classes/StorageData'
 import Equipment from '@/classes/Equipment'
+import { hasPerm } from '@/scripts/utils'
 
 const state = {
   //
@@ -20,11 +20,7 @@ const actions = {
 
     return Equipment.fetchAll({ params })
       .then(({ data }) => {
-        if (params.page > 1) {
-          commit('APPEND_LIST', data)
-        } else {
-          commit('SET_LIST', data)
-        }
+        commit('SET_LIST', data)
       })
       .finally(() => {
         commit('SET_LOADING', false)
@@ -59,7 +55,7 @@ const getters = {
     const data = StorageData.columnEquipments.length ? StorageData.columnEquipments : defaultActive
 
     return columns
-      .filter(column => includePermission(column.permissions))
+      .filter(column => hasPerm(column.permissions))
       .map((column) => {
         return { ...column, model: data.includes(column.prop) }
       })

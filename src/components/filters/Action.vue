@@ -26,7 +26,8 @@ import { mapGetters } from 'vuex'
 export default {
   name: 'FilterAction',
   components: {
-    FilterBasic: () => import('@/components/filters/Basic')
+    FilterBasic: () => import('@/components/filters/Basic'),
+    ElButton: () => import('element-ui/lib/button')
   },
   inheritAttrs: false,
   props: {

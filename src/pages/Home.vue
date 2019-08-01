@@ -24,14 +24,8 @@ export default {
       menu: 'template/menu'
     }),
     menuWithoutHomePage() {
-      const list = {}
-
-      Object.entries(this.menu).filter(([key, val]) => {
-        if (key !== sections.home) {
-          list[key] = val
-        }
-      })
-
+      const list = { ...this.menu }
+      delete list[sections.home]
       return list
     }
   }

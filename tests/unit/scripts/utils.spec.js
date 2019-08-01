@@ -18,8 +18,8 @@ describe('Check scripts/utils.js file', () => {
     checkTest(1025, 2, '1 KB')
   })
 
-  describe('includePermission function', () => {
-    const fn = methods.includePermission
+  describe('hasPerm function', () => {
+    const fn = methods.hasPerm
 
     it('test1 => [test1, test2] | true', () => {
       expect(fn('test1', null, ['test1', 'test2'])).toBeTruthy()
@@ -47,8 +47,8 @@ describe('Check scripts/utils.js file', () => {
     })
   })
 
-  describe('filterByPermission function', () => {
-    const fn = methods.filterByPermission
+  describe('filterByPerm function', () => {
+    const fn = methods.filterByPerm
 
     it('{} => [] | equal', () => {
       expect(fn({}, null, [])).toEqual({})

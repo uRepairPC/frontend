@@ -16,6 +16,10 @@
 <script>
 export default {
   name: 'FilterCore',
+  components: {
+    ElCollapseItem: () => import('element-ui/lib/collapse-item'),
+    ElCollapse: () => import('element-ui/lib/collapse')
+  },
   data() {
     return {
       collapse: []

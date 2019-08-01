@@ -38,17 +38,17 @@ export function formatBytes(bytes, decimals = 2) {
  * findPermissions is null - available to all.
  *
  * Pass boolean - for manual access check, for example:
- * [USERS_VIEW, user.id === 5]
+ * [USERS_VIEW_ALL, user.id === 5]
  *
  * Pass callback and cbData to check through function, for example:
- * [USERS_VIEW, (cbData) => cbData.id === user.id]
+ * [USERS_VIEW_ALL, (cbData) => cbData.id === user.id]
  *
  * @param {array|string|boolean|function|null} findPermissions
  * @param {*} cbData
- * @param {array} comparePermissions
+ * @param {array|object} myPermissions
  * @return {boolean}
  */
-export function includePermission(findPermissions, cbData = null, comparePermissions = store.state.profile.permissions) {
+export function hasPerm(findPermissions, cbData = null, myPermissions = store.state.profile.permissionsObj) {
   if (!findPermissions && typeof findPermissions !== 'boolean') {
     return true
   }
@@ -62,13 +62,17 @@ export function includePermission(findPermissions, cbData = null, comparePermiss
       const fnData = permission(cbData)
 
       if (isArray(fnData)) {
-        return includePermission(fnData, cbData)
+        return hasPerm(fnData, cbData)
       }
 
       return fnData
     }
 
-    return comparePermissions.includes(permission)
+    if (isArray(myPermissions)) {
+      return myPermissions.includes(permission)
+    }
+
+    return !!myPermissions[permission]
   }
 
   if (isArray(findPermissions)) {
@@ -84,26 +88,26 @@ export function includePermission(findPermissions, cbData = null, comparePermiss
  *
  * @param {*} cbData
  * @param {object} data
- * @param {array} comparePermissions
+ * @param {array|object} comparePermissions
  * @return {?object}
  * @example
  *  data - { test: 123, children: { test: 321, permissions: 'p1' } } =>
  *  comparePermissions - ['t1']
  *  return { test: 123 }
  */
-export function filterByPermission(data, cbData = null, comparePermissions = store.state.profile.permissions) {
+export function filterByPerm(data, cbData = null, comparePermissions = store.state.profile.permissionsObj) {
   if (!data) {
     return data
   }
 
-  if (!includePermission(data.permissions, cbData, comparePermissions)) {
+  if (!hasPerm(data.permissions, cbData, comparePermissions)) {
     return {}
   }
 
   const result = { ...data }
 
   if (isObject(data.children)) {
-    result.children = filterByPermission(data.children, cbData, comparePermissions)
+    result.children = filterByPerm(data.children, cbData, comparePermissions)
   }
 
   return result

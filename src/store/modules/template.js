@@ -1,8 +1,8 @@
 'use strict'
 
-import { onEventDynamic, offEventDynamic } from '@/socket/functions'
 import { isObject, isEmpty } from '@/scripts/helpers'
-import { filterByPermission } from '@/scripts/utils'
+import { offEventDynamic } from '@/socket/functions'
+import { filterByPerm } from '@/scripts/utils'
 import sections from '@/enum/sections'
 import store from '@/store/index'
 import menu from '@/data/menu'
@@ -51,10 +51,6 @@ const mutations = {
 
     // Prevent delete custom attributes (relationship)
     const oldValue = state.sidebar[section][data.id]
-
-    if (typeof oldValue === 'undefined') {
-      onEventDynamic(section, data.id)
-    }
 
     // Update current profile, if id is equal
     if (section === sections.users && store.state.profile.user.id === data.id) {
@@ -107,7 +103,7 @@ const getters = {
     const result = {}
 
     Object.entries(menu).forEach(([key, val]) => {
-      if (!isEmpty(filterByPermission(val))) {
+      if (!isEmpty(filterByPerm(val))) {
         result[key] = val
       }
     })

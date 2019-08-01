@@ -59,12 +59,14 @@
 </template>
 
 <script>
-import { includePermission } from '@/scripts/utils'
+import { hasPerm } from '@/scripts/utils'
 
 export default {
   components: {
+    ElTableColumn: () => import('element-ui/lib/table-column'),
     TopButtons: () => import('@/components/TopButtons'),
-    ColumnData: () => import('@/components/ColumnData')
+    ColumnData: () => import('@/components/ColumnData'),
+    ElTable: () => import('element-ui/lib/table')
   },
   props: {
     buttons: {
@@ -83,7 +85,7 @@ export default {
   computed: {
     columns() {
       return this.tableData
-        .filter(obj => includePermission(obj.permissions))
+        .filter(obj => hasPerm(obj.permissions))
     }
   }
 }
