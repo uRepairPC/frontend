@@ -47,15 +47,13 @@ export default {
   data() {
     return {
       list: [],
-      loading: false
+      loading: false,
+      init: true
     }
   },
   created() {
     this.list = this.defaultRoles
     this.$emit('input', this.list.map(item => item.id))
-  },
-  mounted() {
-    this.list = []
   },
   methods: {
     fetchRequest(query) {
@@ -76,8 +74,9 @@ export default {
         })
     },
     onFocus() {
-      if (!this.list.length) {
+      if (this.init) {
         this.fetchRequest()
+        this.init = false
       }
     }
   }
