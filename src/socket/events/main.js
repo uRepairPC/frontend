@@ -1,7 +1,7 @@
 'use strict'
 
-import { syncEvents, notify } from '@/socket/functions'
 import socketTypes from '@/enum/socketTypes'
+import { notify } from '@/socket/functions'
 import { hasPerm } from '@/scripts/utils'
 import sections from '@/enum/sections'
 import logout from '@/scripts/logout'
@@ -104,12 +104,6 @@ function handleCreate(payload, obj) {
 }
 
 function handleCurrentUser(payload) {
-  // If the current user is deleted - logout
-  if (payload.type === socketTypes.DELETE) {
-    logout()
-    return
-  }
-
   // Set new data to the current user
   store.commit('profile/SET_USER', payload.data)
 
@@ -117,9 +111,6 @@ function handleCurrentUser(payload) {
   if (payload.data.permissions) {
     store.commit('profile/SET_PERMISSIONS', payload.data.permissions)
   }
-
-  // And refresh events
-  syncEvents()
 }
 
 function handleUpdate(payload, obj) {

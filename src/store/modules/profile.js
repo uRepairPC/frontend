@@ -25,8 +25,9 @@ const mutations = {
     state.permissions = arr
     StorageData.permissions = arr
 
-    state.permissionsObj = {}
-    arr.forEach(name => state.permissionsObj[name] = true)
+    const permissionsObj = {}
+    arr.forEach(name => permissionsObj[name] = true)
+    state.permissionsObj = permissionsObj
   },
   SET_LOADING(state, toggle) {
     state.loading = toggle
