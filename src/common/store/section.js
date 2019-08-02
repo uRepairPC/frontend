@@ -26,7 +26,7 @@ const mutations = {
     if (state.list && state.list.data) {
       state.list.data.forEach((item, index) => {
         if (item.id === data.id) {
-          Vue.set(state.list.data, index, data)
+          Vue.set(state.list.data, index, { ...item, ...data })
         }
       })
     }
