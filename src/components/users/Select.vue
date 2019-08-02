@@ -4,6 +4,7 @@
     remote
     :remote-method="remoteMethod"
     automatic-dropdown
+    clearable
     :loading="loading || loadingStore"
     v-bind="$attrs"
     v-on="listeners"
