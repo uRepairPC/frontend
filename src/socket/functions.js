@@ -1,5 +1,6 @@
 'use strict'
 
+import Notification from 'element-ui/lib/notification'
 import sections from '@/enum/sections'
 import io from '@/socket/io'
 import axios from 'axios'
@@ -9,6 +10,51 @@ import axios from 'axios'
  */
 export function syncEvents() {
   axios.post('listeners/sync')
+}
+
+/**
+ * @param {string} section - enum
+ * @param {number} id
+ */
+export function offEventDynamic(section, id) {
+  io.emit('leave', generateRooms(section, id))
+}
+
+/**
+ * @param {string} title
+ * @param {string} msg
+ * @returns {{create: (function(): (*)), update: (function(): (*)), delete: (function(): (*))}}
+ */
+export function notify(title, msg = '') {
+  const basic = {
+    title: `RT: ${title}`,
+    message: msg,
+    position: 'bottom-left'
+  }
+
+  return {
+    create: () => {
+      return Notification({
+        ...basic,
+        iconClass: 'el-icon-circle-plus-outline',
+        customClass: 'rt--create'
+      })
+    },
+    update: () => {
+      return Notification({
+        ...basic,
+        iconClass: 'el-icon-edit-outline',
+        customClass: 'rt--update'
+      })
+    },
+    delete: () => {
+      return Notification({
+        ...basic,
+        iconClass: 'el-icon-delete',
+        customClass: 'rt--delete'
+      })
+    }
+  }
 }
 
 /**
@@ -31,12 +77,4 @@ function generateRooms(section, id) {
   }
 
   return rooms
-}
-
-/**
- * @param {string} section - enum
- * @param {number} id
- */
-export function offEventDynamic(section, id) {
-  io.emit('leave', generateRooms(section, id))
 }

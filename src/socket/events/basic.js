@@ -1,8 +1,8 @@
 'use strict'
 
-import { tryCloseLoading } from '@/socket/events/autodeploy'
-import { WEBSOCKET as APP_WEBSOCKET } from '@/enum/apps'
+import Notification from 'element-ui/lib/notification'
 import { syncEvents } from '@/socket/functions'
+import types from '@/enum/types'
 import io from '@/socket/io'
 import store from '@/store'
 import axios from 'axios'
@@ -19,10 +19,12 @@ io.on('connect', () => {
     syncEvents()
   }
 
-  tryCloseLoading(APP_WEBSOCKET)
+  Notification({ title: 'Real-Time підключен', position: 'bottom-left', type: types.SUCCESS })
 })
 
 io.on('disconnect', () => {
   // Remove socketId from axios
   axios.defaults.headers[SOCKET_HEADER] = null
+
+  Notification({ title: 'Real-Time відключений', position: 'bottom-left', type: types.WARNING })
 })

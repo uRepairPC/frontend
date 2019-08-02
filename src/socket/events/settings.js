@@ -2,6 +2,7 @@
 
 import SettingsGlobal from '@/classes/SettingsGlobal'
 import socketTypes from '@/enum/socketTypes'
+import { notify } from '@/socket/functions'
 import io from '@/socket/io'
 import store from '@/store'
 
@@ -24,12 +25,12 @@ io.on('server.settings.manifest', (payload) => {
  * Other sections with the same structure.
  */
 Array(
-  { event: 'server.request_types', store: 'requestTypes' },
-  { event: 'server.request_statuses', store: 'requestStatuses' },
-  { event: 'server.request_priorities', store: 'requestPriorities' },
-  { event: 'server.equipment_types', store: 'equipmentTypes' },
-  { event: 'server.equipment_manufacturers', store: 'equipmentManufacturers' },
-  { event: 'server.equipment_models', store: 'equipmentModels' }
+  { event: 'server.request_types', store: 'requestTypes', title: 'Замовлення - Типи' },
+  { event: 'server.request_statuses', store: 'requestStatuses', title: 'Замовлення - Статуси' },
+  { event: 'server.request_priorities', store: 'requestPriorities', title: 'Замовлення - Пріоритети' },
+  { event: 'server.equipment_types', store: 'equipmentTypes', title: 'Обладнання - Типи' },
+  { event: 'server.equipment_manufacturers', store: 'equipmentManufacturers', title: 'Обладнання - Виробники' },
+  { event: 'server.equipment_models', store: 'equipmentModels', title: 'Обладнання - Моделі' }
 )
   .forEach((obj) => {
     io.on(obj.event, (payload) => {
@@ -52,8 +53,10 @@ Array(
         if (~findIndex) {
           if (payload.type === socketTypes.UPDATE) {
             store.commit(`${obj.store}/REPLACE_ITEM`, { index: findIndex, data: payload.data })
+            notify(obj.title, `[${payload.params.id}] ${payload.data.name}`).update()
           } else {
             store.commit(`${obj.store}/DELETE_ITEM`, findIndex)
+            notify(obj.title, `[${payload.params.id}]`).delete()
           }
         }
       }
@@ -63,6 +66,7 @@ Array(
        */
       if (payload.type === socketTypes.CREATE) {
         store.commit(`${obj.store}/APPEND_ITEM`, payload.data)
+        notify(obj.title, `[${payload.data.id}] ${payload.data.name}`).create()
       }
     })
   })

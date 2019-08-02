@@ -2,12 +2,13 @@
 
 import socketTypes from '@/enum/socketTypes'
 import { isArray } from '@/scripts/helpers'
+import { notify } from '@/socket/functions'
 import sections from '@/enum/sections'
 import io from '@/socket/io'
 import store from '@/store'
 
 /*
- * NOTE: Attr must be Array!
+ * NOTE: Values in attr must be Array!
  */
 
 Array(
@@ -16,21 +17,24 @@ Array(
     section: sections.equipments,
     sectionAttrId: 'equipment_id',
     attr: 'files',
-    orderByAsc: false
+    orderByAsc: false,
+    title: 'Обладнання - Файли'
   },
   {
     event: 'server.request_files',
     section: sections.requests,
     sectionAttrId: 'request_id',
     attr: 'files',
-    orderByAsc: false
+    orderByAsc: false,
+    title: 'Замовлення - Файли'
   },
   {
     event: 'server.request_comments',
     section: sections.requests,
     sectionAttrId: 'request_id',
     attr: 'comments',
-    orderByAsc: true
+    orderByAsc: true,
+    title: 'Замовлення - Коментарі'
   }
 )
   .forEach((obj) => {
@@ -39,6 +43,23 @@ Array(
       // Get sidebar section, if items not found - return
       const sidebar = store.state.template.sidebar[obj.section]
       if (!payload.params || !payload.params[obj.sectionAttrId]) {
+        return
+      }
+
+      // Notification
+      switch (payload.type) {
+      case socketTypes.UPDATE:
+        notify(`[${payload.params[obj.sectionAttrId]}] ${obj.title}`).update()
+        break
+      case socketTypes.CREATE:
+        notify(`[${payload.params[obj.sectionAttrId]}] ${obj.title}`).create()
+        break
+      case socketTypes.DELETE:
+        notify(`[${payload.params[obj.sectionAttrId]}] ${obj.title}`).delete()
+        break
+      }
+
+      if (!sidebar) {
         return
       }
 
@@ -71,7 +92,7 @@ Array(
       }
 
       if (payload.type === socketTypes.CREATE) {
-        // Accept [] or {}
+        // Accept [{}, {}, ..] or {}
         const payloadDataArray = isArray(payload.data) ? payload.data : [payload.data]
         let dataAttr = []
 

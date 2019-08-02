@@ -1,18 +1,44 @@
 'use strict'
 
-import { syncEvents } from '@/socket/functions'
+import { syncEvents, notify } from '@/socket/functions'
 import socketTypes from '@/enum/socketTypes'
+import { hasPerm } from '@/scripts/utils'
 import sections from '@/enum/sections'
 import logout from '@/scripts/logout'
+import * as perm from '@/enum/perm'
 import router from '@/router'
 import io from '@/socket/io'
 import store from '@/store'
 
 Array(
-  { event: 'server.equipments', store: 'equipments', section: sections.equipments },
-  { event: 'server.users', store: 'users', section: sections.users },
-  { event: 'server.roles', store: 'roles', section: sections.roles },
-  { event: 'server.requests', store: 'requests', section: sections.requests }
+  {
+    event: 'server.equipments',
+    store: 'equipments',
+    section: sections.equipments,
+    title: 'Обладнання',
+    msgAttr: 'type_name'
+  },
+  {
+    event: 'server.users',
+    store: 'users',
+    section: sections.users,
+    title: 'Користувачі',
+    msgAttr: 'last_name'
+  },
+  {
+    event: 'server.roles',
+    store: 'roles',
+    section: sections.roles,
+    title: 'Ролі',
+    msgAttr: 'name'
+  },
+  {
+    event: 'server.requests',
+    store: 'requests',
+    section: sections.requests,
+    title: 'Замовлення',
+    msgAttr: 'title'
+  }
 )
   .forEach((obj) => {
     io.on(obj.event, (payload) => {
@@ -39,11 +65,14 @@ Array(
 
       // Sidebar/SidebarItem can empty, but user see list of items (Index.vue)
       // Update general list
+      const notifyData = notify(obj.title, `[${payload.params.id}] ${payload.data[obj.msgAttr] || '-'}`)
       if (payload.type === socketTypes.UPDATE) {
         // Some data may not have id
         store.commit(`${obj.section}/UPDATE_ITEM`, { ...payload.data, id: payload.params.id })
+        notifyData.update()
       } else {
         store.commit(`${obj.section}/DELETE_ITEM`, payload.params.id)
+        notifyData.delete()
       }
 
       // Section in sidebar not found
@@ -67,6 +96,11 @@ Array(
 
 function handleCreate(payload, obj) {
   store.commit(`${obj.section}/APPEND_DATA`, payload.data)
+
+  // Only users who can create other users or current profile - accept notify
+  if (obj.section !== sections.users || hasPerm(perm.USERS_CREATE)) {
+    notify(obj.title, `[${payload.data.id}] ${payload.data[obj.msgAttr] || '-'}`).create()
+  }
 }
 
 function handleCurrentUser(payload) {
