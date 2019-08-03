@@ -65,14 +65,13 @@ Array(
 
       // Sidebar/SidebarItem can empty, but user see list of items (Index.vue)
       // Update general list
-      const notifyData = notify(obj.title, `[${payload.params.id}] ${payload.data[obj.msgAttr] || '-'}`)
       if (payload.type === socketTypes.UPDATE) {
         // Some data may not have id
         store.commit(`${obj.section}/UPDATE_ITEM`, { ...payload.data, id: payload.params.id })
-        notifyData.update()
+        notify(obj.title, `[${payload.params.id}] ${payload.data[obj.msgAttr] || '-'}`).update()
       } else {
         store.commit(`${obj.section}/DELETE_ITEM`, payload.params.id)
-        notifyData.delete()
+        notify(obj.title, `[${payload.params.id}]`).delete()
       }
 
       // Section in sidebar not found
