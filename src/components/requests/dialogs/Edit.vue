@@ -15,6 +15,7 @@
 </template>
 
 <script>
+import { hasPerm } from '@/scripts/utils'
 import { required } from '@/data/rules'
 import Request from '@/classes/Request'
 import * as perm from '@/enum/perm'
@@ -49,7 +50,7 @@ export default {
         assign_id: {
           component: () => import('@/components/users/Select'),
           value: this.request.assign_id,
-          permissions: perm.USERS_VIEW_ALL,
+          permissions: hasPerm(perm.USERS_VIEW_ALL) && hasPerm(perm.REQUESTS_EDIT_ALL),
           label: 'Виконує',
           attrs: {
             defaultValue: {
