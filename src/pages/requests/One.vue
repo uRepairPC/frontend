@@ -38,8 +38,7 @@
           :files="model.files"
           :loading="loadingFiles"
           :url-download="(file) => `requests/${model.id}/files/${file.id}`"
-          :permission-edit="fileActionPermissions"
-          :permission-delete="fileActionPermissions"
+          v-bind="filesPermissions"
           @add="onAddFile"
           @edit="onEditFile"
           @delete="onDeleteFile"
@@ -58,13 +57,13 @@
         class="mb-20"
         :comments="model.comments"
         :loading="loadingComments"
-        :permission-edit="commentActionPermissions"
-        :permission-delete="commentActionPermissions"
+        v-bind="commentsPermissions"
         @edit="onEditComment"
         @delete="onDeleteComment"
         @refresh="fetchRequestComments"
       />
       <comment-create
+        v-if="canCreateComment"
         :request="model"
         @comment-create="onAddComment"
       />
@@ -73,19 +72,19 @@
 </template>
 
 <script>
-import CommentCreate from '@/components/comments/Create'
 import RequestComment from '@/classes/RequestComment'
-import * as permissions from '@/enum/permissions'
 import RequestFile from '@/classes/RequestFile'
+import { hasPerm } from '@/scripts/utils'
 import Request from '@/classes/Request'
 import sections from '@/enum/sections'
 import onePage from '@/mixins/onePage'
+import * as perm from '@/enum/perm'
 import types from '@/enum/types'
 
 export default {
   components: {
-    CommentCreate,
     TableCellColor: () => import('@/components/TableCellColor'),
+    CommentCreate: () => import('@/components/comments/Create'),
     CommentsList: () => import('@/components/comments/List'),
     TemplateOne: () => import('@/components/template/One'),
     FilesList: () => import('@/components/files/List')
@@ -106,29 +105,38 @@ export default {
         {
           title: 'Оновити',
           type: types.SUCCESS,
-          action: () => this.fetchRequest('loading'),
-          disabled: this.loading
+          action: () => this.fetchRequest('loading')
         },
         {
           title: 'Редагувати',
           type: types.PRIMARY,
-          permissions: [permissions.REQUESTS_EDIT, this.model.id === this.model.assign_id],
+          permissions: [
+            perm.REQUESTS_EDIT_ALL,
+            this.profile.id === this.model.user_id && perm.REQUESTS_EDIT_OWN,
+            this.profile.id === this.model.assign_id && perm.REQUESTS_EDIT_ASSIGN
+          ],
           action: () => this.openDialog(import('@/components/requests/dialogs/Edit'))
         },
         {
           title: 'Додати коментарій',
           type: types.PRIMARY,
+          permissions: perm.REQUESTS_COMMENTS_CREATE,
           action: () => this.openDialog(import('@/components/requests/dialogs/CommentCreate'))
         },
         {
           title: 'Завантажити файл',
           type: types.PRIMARY,
+          permissions: perm.REQUESTS_FILES_CREATE,
           action: () => this.openDialog(import('@/components/requests/dialogs/FilesUpload'))
         },
         {
           title: 'Видалити',
           type: types.DANGER,
-          permissions: [permissions.REQUESTS_DELETE, this.model.id === this.model.assign_id],
+          permissions: [
+            perm.REQUESTS_DELETE_ALL,
+            this.profile.id === this.model.user_id && perm.REQUESTS_DELETE_OWN,
+            this.profile.id === this.model.assign_id && perm.REQUESTS_DELETE_ASSIGN
+          ],
           action: () => this.openDialog(import('@/components/requests/dialogs/Delete'))
         }
       ]
@@ -149,8 +157,30 @@ export default {
 
       return result
     },
-    currentUser() {
+    profile() {
       return this.$store.state.profile.user
+    },
+    filesPermissions() {
+      return {
+        'permission-create': perm.REQUESTS_FILES_CREATE,
+        'permission-download': (file) => hasPerm(perm.REQUESTS_FILES_DOWNLOAD_ALL) ||
+          (hasPerm(perm.REQUESTS_FILES_DOWNLOAD_OWN) && file.user_id === this.profile.id),
+        'permission-edit': (file) => hasPerm(perm.REQUESTS_FILES_EDIT_ALL) ||
+          (hasPerm(perm.REQUESTS_EDIT_OWN) && file.user_id === this.profile.id),
+        'permission-delete': (file) => hasPerm(perm.REQUESTS_FILES_DELETE_ALL) ||
+          (hasPerm(perm.REQUESTS_DELETE_OWN) && file.user_id === this.profile.id)
+      }
+    },
+    commentsPermissions() {
+      return {
+        'permission-edit': (comment) => hasPerm(perm.REQUESTS_COMMENTS_EDIT_ALL) ||
+          (hasPerm(perm.REQUESTS_COMMENTS_EDIT_OWN) && comment.user_id === this.profile.id),
+        'permission-delete': (comment) => hasPerm(perm.REQUESTS_COMMENTS_DELETE_ALL) ||
+          (hasPerm(perm.REQUESTS_COMMENTS_DELETE_OWN) && comment.user_id === this.profile.id)
+      }
+    },
+    canCreateComment() {
+      return hasPerm(perm.REQUESTS_COMMENTS_CREATE)
     }
   },
   methods: {
@@ -223,9 +253,7 @@ export default {
             this.updateData({ comments })
           },
           'files-upload': (uploadFiles) => {
-            const files = [...this.model.files]
-            files.unshift(...uploadFiles)
-            this.updateData({ files })
+            this.updateData({ files: [...uploadFiles, ...this.model.files] })
           },
           'file-update': (file, index) => {
             const files = [...this.model.files]
@@ -240,18 +268,6 @@ export default {
         }
       })
     },
-    fileActionPermissions() {
-      return [
-        permissions.REQUESTS_EDIT,
-        (file) => file.user_id === this.currentUser.id
-      ]
-    },
-    commentActionPermissions() {
-      return [
-        permissions.REQUESTS_EDIT,
-        (comment) => comment.user_id === this.currentUser.id
-      ]
-    },
     updateData(data) {
       Request.sidebar().add({ id: this.pageId, ...data })
     },
@@ -265,9 +281,7 @@ export default {
       this.openDialog(import('@/components/requests/dialogs/FileDelete'), { file, index })
     },
     onAddComment(comment) {
-      const comments = [...this.model.comments]
-      comments.push(comment)
-      this.updateData({ comments })
+      this.updateData({ comments: [...this.model.comments, comment] })
     },
     onEditComment(comment, index) {
       this.openDialog(import('@/components/requests/dialogs/CommentEdit'), { comment, index })
@@ -283,5 +297,6 @@ export default {
 .title {
   font-size: 1.5rem;
   font-weight: bold;
+  overflow-wrap: break-word;
 }
 </style>

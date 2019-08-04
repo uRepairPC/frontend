@@ -40,18 +40,18 @@ export default {
       loading: false,
       form: {
         name: {
-          component: 'el-input',
+          component: () => import('element-ui/lib/input'),
           value: '',
           label: 'Ім\'я',
           rules: required
         },
         color: {
-          component: 'el-color-picker',
+          component: () => import('element-ui/lib/color-picker'),
           value: '',
           label: 'Колір'
         },
         default: {
-          component: 'el-checkbox',
+          component: () => import('element-ui/lib/checkbox'),
           value: false,
           attrs: {
             label: 'За замовчуванням'
@@ -71,6 +71,7 @@ export default {
 
       Role.fetchStore(form)
         .then(({ data }) => {
+          this.$store.commit('roles/APPEND_DATA', data.role)
           this.$router.push({ name: `${sections.roles}-id`, params: { id: data.role.id } })
         })
         .finally(() => {

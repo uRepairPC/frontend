@@ -5,14 +5,7 @@
     :loading="loading"
     v-bind="$attrs"
     v-on="listeners"
-  >
-    <el-checkbox
-      slot="content-bottom"
-      v-model="imageDelete"
-    >
-      Видалити зображення
-    </el-checkbox>
-  </basic-delete>
+  />
 </template>
 
 <script>
@@ -31,8 +24,7 @@ export default {
   },
   data() {
     return {
-      loading: false,
-      imageDelete: true
+      loading: false
     }
   },
   computed: {
@@ -50,12 +42,9 @@ export default {
     fetchRequest() {
       this.loading = true
 
-      User.fetchDelete(this.user.id, {
-        data: {
-          image_delete: this.imageDelete
-        }
-      })
+      User.fetchDelete(this.user.id)
         .then(() => {
+          this.$store.commit('users/DELETE_ITEM', this.user.id)
           this.$emit('delete')
           this.$emit('close')
         })

@@ -30,17 +30,20 @@ export default (section) => {
         }
 
         return {}
+      },
+      hasFetchDataFunc() {
+        return typeof this.fetchData === 'function'
       }
     },
     watch: {
       '$route'() {
-        if (typeof this.fetchData === 'function') {
+        if (this.hasFetchDataFunc) {
           this.fetchData()
         }
       }
     },
     created() {
-      if (typeof this.fetchData === 'function') {
+      if (this.hasFetchDataFunc) {
         this.fetchData()
       }
     }

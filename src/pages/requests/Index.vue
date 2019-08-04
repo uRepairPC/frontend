@@ -30,7 +30,7 @@
       <filter-table-buttons
         ref="buttons"
         :section="sections.requests"
-        @update="fetchList"
+        @update="() => fetchList(+list.current_page || 1)"
       />
       <filter-action
         :section="sectionName"

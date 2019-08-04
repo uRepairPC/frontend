@@ -35,13 +35,13 @@ export default {
       loading: false,
       form: {
         name: {
-          component: 'el-input',
+          component: () => import('element-ui/lib/input'),
           value: this.item.name,
           label: 'Назва',
           rules: required
         },
         value: {
-          component: 'el-input-number',
+          component: () => import('element-ui/lib/input-number'),
           value: this.item.value,
           label: 'Значення',
           rules: required,
@@ -51,12 +51,12 @@ export default {
           }
         },
         color: {
-          component: 'el-color-picker',
+          component: () => import('element-ui/lib/color-picker'),
           value: this.item.color,
           label: 'Колір'
         },
         description: {
-          component: 'el-input',
+          component: () => import('element-ui/lib/input'),
           value: this.item.description,
           label: 'Опис',
           attrs: {
@@ -65,7 +65,7 @@ export default {
           }
         },
         default: {
-          component: 'el-checkbox',
+          component: () => import('element-ui/lib/checkbox'),
           value: this.item.default,
           attrs: {
             label: 'За замовчуванням'

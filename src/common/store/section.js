@@ -17,14 +17,28 @@ const mutations = {
     state.init = false
     state.list = obj
   },
-  APPEND_LIST(state, obj) {
-    Object.entries(obj).forEach(([key, val]) => {
-      if (key !== 'data') {
-        Vue.set(state.list, key, val)
-      }
-    })
-
-    state.list.data.push(...obj.data)
+  APPEND_DATA(state, ...data) {
+    if (state.list && state.list.data) {
+      state.list.data.unshift(...data.map(i => ({ ...i, _is_new: true })))
+    }
+  },
+  UPDATE_ITEM(state, data) {
+    if (state.list && state.list.data) {
+      state.list.data.forEach((item, index) => {
+        if (item.id === data.id) {
+          Vue.set(state.list.data, index, { ...item, ...data })
+        }
+      })
+    }
+  },
+  DELETE_ITEM(state, id) {
+    if (state.list && state.list.data) {
+      state.list.data.forEach((item, index) => {
+        if (item.id === id) {
+          state.list.data.splice(index, 1)
+        }
+      })
+    }
   },
   CLEAR_ALL(state) {
     state.init = true

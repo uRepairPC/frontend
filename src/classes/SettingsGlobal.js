@@ -17,11 +17,7 @@ export default class SettingsGlobal {
 
   static updateDOM(data) {
     // Favicon
-    if (data.favicon) {
-      setFavicon(data.favicon)
-    } else {
-      setFavicon(defaultFavicon)
-    }
+    setFavicon(data.favicon || defaultFavicon)
 
     // Meta title
     const el = document.querySelector('head title')

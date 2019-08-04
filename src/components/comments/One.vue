@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import { includePermission } from '@/scripts/utils'
+import { hasPerm } from '@/scripts/utils'
 import { getDate } from '@/scripts/date'
 import sections from '@/enum/sections'
 
@@ -65,13 +65,13 @@ export default {
       return { name: `${sections.users}-id`, params: { id: this.comment.user_id } }
     },
     canEdit() {
-      return includePermission(this.permissionEdit, this.comment)
+      return hasPerm(this.permissionEdit, this.comment)
+    },
+    canDelete() {
+      return hasPerm(this.permissionDelete, this.comment)
     },
     createdAt() {
       return getDate(this.comment.created_at)
-    },
-    canDelete() {
-      return includePermission(this.permissionDelete, this.comment)
     }
   },
   methods: {

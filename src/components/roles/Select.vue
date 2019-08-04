@@ -17,7 +17,7 @@
       v-for="item in list"
       :key="item.name"
       :label="item.name"
-      :value="item.name"
+      :value="item.id"
       :style="{
         'background-color': item.color + '10',
         color: item.color
@@ -30,6 +30,10 @@
 import Role from '@/classes/Role'
 
 export default {
+  components: {
+    ElSelect: () => import('element-ui/lib/select'),
+    ElOption: () => import('element-ui/lib/option')
+  },
   props: {
     value: {
       type: Array,
@@ -43,15 +47,13 @@ export default {
   data() {
     return {
       list: [],
-      loading: false
+      loading: false,
+      init: true
     }
   },
   created() {
     this.list = this.defaultRoles
-    this.$emit('input', this.list.map(item => item.name))
-  },
-  mounted() {
-    this.list = []
+    this.$emit('input', this.list.map(item => item.id))
   },
   methods: {
     fetchRequest(query) {
@@ -72,8 +74,9 @@ export default {
         })
     },
     onFocus() {
-      if (!this.list.length) {
+      if (this.init) {
         this.fetchRequest()
+        this.init = false
       }
     }
   }

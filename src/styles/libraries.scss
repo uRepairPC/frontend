@@ -2,6 +2,10 @@
 @import "~nprogress/nprogress.css";
 @import "~scss/_colors";
 
+.el-loading {
+  z-index: 1500 !important;
+}
+
 .el-input > .el-input-group__prepend > i {
   display: flex;
   align-items: center;
@@ -17,7 +21,7 @@
 
 .dialog--default {
   > .el-dialog {
-    max-width: 550px;
+    max-width: 650px;
     margin-top: 5vh !important;
     width: 100%;
   }

@@ -1,10 +1,10 @@
 'use strict'
 
-import { includePermission } from '@/scripts/utils'
 import { TYPE_TIMESTAMP } from '@/enum/columnTypes'
-import * as permissions from '@/enum/permissions'
 import commonStore from '@/common/store/section'
 import StorageData from '@/classes/StorageData'
+import { hasPerm } from '@/scripts/utils'
+import * as perm from '@/enum/perm'
 import User from '@/classes/User'
 
 const state = {
@@ -21,11 +21,7 @@ const actions = {
 
     return User.fetchAll({ params })
       .then(({ data }) => {
-        if (params.page > 1) {
-          commit('APPEND_LIST', data)
-        } else {
-          commit('SET_LIST', data)
-        }
+        commit('SET_LIST', data)
       })
       .finally(() => {
         commit('SET_LOADING', false)
@@ -50,7 +46,7 @@ const getters = {
       { prop: 'first_name', label: 'Ім\'я', 'min-width': 150, sortable: 'custom' },
       { prop: 'middle_name', label: 'По-батькові', 'min-width': 150, sortable: 'custom' },
       { prop: 'last_name', label: 'Прізвище', 'min-width': 150, sortable: 'custom' },
-      { prop: 'roles', label: 'Ролі', 'min-width': 150, permissions: permissions.ROLES_VIEW, disableSearch: true },
+      { prop: 'roles', label: 'Ролі', 'min-width': 150, permissions: perm.ROLES_VIEW_ALL, disableSearch: true },
       { prop: 'email', label: 'E-mail', 'min-width': 250, sortable: 'custom' },
       { prop: 'phone', label: 'Телефон', 'min-width': 150, sortable: 'custom' },
       { prop: 'description', label: 'Опис', 'min-width': 250, disableSearch: true, hideList: true },
@@ -61,7 +57,7 @@ const getters = {
     const data = StorageData.columnUsers.length ? StorageData.columnUsers : defaultActive
 
     return columns
-      .filter(column => includePermission(column.permissions))
+      .filter(column => hasPerm(column.permissions))
       .map((column) => {
         return { ...column, model: data.includes(column.prop) }
       })

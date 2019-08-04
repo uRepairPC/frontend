@@ -5,9 +5,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const { VueLoaderPlugin } = require('vue-loader/lib/index')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { GenerateSW } = require('workbox-webpack-plugin')
-const Dotenv = require('dotenv-webpack')
 const path = require('path')
-require('dotenv').config()
 
 module.exports = {
   mode: 'production',
@@ -22,7 +20,7 @@ module.exports = {
     filename: 'web/[name].[hash].js',
     chunkFilename: 'web/chunks/[name].[hash].js',
     publicPath: '/',
-    path: path.resolve(__dirname, process.env.WEBPACK_OUTPUT_DIR || 'dist')
+    path: path.resolve(__dirname, 'dist')
   },
   devtool: false,
   optimization: {
@@ -83,7 +81,6 @@ module.exports = {
     ]
   },
   plugins: [
-    new Dotenv,
     new VueLoaderPlugin,
     new CleanWebpackPlugin({
       cleanOnceBeforeBuildPatterns: ['web/*', 'index.html', 'sw.js']
@@ -136,7 +133,7 @@ module.exports = {
         }
       }]
     }),
-    // new (require('webpack-bundle-analyzer').BundleAnalyzerPlugin)
+    // new (require('webpack-bundle-analyzer').BundleAnalyzerPlugin)()
   ],
   resolve: {
     extensions: ['.js', '.vue', '.json'],

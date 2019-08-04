@@ -11,17 +11,17 @@
       :disabled="onlyView"
       @change="handleCheckAllChange"
     >
-      <strong>{{ name }}</strong>{{ onlyView ? '' : ' - Обрати всі' }}
+      <strong>{{ groupName }}</strong>
     </el-checkbox>
-    <el-checkbox-group :value="checked">
+    <el-checkbox-group :value="value">
       <el-checkbox
-        v-for="(item, index) in items"
+        v-for="(permission, index) in permissions"
         :key="index"
-        :label="item.name"
+        :label="permission.name"
         :disabled="onlyView"
-        @change="onChange($event, item.name, index)"
+        @change="onChange($event, permission.name, index)"
       >
-        {{ item.display_name }}
+        {{ permission.action }}
       </el-checkbox>
     </el-checkbox-group>
   </div>
@@ -29,16 +29,20 @@
 
 <script>
 export default {
+  components: {
+    ElCheckboxGroup: () => import('element-ui/lib/checkbox-group'),
+    ElCheckbox: () => import('element-ui/lib/checkbox')
+  },
   props: {
     value: {
       type: Array,
       default: () => []
     },
-    name: {
+    groupName: {
       type: String,
       default: ''
     },
-    items: {
+    permissions: {
       type: Array,
       default: () => []
     },
@@ -49,51 +53,47 @@ export default {
   },
   data() {
     return {
+      set: new Set,
       checkAll: false,
       isIndeterminate: false
     }
   },
-  computed: {
-    checked() {
-      return this.value.map(i => i.name)
-    }
-  },
   watch: {
     value: {
-      handler() {
-        const checkedCount = this.checked.length
-        this.checkAll = checkedCount === this.items.length
-        this.isIndeterminate = checkedCount > 0 && checkedCount < this.items.length
+      handler(permissionNames) {
+        this.set = new Set(permissionNames)
+        this.checkAll = this.permissions.every(p => this.set.has(p.name))
+        this.isIndeterminate = !this.checkAll && this.permissions.some(p => this.set.has(p.name))
       },
       immediate: true
     }
   },
   methods: {
-    handleCheckAllChange(val) {
+    handleCheckAllChange(allSelected) {
       if (this.onlyView) {
         return
       }
 
-      this.$emit('input', val ? this.items : [])
-      this.isIndeterminate = false
-    },
-    onChange(val, name, index) {
-      if (this.onlyView) {
-        return
-      }
-
-      let items = [...this.value]
-
-      if (val) {
-        items.push(this.items[index])
+      if (allSelected) {
+        this.permissions.forEach(p => this.set.add(p.name))
       } else {
-        const index = items.findIndex(obj => obj.name === name)
-        if (~index) {
-          items.splice(index, 1)
-        }
+        this.permissions.forEach(p => this.set.delete(p.name))
       }
 
-      this.$emit('input', items)
+      this.$emit('input', [...this.set])
+    },
+    onChange(isSelected, name) {
+      if (this.onlyView) {
+        return
+      }
+
+      if (isSelected) {
+        this.set.add(name)
+      } else {
+        this.set.delete(name)
+      }
+
+      this.$emit('input', [...this.set])
     }
   }
 }
@@ -139,8 +139,12 @@ export default {
   }
 }
 
-.title {
-  margin-bottom: 10px;
+.el-checkbox {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  &.title {
+    margin-bottom: 10px;
+  }
 }
 
 .el-checkbox-group {

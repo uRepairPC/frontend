@@ -44,6 +44,13 @@
 
 <script>
 export default {
+  components: {
+    ElInputNumber: () => import('element-ui/lib/input-number'),
+    ElButton: () => import('element-ui/lib/button'),
+    ElDialog: () => import('element-ui/lib/dialog'),
+    ElAlert: () => import('element-ui/lib/alert'),
+    ElForm: () => import('element-ui/lib/form')
+  },
   inheritAttrs: false,
   props: {
     confirm: {

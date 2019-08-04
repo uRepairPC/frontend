@@ -43,8 +43,8 @@ export default class User extends ApiHasHistory {
     return super.fetchOne(id, config)
       .then((response) => {
         // Update for current user new permissions
-        if (store.state.profile.user.id === id && response.data.user.permission_names) {
-          store.commit('profile/SET_PERMISSIONS', response.data.user.permission_names)
+        if (store.state.profile.user.id === id && response.data.user.permissions) {
+          store.commit('profile/SET_PERMISSIONS', response.data.user.permissions)
         }
         return response
       })
@@ -131,9 +131,10 @@ export default class User extends ApiHasHistory {
 
   /** @return {string|null} */
   get backgroundImage() {
-    if (this.user.image) {
+    if (this.user.image_id) {
       const token = StorageData.token
-      return `background-image: url(${server}/api/users/images/${this.user.image}?token=${token})`
+      const time = new Date(this.user.updated_at).getTime()
+      return `background-image: url(${server}/api/users/${this.user.id}/image?time=${time}&token=${token})`
     }
 
     return null

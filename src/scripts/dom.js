@@ -1,6 +1,7 @@
 'use strict'
 
-import { Loading, Message } from 'element-ui'
+import Loading from 'element-ui/lib/loading'
+import Message from 'element-ui/lib/message'
 
 /**
  * @param {String, Node} node
@@ -31,19 +32,6 @@ export function copyNode(node) {
   } else {
     Message('Виникла помилка')
   }
-}
-
-/**
- * @param data
- * @param {string} fileName
- */
-export function downloadFile(data, fileName) {
-  const url = window.URL.createObjectURL(new Blob([data]))
-  const link = document.createElement('a')
-  link.href = url
-  link.setAttribute('download', fileName)
-  document.body.appendChild(link)
-  link.click()
 }
 
 /**

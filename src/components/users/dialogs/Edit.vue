@@ -35,29 +35,29 @@ export default {
       loading: false,
       form: {
         first_name: {
-          component: 'el-input',
+          component: () => import('element-ui/lib/input'),
           value: this.user.first_name,
           label: 'Ім\'я',
           rules: required
         },
         middle_name: {
-          component: 'el-input',
+          component: () => import('element-ui/lib/input'),
           value: this.user.middle_name,
           label: 'По-батькові'
         },
         last_name: {
-          component: 'el-input',
+          component: () => import('element-ui/lib/input'),
           value: this.user.last_name,
           label: 'Прізвище',
           rules: required
         },
         phone: {
-          component: 'el-input',
+          component: () => import('element-ui/lib/input'),
           value: this.user.phone,
           label: 'Телефон'
         },
         description: {
-          component: 'el-input',
+          component: () => import('element-ui/lib/input'),
           value: this.user.description,
           label: 'Опис',
           attrs: {
@@ -86,7 +86,8 @@ export default {
       this.loading = true
 
       User.fetchEdit(this.user.id, form)
-        .then(() => {
+        .then(({ data }) => {
+          this.$store.commit('users/UPDATE_ITEM', data.user)
           this.$emit('edit')
           this.$emit('close')
         })

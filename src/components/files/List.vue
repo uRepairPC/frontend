@@ -9,7 +9,7 @@
         Оновити
       </div>
       <div
-        v-if="includePermission(permissionCreate)"
+        v-if="hasPerm(permissionCreate)"
         class="file-add"
         @click="onAdd"
       >
@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import { includePermission } from '@/scripts/utils'
+import { hasPerm } from '@/scripts/utils'
 
 export default {
   components: {
@@ -78,7 +78,7 @@ export default {
     }
   },
   methods: {
-    includePermission,
+    hasPerm,
     onAdd() {
       this.$emit('add')
     },

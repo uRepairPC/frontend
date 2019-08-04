@@ -26,7 +26,9 @@ const TIMEOUT = 500
 export default {
   name: 'FilterSearch',
   components: {
-    FilterBasic: () => import('@/components/filters/Basic')
+    FilterBasic: () => import('@/components/filters/Basic'),
+    ElAlert: () => import('element-ui/lib/alert'),
+    ElInput: () => import('element-ui/lib/input')
   },
   inheritAttrs: false,
   props: {

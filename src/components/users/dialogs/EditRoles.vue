@@ -59,7 +59,8 @@ export default {
       this.loading = true
 
       User.fetchEditRoles(this.user.id, form)
-        .then(() => {
+        .then(({ data }) => {
+          this.$store.commit('users/UPDATE_ITEM', data.user)
           this.$emit('edit-roles')
           this.$emit('close')
         })

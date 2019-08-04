@@ -4,6 +4,7 @@
     remote
     :remote-method="remoteMethod"
     automatic-dropdown
+    clearable
     :loading="loading || loadingStore"
     v-bind="$attrs"
     v-on="listeners"
@@ -22,6 +23,10 @@ import User from '@/classes/User'
 import { mapState } from 'vuex'
 
 export default {
+  components: {
+    ElSelect: () => import('element-ui/lib/select'),
+    ElOption: () => import('element-ui/lib/option')
+  },
   inheritAttrs: false,
   props: {
     defaultValue: {
@@ -38,14 +43,14 @@ export default {
 
     return {
       loading: false,
+      init: true,
       list
     }
   },
   computed: {
     ...mapState({
       listStore: state => state.users.list.data || [],
-      loadingStore: state => state.users.loading,
-      init: state => state.users.init
+      loadingStore: state => state.users.loading
     }),
     listeners() {
       return {
@@ -61,7 +66,8 @@ export default {
       User.fetchAll({
         params: {
           search: search || undefined,
-          columns: ['last_name', 'first_name']
+          columns: ['last_name', 'first_name'],
+          request_access: 1
         }
       })
         .then(({ data }) => {
@@ -73,10 +79,9 @@ export default {
     },
     async onFocus() {
       if (this.init) {
-        await this.$store.dispatch('users/fetchList')
+        this.remoteMethod()
+        this.init = false
       }
-
-      this.list = [...this.listStore]
     }
   }
 }

@@ -1,24 +1,21 @@
 <template>
-  <div
-    v-loading="loading"
-    class="permissions-list-checkboxes"
-  >
+  <div class="permissions-list-checkboxes">
+    <!--last div element - loading mask-->
     <div>
       <group-checkbox
-        v-for="(item, key) in list"
-        :key="key"
-        v-model="permissions[key]"
-        :name="key"
-        :items="item"
+        v-for="(permissions, groupName) in permissionsList"
+        :key="groupName"
+        :value="value"
+        :group-name="groupName"
+        :permissions="permissions"
         :only-view="onlyView"
+        @input="onChange"
       />
     </div>
   </div>
 </template>
 
 <script>
-import { mapState } from 'vuex'
-
 export default {
   components: {
     GroupCheckbox: () => import('@/components/permissions/GroupCheckbox')
@@ -30,55 +27,18 @@ export default {
       type: Array,
       default: () => []
     },
-    permissionsGrouped: {
+    permissionsList: {
       type: Object,
-      required: true
+      default: () => {}
     },
     onlyView: {
       type: Boolean,
       default: false
     }
   },
-  data() {
-    return {
-      permissions: { ...this.permissionsGrouped }
-    }
-  },
-  computed: {
-    ...mapState({
-      list: state => state.permissions.listGrouped,
-      loading: state => state.permissions.loading
-    }),
-    hasItems() {
-      return !!Object.keys(this.list).length
-    }
-  },
-  watch: {
-    permissionsGrouped(obj) {
-      this.permissions = { ...obj }
-    },
-    permissions: {
-      handler(obj) {
-        const names = []
-
-        Object.values(obj).forEach((arr) => {
-          arr.forEach(item => names.push(item.name))
-        })
-
-        this.$emit('input', names)
-      },
-      deep: true,
-      immediate: true
-    }
-  },
-  mounted() {
-    if (!this.hasItems) {
-      this.fetchList()
-    }
-  },
   methods: {
-    fetchList() {
-      this.$store.dispatch('permissions/fetchListGrouped')
+    onChange(val) {
+      this.$emit('input', val)
     }
   }
 }

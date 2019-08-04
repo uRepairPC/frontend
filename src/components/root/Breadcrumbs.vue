@@ -12,6 +12,10 @@
 
 <script>
 export default {
+  components: {
+    ElBreadcrumbItem: () => import('element-ui/lib/breadcrumb-item'),
+    ElBreadcrumb: () => import('element-ui/lib/breadcrumb')
+  },
   computed: {
     list() {
       return this.$store.state.template.breadcrumbs

@@ -32,7 +32,8 @@ import RequestFile from '@/classes/RequestFile'
 
 export default {
   components: {
-    BasicEdit: () => import('@/common/components/dialogs/BasicEdit')
+    BasicEdit: () => import('@/common/components/dialogs/BasicEdit'),
+    ElUpload: () => import('element-ui/lib/upload')
   },
   inheritAttrs: false,
   props: {

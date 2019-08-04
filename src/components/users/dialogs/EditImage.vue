@@ -35,7 +35,8 @@ import User from '@/classes/User'
 
 export default {
   components: {
-    BasicEdit: () => import('@/common/components/dialogs/BasicEdit')
+    BasicEdit: () => import('@/common/components/dialogs/BasicEdit'),
+    ElUpload: () => import('element-ui/lib/upload')
   },
   inheritAttrs: false,
   props: {
@@ -66,7 +67,8 @@ export default {
       fd.append('image', this.file.raw)
 
       User.fetchEditImage(this.user.id, fd)
-        .then(() => {
+        .then(({ data }) => {
+          this.$store.commit('users/UPDATE_ITEM', data.user)
           this.$emit('edit-image')
           this.$emit('close')
         })

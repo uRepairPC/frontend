@@ -28,7 +28,8 @@ import { isObject } from '@/scripts/helpers'
 export default {
   name: 'FilterTableButtons',
   components: {
-    FilterBasic: () => import('@/components/filters/Basic')
+    FilterBasic: () => import('@/components/filters/Basic'),
+    ElButton: () => import('element-ui/lib/button')
   },
   props: {
     section: {

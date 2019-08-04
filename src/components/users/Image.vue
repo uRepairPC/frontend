@@ -2,11 +2,11 @@
   <div class="user-image">
     <div
       :class="['image', {
-        'image_has': !!user.image
+        'image_has': !!user.image_id
       }]"
       :style="userObj.backgroundImage"
     >
-      <template v-if="!user.image">
+      <template v-if="!user.image_id">
         <i class="material-icons">face</i>
         {{ userObj.initials }}
       </template>

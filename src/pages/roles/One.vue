@@ -19,20 +19,20 @@
         <span>Доступи</span>
       </div>
       <list-checkboxes
-        v-loading="loadingPermissions || loadingPermissionsStore"
-        :permissions-grouped="model.permissions_grouped || {}"
+        v-loading="loading"
+        :value="model.permissions_active"
+        :permissions-list="model.permissions_list"
         class="list-checkboxes"
         only-view
       />
     </div>
-    <!--TODO Users section (Table, component)-->
   </template-one>
 </template>
 
 <script>
-import * as permissions from '@/enum/permissions'
 import sections from '@/enum/sections'
 import onePage from '@/mixins/onePage'
+import * as perm from '@/enum/perm'
 import Role from '@/classes/Role'
 import types from '@/enum/types'
 
@@ -46,17 +46,10 @@ export default {
   ],
   data() {
     return {
-      loading: false,
-      loadingPermissions: false
+      loading: false
     }
   },
   computed: {
-    permissions() {
-      return this.$store.state.permissions.listGrouped
-    },
-    loadingPermissionsStore() {
-      return this.$store.state.permissions.loading
-    },
     buttons() {
       return [
         {
@@ -68,21 +61,21 @@ export default {
         {
           title: 'Редагувати дані',
           type: types.PRIMARY,
-          permissions: permissions.ROLES_MANAGE,
+          permissions: perm.ROLES_EDIT_ALL,
           action: () => this.openDialog(import('@/components/roles/dialogs/Edit'))
         },
         {
           title: 'Редагувати доступи',
           type: types.PRIMARY,
           disabled: this.model.id === 1,
-          permissions: permissions.ROLES_MANAGE,
+          permissions: perm.ROLES_EDIT_ALL,
           action: () => this.openDialog(import('@/components/roles/dialogs/EditPermissions'))
         },
         {
           title: 'Видалити роль',
           type: types.DANGER,
           disabled: this.model.id === 1,
-          permissions: permissions.ROLES_MANAGE,
+          permissions: perm.ROLES_EDIT_ALL,
           action: () => this.openDialog(import('@/components/roles/dialogs/Delete'))
         }
       ]
@@ -104,24 +97,18 @@ export default {
   methods: {
     fetchData() {
       if (!this.model.id) {
-        this.fetchRequest('loading')
-      } else if (!this.model.permissions) {
-        this.fetchRequest('loadingPermissions')
-      }
-
-      if (!Object.keys(this.permissions).length) {
-        this.$store.dispatch('permissions/fetchListGrouped')
+        this.fetchRequest()
       }
     },
-    fetchRequest(loadingAttr) {
-      this[loadingAttr] = true
+    fetchRequest() {
+      this.loading = true
 
       Role.fetchOne(this.pageId)
         .catch(() => {
           this.$router.push({ name: sections.roles })
         })
         .finally(() => {
-          this[loadingAttr] = false
+          this.loading = false
         })
     },
     openDialog(component, attrs = {}) {
@@ -148,6 +135,7 @@ export default {
 .title {
 	font-size: 1.5rem;
 	font-weight: bold;
+  overflow-wrap: break-word;
 }
 
 .color {

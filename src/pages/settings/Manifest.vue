@@ -82,7 +82,12 @@ export default {
     { title: menu[sections.settings].children[sections.settingsManifest].title }
   ],
   components: {
-    Item: () => import('@/components/settings/Item')
+    ElTimelineItem: () => import('element-ui/lib/timeline-item'),
+    ElTimeline: () => import('element-ui/lib/timeline'),
+    Item: () => import('@/components/settings/Item'),
+    ElButton: () => import('element-ui/lib/button'),
+    ElAlert: () => import('element-ui/lib/alert'),
+    ElCard: () => import('element-ui/lib/card')
   },
   mixins: [
     breadcrumbs

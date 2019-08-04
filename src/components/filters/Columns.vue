@@ -32,7 +32,10 @@
 export default {
   name: 'FilterColumns',
   components: {
-    FilterBasic: () => import('@/components/filters/Basic')
+    ElCheckboxGroup: () => import('element-ui/lib/checkbox-group'),
+    FilterBasic: () => import('@/components/filters/Basic'),
+    ElCheckbox: () => import('element-ui/lib/checkbox'),
+    ElAlert: () => import('element-ui/lib/alert')
   },
   props: {
     columns: {

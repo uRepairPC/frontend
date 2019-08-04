@@ -15,7 +15,7 @@
       <filter-table-buttons
         ref="buttons"
         :section="sections.roles"
-        @update="fetchList"
+        @update="() => fetchList(+list.current_page || 1)"
       />
       <filter-action
         :section="sectionName"

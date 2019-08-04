@@ -22,6 +22,7 @@ import breadcrumbs from '@/mixins/breadcrumbs'
 import Equipment from '@/classes/Equipment'
 import { required } from '@/data/rules'
 import sections from '@/enum/sections'
+import * as perm from '@/enum/perm'
 import menu from '@/data/menu'
 
 export default {
@@ -41,22 +42,23 @@ export default {
       form: {
         equipment: {
           component: () => import('@/components/equipments/Cascader'),
+          permissions: perm.EQUIPMENTS_CONFIG_VIEW_ALL,
           value: [],
           label: 'Тип, Виробник, Модель',
           rules: required
         },
         serial_number: {
-          component: 'el-input',
+          component: () => import('element-ui/lib/input'),
           value: '',
           label: 'Серійний номер'
         },
         inventory_number: {
-          component: 'el-input',
+          component: () => import('element-ui/lib/input'),
           value: '',
           label: 'Інвертарний номер'
         },
         description: {
-          component: 'el-input',
+          component: () => import('element-ui/lib/input'),
           value: '',
           label: 'Опис',
           attrs: {
@@ -83,6 +85,7 @@ export default {
         model_id: form.equipment[2] || null
       })
         .then(({ data }) => {
+          this.$store.commit('equipments/APPEND_DATA', data.equipment)
           this.$router.push({ name: `${sections.equipments}-id`, params: { id: data.equipment.id } })
         })
         .finally(() => {

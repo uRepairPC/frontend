@@ -18,7 +18,8 @@ import User from '@/classes/User'
 
 export default {
   components: {
-    UserImage: () => import('@/components/users/Image')
+    UserImage: () => import('@/components/users/Image'),
+    ElCard: () => import('element-ui/lib/card')
   },
   props: {
     user: {

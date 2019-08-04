@@ -42,6 +42,7 @@ export default {
 
       Role.fetchDelete(this.role.id)
         .then(() => {
+          this.$store.commit('roles/DELETE_ITEM', this.role.id)
           this.$emit('delete')
           this.$emit('close')
         })

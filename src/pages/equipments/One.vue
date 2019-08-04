@@ -47,10 +47,7 @@
           :files="model.files"
           :loading="loadingFiles"
           :url-download="(file) => `equipments/${model.id}/files/${file.id}`"
-          :permission-create="permissions.EQUIPMENTS_FILES_CREATE"
-          :permission-download="permissions.EQUIPMENTS_FILES_DOWNLOAD"
-          :permission-edit="permissions.EQUIPMENTS_FILES_EDIT"
-          :permission-delete="permissions.EQUIPMENTS_FILES_DELETE"
+          v-bind="filesPermissions"
           @add="onAdd"
           @edit="onEdit"
           @delete="onDelete"
@@ -63,12 +60,12 @@
 
 <script>
 import EquipmentFile from '@/classes/EquipmentFile'
-import { includePermission } from '@/scripts/utils'
-import * as permissions from '@/enum/permissions'
 import Equipment from '@/classes/Equipment'
+import { hasPerm } from '@/scripts/utils'
 import { copyNode } from '@/scripts/dom'
 import sections from '@/enum/sections'
 import onePage from '@/mixins/onePage'
+import * as perm from '@/enum/perm'
 import types from '@/enum/types'
 
 export default {
@@ -81,7 +78,7 @@ export default {
   ],
   data() {
     return {
-      permissions,
+      perm,
       loading: false,
       loadingFiles: false
     }
@@ -101,19 +98,25 @@ export default {
         {
           title: 'Редагувати',
           type: types.PRIMARY,
-          permissions: permissions.EQUIPMENTS_EDIT,
+          permissions: [
+            perm.EQUIPMENTS_EDIT_ALL,
+            this.model.user_id === this.profile.id && perm.EQUIPMENTS_EDIT_OWN
+          ],
           action: () => this.openDialog(import('@/components/equipments/dialogs/Edit'))
         },
         {
           title: 'Завантажити файл',
           type: types.PRIMARY,
-          permissions: permissions.EQUIPMENTS_FILES_CREATE,
+          permissions: perm.EQUIPMENTS_FILES_CREATE,
           action: () => this.openDialog(import('@/components/equipments/dialogs/FilesUpload'))
         },
         {
           title: 'Видалили',
           type: types.DANGER,
-          permissions: permissions.EQUIPMENTS_DELETE,
+          permissions: [
+            perm.EQUIPMENTS_DELETE_ALL,
+            this.model.user_id === this.profile.id && perm.EQUIPMENTS_DELETE_OWN
+          ],
           action: () => this.openDialog(import('@/components/equipments/dialogs/Delete'))
         }
       ]
@@ -130,6 +133,23 @@ export default {
         })
 
       return result
+    },
+    profile() {
+      return this.$store.state.profile.user
+    },
+    filesPermissions() {
+      return {
+        'permission-create': perm.EQUIPMENTS_FILES_CREATE,
+        'permission-download': (file) => hasPerm(perm.EQUIPMENTS_FILES_DOWNLOAD_ALL) ||
+          (hasPerm(perm.EQUIPMENTS_FILES_DOWNLOAD_OWN) && file.user_id === this.profile.id),
+        'permission-edit': (file) => hasPerm(perm.EQUIPMENTS_FILES_EDIT_ALL) ||
+          (hasPerm(perm.EQUIPMENTS_EDIT_OWN) && file.user_id === this.profile.id),
+        'permission-delete': (file) => hasPerm(perm.EQUIPMENTS_FILES_DELETE_ALL) ||
+          (hasPerm(perm.EQUIPMENTS_DELETE_OWN) && file.user_id === this.profile.id)
+      }
+    },
+    canSeeFiles() {
+      return hasPerm([perm.EQUIPMENTS_FILES_VIEW_ALL, perm.EQUIPMENTS_FILES_VIEW_OWN])
     }
   },
   methods: {
@@ -153,7 +173,7 @@ export default {
         })
     },
     fetchRequestFiles() {
-      if (!includePermission(permissions.EQUIPMENTS_FILES_VIEW)) {
+      if (!this.canSeeFiles) {
         return
       }
 
@@ -187,12 +207,10 @@ export default {
             this.$router.push({ name: sections.equipments })
           },
           'files-upload': (uploadFiles) => {
-            const files = this.model.files || []
-            files.unshift(...uploadFiles)
-            this.updateFiles(files)
+            this.updateFiles([...uploadFiles, ...this.model.files])
           },
           'file-update': (file, index) => {
-            const files = this.model.files
+            const files = [...this.model.files]
             files[index] = file
             this.updateFiles(files)
           },

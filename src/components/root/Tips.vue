@@ -14,8 +14,8 @@
 </template>
 
 <script>
-import { includePermission } from '@/scripts/utils'
 import { getRndInteger } from '@/scripts/helpers'
+import { hasPerm } from '@/scripts/utils'
 import tips from '@/data/tips'
 
 export default {
@@ -40,7 +40,7 @@ export default {
       return this.tipsList.length
     },
     tipsList() {
-      return tips.filter(obj => includePermission(obj.permissions))
+      return tips.filter(obj => hasPerm(obj.permissions))
     }
   },
   watch: {

@@ -1,9 +1,10 @@
 'use strict'
 
+import Notification from 'element-ui/lib/notification'
 import { isArray, isObject } from '@/scripts/helpers'
-import { Message, Notification } from 'element-ui'
 import { runLoadingService } from '@/scripts/dom'
 import StorageData from '@/classes/StorageData'
+import Message from 'element-ui/lib/message'
 import logout from '@/scripts/logout'
 import types from '@/enum/types'
 import store from '@/store'

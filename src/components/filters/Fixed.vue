@@ -22,7 +22,9 @@
 export default {
   name: 'FilterFixed',
   components: {
-    FilterBasic: () => import('@/components/filters/Basic')
+    FilterBasic: () => import('@/components/filters/Basic'),
+    ElSelect: () => import('element-ui/lib/select'),
+    ElOption: () => import('element-ui/lib/option')
   },
   inheritAttrs: false,
   props: {

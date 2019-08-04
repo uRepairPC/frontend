@@ -1,27 +1,60 @@
 'use strict'
 
-import { isObject } from '@/scripts/helpers'
+import Notification from 'element-ui/lib/notification'
 import sections from '@/enum/sections'
 import io from '@/socket/io'
-import store from '@/store'
 import axios from 'axios'
 
 /**
  * Sync rooms by permissions on socket server.
  */
 export function syncEvents() {
-  const sidebar = store.state.template.sidebar
-  const rooms = []
+  axios.post('listeners/sync')
+}
 
-  Object.entries(sidebar).forEach(([key, obj]) => {
-    if (isObject(obj)) {
-      Object.keys(obj).forEach((itemKey) => {
-        rooms.push(...generateRooms(key, +itemKey))
+/**
+ * @param {string} section - enum
+ * @param {number} id
+ */
+export function offEventDynamic(section, id) {
+  io.emit('leave', generateRooms(section, id))
+}
+
+/**
+ * @param {string} title
+ * @param {string} msg
+ * @returns {{create: (function(): (*)), update: (function(): (*)), delete: (function(): (*))}}
+ */
+export function notify(title, msg = '') {
+  const basic = {
+    title: `RT: ${title}`,
+    message: msg,
+    position: 'bottom-left'
+  }
+
+  return {
+    create: () => {
+      return Notification({
+        ...basic,
+        iconClass: 'el-icon-circle-plus-outline',
+        customClass: 'rt--create'
+      })
+    },
+    update: () => {
+      return Notification({
+        ...basic,
+        iconClass: 'el-icon-edit-outline',
+        customClass: 'rt--update'
+      })
+    },
+    delete: () => {
+      return Notification({
+        ...basic,
+        iconClass: 'el-icon-delete',
+        customClass: 'rt--delete'
       })
     }
-  })
-
-  axios.post('listeners/sync', { rooms })
+  }
 }
 
 /**
@@ -44,20 +77,4 @@ function generateRooms(section, id) {
   }
 
   return rooms
-}
-
-/**
- * @param {string} section - enum
- * @param {number} id
- */
-export function onEventDynamic(section, id) {
-  axios.post('listeners/join', { rooms: generateRooms(section, id) })
-}
-
-/**
- * @param {string} section - enum
- * @param {number} id
- */
-export function offEventDynamic(section, id) {
-  io.emit('leave', generateRooms(section, id))
 }

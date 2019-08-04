@@ -28,9 +28,9 @@
 </template>
 
 <script>
-import * as permissions from '@/enum/permissions'
 import sections from '@/enum/sections'
 import onePage from '@/mixins/onePage'
+import * as perm from '@/enum/perm'
 import User from '@/classes/User'
 import types from '@/enum/types'
 
@@ -65,56 +65,49 @@ export default {
         {
           title: 'Редагувати дані',
           type: types.PRIMARY,
-          permissions: permissions.USERS_EDIT,
+          permissions: [ownProfile && perm.PROFILE_EDIT, perm.USERS_EDIT_ALL],
           action: () => this.openDialog(import('@/components/users/dialogs/Edit'))
         },
         {
           title: 'Редагувати пароль',
           type: types.PRIMARY,
-          permissions: permissions.USERS_EDIT,
+          permissions: [ownProfile && perm.PROFILE_EDIT, perm.USERS_EDIT_ALL],
           action: () => this.openDialog(import('@/components/users/dialogs/EditPassword'))
         },
         {
           title: 'Редагувати зображення',
           type: types.PRIMARY,
-          permissions: permissions.USERS_EDIT,
+          permissions: [ownProfile && perm.PROFILE_EDIT, perm.USERS_EDIT_ALL],
           action: () => this.openDialog(import('@/components/users/dialogs/EditImage'))
         },
         {
           title: 'Редагувати email',
           type: types.PRIMARY,
-          permissions: permissions.USERS_EDIT,
+          permissions: [ownProfile && perm.PROFILE_EDIT, perm.USERS_EDIT_ALL],
           action: () => this.openDialog(import('@/components/users/dialogs/EditEmail'))
         },
         {
           title: 'Редагування ролей',
           type: types.PRIMARY,
           disabled: ownProfile,
-          permissions: permissions.ROLES_MANAGE,
+          permissions: perm.ROLES_EDIT_ALL,
           action: () => this.openDialog(import('@/components/users/dialogs/EditRoles'))
         },
         {
           title: 'Видалити зображення',
           type: types.WARNING,
-          disabled: !this.model.image,
-          permissions: permissions.USERS_EDIT,
+          disabled: !this.model.image_id,
+          permissions: [ownProfile && perm.PROFILE_EDIT, perm.USERS_EDIT_ALL],
           action: () => this.openDialog(import('@/components/users/dialogs/DeleteImage'))
         },
         {
           title: 'Видалити користувача',
           type: types.DANGER,
           disabled: ownProfile || this.model.id === 1,
-          permissions: permissions.USERS_DELETE,
+          permissions: perm.USERS_DELETE_ALL,
           action: () => this.openDialog(import('@/components/users/dialogs/Delete'))
         }
       ]
-        .map((obj) => {
-          if (ownProfile && obj.permissions === permissions.USERS_EDIT) {
-            return { ...obj, permissions: [obj.permissions, permissions.PROFILE_EDIT] }
-          }
-
-          return obj
-        })
     },
     tableData() {
       const props = ['roles', 'email', 'description', 'phone', 'created_at', 'updated_at']

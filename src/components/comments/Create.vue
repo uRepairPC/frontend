@@ -22,6 +22,10 @@
 import RequestComment from '@/classes/RequestComment'
 
 export default {
+  components: {
+    ElButton: () => import('element-ui/lib/button'),
+    ElInput: () => import('element-ui/lib/input')
+  },
   props: {
     request: {
       type: Object,

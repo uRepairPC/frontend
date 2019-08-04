@@ -29,13 +29,13 @@ export default {
       loading: false,
       form: {
         name: {
-          component: 'el-input',
+          component: () => import('element-ui/lib/input'),
           value: '',
           label: 'Назва',
           rules: required
         },
         description: {
-          component: 'el-input',
+          component: () => import('element-ui/lib/input'),
           value: '',
           label: 'Опис',
           attrs: {
@@ -44,7 +44,7 @@ export default {
           }
         },
         default: {
-          component: 'el-checkbox',
+          component: () => import('element-ui/lib/checkbox'),
           value: false,
           attrs: {
             label: 'За замовчуванням'

@@ -43,7 +43,8 @@ export default {
       this.loading = true
 
       User.fetchDeleteImage(this.user.id)
-        .then(() => {
+        .then(({ data }) => {
+          this.$store.commit('users/UPDATE_ITEM', data.user)
           this.$emit('delete-image')
           this.$emit('close')
         })

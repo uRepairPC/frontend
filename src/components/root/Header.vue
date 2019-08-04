@@ -47,6 +47,8 @@ import User from '@/classes/User'
 export default {
   components: {
     HeaderLogo: () => import('@/components/root/HeaderLogo'),
+    ElHeader: () => import('element-ui/lib/header'),
+    ElButton: () => import('element-ui/lib/button'),
     Tips: () => import('@/components/root/Tips')
   },
   computed: {
@@ -91,7 +93,7 @@ export default {
   padding: 0 15px;
   user-select: none;
   overflow: hidden;
-  z-index: 999;
+  z-index: 1600; // v-loading 1500
 }
 
 .el-button {

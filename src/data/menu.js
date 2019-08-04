@@ -1,7 +1,7 @@
 'use strict'
 
-import * as permissions from '@/enum/permissions'
 import sections from '@/enum/sections'
+import * as perm from '@/enum/perm'
 import types from '@/enum/types'
 import router from '@/router'
 import store from '@/store'
@@ -22,10 +22,7 @@ export default {
     icon: 'description',
     title: 'Замовлення',
     route: { name: sections.requests },
-    permissions: [
-      permissions.REQUESTS_VIEW,
-      permissions.REQUESTS_CREATE
-    ],
+    permissions: perm.REQUESTS_VIEW_SECTION,
     history: {
       show: true,
       callback: (obj) => `[${obj.id}] ${obj.title}`
@@ -35,7 +32,7 @@ export default {
         title: 'Створити замовлення',
         icon: 'add',
         type: types.PRIMARY,
-        permissions: permissions.REQUESTS_CREATE,
+        permissions: perm.REQUESTS_CREATE,
         action: () => router.push({ name: `${sections.requests}-create` })
       }
     }
@@ -44,7 +41,7 @@ export default {
     icon: 'people_outline',
     title: 'Користувачі',
     route: { name: sections.users },
-    permissions: permissions.USERS_VIEW,
+    permissions: perm.USERS_VIEW_SECTION,
     history: {
       show: true,
       callback: (obj) => `[${obj.id}] ${obj.last_name} ${obj.first_name}`
@@ -54,7 +51,7 @@ export default {
         title: 'Створити користувача',
         icon: 'add',
         type: types.PRIMARY,
-        permissions: permissions.USERS_CREATE,
+        permissions: perm.USERS_CREATE,
         action: () => router.push({ name: `${sections.users}-create` })
       }
     }
@@ -63,7 +60,7 @@ export default {
     icon: 'group',
     title: 'Ролі',
     route: { name: sections.roles },
-    permissions: permissions.ROLES_VIEW,
+    permissions: perm.ROLES_VIEW_SECTION,
     history: {
       show: true
     },
@@ -72,7 +69,7 @@ export default {
         title: 'Створити роль',
         icon: 'add',
         type: types.PRIMARY,
-        permissions: permissions.ROLES_MANAGE,
+        permissions: perm.ROLES_EDIT_ALL,
         action: () => router.push({ name: `${sections.roles}-create` })
       }
     }
@@ -81,7 +78,7 @@ export default {
     icon: 'storage',
     title: 'Обладнання',
     route: { name: sections.equipments },
-    permissions: permissions.EQUIPMENTS_VIEW,
+    permissions: perm.EQUIPMENTS_VIEW_SECTION,
     history: {
       show: true,
       callback: (obj) => `[${obj.id}] ${obj.serial_number || ''} / ${obj.inventory_number || ''}`
@@ -91,7 +88,7 @@ export default {
         title: 'Створити обладнання',
         icon: 'add',
         type: types.PRIMARY,
-        permissions: permissions.EQUIPMENTS_CREATE,
+        permissions: perm.EQUIPMENTS_CREATE,
         action: () => router.push({ name: `${sections.equipments}-create` })
       }
     }
@@ -101,24 +98,24 @@ export default {
     title: 'Конфігурація',
     route: { name: sections.settings },
     permissions: [
-      permissions.GLOBAL_SETTINGS,
-      permissions.GLOBAL_MANIFEST,
-      permissions.REQUESTS_CONFIG_VIEW,
-      permissions.EQUIPMENTS_CONFIG_VIEW
+      perm.GLOBAL_SETTINGS_EDIT,
+      perm.GLOBAL_MANIFEST_EDIT,
+      perm.REQUESTS_CONFIG_VIEW_SECTION,
+      perm.EQUIPMENTS_CONFIG_VIEW_SECTION
     ],
     children: {
       [sections.settingsGlobal]: {
         title: 'Глобальні налаштування',
         icon: 'dashboard',
         tag: 'page',
-        permissions: permissions.GLOBAL_SETTINGS,
+        permissions: perm.GLOBAL_SETTINGS_EDIT,
         route: { name: sections.settingsGlobal },
         children: {
           edit: {
             title: 'Редагувати',
             icon: 'edit',
             type: types.PRIMARY,
-            permissions: permissions.GLOBAL_SETTINGS,
+            permissions: perm.GLOBAL_SETTINGS_EDIT,
             action: () => {
               store.commit('template/OPEN_DIALOG', {
                 component: () => import('@/components/settings/dialogs/Global')
@@ -131,14 +128,14 @@ export default {
         title: 'Маніфест',
         icon: 'dashboard',
         tag: 'page',
-        permissions: permissions.GLOBAL_MANIFEST,
+        permissions: perm.GLOBAL_MANIFEST_EDIT,
         route: { name: sections.settingsManifest },
         children: {
           edit: {
             title: 'Редагувати',
             icon: 'edit',
             type: types.PRIMARY,
-            permission: permissions.GLOBAL_MANIFEST,
+            permission: perm.GLOBAL_MANIFEST_EDIT,
             action: () => {
               store.commit('template/OPEN_DIALOG', {
                 component: () => import('@/components/settings/dialogs/Manifest')
@@ -151,14 +148,14 @@ export default {
         title: 'Статуси замовлень',
         icon: 'dashboard',
         tag: 'page',
-        permissions: permissions.REQUESTS_CONFIG_VIEW,
+        permissions: perm.REQUESTS_CONFIG_VIEW_SECTION,
         route: { name: sections.requestsStatuses },
         children: {
           add: {
             title: 'Створити статус',
             icon: 'add',
             type: types.PRIMARY,
-            permissions: permissions.REQUESTS_CONFIG_CREATE,
+            permissions: perm.REQUESTS_CONFIG_CREATE,
             action: () => {
               store.commit('template/OPEN_DIALOG', {
                 component: () => import('@/components/requests/statuses/dialogs/Create')
@@ -171,14 +168,14 @@ export default {
         title: 'Пріорітети замовлень',
         icon: 'dashboard',
         tag: 'page',
-        permissions: permissions.REQUESTS_CONFIG_VIEW,
+        permissions: perm.REQUESTS_CONFIG_VIEW_SECTION,
         route: { name: sections.requestsPriorities },
         children: {
           add: {
             title: 'Створити пріорітет',
             icon: 'add',
             type: types.PRIMARY,
-            permissions: permissions.REQUESTS_CONFIG_CREATE,
+            permissions: perm.REQUESTS_CONFIG_CREATE,
             action: () => {
               store.commit('template/OPEN_DIALOG', {
                 component: () => import('@/components/requests/priorities/dialogs/Create')
@@ -191,14 +188,14 @@ export default {
         title: 'Типи замовлень',
         icon: 'dashboard',
         tag: 'page',
-        permissions: permissions.REQUESTS_CONFIG_VIEW,
+        permissions: perm.REQUESTS_CONFIG_VIEW_SECTION,
         route: { name: sections.requestsTypes },
         children: {
           add: {
             title: 'Створити тип',
             icon: 'add',
             type: types.PRIMARY,
-            permissions: permissions.REQUESTS_CONFIG_CREATE,
+            permissions: perm.REQUESTS_CONFIG_CREATE,
             action: () => {
               store.commit('template/OPEN_DIALOG', {
                 component: () => import('@/components/requests/types/dialogs/Create')
@@ -211,14 +208,14 @@ export default {
         title: 'Типи обладнання',
         icon: 'dashboard',
         tag: 'page',
-        permissions: permissions.EQUIPMENTS_CONFIG_VIEW,
+        permissions: perm.EQUIPMENTS_CONFIG_VIEW_SECTION,
         route: { name: sections.equipmentsTypes },
         children: {
           add: {
             title: 'Створити тип',
             icon: 'add',
             type: types.PRIMARY,
-            permissions: permissions.EQUIPMENTS_CONFIG_CREATE,
+            permissions: perm.EQUIPMENTS_CONFIG_CREATE,
             action: () => {
               store.commit('template/OPEN_DIALOG', {
                 component: () => import('@/components/equipments/types/dialogs/Create')
@@ -231,14 +228,14 @@ export default {
         title: 'Виробники обладнання',
         icon: 'dashboard',
         tag: 'page',
-        permissions: permissions.EQUIPMENTS_CONFIG_VIEW,
+        permissions: perm.EQUIPMENTS_CONFIG_VIEW_SECTION,
         route: { name: sections.equipmentsManufacturers },
         children: {
           add: {
             title: 'Створити виробника',
             icon: 'add',
             type: types.PRIMARY,
-            permissions: permissions.EQUIPMENTS_CONFIG_CREATE,
+            permissions: perm.EQUIPMENTS_CONFIG_CREATE,
             action: () => {
               store.commit('template/OPEN_DIALOG', {
                 component: () => import('@/components/equipments/manufacturers/dialogs/Create')
@@ -251,14 +248,14 @@ export default {
         title: 'Моделі обладнання',
         icon: 'dashboard',
         tag: 'page',
-        permissions: permissions.EQUIPMENTS_CONFIG_VIEW,
+        permissions: perm.EQUIPMENTS_CONFIG_VIEW_SECTION,
         route: { name: sections.equipmentsModels },
         children: {
           add: {
             title: 'Створити модель',
             icon: 'add',
             type: types.PRIMARY,
-            permissions: permissions.EQUIPMENTS_CONFIG_CREATE,
+            permissions: perm.EQUIPMENTS_CONFIG_CREATE,
             action: () => {
               store.commit('template/OPEN_DIALOG', {
                 component: () => import('@/components/equipments/models/dialogs/Create')

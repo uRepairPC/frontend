@@ -35,18 +35,18 @@ export default {
       loading: false,
       form: {
         name: {
-          component: 'el-input',
+          component: () => import('element-ui/lib/input'),
           value: this.role.name,
           label: 'Ім\'я',
           rules: required
         },
         color: {
-          component: 'el-color-picker',
+          component: () => import('element-ui/lib/color-picker'),
           value: this.role.color,
           label: 'Колір'
         },
         default: {
-          component: 'el-checkbox',
+          component: () => import('element-ui/lib/checkbox'),
           value: this.role.default,
           attrs: {
             label: 'За замовчуванням'
@@ -70,7 +70,8 @@ export default {
       this.loading = true
 
       Role.fetchEdit(this.role.id, form)
-        .then(() => {
+        .then(({ data }) => {
+          this.$store.commit('roles/UPDATE_ITEM', data.role)
           this.$emit('edit')
           this.$emit('close')
         })
