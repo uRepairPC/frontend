@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.0.0](https://github.com/uRepairPC/web/compare/v2.3.1...v3.0.0) (2019-08-04)
+
+
+### Bug Fixes
+
+* get element from array on undefined ([b231625](https://github.com/uRepairPC/web/commit/b231625))
+* select dialog display roles ([0e91e85](https://github.com/uRepairPC/web/commit/0e91e85))
+* vuex rewrite data ([0317e44](https://github.com/uRepairPC/web/commit/0317e44))
+* **socket:** delete item for main section ([81f00af](https://github.com/uRepairPC/web/commit/81f00af))
+* **store:** cut data when update on section ([2e26d22](https://github.com/uRepairPC/web/commit/2e26d22))
+
+
+### Features
+
+* **socket:** add module update informatio - autodeloy ([2c5ed78](https://github.com/uRepairPC/web/commit/2c5ed78))
+* rewrite permission system, new pagination, optimization, sockets/events, lazy loading, styles, etc ([de05630](https://github.com/uRepairPC/web/commit/de05630))
+* socket change notification ([be47f19](https://github.com/uRepairPC/web/commit/be47f19))
+
+
+### BREAKING CHANGES
+
+* rewrite permission system, new pagination, optimization, sockets/events, lazy loading, styles, etc
+
+
+
 ### [2.3.1](https://github.com/uRepairPC/web/compare/v2.3.0...v2.3.1) (2019-07-08)
 
 
