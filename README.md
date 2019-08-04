@@ -26,14 +26,20 @@
 ## Introducing
 The frontend part, performed on the Vue framework, supports real-time updates via socket.io.
 
-## Preview (ukr)
-<p align="center">
-  <img alt="Image 1" height="200" src="https://raw.githubusercontent.com/uRepairPC/web/master/demo/images/1.png" />
-  <img alt="Image 2" height="200" src="https://raw.githubusercontent.com/uRepairPC/web/master/demo/images/2.png" />
-  <img alt="Image 3" height="200" src="https://raw.githubusercontent.com/uRepairPC/web/master/demo/images/3.png" />
-  <img alt="Image 4" height="200" src="https://raw.githubusercontent.com/uRepairPC/web/master/demo/images/4.png" />
-  <img alt="Image 5" height="200" src="https://raw.githubusercontent.com/uRepairPC/web/master/demo/images/5.png" />
-  <img alt="Image 6" height="200" src="https://raw.githubusercontent.com/uRepairPC/web/master/demo/images/6.png" />
+## Preview
+<p>
+  <img alt="Image 1" height="150" src="https://raw.githubusercontent.com/uRepairPC/docs/master/public/web/1.png" />
+  <img alt="Image 2" height="150" src="https://raw.githubusercontent.com/uRepairPC/docs/master/public/web/2.png" />
+  <img alt="Image 3" height="150" src="https://raw.githubusercontent.com/uRepairPC/docs/master/public/web/3.png" />
+  <img alt="Image 4" height="150" src="https://raw.githubusercontent.com/uRepairPC/docs/master/public/web/4.png" />
+  <img alt="Image 5" height="150" src="https://raw.githubusercontent.com/uRepairPC/docs/master/public/web/5.png" />
+  <img alt="Image 6" height="150" src="https://raw.githubusercontent.com/uRepairPC/docs/master/public/web/6.png" />
+  <img alt="Image 7" height="150" src="https://raw.githubusercontent.com/uRepairPC/docs/master/public/web/7.png" />
+  <img alt="Image 8" height="150" src="https://raw.githubusercontent.com/uRepairPC/docs/master/public/web/8.png" />
+  <img alt="Image 9" height="150" src="https://raw.githubusercontent.com/uRepairPC/docs/master/public/web/9.png" />
+  <img alt="Image 10" height="150" src="https://raw.githubusercontent.com/uRepairPC/docs/master/public/web/10.png" />
+  <img alt="Image 11" height="150" src="https://raw.githubusercontent.com/uRepairPC/docs/master/public/web/11.png" />
+  <img alt="Image 12" height="150" src="https://raw.githubusercontent.com/uRepairPC/docs/master/public/web/12.png" />
 </p>
 
 ## Ecosystem
